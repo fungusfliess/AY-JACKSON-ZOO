@@ -1,13 +1,15 @@
 public class Map {
+    
+    // FIELDS
     private int length;
     private int width;
-    public static final char EMPTY = '.'; // represents empty space on grid
     private char[][] map;
     private final char TEMPORARY_COUNTER = 'Σ'; // temporary character to mark counted spots for areaOf
 
+    // CONSTANTS
+    public static final char EMPTY = '.'; // represents empty space on grid
 
     // ACCESSOR MUTATORS
-
     public int getLength() {
         return this.length;
     }
@@ -49,12 +51,10 @@ public class Map {
         }
     }
 
-
     /*
     @description: returns map array expressed as a String, ready to be written into a file.
     @returns: formatted String, in the format that allows it to be written into a file. 
     */ 
-
     public String saveToString () {
         String save = "";
         // first 2 rows are length and width
@@ -110,7 +110,6 @@ public class Map {
         out.setCharArray(inMap);
         return out;
     } 
-
 
     /*
     @description: Loads map array from an inputted, specifically-formatted String from Land class.
@@ -172,7 +171,6 @@ public class Map {
         return true;
     }
 
-    
     /*
     @description: Random boolean generator, with a modifiable probability that will approach 100% true as count --> max. Used by recursive blob generation.
     @parameters: int max, int count. These are used in the probability calculation. Max is the maximum sprawl, and count is to change the probability with each call from buildStructureBlob's recursive algorithm.
@@ -216,7 +214,6 @@ public class Map {
         Coord right = new Coord (x-1, y);
         Coord up = new Coord (x, y-1);
         Coord down = new Coord (x, y+1);
-
 
         /*
         RECURSION:
@@ -311,6 +308,7 @@ public class Map {
             return true;
         }
    }
+
    /*
    @description:  finds topmost and leftmost (with topmost dominant) point of with a matching char to input on the map 2D array. Returns point as a Coord object.
    @parameters: char input is the character to be found.
@@ -327,6 +325,7 @@ public class Map {
         }
         return null;
    }
+
    /*
     @description: returns area of connected blob of elements of the same element, adjacent to inputted coordinate point.
     @parameters: Coord point is the starting point of the blob.
@@ -375,6 +374,9 @@ public class Map {
         return blobCount;
    }
 
+   /*
+    @description: prints the map to standard output.
+   */
    public void printMap() {
         for (int i = 0; i < this.length; i++) {
             for (int j = 0; j < this.width; j++) {
