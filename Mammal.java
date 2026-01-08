@@ -1,0 +1,3 @@
+class Mammal extends Animal {
+
+}
