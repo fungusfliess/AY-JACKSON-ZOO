@@ -8,6 +8,10 @@ public abstract class Shop extends Structure{
       this.animalFacts = new AnimalFacts(animalFacts);     
    }
    
+   public AnimalFacts getAnimalFacts(){
+      return animalFacts;
+   }
+   
    public abstract double calculateMaintenanceCost(); 
    
    public abstract void updateVisitorLearning(Visitor toUpdate);
