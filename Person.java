@@ -44,6 +44,4 @@ public abstract class Person {
    
    public abstract String getRole();
    
-   public abstract String toString();
-   
 }
