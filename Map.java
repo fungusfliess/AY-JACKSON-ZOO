@@ -3,9 +3,19 @@ public class Map {
     private int width;
     public static final char EMPTY = '.'; // represents empty space on grid
     private char[][] map;
+    private final char TEMPORARY_COUNTER = 'Σ'; // temporary character to mark counted spots for areaOf
 
 
     // ACCESSOR MUTATORS
+
+    public int getLength() {
+        return this.length;
+    }
+
+    public int getWidth() {
+        return this.width;
+    }
+
     public char[][] getCharArray() {
         return this.map;
     }
@@ -31,6 +41,12 @@ public class Map {
         this.length = length1;
         // init array      Each row is an array of size width,  and map is an array of rows. 
         this.map = new char[this.length][this.width];
+        // filling with EMPTY character
+        for (int i = 0; i < this.length; i++) {
+            for (int j = 0; j < this.width; j++) {
+                this.map[i][j] = EMPTY;
+            }
+        }
     }
 
 
@@ -104,7 +120,7 @@ public class Map {
     public boolean buildStructureRectangular (Coord corner1, Coord corner2, char id) {
         
         // if either corner is out of bounds
-        if (!(corner1.isInGrid(this.length, this.width) && corner2.isInGrid(this.length, this.width))) {
+        if (!corner1.isInGrid(this.length, this.width) || !corner2.isInGrid(this.length, this.width)) {
             return false;
         }
         
@@ -136,7 +152,7 @@ public class Map {
 
         for (int i = y1; i <= y2; i++) {
             for (int j = x1; j <= x2; j++) {
-                if (this.map[i][j] == EMPTY) {
+                if (this.map[i][j] != EMPTY) {
                     obstacle = true;
                 }
             }
@@ -168,11 +184,12 @@ public class Map {
         if (den < 0) {
             den = 0;
         }
-        int d = (int)(Math.random() * (den));
+        int d = (int)(Math.random() * (den)); // random int from 0 to den exclusive (max-count integers)
+        // chance of d being 0 is 1/(max-count)
         if (d == 0) {
-            return true;
-        } else {
             return false;
+        } else {
+            return true;
         }
     }
 
@@ -187,10 +204,6 @@ public class Map {
     */ 
     private void buildStructureBlob (Coord seed, char id, int max, int count) {
         char empty = EMPTY;
-        
-        // map length and width
-        int length = map.length;
-        int width = map[0].length;
 
         // setting x, y
         int x = seed.getX();
@@ -207,22 +220,22 @@ public class Map {
 
         /*
         RECURSION:
-            base case: probabilityOfEnd(.....) = 0
+            base case: probabilityOfEnd(.....) returns false
             Increments towards base case: count+1 (probabilityOfEnd becomes more biased to return true)
         */
 
         // calling recursion in all 4 directions
         // can only go in a direction IF !outOfBounds & index can be replaced & probability says so
-        if (!left.isInGrid(length, width) && canReplace(map[y][x+1], id, empty) && !probabilityOfEnd(max, count)) {
+        if (left.isInGrid(length, width) && canReplace(map[left.getY()][left.getX()], id, empty) && probabilityOfEnd(max, count)) {
             buildStructureBlob(left, id, max, count+1);
         }
-        if (!right.isInGrid(length, width) && canReplace(map[y][x-1], id, empty) && !probabilityOfEnd(max, count)) {
+        if (right.isInGrid(length, width) && canReplace(map[right.getY()][right.getX()], id, empty) && probabilityOfEnd(max, count)) {
             buildStructureBlob(right, id, max, count+1);
         }
-        if (!down.isInGrid(length, width) && canReplace(map[y+1][x], id, empty) && !probabilityOfEnd(max, count)) {
+        if (down.isInGrid(length, width) && canReplace(map[down.getY()][down.getX()], id, empty) && probabilityOfEnd(max, count)) {
             buildStructureBlob(down, id, max, count+1);
         }
-        if (!up.isInGrid(length, width) && canReplace(map[y-1][x], id, empty) && !probabilityOfEnd(max, count)) {
+        if (up.isInGrid(length, width) && canReplace(map[up.getY()][up.getX()], id, empty) && probabilityOfEnd(max, count)) {
             buildStructureBlob(up, id, max, count+1);
         }     
     
@@ -240,6 +253,136 @@ public class Map {
       }
    }
 
+   /*
+    @description: Wrapper method for recursive replace. Replaces all connected same-ID characters with a new ID.
+    @parameters: Coord tgt is the target coordinate, char replaceID is the character to replace with.
+    @returns: boolean indicating success of replacement (false if target coordinate is not EMPTY)
+   */
+   public boolean replace (Coord tgt, char replaceID) {
+        if (map[tgt.getY()][tgt.getX()] == EMPTY) {
+            return false;
+        } else {
+            replace (tgt, map[tgt.getY()][tgt.getX()], replaceID);
+            return true;
+        }
+   }
+
+   /*
+    @description: replaces all connected same-ID characters with a new ID.
+    @parameters: Coord tgt is the target coordinate, char tgtID is the character to be replaced, char replaceID is the character to replace with.
+    */
+   private void replace (Coord tgt, char tgtID, char replaceID) {
+        int x = tgt.getX();
+        int y = tgt.getY();    
+    
+        // new coordinates to represent each adjacent element
+        Coord left = new Coord (x+1, y);
+        Coord right = new Coord (x-1, y);
+        Coord up = new Coord (x, y-1);
+        Coord down = new Coord (x, y+1);
+
+        if (map[tgt.getY()][tgt.getX()] == tgtID) {
+            map[tgt.getY()][tgt.getX()] = replaceID;
+            if (left.isInGrid(length, width) && map[left.getY()][left.getX()] == tgtID) {
+                replace(left, tgtID, replaceID);      
+            }
+            if (right.isInGrid(length, width) && map[right.getY()][right.getX()] == tgtID) {
+                replace(right, tgtID, replaceID);
+            }
+            if (down.isInGrid(length, width) && map[down.getY()][down.getX()] == tgtID) {
+                replace(down, tgtID, replaceID);
+            }
+            if (up.isInGrid(length, width) && map[up.getY()][up.getX()] == tgtID) {
+                replace(up, tgtID, replaceID);
+            }
+        }
+   }
+
+   /*
+    @description: erases structure at target coordinate by replacing all connected same-ID characters with EMPTY character.
+    @returns: boolean indicating success of erasure (false if target coordinate is already EMPTY)
+   */
+   public boolean erase (Coord tgt) {
+        if (map[tgt.getY()][tgt.getX()] == EMPTY) {
+            return false;
+        } else {
+            char tgtID = map[tgt.getY()][tgt.getX()];
+            replace (tgt, tgtID, EMPTY);
+            return true;
+        }
+   }
+   /*
+   @description:  finds topmost and leftmost (with topmost dominant) point of with a matching char to input on the map 2D array. Returns point as a Coord object.
+   @parameters: char input is the character to be found.
+   */
+   public Coord find (char input) {
+        // loop down rows first (y), then across columns (x)
+        for (int i = 0; i < this.length; i++) {
+            for (int j = 0; j < this.width; j++) {
+                // if match found
+                if (this.map[i][j] == input) {
+                    return new Coord (j, i); // x is j, y is i
+                }
+            }
+        }
+        return null;
+   }
+   /*
+    @description: returns area of connected blob of elements of the same element, adjacent to inputted coordinate point.
+    @parameters: Coord point is the starting point of the blob.
+    @returns: int, the area of the connected blob.
+   */
+   public int areaOf(Coord point) {
+        char tgt = map[point.getY()][point.getX()];
+        int area = areaOf(point, tgt);
+        replace(point, TEMPORARY_COUNTER, tgt); // restoring map to original state
+        return area;
+   }
+
+   /*
+   @description: recursive method that calculates area of connected blob of elements of the same element, adjacent to inputted coordinate point.
+   @parameters: Coord point is the starting point of the blob, char tgt is the target character to be matched.
+   @returns: int blobCount, the area of the connected blob from all branching recursive calls summed up.
+   */
+   private int areaOf (Coord point, char tgt) {
+        int blobCount = 0;
+        int x = point.getX();
+        int y = point.getY();   
+        // new coordinates to represent each adjacent element
+        Coord left = new Coord (x+1, y);
+        Coord right = new Coord (x-1, y);
+        Coord up = new Coord (x, y-1);
+        Coord down = new Coord (x, y+1);
+
+        if (map[point.getY()][point.getX()] == tgt) { // redundant except for first case when we input target
+            blobCount++;
+            map[point.getY()][point.getX()] = TEMPORARY_COUNTER; // marking as counted
+        
+            // recursive calls in all 4 directions
+            if (right.isInGrid(this.length, this.width) && map[right.getY()][right.getX()] == tgt) {
+                blobCount += areaOf(right, tgt);
+            }
+            if (left.isInGrid(this.length, this.width) && map[left.getY()][left.getX()] == tgt) {
+                blobCount += areaOf(left, tgt);
+            }
+            if (down.isInGrid(this.length, this.width) &&  map[down.getY()][down.getX()] == tgt) {
+                blobCount += areaOf(down, tgt);
+            }
+            if (up.isInGrid(this.length, this.width) && map[up.getY()][up.getX()] == tgt) {
+                blobCount += areaOf(up, tgt);
+            }      
+        }
+        return blobCount;
+   }
+
+   public void printMap() {
+        for (int i = 0; i < this.length; i++) {
+            for (int j = 0; j < this.width; j++) {
+                System.out.print(this.map[i][j] + " ");
+            }
+            System.out.println();
+        }
+   }
 }
 
  
