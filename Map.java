@@ -52,8 +52,8 @@ public class Map {
     }
 
     /*
-    @description: returns map array expressed as a String, ready to be written into a file.
-    @returns: formatted String, in the format that allows it to be written into a file. 
+    @description: returns information of this Map object as a String, ready to be written into a file.
+    @returns: formatted String, in the desired format that allows it to be written into a file. 
     */ 
     public String saveToString () {
         String save = "";
