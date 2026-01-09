@@ -15,7 +15,7 @@ public abstract class Visitor extends Person{
 
     public static final int FREE_CHILD_AGE_MAX = 3;
     public static final int FREE_SENIOR_AGE_MIN = 80;
-
+    
     private double balance;
     private int learningLevel;
     private int visitDuration;
@@ -36,6 +36,23 @@ public abstract class Visitor extends Person{
     public int getAttractionsVisited()
     public int getNumItems()
 
-    
+
+    public Visitor(int age, String personID, String firstName, String lastNamedouble balance, int learningLevel, int visitDuration) {
+        super(age, personID, firstName, lastName);
+
+        this.balance = Math.max(0.0, balance);
+        this.learningLevel = Math.max(0, learningLevel);
+        this.visitDuration = Math.max(0, visitDuration);
+
+        this.attractionsVisited = 0;
+        this.amountSpent = 0.0;
+
+        this.learningHistorySize = 0;
+        this.learningHistory = new String[10];
+
+        this.numItems = 0;
+        this.itemInventory = new Item[10];
+    }
+
 
 }
