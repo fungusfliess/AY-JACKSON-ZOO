@@ -5,14 +5,18 @@ public class MapTester {
         Coord corner1 = new Coord(1, 1); 
         Coord corner2 = new Coord(5, 3);
 
-        Land testLand = new Land(10, testMap);
+        // Land testLand = new Land(10, testMap);
         testMap.buildStructureBlob(corner1, 'A', 3); 
 
         System.out.println("Initial Map:");
         testMap.printMap();
-        String saved = testMap.saveToString();
+        //String saved = testMap.saveToString();
 
-        testLand.saveToFile("testMapSave.txt");
+        System.out.println(testMap.areaOf(corner1));
+
+        System.out.println("End Map:");
+        testMap.printMap();
+        // testLand.saveToFile("testMapSave.txt");
 
         
     }
