@@ -332,9 +332,20 @@ public class Map {
     @returns: int, the area of the connected blob.
    */
    public int areaOf(Coord point) {
-        char tgt = map[point.getY()][point.getX()];
-        int area = areaOf(point, tgt);
-        replace(point, TEMPORARY_COUNTER, tgt); // restoring map to original state
+        char[][] map2 = new char[this.length][this.width];
+        // copying map into map2
+        for (int i = 0; i < this.length; i++) {
+            for (int j = 0; j < this.width; j++) {
+                map2[i][j] = this.map[i][j];
+            }
+        }
+        // by using a separate copy of map, we preserve the original map while using the recursive areaOf algorithm that modifies the map.
+        char tgt = map2[point.getY()][point.getX()];
+        if (tgt == EMPTY) {
+            return 0; // area of empty space is 0
+        }
+
+        int area = areaOf(point, tgt, map2);
         return area;
    }
 
@@ -343,7 +354,7 @@ public class Map {
    @parameters: Coord point is the starting point of the blob, char tgt is the target character to be matched.
    @returns: int blobCount, the area of the connected blob from all branching recursive calls summed up.
    */
-   private int areaOf (Coord point, char tgt) {
+   private int areaOf (Coord point, char tgt, char[][] map2) {
         int blobCount = 0;
         int x = point.getX();
         int y = point.getY();   
@@ -353,22 +364,22 @@ public class Map {
         Coord up = new Coord (x, y-1);
         Coord down = new Coord (x, y+1);
 
-        if (map[point.getY()][point.getX()] == tgt) { // redundant except for first case when we input target
+        if (map2[point.getY()][point.getX()] == tgt) { // redundant except for first case when we input target
             blobCount++;
-            map[point.getY()][point.getX()] = TEMPORARY_COUNTER; // marking as counted
+            map2[point.getY()][point.getX()] = TEMPORARY_COUNTER; // marking as counted
         
             // recursive calls in all 4 directions
-            if (right.isInGrid(this.length, this.width) && map[right.getY()][right.getX()] == tgt) {
-                blobCount += areaOf(right, tgt);
+            if (right.isInGrid(this.length, this.width) && map2[right.getY()][right.getX()] == tgt) {
+                blobCount += areaOf(right, tgt, map2);
             }
-            if (left.isInGrid(this.length, this.width) && map[left.getY()][left.getX()] == tgt) {
-                blobCount += areaOf(left, tgt);
+            if (left.isInGrid(this.length, this.width) && map2[left.getY()][left.getX()] == tgt) {
+                blobCount += areaOf(left, tgt, map2);
             }
-            if (down.isInGrid(this.length, this.width) &&  map[down.getY()][down.getX()] == tgt) {
-                blobCount += areaOf(down, tgt);
+            if (down.isInGrid(this.length, this.width) &&  map2[down.getY()][down.getX()] == tgt) {
+                blobCount += areaOf(down, tgt, map2);
             }
-            if (up.isInGrid(this.length, this.width) && map[up.getY()][up.getX()] == tgt) {
-                blobCount += areaOf(up, tgt);
+            if (up.isInGrid(this.length, this.width) && map2[up.getY()][up.getX()] == tgt) {
+                blobCount += areaOf(up, tgt, map2);
             }      
         }
         return blobCount;
