@@ -3,44 +3,130 @@ public abstract class Animal {
     public static final int MAX_STAT = 100;
     public static final int LOW_STAT = 30;
 
-    private LivingCondition livingCondition;
+    // COMMON FIELDS
     private Habitat habitat;
-
-    private int maxHunger;
     private String name;
     private String specie;
-    private String preferredInteraction;
-    private int numPreferredInteractions;
-
-    private String[] typeFoods;
-
+    private int age;
+    private String preferedInteraction;
     private int happiness;
     private int cleanliness;
     private int hunger;
+    private String gender;
+    private double weight;
 
     private int numDailyInteractions;
+    private int daysPassed;
+    private int numPreferredInteractions;
+
+    // SPECIE BASED FIELDS
+    private int maxHunger;
+    private String[] typeFoods;
+    private int lifeExpectancy;
+    private double flexibility;
+    private LivingCondition livingCondition;
     private int totalDailyInteractions;
 
-    private int lifeExpectancy;
-    private int livingConditionId;
-    private int habitatId;
+    
+    
 
-    private int age;
-    private double flexibility;
-    private boolean rehomed;
-
-    private String gender;
-    private int weight;
-    private int daysPassed;
-
-    public Animal(String name, String specie, String preferedInteraction, String gender,
-                  int happiness, int cleanliness, int hunger, int totalDailyInteractions, int age) {
+    public Animal(String name, String specie, String preferedInteraction, String gender, int happiness, int cleanliness, int hunger, int age, double weight) {
         this.name = name;
         this.specie = specie;
-
+        this.preferedInteraction = preferedInteraction;
+        this.gender = gender;
+        this.happiness = happiness;
+        this.cleanliness = cleanliness;
+        this.hunger = hunger;
+        this.age = age;
+        this.weight = weight;
+        numDailyInteractions = 0;
+        daysPassed = 0;
+        numPreferredInteractions = 0;
     }
     // METHODS
 
+    // COMMON FIELDS GETTERS AND SETTERS
+
+    // GETTERS
+    public Habitat getHabitat() {
+        return habitat;
+    }
+    public String getName() {
+        return name;
+    } 
+    public String getSpecie() {
+        return specie;
+    }
+    public String getGender() {
+        return gender;
+    }
+    public int getHappiness() {
+        return happiness;
+    }
+    public int getCleanliness() {
+        return cleanliness;
+    }
+    public int getHunger() {
+        return hunger;
+    }
+    public int getAge() {
+        return age;
+    }
+    public double getWeight() {
+        return weight;
+    }
+
+    //SETTERS
+
+    public void setHabitat(Habitat habitat) {
+        this.habitat = habitat;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void setSpecie(String specie) {
+        this.specie = specie;
+    }
+    public void setAge(int age) {
+        this.age = age;
+    }
+    public void setPreferedInteraction (String preferedInteraction) {
+        this.preferedInteraction = preferedInteraction;
+    }
+    public void setHappiness(int happiness) {
+        this.happiness = happiness;
+    }
+    public void setCleanliness(int cleanliness) {
+        this.cleanliness = cleanliness;
+    }
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }  
+
+    // SPECIE BASED FIELDS GETTERS AND SETTERS
+    // SETTERS
+    public void setMaxHunger(int maxHunger) {
+        this.maxHunger = maxHunger;
+    }
+    public void setTypeFoods(String[] typeFoods) {
+        this.typeFoods = typeFoods;
+    }
+    public void setLifeExpectancy(int lifeExpectancy) {
+        this.lifeExpectancy = lifeExpectancy;
+    }
+    public void setFlexibility(double flexibility) {
+        this.flexibility = flexibility;
+    }   
+    public void setLivingCondition(LivingCondition livingCondition) {
+        this.livingCondition = livingCondition;
+    }
+    public void setTotalDailyInteractions(int totalDailyInteractions) {
+        this.totalDailyInteractions = totalDailyInteractions;
+    }
+
+
+    // NON-ABSTRACT METHODS
     // feeds the animal with given food, if possible
     public boolean eat(String food, int amount) {
 
@@ -85,6 +171,8 @@ public abstract class Animal {
     public boolean lowHappiness() {
 
     }
+
+    // ABSTRACT METHODS
 
     // Description: abstract method that formats all information of the animal
     public abstract String toString();
