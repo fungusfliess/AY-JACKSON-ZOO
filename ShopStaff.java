@@ -7,7 +7,7 @@
 */
 
 public class ShopStaff {
-    public static void FACTS_BONUS_PERCENTAGE = 0.02; 
+    public static final double FACTS_BONUS_PERCENTAGE = 0.02; 
     private int itemsSold; 
     private double totalSales; 
     private int factsShared; 
@@ -33,7 +33,7 @@ public class ShopStaff {
     
     public boolean sellItem(Item item, Visitor visitor){
         if (visitor!=null && visitor.canAffordItem(item)){
-            balance -= item.getPrice(); 
+            balance -= item.getPrice();         //set balance for Visitor 
             visitor.addItem(item);
             itemsSold++; 
             totalSales+=item.getPrice(); 
