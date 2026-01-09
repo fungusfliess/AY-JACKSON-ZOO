@@ -10,7 +10,7 @@ public abstract class Structure{
    
    public Structure(String name, char structureID, int area, int timeBetweenMaintenance, int daysSinceLastMaintenance, Land onProperty){
       this.name = name;
-      this.structureId = structureID;
+      this.structureID = structureID;
       this.area = area;
       this.maintenanceCost = calculateMaintenanceCost();
       this.demolished = false;
@@ -43,7 +43,6 @@ public abstract class Structure{
    public void setDemolished(boolean status){
       demolished = status; 
    }
-   
    public abstract double calculateMaintenanceCost();
    
    public abstract void updateVisitorLearning(Visitor toUpdate);
@@ -67,7 +66,7 @@ public abstract class Structure{
    }
    
    public int compareToSize(Structure structure){
-      return this.size - structure.getSize();
+      return this.size - structure.getArea();
    }
    
    public int compareToSinceLastMaintenance(Structure structure){
