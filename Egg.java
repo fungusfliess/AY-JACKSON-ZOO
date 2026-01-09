@@ -1,41 +1,34 @@
 public class Egg {
-    private String specie;
     private int hatchTime;
-    private Animal animalClass;
+    private Animal parent;
 
-    public Egg(String specie, Animal animalClass) {
-        this.specie = specie;
+    public Egg(Animal parent) {
         this.hatchTime = 0;
-        this.animalClass = animalClass;
+        this.parent = parent;
         
-        if (specie.equalsIgnoreCase("Shark")) {
+        if (parent.getSpecie().equalsIgnoreCase("Shark")) {
             this.hatchTime = 90; // Sharks hatch in 90 days
-        } else if (specie.equalsIgnoreCase("Sunfish")) {
+        } else if (parent.getSpecie().equalsIgnoreCase("Sunfish")) {
             this.hatchTime = 60; // Sunfish hatch in 60 days
         }
     }
 
     // GETTERS
-    public String getSpecie() {
-        return specie; 
-    }
     public int getHatchTime() {
         return hatchTime;
     }
-    public Animal getAnimalClass() {
-        return animalClass;
+    public Animal getParent() {
+        return parent;
     }
 
     // SETTERS
-    public void setSpecie(String specie) {
-        this.specie = specie;
-    }
     public void setHatchTime(int hatchTime) {
         this.hatchTime = hatchTime;
     }   
-    public void setAnimalClass(Animal animalClass) {
-        this.animalClass = animalClass;
+    public void setParent(Animal parent) {
+        this.parent = parent;
     }
+
 
     // METHODS
     public void passTime(int daysPassed) {
@@ -46,12 +39,19 @@ public class Egg {
         return hatchTime <= 0;
     }   
 
-    public Animal hatch() {
+    public Animal hatch(Habitat habitat, String name) {
         if (readyToHatch()) {
-            if (animalClass instanceof Fish) {
-                new Fish
+            if (parent instanceof Fish && parent.isSuitable(habitat)) {
+                Fish babyFish = new Fish(parent);
+                babyFish.setName(name);
+                if (Math.random() < 0.5) {
+                    babyFish.setGender("Male"); // 50% chance male
+                } else {
+                    babyFish.setGender("Female"); // 50% chance female
+                }
+                habitat.addAnimal(babyFish);
+                return babyFish;
             }
-            return animalClass;
         }
         return null;
     }
