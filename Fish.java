@@ -1,8 +1,10 @@
 public class Fish extends Animal{
-
-
-
+    private int amountEggs;
+    
     // Description: constructor for fish
+    public Fish(String specie) {
+        super(specie);
+    }
     public Fish(String name, String specie, String preferedInteraction, String gender,
                 int happiness, int cleanliness, int hunger, int age, double weight) {
 
@@ -15,6 +17,7 @@ public class Fish extends Animal{
         setLivingCondition(livingCondition(specie));
         setTotalDailyInteractions(totalDailyInteractions(specie)); 
 
+        this.amountEggs = amountEggs(specie);
     }
 
     // SETTING SPECIE BASED FIELDS
@@ -28,11 +31,13 @@ public class Fish extends Animal{
     }
     public static String[] typeFoods(String specie) {
         if (specie.equalsIgnoreCase("Shark")) {
-            return new String[]{"Meat", "Fish"};
+            String[] foods = {"Meat", "Fish"};
+            return foods;
         } else if (specie.equalsIgnoreCase("Sunfish")) {
-            return new String[]{"Algae", "Flakes"};
+            String[] foods = {"Algae", "Flakes"};
+            return foods;
         }
-        return null;
+        return new String[0];
     }
 
     public static int lifeExpectancy(String specie) {
@@ -69,23 +74,78 @@ public class Fish extends Animal{
         }
         return -1;
     }
+    private static int amountEggs(String specie) {
+        if (specie.equalsIgnoreCase("Shark")) return 2;
+        if (specie.equalsIgnoreCase("Sunfish")) return 10;
+        return 0;
+    }
+
+    // GETTERS
+
+    public int getMaxHunger() {
+        return Fish.maxHunger(this.getSpecie());
+    }
+    public String[] getTypeFoods() {
+        return Fish.typeFoods(this.getSpecie());
+    }
+    public int getLifeExpectancy() {
+        return Fish.lifeExpectancy(this.getSpecie());
+    }
+    public double getFlexibility() {
+        return Fish.flexibility(this.getSpecie());
+    } 
+    public LivingCondition getLivingCondition() {
+        return Fish.livingCondition(this.getSpecie());
+    }
+    public int getTotalDailyInteractions() {
+        return Fish.totalDailyInteractions(this.getSpecie());
+    }
+    public int getAmountEggs() {
+        return amountEggs;
+    }   
+
+    // SETTERS
+    public void setAmountEggs(int amountEggs) {
+        this.amountEggs = amountEggs;
+    }
 
     // METHODS
 
     // Description: abstract method that formats all information of the animal
     public String toString() {
+        return  "Habitat: " + getHabitat() + "\n" +
+                "Name: " + getName() + "\n" +
+                "Specie: " + getSpecie() + "\n" +
+                "Age: " + getAge() + "\n" +
+                "Prefered Interaction: " + getPreferedInteraction() + "\n" +
+                "Happiness: " + getHappiness() + "\n" +
+                "Cleanliness: " + getCleanliness() + "\n" +
+                "Hunger: " + getHunger() + "/" + getMaxHunger() + "\n" +
+                "Gender: " + getGender() + "\n" +
+                "Weight: " + getWeight() + "\n" +
+                "Type of Foods: " + getTypeFoods() + "\n" +
+                "Life Expectancy: " + getLifeExpectancy() + "\n" +
+                "Amount of Eggs: " + getAmountEggs() + "\n";
 
     }
 
-    // Description: abstract method that creates a new animal of the same type as its parent.
+    // Description: creates a new animal of the same type as its parent.
     //  This method is different for animals that produce offspring as eggs.
     //  Returns null if the animal does not have the requirements to reproduce.
     public Animal reproduce(Habitat habitat) {
-
+ 
     }
 
-    // Description: abstract helper method that updates the age of the animal
+    // Description: method that updates the age of the animal
     public void updateAge() {
-
+        if (getDaysPassed() % 365 == 0) {
+            int newAge = getAge() + 1;
+            setAge(newAge);
+            if (this.getSpecie().equalsIgnoreCase("Shark")) {
+                setWeight(getWeight() + 15);
+            } else if (this.getSpecie().equalsIgnoreCase("Sunfish")) {
+                setWeight(getWeight() + 5);
+            }
+        }
     }
 }

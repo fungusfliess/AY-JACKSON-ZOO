@@ -28,7 +28,9 @@ public abstract class Animal {
     private int totalDailyInteractions;
 
     
-    
+    public Animal(String specie) {
+        this.specie = specie;
+    }
 
     public Animal(String name, String specie, String preferedInteraction, String gender, int happiness, int cleanliness, int hunger, int age, double weight) {
         this.name = name;
@@ -58,8 +60,11 @@ public abstract class Animal {
     public String getSpecie() {
         return specie;
     }
-    public String getGender() {
-        return gender;
+    public int getAge() {
+        return age;
+    }
+    public String getPreferedInteraction() {
+        return preferedInteraction;
     }
     public int getHappiness() {
         return happiness;
@@ -70,12 +75,21 @@ public abstract class Animal {
     public int getHunger() {
         return hunger;
     }
-    public int getAge() {
-        return age;
+    public String getGender() {
+        return gender;
     }
     public double getWeight() {
         return weight;
     }
+    public int getNumDailyInteractions() {
+        return numDailyInteractions;
+    }
+    public int getDaysPassed() {
+        return daysPassed;
+    }
+    public int getNumPreferredInteractions() {  
+        return numPreferredInteractions;
+    }   
 
     //SETTERS
 
