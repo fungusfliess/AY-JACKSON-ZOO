@@ -57,8 +57,15 @@ public abstract class Shop extends Structure{
    public String saveToString(){
       String saveToString = menu.length + "\n";
       for (int i = 0; i < menu.length; i++){
-         saveToString += menu[0] + "\n";
+         saveToString += menu[i].getName()+ "\n" + menu[i].getPrice() + "\n";
       }
-      saveToString +=
+      int animalLength = animalFacts.getLength();
+      saveToString += animalLength;
+      for (int j = 0; j < animalLength; j++){
+         saveToString += animalFacts.getAnimalFact(j) + "\n";
+      }
+      // fix ts
+      saveToString += getName() + "\n" + getStructureID() + "\n" + getArea() + "\n" + getTimeBetweenMaintenance() + "\n" + timeSinceLastMaintenance() + "\n";
+
    }
 }
