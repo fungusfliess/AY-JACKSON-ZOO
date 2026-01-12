@@ -140,4 +140,50 @@ public class Land {
     }
 
 
+
+
+    // MANAGE STRUCTURE ARRAY
+    // SEARCH
+    /*
+    @description: Searches for a Structure in the structureList by its name.
+    @params: String name represents the name of the Structure to search for.
+    @returns: int index of the Structure in the structureList array, or -1 if not found.
+    */
+    public int searchIdxByName (String name) {
+        for (int i = 0; i < currentNumStructures; i++) {
+            if (structureList[i].getName().equalsIgnoreCase(name)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    
+    public int searchIdxByID (char structureID) {
+        for (int i = 0; i < currentNumStructures; i++) {
+            if (structureList[i].getStructureID() == structureID) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    // SORT
+    /*
+    @description: 
+    */
+
+    public void sortByDaysSinceLastMaintenance(int numToSort) {
+        // selection sort
+        for (int i = 0; i < numToSort && i < currentNumStructures; i++) {
+
+            // find highest num of days without maintenance
+            Structure highest;
+            for (int j = 0; j < currentNumStructures; j++) {
+                if (structureList[j].get)
+
+            }
+
+        }
+    }
+
 }
