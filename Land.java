@@ -100,7 +100,7 @@ public class Land {
                     sumString += input + "\n";
                 }
 
-                this.structureList[i] = Structure.loadFromString(sumString);
+                this.structureList[i] = Structure.loadFromString(sumString); //From Arianna: find somewhere to pass in onProperty parameter
             }
 
             

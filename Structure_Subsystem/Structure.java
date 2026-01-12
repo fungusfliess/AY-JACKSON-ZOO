@@ -33,6 +33,12 @@ public abstract class Structure{
    public double getMaintenanceCost(){
       return maintenanceCost;
    }
+   public int getTimeBetweenMaintenance(){
+      return timeBetweenMaintenance;
+   }
+   public int getDaysSinceLastMaintenance(){
+      return daysSinceLastMaintenance; 
+   }
    
    //Mutator
    

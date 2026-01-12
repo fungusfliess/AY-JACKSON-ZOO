@@ -65,7 +65,12 @@ public abstract class Shop extends Structure{
          saveToString += animalFacts.getAnimalFact(j) + "\n";
       }
       // fix ts
-      saveToString += getName() + "\n" + getStructureID() + "\n" + getArea() + "\n" + getTimeBetweenMaintenance() + "\n" + timeSinceLastMaintenance() + "\n";
+      saveToString += getName() 
+      + "\n" + getStructureID() 
+      + "\n" + getArea() 
+      + "\n" + getTimeBetweenMaintenance() 
+      + "\n" + getDaysSinceLastMaintenance() 
+      + "\n";
 
    }
 }
