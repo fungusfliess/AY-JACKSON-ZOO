@@ -1,4 +1,4 @@
-package Structure_Subsystem;
+package Animal_Subsystem;
 public class LivingCondition {
     
 }

@@ -6,7 +6,7 @@
    Description: 
 */
 
-import Structure_Subsystem.Animal;
+import Animal_Subsystem.Animal;
 
 public abstract class ZooKeeper extends Employee {
    //fields 
