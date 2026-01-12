@@ -1,4 +1,4 @@
-package Structure_Subsystem;
+package Animal_Subsystem;
 public abstract class Animal {
 
     public static final int MAX_STAT = 100;
