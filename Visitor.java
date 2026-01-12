@@ -99,17 +99,26 @@ public abstract class Visitor extends Person{
     }
 
     public boolean canAffordItem(Item item) {
-        if (item == null) return false;
+        if (item == null){return false;}
         return item.getPrice() <= balance;
     }
 
     public boolean addItem(Item item) {
-        if (item == null) return false;
+        if (item == null){return false;{}
 
         ensureItemInventoryCapacity(numItems + 1);
         itemInventory[numItems] = item;
         numItems++;
         return true;
+    }
+
+    public void passDay(){
+        this.deactivate();
+    }
+
+    public boolean visit(Structure s){
+        if (s == null){return false;}   //ADD OR DEMOLISHED to reutnr false condition 
+        //CALL specifif mehods for visit, called by user  
     }
 
 

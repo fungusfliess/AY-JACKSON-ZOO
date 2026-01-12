@@ -7,7 +7,6 @@
 */
 
 import Structure_Subsystem.Animal;
-
 public abstract class ZooKeeper extends Employee {
    //fields 
     public static final int MAX_CERTIFICATION_LEVEL = 5; 
