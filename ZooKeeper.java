@@ -6,10 +6,12 @@
    Description: 
 */
 
+import Animal_Subsystem.Animal;
+
 public abstract class ZooKeeper extends Employee {
    //fields 
-    public static int MAX_CERTIFICATION_LEVEL = 5; 
-    public static double CERTIFICATION_BONUS_PERCENTAGE = 0.05;
+    public static final int MAX_CERTIFICATION_LEVEL = 5; 
+    public static final double CERTIFICATION_BONUS_PERCENTAGE = 0.05;
    
     private int certificationLevel; 
     private int dailyTasksCompleted;  
@@ -71,5 +73,4 @@ public abstract class ZooKeeper extends Employee {
         super.passDay(); 
         dailyTasksCompleted =0; 
     }
-
 }

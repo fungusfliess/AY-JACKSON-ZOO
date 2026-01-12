@@ -1,9 +1,20 @@
+package Animal_Subsystem;
+import Structure_Subsystem.*;
+
 public class Fish extends Animal{
     private int amountEggs;
     
     // Description: constructor for fish
-    public Fish(String specie) {
-        super(specie);
+    public Fish(Animal parent) {
+        super(parent);
+
+        setMaxHunger(maxHunger(parent.getSpecie()));
+        setTypeFoods(typeFoods(parent.getSpecie()));
+        setLifeExpectancy(lifeExpectancy(parent.getSpecie()));
+        setFlexibility(flexibility(parent.getSpecie()));
+        setLivingCondition(livingCondition(parent.getSpecie()));
+        setTotalDailyInteractions(totalDailyInteractions(parent.getSpecie()));  
+        this.amountEggs = amountEggs(parent.getSpecie());
     }
     public Fish(String name, String specie, String preferedInteraction, String gender,
                 int happiness, int cleanliness, int hunger, int age, double weight) {
@@ -105,6 +116,24 @@ public class Fish extends Animal{
     }   
 
     // SETTERS
+    public void setMaxHunger(int maxHunger) {
+        super.setMaxHunger(maxHunger);
+    }
+    public void setTypeFoods(String[] typeFoods) {
+        super.setTypeFoods(typeFoods);
+    }
+    public void setLifeExpectancy(int lifeExpectancy) {
+        super.setLifeExpectancy(lifeExpectancy);
+    }
+    public void setFlexibility(double flexibility) {
+        super.setFlexibility(flexibility);
+    }
+    public void setLivingCondition(LivingCondition livingCondition) {
+        super.setLivingCondition(livingCondition);
+    }
+    public void setTotalDailyInteractions(int totalDailyInteractions) {
+        super.setTotalDailyInteractions(totalDailyInteractions);
+    }
     public void setAmountEggs(int amountEggs) {
         this.amountEggs = amountEggs;
     }
@@ -132,8 +161,19 @@ public class Fish extends Animal{
     // Description: creates a new animal of the same type as its parent.
     //  This method is different for animals that produce offspring as eggs.
     //  Returns null if the animal does not have the requirements to reproduce.
-    public Animal reproduce(Habitat habitat) {
- 
+    public Egg[] reproduce(Habitat habitat) {
+        if (this.getGender().equalsIgnoreCase("Female") && 
+            this.getHappiness() >= (LOW_STAT * MAX_STAT) && 
+            this.getAge() >= 2 &&  
+            this.getHunger() <= (LOW_STAT * this.getMaxHunger())) {
+
+            Egg[] eggs = new Egg[amountEggs]; 
+            for (int i = 0; i < amountEggs; i++) {
+                eggs[i] = new Egg(this);
+            }
+            return eggs;
+        }
+        return null;
     }
 
     // Description: method that updates the age of the animal
@@ -143,8 +183,10 @@ public class Fish extends Animal{
             setAge(newAge);
             if (this.getSpecie().equalsIgnoreCase("Shark")) {
                 setWeight(getWeight() + 15);
+                setMaxHunger(getMaxHunger() + 5);
             } else if (this.getSpecie().equalsIgnoreCase("Sunfish")) {
                 setWeight(getWeight() + 5);
+                setMaxHunger(getMaxHunger() + 2);
             }
         }
     }

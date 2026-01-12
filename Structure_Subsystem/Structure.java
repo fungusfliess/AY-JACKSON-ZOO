@@ -33,6 +33,12 @@ public abstract class Structure{
    public double getMaintenanceCost(){
       return maintenanceCost;
    }
+   public int getTimeBetweenMaintenance(){
+      return timeBetweenMaintenance;
+   }
+   public int getDaysSinceLastMaintenance(){
+      return daysSinceLastMaintenance; 
+   }
    
    //Mutator
    
@@ -43,6 +49,7 @@ public abstract class Structure{
    public void setDemolished(boolean status){
       demolished = status; 
    }
+
    public abstract double calculateMaintenanceCost();
    
    public abstract void updateVisitorLearning(Visitor toUpdate);

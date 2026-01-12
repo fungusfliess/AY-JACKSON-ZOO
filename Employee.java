@@ -9,7 +9,7 @@
 public abstract class Employee extends Person {
    //fields 
    //SOMEHOW UPDATE YEARS OF EXPERIENCE BY KEEPING TRACKOF DAYS OF WORKING HERE?? 
-   public static int MIN_YEARS_FOR_BENEFITS = 5; 
+   public static final int MIN_YEARS_FOR_BENEFITS = 5; 
    private double hourlyWage; 
    private int yearsOfExperience; 
    private double hoursWorked; 
