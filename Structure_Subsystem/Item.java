@@ -12,6 +12,10 @@ public class Item{
    public double getPrice(){
       return price;
    }
+
+   public String getName(){
+      return name;
+   }
    
    public String toString(){
       return name + ": $ " + price + "\n";

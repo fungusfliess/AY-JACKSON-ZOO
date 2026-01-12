@@ -43,6 +43,7 @@ public abstract class Structure{
    public void setDemolished(boolean status){
       demolished = status; 
    }
+
    public abstract double calculateMaintenanceCost();
    
    public abstract void updateVisitorLearning(Visitor toUpdate);

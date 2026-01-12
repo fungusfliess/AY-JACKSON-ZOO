@@ -1,3 +1,4 @@
+package Structure_Subsystem;
 public abstract class Animal {
 
     public static final int MAX_STAT = 100;
@@ -28,7 +29,21 @@ public abstract class Animal {
     private int totalDailyInteractions;
 
     
-    
+    public Animal(Animal parent) {
+        this.name = "";
+        this.specie = parent.getSpecie();
+        this.preferedInteraction = parent.getPreferedInteraction();
+        this.gender = "";
+        this.happiness = 50;
+        this.cleanliness = 50;
+        this.hunger = 50;
+        this.age = 0;
+        this.weight = 0.0;
+        numDailyInteractions = 0;
+        daysPassed = 0;
+        numPreferredInteractions = 0;
+
+    }
 
     public Animal(String name, String specie, String preferedInteraction, String gender, int happiness, int cleanliness, int hunger, int age, double weight) {
         this.name = name;
@@ -58,8 +73,11 @@ public abstract class Animal {
     public String getSpecie() {
         return specie;
     }
-    public String getGender() {
-        return gender;
+    public int getAge() {
+        return age;
+    }
+    public String getPreferedInteraction() {
+        return preferedInteraction;
     }
     public int getHappiness() {
         return happiness;
@@ -70,12 +88,21 @@ public abstract class Animal {
     public int getHunger() {
         return hunger;
     }
-    public int getAge() {
-        return age;
+    public String getGender() {
+        return gender;
     }
     public double getWeight() {
         return weight;
     }
+    public int getNumDailyInteractions() {
+        return numDailyInteractions;
+    }
+    public int getDaysPassed() {
+        return daysPassed;
+    }
+    public int getNumPreferredInteractions() {  
+        return numPreferredInteractions;
+    }   
 
     //SETTERS
 
@@ -99,6 +126,12 @@ public abstract class Animal {
     }
     public void setCleanliness(int cleanliness) {
         this.cleanliness = cleanliness;
+    }
+    public void setHunger(int hunger) {
+        this.hunger = hunger;
+    }
+    public void setGender(String gender) {
+        this.gender = gender;
     }
     public void setWeight(double weight) {
         this.weight = weight;
@@ -176,11 +209,6 @@ public abstract class Animal {
 
     // Description: abstract method that formats all information of the animal
     public abstract String toString();
-
-    // Description: abstract method that creates a new animal of the same type as its parent.
-                //  This method is different for animals that produce offspring as eggs.
-                //  Returns null if the animal does not have the requirements to reproduce.
-    public abstract Animal reproduce(Habitat habitat);
 
     // Description: abstract helper method that updates the age of the animal
     public abstract void updateAge();
