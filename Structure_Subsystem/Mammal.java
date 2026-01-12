@@ -1,3 +1,4 @@
+package Structure_Subsystem;
 public class Mammal extends Animal{
     
     // Description: constructor for mammals
