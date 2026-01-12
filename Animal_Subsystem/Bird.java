@@ -16,6 +16,7 @@ public class Bird extends Animal{
         setFlexibility(flexibility(parent.getSpecie()));
         setLivingCondition(livingCondition(parent.getSpecie()));
         setTotalDailyInteractions(totalDailyInteractions(parent.getSpecie()));
+        setAdultAge(adultAge(parent.getSpecie()));
         this.canFly = canFly(parent.getSpecie());
         this.flyingAge = flyingAge(parent.getSpecie());  
         this.hasNest = false;
@@ -32,6 +33,7 @@ public class Bird extends Animal{
         setFlexibility(flexibility(specie));
         setLivingCondition(livingCondition(specie));
         setTotalDailyInteractions(totalDailyInteractions(specie)); 
+        setAdultAge(adultAge(specie));
         this.canFly = canFly(specie);
         this.flyingAge = flyingAge(specie);  
         this.hasNest = false;
@@ -119,22 +121,22 @@ public class Bird extends Animal{
     // GETTERS
 
     public int getMaxHunger() {
-        return Fish.maxHunger(this.getSpecie());
+        return Bird.maxHunger(this.getSpecie());
     }
     public String[] getTypeFoods() {
-        return Fish.typeFoods(this.getSpecie());
+        return Bird.typeFoods(this.getSpecie());
     }
     public int getLifeExpectancy() {
-        return Fish.lifeExpectancy(this.getSpecie());
+        return Bird.lifeExpectancy(this.getSpecie());
     }
     public double getFlexibility() {
-        return Fish.flexibility(this.getSpecie());
+        return Bird.flexibility(this.getSpecie());
     } 
     public LivingCondition getLivingCondition() {
-        return Fish.livingCondition(this.getSpecie());
+        return Bird.livingCondition(this.getSpecie());
     }
     public int getTotalDailyInteractions() {
-        return Fish.totalDailyInteractions(this.getSpecie());
+        return Bird.totalDailyInteractions(this.getSpecie());
     }
     public boolean getCanFly() {
         return canFly;
@@ -195,7 +197,7 @@ public class Bird extends Animal{
     public Egg reproduce(Habitat habitat) {
         if (this.getGender().equalsIgnoreCase("Female") && 
             this.getHappiness() >= (LOW_STAT * MAX_STAT) && 
-            this.getAge() >= 2 &&  
+            this.getAge() >= this.getAdultAge() &&  
             this.getHunger() <= (LOW_STAT * this.getMaxHunger()) &&
             this.hasNest) {
 
@@ -207,16 +209,16 @@ public class Bird extends Animal{
 
     // Description: method that updates the age of the animal
     public void updateAge() {
-        if (getDaysPassed() % 365 == 0) {
-            int newAge = getAge() + 1;
-            setAge(newAge);
-            if (this.getSpecie().equalsIgnoreCase("Shark")) {
-                setWeight(getWeight() + 15);
-                setMaxHunger(getMaxHunger() + 5);
-            } else if (this.getSpecie().equalsIgnoreCase("Sunfish")) {
-                setWeight(getWeight() + 5);
-                setMaxHunger(getMaxHunger() + 2);
-            }
+        setAge(getAge() + 1);
+        if (this.getSpecie().equalsIgnoreCase("Eagle")) {
+            setWeight(getWeight() + 15);
+            setMaxHunger(getMaxHunger() + 5);
+        } else if (this.getSpecie().equalsIgnoreCase("Cockatoo")) {
+            setWeight(getWeight() + 5);
+            setMaxHunger(getMaxHunger() + 2);
+        }
+        if (this.getAge() >= this.getFlyingAge()) {
+            this.canFly = true;
         }
     }
 }

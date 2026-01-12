@@ -109,6 +109,13 @@ public abstract class Animal {
     public int getAdultAge() {
         return adultAge;
     }
+    // ABSTRACT GETTERS
+    public abstract int getMaxHunger();
+    public abstract String[] getTypeFoods();
+    public abstract int getLifeExpectancy();
+    public abstract double getFlexibility();
+    public abstract LivingCondition getLivingCondition();
+    public abstract int getTotalDailyInteractions();
 
     //SETTERS
 
@@ -171,47 +178,94 @@ public abstract class Animal {
     // NON-ABSTRACT METHODS
     // feeds the animal with given food, if possible
     public boolean eat(String food, int amount) {
-
+        if (this.getTypeFoods() != null) {
+            for (int i =0; i <this.typeFoods.length; i++) {
+                if (food.equalsIgnoreCase(this.typeFoods[i])) {
+                    this.hunger += amount;
+                    if (this.hunger > this.maxHunger) {
+                        this.hunger = this.maxHunger;
+                    }
+                    return true;
+                }
+            }
+        } 
+        return false;
     }
 
     // updates the animal's happiness based on cleanliness, hunger, and interactions.
     public void calculateHappiness() {
-
+        double average =0;
+        average += this.cleanliness/MAX_STAT;
+        average += this.hunger/this.maxHunger;
+        average += Math.min(this.numDailyInteractions, this.totalDailyInteractions)/Math.max(this.numDailyInteractions, this.totalDailyInteractions);
+        average += numPreferredInteractions;
+        this.happiness = (int) ((average/4) * MAX_STAT);
     }
 
     // interacts with the animal given the name of said interaction.
     public void interact(String interaction) {
-
+        if (numDailyInteractions < totalDailyInteractions) {
+            numDailyInteractions++;
+            if (interaction.equalsIgnoreCase(this.preferedInteraction)) {
+                numPreferredInteractions++;
+            }
+        }
     }
 
     // moves animal to a new habitat if possible
     public boolean relocate(Habitat newHabitat) {
-
+        return relocateAnimal(this, newHabitat);
     }
 
     // checks to see if the animal is suitable for the given habitat
     public boolean isSuitable(Habitat habitat) {
-
+        if (this.livingCondition.compareTo(habitat.getLivingCondition()) <= this.flexibility && habitat.hasSpace()) {
+            return true;
+        }
+        return false;
     }
 
     // Description: simulates a day passing for animals
     public void passDay() {
-
+        daysPassed++;
+        numDailyInteractions = 0;
+        numPreferredInteractions = 0;
+        hunger -= 10;
+        if (hunger < 0) {
+            hunger = 0;
+        }
+        cleanliness -= 5;
+        if (cleanliness < 0) {
+            cleanliness = 0;
+        }
+        // if a year has passed, update age
+        if (getDaysPassed() % 365 == 0) {
+            updateAge();
+        }
     }
 
     // Description: determines if the animals hunger is low
     public boolean lowHunger() {
-
+        if (this.hunger <= (LOW_STAT * this.maxHunger) / 100) {
+            return true;
+        }
+        return false;
     }
 
     // Description: determines if the animals cleanliness is low
     public boolean lowCleansiness() {
-
+        if (this.cleanliness <= LOW_STAT) {
+            return true;
+        }
+        return false;
     }
 
     // Description: determines if the animals happiness is low
     public boolean lowHappiness() {
-
+        if (this.happiness <= LOW_STAT) {
+            return true;
+        }
+        return false;
     }
 
     // ABSTRACT METHODS
@@ -221,5 +275,6 @@ public abstract class Animal {
 
     // Description: abstract helper method that updates the age of the animal
     public abstract void updateAge();
+    
 
 }
