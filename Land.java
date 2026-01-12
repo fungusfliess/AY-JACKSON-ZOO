@@ -93,18 +93,44 @@ public class Land {
 
             in.skip(1);
             // reading Structure info from the file.
+            String structureType;
+            
+            // I originally intended this to be a while loop but since the save file already has a numStrutures field, a for loop is more appropriate.
             for (int i = 0; i < this.currentNumStructures; i++) {
                 sumString = "";
+                structureType = in.readLine();
                 // if input is an empty line, stop reading. Check null to avoid errors. This will still read the empty line.
                 while ((input = in.readLine()) != null && !input.isEmpty()) {
                     sumString += input + "\n";
                 }
 
-                this.structureList[i] = Structure.loadFromString(sumString);
-            }
+                // based on the structureType, call the appropriate loadFromString method.
+                switch (structureType) {
+                    case "GiftShop":
+                        this.structureList[i] = GiftShop.loadFromString(sumString, this);
+                        break;
+                    case "Restaurant":
+                        this.structureList[i] = Restaurant.loadFromString(sumString, this);
+                        break;
+                    case "Pavillion":
+                        this.structureList[i] = Pavillion.loadFromString(sumString, this);
+                        break;
+                    case "Enclosure":
+                        this.structureList[i] = Enclosure.loadFromString(sumString, this);
+                        break;
+                    case "Maze":
+                        this.structureList[i] = Maze.loadFromString(sumString, this);
+                        break;
+                    case "Park":
+                        this.structureList[i] = Park.loadFromString(sumString, this);
+                        break;
+                    // add more cases as more instantiatable Structure types are created.
+                    default:
+                        System.out.println("Error: Unknown Structure type: " + structureType + "\nfound in file: " + filename + ". ");
+                        return false;
+                }
 
-            
-             
+            }
             in.close();
             return true;
         } catch (IOException iox) {
