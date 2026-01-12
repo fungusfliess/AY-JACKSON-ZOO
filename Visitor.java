@@ -94,7 +94,7 @@ public abstract class Visitor extends Person{
         if (amount > 0) {
             amountSpent += amount;
             balance -= amount;
-            if (balance < 0) balance = 0; // safety clamp
+            if (balance < 0) balance = 0;
         }
     }
 
