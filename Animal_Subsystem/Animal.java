@@ -1,4 +1,6 @@
 package Animal_Subsystem;
+import Structure_Subsystem.*;
+
 public abstract class Animal {
 
     public static final int MAX_STAT = 100;
@@ -15,6 +17,7 @@ public abstract class Animal {
     private int hunger;
     private String gender;
     private double weight;
+    private int adultAge;
 
     private int numDailyInteractions;
     private int daysPassed;
@@ -103,6 +106,9 @@ public abstract class Animal {
     public int getNumPreferredInteractions() {  
         return numPreferredInteractions;
     }   
+    public int getAdultAge() {
+        return adultAge;
+    }
 
     //SETTERS
 
@@ -136,6 +142,9 @@ public abstract class Animal {
     public void setWeight(double weight) {
         this.weight = weight;
     }  
+    public void setAdultAge(int adultAge) {
+        this.adultAge = adultAge;
+    }
 
     // SPECIE BASED FIELDS GETTERS AND SETTERS
     // SETTERS

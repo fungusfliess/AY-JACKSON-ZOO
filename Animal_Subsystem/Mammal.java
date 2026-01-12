@@ -1,16 +1,19 @@
 package Animal_Subsystem;
-public class Mammal extends Animal{
+import Structure_Subsystem.*;
+
+public class Mammal extends Animal {
     
     // Description: constructor for mammals
     public Mammal(Animal parent) {
         super(parent);
 
         setMaxHunger(maxHunger(parent.getSpecie()));
-        setTypeFoods(typeFoods(parent.getSpecie()));
+        setTypeFoods(new String[]{"Milk"});
         setLifeExpectancy(lifeExpectancy(parent.getSpecie()));
         setFlexibility(flexibility(parent.getSpecie()));
         setLivingCondition(livingCondition(parent.getSpecie()));
         setTotalDailyInteractions(totalDailyInteractions(parent.getSpecie()));  
+        setAdultAge(adultAge(parent.getSpecie()));
     }
     public Mammal(String name, String specie, String preferedInteraction, String gender,
                 int happiness, int cleanliness, int hunger, int age, double weight) {
@@ -23,6 +26,7 @@ public class Mammal extends Animal{
         setFlexibility(flexibility(specie));
         setLivingCondition(livingCondition(specie));
         setTotalDailyInteractions(totalDailyInteractions(specie)); 
+        setAdultAge(adultAge(specie));
     }
 
     // SETTING SPECIE BASED FIELDS
@@ -36,7 +40,7 @@ public class Mammal extends Animal{
     }
     public static String[] typeFoods(String specie) {
         if (specie.equalsIgnoreCase("Unicorn")) {
-            String[] foods = {"Grass", "Hay"};
+            String[] foods = {"Grass", "Hay", "Fruits"};
             return foods;
         } else if (specie.equalsIgnoreCase("Cabybara")) {
             String[] foods = {"Grass", "Vegetables"};
@@ -79,26 +83,37 @@ public class Mammal extends Animal{
         }
         return -1;
     }
+    public static int adultAge(String specie) {
+        if (specie.equalsIgnoreCase("Unicorn")) {
+            return 3;
+        } else if (specie.equalsIgnoreCase("Cabybara")) {
+            return 2;
+        }
+        return -1;
+    }
 
     // GETTERS
 
     public int getMaxHunger() {
-        return Fish.maxHunger(this.getSpecie());
+        return Mammal.maxHunger(this.getSpecie());
     }
     public String[] getTypeFoods() {
-        return Fish.typeFoods(this.getSpecie());
+        return Mammal.typeFoods(this.getSpecie());
     }
     public int getLifeExpectancy() {
-        return Fish.lifeExpectancy(this.getSpecie());
+        return Mammal.lifeExpectancy(this.getSpecie());
     }
     public double getFlexibility() {
-        return Fish.flexibility(this.getSpecie());
+        return Mammal.flexibility(this.getSpecie());
     } 
     public LivingCondition getLivingCondition() {
-        return Fish.livingCondition(this.getSpecie());
+        return Mammal.livingCondition(this.getSpecie());
     }
     public int getTotalDailyInteractions() {
-        return Fish.totalDailyInteractions(this.getSpecie());
+        return Mammal.totalDailyInteractions(this.getSpecie());
+    }
+    public int getAdultAge() {
+        return Mammal.adultAge(this.getSpecie());
     }
 
     // SETTERS
@@ -120,6 +135,9 @@ public class Mammal extends Animal{
     public void setTotalDailyInteractions(int totalDailyInteractions) {
         super.setTotalDailyInteractions(totalDailyInteractions);
     }
+    public void setAdultAge(int adultAge) {
+        super.setAdultAge(adultAge);
+    }
 
     // METHODS
 
@@ -136,19 +154,32 @@ public class Mammal extends Animal{
                 "Gender: " + getGender() + "\n" +
                 "Weight: " + getWeight() + "\n" +
                 "Type of Foods: " + getTypeFoods() + "\n" +
-                "Life Expectancy: " + getLifeExpectancy() + "\n";
+                "Life Expectancy: " + getLifeExpectancy() + "\n" +
+                "Adulthood Age: " + getAdultAge() + "\n";
 
     }
 
     // Description: creates a new animal of the same type as its parent.
     //  This method is different for animals that produce offspring as eggs.
     //  Returns null if the animal does not have the requirements to reproduce.
-    public Animal[] reproduce(Habitat habitat) {
+    public Animal[] reproduce(Habitat habitat, String name) {
         if (this.getGender().equalsIgnoreCase("Female") && 
             this.getHappiness() >= (LOW_STAT * MAX_STAT) && 
-            this.getAge() >= 2 &&  
+            this.getAge() >= this.getAdultAge() &&  
             this.getHunger() <= (LOW_STAT * this.getMaxHunger())) {
+                if (this.isSuitable(habitat)) {
+                Mammal babyMammal = new Mammal(this);
+                babyMammal.setName(name);
+                if (Math.random() < 0.5) {
+                    babyMammal.setGender("Male"); // 50% chance male
+                } else {
+                    babyMammal.setGender("Female"); // 50% chance female
+                }
+                habitat.addAnimal(babyMammal);
+                return new Animal[]{babyMammal} ;
+            }
 
+        }
     }
 
     // Description: method that updates the age of the animal
@@ -156,7 +187,7 @@ public class Mammal extends Animal{
         if (getDaysPassed() % 365 == 0) {
             int newAge = getAge() + 1;
             setAge(newAge);
-            if (this.getSpecie().equalsIgnoreCase("Unicorn")) {
+            if (this.getSpecie().equalsIgnoreCase("Unicorn") && this.getAge() > 1) {
                 setWeight(getWeight() + 15);
             } else if (this.getSpecie().equalsIgnoreCase("Cabybara")) {
                 setWeight(getWeight() + 5);
