@@ -1,5 +1,4 @@
-import Structure_Subsystem.*;
-
+package Structure_Subsystem;
 public class Fish extends Animal{
     private int amountEggs;
     
