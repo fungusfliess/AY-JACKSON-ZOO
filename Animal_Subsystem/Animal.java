@@ -214,7 +214,7 @@ public abstract class Animal {
 
     // moves animal to a new habitat if possible
     public boolean relocate(Habitat newHabitat) {
-        return relocateAnimal(this, newHabitat);
+        return relocateAnimal()
     }
 
     // checks to see if the animal is suitable for the given habitat
@@ -240,6 +240,7 @@ public abstract class Animal {
         }
         // if a year has passed, update age
         if (getDaysPassed() % 365 == 0) {
+            setAge(getAge() + 1);
             updateAge();
         }
     }

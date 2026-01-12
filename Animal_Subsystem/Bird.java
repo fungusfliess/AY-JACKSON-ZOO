@@ -42,9 +42,9 @@ public class Bird extends Animal{
     // SETTING SPECIE BASED FIELDS
     public static int maxHunger(String specie) {
         if (specie.equalsIgnoreCase("Eagle")) {
-            return 150;
-        } else if (specie.equalsIgnoreCase("Cockatoo")) {
             return 80;
+        } else if (specie.equalsIgnoreCase("Cockatoo")) {
+            return 50;
         }
         return -1;
     }

@@ -14,7 +14,7 @@ public class Fish extends Animal{
         setFlexibility(flexibility(parent.getSpecie()));
         setLivingCondition(livingCondition(parent.getSpecie()));
         setTotalDailyInteractions(totalDailyInteractions(parent.getSpecie()));  
-        setAdultAge(parent.getSpecie());
+        setAdultAge(adultAge(parent.getSpecie()));
         this.amountEggs = amountEggs(parent.getSpecie());
     }
     public Fish(String name, String specie, String preferedInteraction, String gender,
