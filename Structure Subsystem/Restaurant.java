@@ -1,13 +1,13 @@
-import java.io.*;
-public class GiftShop extends Shop{
-    public final static int LEARNING_PER_PURCHASE = 12;
-    public final static double MAINTENANCE_COST_PER_AREA = 10;
+public class Restaurant extends Shop{
+    public final static int LEARNING_PER_PURCHASE = 20;
+    public final static double MAINTENANCE_COST_PER_AREA = 12;
+    public final static String EATING_MESSAGE = "Meal Eaten: yummy!!";
 
-    public GiftShop(String name, char structureID, int area, int timeBetweenMaintenance, int daysSinceLastMaintenance, Land onProperty, String[] animalFacts, Item[] menu){
+    public Restaurant(String name, char structureID, int area, int timeBetweenMaintenance, int daysSinceLastMaintenance, Land onProperty, String[] animalFacts, Item[] menu){
       super(name, structureID, area, timeBetweenMaintenance, daysSinceLastMaintenance, onProperty, animalFacts, menu);
     }
 
-    public static GiftShop loadFromString(String fromFile) {
+    public static Restaurant loadFromString(String fromFile) {
         String[] fields = fromFile.split("\n");
         int index = 0;
 
@@ -36,7 +36,7 @@ public class GiftShop extends Shop{
         int timeBetweenMaintenance = Integer.parseInt(fields[index++]);
         int daysSinceLastMaintenance = Integer.parseInt(fields[index++]);
 
-        return new GiftShop(
+        return new Restaurant(
             name,
             structureID,
             area,
@@ -61,11 +61,11 @@ public class GiftShop extends Shop{
             deductMoney(buyer, product.getPrice());
             buyer.addItem(product);
             updateVisitorLearning(buyer);
+            System.out.println(EATING_MESSAGE + "\n");
             return true;
         } else {
            return false;
         }        
     }
 
-    
 }
