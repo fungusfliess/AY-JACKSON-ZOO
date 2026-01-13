@@ -3,11 +3,18 @@ public class GiftShop extends Shop{
     public final static int LEARNING_PER_PURCHASE = 12;
     public final static double MAINTENANCE_COST_PER_AREA = 10;
 
-    public GiftShop(String name, char structureID, int area, int timeBetweenMaintenance, int daysSinceLastMaintenance, Land onProperty, String[] animalFacts, Item[] menu){
+    public GiftShop(String name,
+    char structureID,
+    int area, 
+    int timeBetweenMaintenance, 
+    int daysSinceLastMaintenance, 
+    Land onProperty, 
+    String[] animalFacts, 
+    Item[] menu){
       super(name, structureID, area, timeBetweenMaintenance, daysSinceLastMaintenance, onProperty, animalFacts, menu);
     }
 
-    public static GiftShop loadFromString(String fromFile) {
+    public static GiftShop loadFromString(String fromFile, Land onProperty) {
         String[] fields = fromFile.split("\n");
         int index = 0;
 
@@ -42,8 +49,9 @@ public class GiftShop extends Shop{
             area,
             timeBetweenMaintenance,
             daysSinceLastMaintenance,
+            onProperty,
             menu,
-            facts
+            facts,
         );
     }
 
