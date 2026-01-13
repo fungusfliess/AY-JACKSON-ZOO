@@ -1,4 +1,6 @@
 import java.util.*;
+
+import Land_Subsystem.Land;
 public abstract class Shop extends Structure{
    public static Scanner sc = new Scanner(System.in);
    private Item[] menu;
@@ -64,13 +66,14 @@ public abstract class Shop extends Structure{
       for (int j = 0; j < animalLength; j++){
          saveToString += animalFacts.getAnimalFact(j) + "\n";
       }
-      // fix ts
+      
       saveToString += getName() 
       + "\n" + getStructureID() 
       + "\n" + getArea() 
       + "\n" + getTimeBetweenMaintenance() 
       + "\n" + getDaysSinceLastMaintenance() 
       + "\n";
+      return saveToString;
 
    }
 }

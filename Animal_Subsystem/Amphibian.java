@@ -1,22 +1,32 @@
 package Animal_Subsystem;
 import Structure_Subsystem.*;
 
-public class Mammal extends Animal {
-    
-    // Description: constructor for mammals
-    public Mammal(Animal parent) {
-        super(parent);
+public class Amphibian extends Animal{
+    private String currentStage;
+    private int stage2Age;
+    private int stage3Age;
+    private boolean canWalk;
+    private boolean canBreathUnderwater;
 
+    // Description: constructor for amphibian
+    public Amphibian (Animal parent) {
+        super(parent);
+        
         setMaxHunger(maxHunger(parent.getSpecie()));
-        setTypeFoods(new String[]{"Milk"});
+        setTypeFoods(typeFoods(parent.getSpecie()));
         setLifeExpectancy(lifeExpectancy(parent.getSpecie()));
         setFlexibility(flexibility(parent.getSpecie()));
         setLivingCondition(livingCondition(parent.getSpecie()));
-        setTotalDailyInteractions(totalDailyInteractions(parent.getSpecie()));  
+        setTotalDailyInteractions(totalDailyInteractions(parent.getSpecie()));
         setAdultAge(adultAge(parent.getSpecie()));
+        this.stage2Age = stage2Age(parent.getSpecie());
+        this.stage3Age = stage3Age(parent.getSpecie());
+        this.canWalk = false;
+        this.canBreathUnderwater = true;
+
     }
-    public Mammal(String name, String specie, String preferedInteraction, String gender,
-                int happiness, int cleanliness, int hunger, int age, double weight) {
+    public Amphibian(String name, String specie, String preferedInteraction, String gender,
+                int happiness, int cleanliness, int hunger, int age, double weight, String currentStage) {
 
         super(name, specie, preferedInteraction, gender, happiness, cleanliness, hunger, age, weight);
 
@@ -27,93 +37,104 @@ public class Mammal extends Animal {
         setLivingCondition(livingCondition(specie));
         setTotalDailyInteractions(totalDailyInteractions(specie)); 
         setAdultAge(adultAge(specie));
+        updateAge();
     }
 
     // SETTING SPECIE BASED FIELDS
     public static int maxHunger(String specie) {
-        if (specie.equalsIgnoreCase("Unicorn")) {
-            return 120;
-        } else if (specie.equalsIgnoreCase("Cabybara")) {
-            return 80;
+        if (specie.equalsIgnoreCase("Frog")) {
+            return 50;
+        } else if (specie.equalsIgnoreCase("Axolotl")) {
+            return 20;
         }
         return -1;
     }
     public static String[] typeFoods(String specie) {
-        if (specie.equalsIgnoreCase("Unicorn")) {
-            String[] foods = {"Grass", "Hay", "Fruits"};
+        if (specie.equalsIgnoreCase("Frog")) {
+            String[] foods = {"Flies", "Worms"};
             return foods;
-        } else if (specie.equalsIgnoreCase("Cabybara")) {
-            String[] foods = {"Grass", "Vegetables"};
+        } else if (specie.equalsIgnoreCase("Axolotl")) {
+            String[] foods = {"Insects", "Small Fish"};
             return foods;
         }
         return new String[0];
     }
 
     public static int lifeExpectancy(String specie) {
-        if (specie.equalsIgnoreCase("Unicorn")) {
-            return 30;
-        } else if (specie.equalsIgnoreCase("Cabybara")) {
-            return 10;
+        if (specie.equalsIgnoreCase("Frog")) {
+            return 5;
+        } else if (specie.equalsIgnoreCase("Axolotl")) {
+            return 15;
         }
         return -1;
     }
     public static double flexibility(String specie) {
-        if (specie.equalsIgnoreCase("Unicorn")) {
+        if (specie.equalsIgnoreCase("Frog")) {
             return 0.4;
-        } else if (specie.equalsIgnoreCase("Cabybara")) {
+        } else if (specie.equalsIgnoreCase("Axolotl")) {
             return 0.7;
         }
         return -1;
     }
     public static LivingCondition livingCondition(String specie) {
-        if (specie.equalsIgnoreCase("Unicorn")) {
-            LivingCondition unicornLivingCondition = new LivingCondition();
-            return unicornLivingCondition;
-        } else if (specie.equalsIgnoreCase("Cabybara")) {
-            LivingCondition cabybaraLivingCondition = new LivingCondition();
-            return cabybaraLivingCondition;
+        if (specie.equalsIgnoreCase("Frog")) {
+            LivingCondition frogLivingCondition = new LivingCondition();
+            return frogLivingCondition;
+        } else if (specie.equalsIgnoreCase("Axolotl")) {
+            LivingCondition axolotlLivingCondition = new LivingCondition();
+            return axolotlLivingCondition;
         }
         return null;
     }
     public static int totalDailyInteractions(String specie) {
-        if (specie.equalsIgnoreCase("Unicorn")) {
+        if (specie.equalsIgnoreCase("Frog")) {
             return 3;
-        } else if (specie.equalsIgnoreCase("Cabybara")) {
+        } else if (specie.equalsIgnoreCase("Axolotl")) {
             return 5;
         }
         return -1;
     }
-    public static int adultAge(String specie) {
-        if (specie.equalsIgnoreCase("Unicorn")) {
+    private static int adultAge(String specie) {
+        if (specie.equalsIgnoreCase("Frog`")) {
+            return 5;
+        } else if (specie.equalsIgnoreCase("Axolotl")) {
             return 3;
-        } else if (specie.equalsIgnoreCase("Cabybara")) {
-            return 2;
         }
         return -1;
+    }
+    private static int stage2Age(String specie) {
+        if (specie.equalsIgnoreCase("Frog")) return 2;
+        if (specie.equalsIgnoreCase("Axolotl")) return 1;
+        return 0;
+    }
+    private static int stage3Age(String specie) {
+        if (specie.equalsIgnoreCase("Frog")) return 4;
+        if (specie.equalsIgnoreCase("Axolotl")) return 2;
+        return 0;
     }
 
     // GETTERS
 
     public int getMaxHunger() {
-        return Mammal.maxHunger(this.getSpecie());
+        return Amphibian.maxHunger(this.getSpecie());
     }
     public String[] getTypeFoods() {
-        return Mammal.typeFoods(this.getSpecie());
+        return Amphibian.typeFoods(this.getSpecie());
     }
     public int getLifeExpectancy() {
-        return Mammal.lifeExpectancy(this.getSpecie());
+        return Amphibian.lifeExpectancy(this.getSpecie());
     }
     public double getFlexibility() {
-        return Mammal.flexibility(this.getSpecie());
+        return Amphibian.flexibility(this.getSpecie());
     } 
     public LivingCondition getLivingCondition() {
-        return Mammal.livingCondition(this.getSpecie());
+        return Amphibian.livingCondition(this.getSpecie());
     }
     public int getTotalDailyInteractions() {
-        return Mammal.totalDailyInteractions(this.getSpecie());
+        return Amphibian.totalDailyInteractions(this.getSpecie());
     }
     public int getAdultAge() {
-        return Mammal.adultAge(this.getSpecie());
+        return Amphibian.adultAge(this.getSpecie());
     }
 
     // SETTERS
@@ -135,9 +156,6 @@ public class Mammal extends Animal {
     public void setTotalDailyInteractions(int totalDailyInteractions) {
         super.setTotalDailyInteractions(totalDailyInteractions);
     }
-    public void setAdultAge(int adultAge) {
-        super.setAdultAge(adultAge);
-    }
 
     // METHODS
 
@@ -155,43 +173,48 @@ public class Mammal extends Animal {
                 "Weight: " + getWeight() + "\n" +
                 "Type of Foods: " + getTypeFoods() + "\n" +
                 "Life Expectancy: " + getLifeExpectancy() + "\n" +
-                "Adulthood Age: " + getAdultAge() + "\n";
-
+                "Current Stage: " + currentStage + "\n" +
+                "Can Walk: " + canWalk + "\n" +
+                "Can Breath Underwater: " + canBreathUnderwater + "\n";
     }
 
     // Description: creates a new animal of the same type as its parent.
     //  This method is different for animals that produce offspring as eggs.
     //  Returns null if the animal does not have the requirements to reproduce.
-    public Animal[] reproduce(Habitat habitat, String name) {
+    public Egg reproduce(Habitat habitat) {
         if (this.getGender().equalsIgnoreCase("Female") && 
             this.getHappiness() >= (LOW_STAT * MAX_STAT) && 
             this.getAge() >= this.getAdultAge() &&  
             this.getHunger() <= (LOW_STAT * this.getMaxHunger())) {
-                if (this.isSuitable(habitat)) {
-                Mammal babyMammal = new Mammal(this);
-                babyMammal.setName(name);
-                if (Math.random() < 0.5) {
-                    babyMammal.setGender("Male"); // 50% chance male
-                } else {
-                    babyMammal.setGender("Female"); // 50% chance female
-                }
-                habitat.addAnimal(babyMammal);
-                return new Animal[]{babyMammal} ;
-            }
 
+            Egg egg = new Egg(this);
+            return egg;
         }
+        return null;
     }
 
     // Description: method that updates the age of the animal
     public void updateAge() {
-        if (getDaysPassed() % 365 == 0) {
-            int newAge = getAge() + 1;
-            setAge(newAge);
-            if (this.getSpecie().equalsIgnoreCase("Unicorn") && this.getAge() > 1) {
-                setWeight(getWeight() + 15);
-            } else if (this.getSpecie().equalsIgnoreCase("Cabybara")) {
-                setWeight(getWeight() + 5);
-            }
+        if (this.getSpecie().equalsIgnoreCase("Eagle")) {
+            setWeight(getWeight() + 15);
+            setMaxHunger(getMaxHunger() + 5);
+        } else if (this.getSpecie().equalsIgnoreCase("Cockatoo")) {
+            setWeight(getWeight() + 5);
+            setMaxHunger(getMaxHunger() + 2);
         }
+        if (getAge() > this.stage3Age) {
+            this.currentStage = "Adult";
+            this.canWalk = true;
+            this.canBreathUnderwater = false;
+        } else if (getAge() > this.stage2Age) {
+            this.currentStage = "Juvenile";
+            this.canWalk = true;
+            this.canBreathUnderwater = true;
+        } else {
+            this.currentStage = "Larva";
+            this.canWalk = false;
+            this.canBreathUnderwater = true;
+        }
+        
     }
 }
