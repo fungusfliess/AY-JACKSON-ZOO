@@ -10,6 +10,14 @@ public class Land {
     private Structure[] structureList;
 
 
+    // CONSTRUCTOR
+    public Land(int maxNumStructures, Map landMap) {
+        this.maxNumStructures = maxNumStructures;
+        this.landMap = landMap;
+        this.currentNumStructures = 0;
+        this.structureList = new Structure[maxNumStructures];
+    }
+
     // ACCESSOR MUTATORS
     public int getCurrentNumStructures() {
         return currentNumStructures;
@@ -24,13 +32,6 @@ public class Land {
         this.maxNumStructures = maxNumStructures;
     }
 
-    // CONSTRUCTOR
-    public Land(int maxNumStructures, Map landMap) {
-        this.maxNumStructures = maxNumStructures;
-        this.landMap = landMap;
-        this.currentNumStructures = 0;
-        this.structureList = new Structure[maxNumStructures];
-    }
 
     /*
     @description: Saves land's map and list of structures to a file.
@@ -169,22 +170,143 @@ public class Land {
     }
 
     // SORT
-    /*
-    @description: 
-    */
 
+    /*
+    @description: Sorts array of Structures based on how urgently they need maintenance
+    @params: int numToSort is the number of Structures the user wnats sorted. 
+    */
     public void sortByDaysSinceLastMaintenance(int numToSort) {
+
+        // if input is negative, then sort the entire array.
+        if (numToSort < 0) {
+            numToSort = currentNumStructures;
+        }
+        Structure temp;
+        int highest;
         // selection sort
         for (int i = 0; i < numToSort && i < currentNumStructures; i++) {
 
             // find highest num of days without maintenance
-            Structure highest;
+            highest = 0;
             for (int j = 0; j < currentNumStructures; j++) {
-                if (structureList[j].get)
-
+                if (structureList[j].compareToSinceLastMaintenance(structureList[highest]) > 0) {
+                    highest = j;
+                }
             }
+
+            // swap
+            temp = structureList[i];
+            structureList[i] = structureList[highest];
+            structureList[highest] = temp;
 
         }
     }
 
+    /*
+    
+    ARIANNA IS DOING SORTBYANIMALS AND SORTBYSIZEANDANIMALS HERE
+
+    */
+
+    /*
+    @description: sorts the array of Structure based on each Structure's area, from smallest to largest. 
+    */
+    public void sortBySmallestToLargest () {
+        // bubble sort
+        Structure temp;
+        // early termination boolean
+        boolean swapped = false;
+        for (int i = 0; i < currentNumStructures-1 && swapped; i++) {
+            swapped = false;
+            for (int j = 0; j < currentNumStructures-i-1; j++) {
+                
+                // if this structure is larger than the one after it, swap
+                if (structureList[j].compareToSize(structureList[j+1]) > 0) {
+                    temp = structureList[j];
+                    structureList[j] = structureList[j+1];
+                    structureList[j+1] = temp;
+                    swapped = true;
+                }
+            }
+        }
+    }
+
+    /*
+    @description: Sorts by smallest to largest based on size (dominant attribute), and if size is equal then sort by time between maintenance, longer goes in front.
+    */
+    public void sortBySizeAndTimeBetweenMaintenance () {   
+        // bubble sort
+        Structure temp;
+        // early termination boolean
+        boolean swapped = false;
+        for (int i = 0; i < currentNumStructures-1 && swapped; i++) {
+            swapped = false;
+            for (int j = 0; j < currentNumStructures-i-1; j++) {
+                
+                // if this structure is larger than the one after it, swap
+                if ((structureList[j].compareToSize(structureList[j+1]) > 0) || ((structureList[j].compareToSize(structureList[j+1]) == 0) && (structureList[j].compareToSinceLastMaintenance(structureList[j+1]) < 0))) {
+                    temp = structureList[j];
+                    structureList[j] = structureList[j+1];
+                    structureList[j+1] = temp;
+                    swapped = true;
+                }
+            }
+        }
+    }
+
+    /*
+    @description: prints all Structure information in standard output.
+    */
+    public void printAllStructureInfo () {
+        for (int i = 0; i < currentNumStructures; i++) {
+            System.out.println(structureList[i].toString());
+        }
+    }
+
+    /*
+    @description: prints the ID of all Structures that require maintenance
+    */
+    public void printAllStructuresNeedingMaintenance () {
+        for (int i = 0; i < currentNumStructures; i++) {
+            if (structureList[i].needsMaintenance()) {
+                System.out.println(structureList[i].getStructureID());
+            }
+        }
+    }
+
+    /*
+    @description: maintains all Structures
+    */
+    public void maintainAll () {
+        for (int i = 0; i < currentNumStructures; i++) {
+            structureList[i].maintenance();
+        }
+    }
+
+    /*
+    @description: passes day for all Structures
+    */
+    public void passDay () {
+        for (int i = 0; i < currentNumStructures; i++) {
+            structureList[i].passDay();
+        }
+    }
+
+    // CREATING STRUCTURES
+
+    public boolean createGiftShop (Coord corner1, Coord corner2, String name, char structureID, int timeBetweenMaintenance, String[] animalFactStrings. Item[] menu) {
+        // if array is full
+        if (currentNumStructures == maxNumStructures) {
+            return false;
+        }
+        // if physical building cannot be built
+        if (!landMap.buildStructureRectangular(corner1, corner2, structureID)) {
+            return false;
+        }
+        // calculating area of the Structure.
+        int area = landMap.areaOf(corner1);
+        structureList[currentNumStructures] = new GiftShop(name, structureID, area, timeBetweenMaintenance, 0, this, animalFactStrings, menu);
+        return true;
+
+    }
 }

@@ -1,23 +1,14 @@
 public class MapTester {
     public static void main(String[] args) {
-        
-        Map testMap = new Map(5, 6);
-        Coord corner1 = new Coord(1, 1); 
-        Coord corner2 = new Coord(5, 3);
+        Map test = new Map (16, 16);
 
-        // Land testLand = new Land(10, testMap);
-        testMap.buildStructureBlob(corner1, 'A', 3); 
-
-        System.out.println("Initial Map:");
-        testMap.printMap();
-        //String saved = testMap.saveToString();
-
-        System.out.println(testMap.areaOf(corner1));
-
-        System.out.println("End Map:");
-        testMap.printMap();
-        // testLand.saveToFile("testMapSave.txt");
-
-        
+        System.out.println(test.buildStructureBlob(new Coord(8, 8), 'e', 4));
+        System.out.println(test.buildStructureBlob(new Coord(6, 6), 'o', 4));
+        test.printMap();   
+        test.replace(new Coord(6, 6), 'D');
+        test.printMap();  
+        test.erase(new Coord (8, 8));
+        test.printMap();  
+        test.erase(new Coord (6, 6));
     }
 }
