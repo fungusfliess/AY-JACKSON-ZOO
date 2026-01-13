@@ -10,6 +10,14 @@ public class Land {
     private Structure[] structureList;
 
 
+    // CONSTRUCTOR
+    public Land(int maxNumStructures, Map landMap) {
+        this.maxNumStructures = maxNumStructures;
+        this.landMap = landMap;
+        this.currentNumStructures = 0;
+        this.structureList = new Structure[maxNumStructures];
+    }
+
     // ACCESSOR MUTATORS
     public int getCurrentNumStructures() {
         return currentNumStructures;
@@ -22,14 +30,6 @@ public class Land {
     }
     public void setMaxNumStructures(int maxNumStructures) {
         this.maxNumStructures = maxNumStructures;
-    }
-
-    // CONSTRUCTOR
-    public Land(int maxNumStructures, Map landMap) {
-        this.maxNumStructures = maxNumStructures;
-        this.landMap = landMap;
-        this.currentNumStructures = 0;
-        this.structureList = new Structure[maxNumStructures];
     }
 
     /*
@@ -169,21 +169,81 @@ public class Land {
     }
 
     // SORT
-    /*
-    @description: 
-    */
 
+    /*
+    @description: Sorts array of Structures based on how urgently they need maintenance
+    @params: int numToSort is the number of Structures the user wnats sorted. 
+    */
     public void sortByDaysSinceLastMaintenance(int numToSort) {
+
+        // if input is negative, then sort the entire array.
+        if (numToSort < 0) {
+            numToSort = currentNumStructures;
+        }
+        Structure temp;
+        int highest;
         // selection sort
         for (int i = 0; i < numToSort && i < currentNumStructures; i++) {
 
             // find highest num of days without maintenance
-            Structure highest;
+            highest = 0;
             for (int j = 0; j < currentNumStructures; j++) {
-                if (structureList[j].get)
-
+                if (structureList[j].compareToSinceLastMaintenance(structureList[highest]) > 0) {
+                    highest = j;
+                }
             }
 
+            // swap
+            temp = structureList[i];
+            structureList[i] = structureList[highest];
+            structureList[highest] = temp;
+
+        }
+    }
+
+    /*
+    
+    ARIANNA IS DOING SORTBYANIMALS AND SORTBYSIZEANDANIMALS HERE
+
+    */
+
+    public void sortBySmallestToLargest () {
+        // bubble sort
+        Structure temp;
+        // early termination boolean
+        boolean swapped = false;
+        for (int i = 0; i < currentNumStructures-1 && swapped; i++) {
+            swapped = false;
+            for (int j = 0; j < currentNumStructures-i-1; j++) {
+                
+                // if this structure is larger than the one after it, swap
+                if (structureList[j].compareToSize(structureList[j+1]) > 0) {
+                    temp = structureList[j];
+                    structureList[j] = structureList[j+1];
+                    structureList[j+1] = temp;
+                    swapped = true;
+                }
+            }
+        }
+    }
+
+    public void sortBySizeAndTimeBetweenMaintenance () {   
+        // bubble sort
+        Structure temp;
+        // early termination boolean
+        boolean swapped = false;
+        for (int i = 0; i < currentNumStructures-1 && swapped; i++) {
+            swapped = false;
+            for (int j = 0; j < currentNumStructures-i-1; j++) {
+                
+                // if this structure is larger than the one after it, swap
+                if (structureList[j].compareToSize(structureList[j+1]) > 0) {
+                    temp = structureList[j];
+                    structureList[j] = structureList[j+1];
+                    structureList[j+1] = temp;
+                    swapped = true;
+                }
+            }
         }
     }
 

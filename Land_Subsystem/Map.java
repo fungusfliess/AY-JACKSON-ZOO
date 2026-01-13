@@ -9,6 +9,27 @@ public class Map {
     // CONSTANTS
     public static final char EMPTY = '.'; // represents empty space on grid
 
+    //CONSTRUCTOR
+    /*
+    @description: declares and initializes 2D char array (called map) of specified size.
+    @param: int length1 represents the length 
+    @param: int width1 represents the width
+    */ 
+
+    public Map (int length1, int width1) {
+        this.width = width1;
+        this.length = length1;
+        // init array      Each row is an array of size width,  and map is an array of rows. 
+        this.map = new char[this.length][this.width];
+        // filling with EMPTY character
+        for (int i = 0; i < this.length; i++) {
+            for (int j = 0; j < this.width; j++) {
+                this.map[i][j] = EMPTY;
+            }
+        }
+    }
+
+
     // ACCESSOR MUTATORS
     public int getLength() {
         return this.length;
@@ -32,24 +53,6 @@ public class Map {
         width = in[0].length;
     }
 
-    /*
-    @description: declares and initializes 2D char array (called map) of specified size.
-    @param: int length1 represents the length 
-    @param: int width1 represents the width
-    */ 
-
-    public Map (int length1, int width1) {
-        this.width = width1;
-        this.length = length1;
-        // init array      Each row is an array of size width,  and map is an array of rows. 
-        this.map = new char[this.length][this.width];
-        // filling with EMPTY character
-        for (int i = 0; i < this.length; i++) {
-            for (int j = 0; j < this.width; j++) {
-                this.map[i][j] = EMPTY;
-            }
-        }
-    }
 
     /*
     @description: returns information of this Map object as a String, ready to be written into a file.
