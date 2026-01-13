@@ -14,6 +14,7 @@ public class Fish extends Animal{
         setFlexibility(flexibility(parent.getSpecie()));
         setLivingCondition(livingCondition(parent.getSpecie()));
         setTotalDailyInteractions(totalDailyInteractions(parent.getSpecie()));  
+        setAdultAge(adultAge(parent.getSpecie()));
         this.amountEggs = amountEggs(parent.getSpecie());
     }
     public Fish(String name, String specie, String preferedInteraction, String gender,
@@ -90,6 +91,14 @@ public class Fish extends Animal{
         if (specie.equalsIgnoreCase("Sunfish")) return 10;
         return 0;
     }
+    private static int adultAge(String specie) {
+        if (specie.equalsIgnoreCase("Shark")) {
+            return 5;
+        } else if (specie.equalsIgnoreCase("Sunfish")) {
+            return 3;
+        }
+        return -1;
+    }
 
     // GETTERS
 
@@ -114,6 +123,9 @@ public class Fish extends Animal{
     public int getAmountEggs() {
         return amountEggs;
     }   
+    public int getAdultAge() {
+        return Fish.adultAge(this.getSpecie());
+    }
 
     // SETTERS
     public void setMaxHunger(int maxHunger) {
@@ -137,6 +149,9 @@ public class Fish extends Animal{
     public void setAmountEggs(int amountEggs) {
         this.amountEggs = amountEggs;
     }
+    public void setAdultAge(int adultAge) {
+        super.setAdultAge(adultAge);
+    }
 
     // METHODS
 
@@ -154,6 +169,7 @@ public class Fish extends Animal{
                 "Weight: " + getWeight() + "\n" +
                 "Type of Foods: " + getTypeFoods() + "\n" +
                 "Life Expectancy: " + getLifeExpectancy() + "\n" +
+                "Adulthood Age: " + getAdultAge() + "\n" +
                 "Amount of Eggs: " + getAmountEggs() + "\n";
 
     }
@@ -164,7 +180,7 @@ public class Fish extends Animal{
     public Egg[] reproduce(Habitat habitat) {
         if (this.getGender().equalsIgnoreCase("Female") && 
             this.getHappiness() >= (LOW_STAT * MAX_STAT) && 
-            this.getAge() >= 2 &&  
+            this.getAge() >= this.getAdultAge() &&  
             this.getHunger() <= (LOW_STAT * this.getMaxHunger())) {
 
             Egg[] eggs = new Egg[amountEggs]; 

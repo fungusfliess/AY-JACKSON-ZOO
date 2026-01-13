@@ -3,11 +3,18 @@ public class Restaurant extends Shop{
     public final static double MAINTENANCE_COST_PER_AREA = 12;
     public final static String EATING_MESSAGE = "Meal Eaten: yummy!!";
 
-    public Restaurant(String name, char structureID, int area, int timeBetweenMaintenance, int daysSinceLastMaintenance, Land onProperty, String[] animalFacts, Item[] menu){
+    public Restaurant(String name, 
+    char structureID, 
+    int area, 
+    int timeBetweenMaintenance, 
+    int daysSinceLastMaintenance, 
+    Land onProperty, 
+    String[] animalFacts, 
+    Item[] menu){
       super(name, structureID, area, timeBetweenMaintenance, daysSinceLastMaintenance, onProperty, animalFacts, menu);
     }
 
-    public static Restaurant loadFromString(String fromFile) {
+    public static Restaurant loadFromString(String fromFile, Land onProperty){
         String[] fields = fromFile.split("\n");
         int index = 0;
 
@@ -42,6 +49,7 @@ public class Restaurant extends Shop{
             area,
             timeBetweenMaintenance,
             daysSinceLastMaintenance,
+            onProperty,
             menu,
             facts
         );

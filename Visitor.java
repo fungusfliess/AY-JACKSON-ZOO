@@ -6,7 +6,10 @@
    Description: 
 */
 
-public abstract class Visitor extends Person{
+import Structure_Subsystem.Item;
+import Structure_Subsystem.Structure;
+
+public abstract class Visitor extends Person {
 
     public static final int MAX_ITEMS = 20;
     public static final int MAX_LEARNING_HISTORY_SIZE = 20;
@@ -33,17 +36,9 @@ public abstract class Visitor extends Person{
 
     private double amountSpent;
 
-    public Visitor(int age, String personID, String firstName, String lastName, double balance, int learningLevel, int visitDuration)
-
-    public double getBalance(){return balance;}
-    public int getLearningLevel(){return learningLevel;}
-    public int getAttractionsVisited(){return attractionsVisited;}
-    public int getNumItems(){return numItems;}
-
-
     public Visitor(int age, String personID, String firstName, String lastNamedouble balance, int learningLevel, int visitDuration) {
         super(age, personID, firstName, lastName);
-
+        
         this.balance = Math.max(0.0, balance);
         this.learningLevel = Math.max(0, learningLevel);
         this.visitDuration = Math.max(0, visitDuration);
@@ -58,6 +53,11 @@ public abstract class Visitor extends Person{
         this.itemInventory = new Item[MAX_ITEMS];
     }
 
+    public double getBalance(){return balance;}
+    public int getLearningLevel(){return learningLevel;}
+    public int getAttractionsVisited(){return attractionsVisited;}
+    public int getNumItems(){return numItems;}
+
     public void addLeavingLevel(int add) {
         if (add>0) {
             learningLevel+=add;
@@ -67,9 +67,7 @@ public abstract class Visitor extends Person{
     public void addLearningFact(String fact) {
         if (fact == null) return;
 
-        fact = fact.trim();
         if (fact.isEmpty()) return;
-
         ensureLearningHistoryCapacity(learningHistorySize + 1);
         learningHistory[learningHistorySize] = fact;
         learningHistorySize++;
@@ -80,7 +78,9 @@ public abstract class Visitor extends Person{
 
     public boolean buyTicket() {
         double cost = calculateTicketCost();
-        if (cost < 0) cost = 0;
+        if (cost < 0) {
+            cost = 0;
+        }
 
         if (balance >= cost) {
             recordPurchase(cost); // subtracts from balance + adds to amountSpent
@@ -99,18 +99,36 @@ public abstract class Visitor extends Person{
     }
 
     public boolean canAffordItem(Item item) {
-        if (item == null) return false;
+        if (item == null){return false;}
         return item.getPrice() <= balance;
     }
 
     public boolean addItem(Item item) {
-        if (item == null) return false;
+        if (item == null){return false;{}
 
         ensureItemInventoryCapacity(numItems + 1);
         itemInventory[numItems] = item;
         numItems++;
         return true;
     }
+
+    public void passDay(){
+        this.deactivate();
+    }
+
+    public boolean visit(String structureID){
+        if (structureID == null || structureID.isEmpty()){return false;}   //ADD OR DEMOLISHED to reutnr false condition 
+        //CALL specifif mehods for visit, called by user  
+        Structure s = Zoo.getStructureByID(structureID);
+
+        if (structure == null) return false;
+        if (structure.isDemolished()) return false;
+
+        structure.updateVisitorLearning(this);
+        attractionsVisited++;
+        return true;
+    }
+}
 
 
 }

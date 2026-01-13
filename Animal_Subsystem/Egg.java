@@ -1,4 +1,6 @@
 package Animal_Subsystem;
+import Structure_Subsystem.*;
+
 public class Egg {
     private int hatchTime;
     private Animal parent;
