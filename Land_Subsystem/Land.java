@@ -1,5 +1,8 @@
-import java.io.*;
+package Land_Subsystem;
 import Structure_Subsystem.*;
+import java.io.*;
+
+import Animal_Subsystem.LivingCondition;
 
 public class Land {
     
@@ -141,9 +144,6 @@ public class Land {
         return false;
     }
 
-
-
-
     // MANAGE STRUCTURE ARRAY
     // SEARCH
     /*
@@ -259,7 +259,7 @@ public class Land {
     */
     public void printAllStructureInfo () {
         for (int i = 0; i < currentNumStructures; i++) {
-            System.out.println(structureList[i].toString());
+            System.out.println(String.format("Name: %s%nID: %c%nArea: %d%n", structureList[i].getName(), structureList[i].getStructureID(), structureList[i].getArea()));
         }
     }
 
@@ -294,7 +294,12 @@ public class Land {
 
     // CREATING STRUCTURES
 
-    public boolean createGiftShop (Coord corner1, Coord corner2, String name, char structureID, int timeBetweenMaintenance, String[] animalFactStrings. Item[] menu) {
+    /*
+    @description: creates a gift shop for the zoo. Creates and stores an instance of the class, as well as the structure on the map. 
+    @params: corner1, corner2 are to tell where to build the rectangular structure. name, char, timeBetweenMaintenance, animalFactStrings, menu, are inputs for the GiftShop constructor.
+    @returns: boolean representing success. Will be unsuccessful if the Structure array is full, or the rectangular build area has obstacles.
+    */
+    public boolean createGiftShop (Coord corner1, Coord corner2, String name, char structureID, int timeBetweenMaintenance, String[] animalFactStrings, Item[] menu) {
         // if array is full
         if (currentNumStructures == maxNumStructures) {
             return false;
@@ -306,7 +311,88 @@ public class Land {
         // calculating area of the Structure.
         int area = landMap.areaOf(corner1);
         structureList[currentNumStructures] = new GiftShop(name, structureID, area, timeBetweenMaintenance, 0, this, animalFactStrings, menu);
+        currentNumStructures++;
         return true;
+    }
 
+    /*
+    @description: creates a Restaurant for the zoo. Creates and stores an instance of the class, as well as the structure on the map. 
+    @params: corner1, corner2 are to tell where to build the rectangular structure. name, char, timeBetweenMaintenance, animalFactStrings, menu, are inputs for the Restaurant constructor.
+    @returns: boolean representing success. Will be unsuccessful if the Structure array is full, or the rectangular build area has obstacles.
+    */    
+    public boolean createRestaurant (Coord corner1, Coord corner2, String name, char structureID, int timeBetweenMaintenance, String[] animalFactStrings, Item[] menu) {
+        // if array is full
+        if (currentNumStructures == maxNumStructures) {
+            return false;
+        }
+        // if physical building cannot be built
+        if (!landMap.buildStructureRectangular(corner1, corner2, structureID)) {
+            return false;
+        }
+        // calculating area of the Structure.
+        int area = landMap.areaOf(corner1);
+        structureList[currentNumStructures] = new Restaurant(name, structureID, area, timeBetweenMaintenance, 0, this, animalFactStrings, menu);
+        currentNumStructures++;
+        return true;
+    }
+    
+    /*
+    @description: creates an Enclosure for the zoo. Creates and stores an instance of the class, as well as the structure on the map.
+    @params: corner1 is to tell where to build the circular structure. maxRadiusOfBuild is the maximum radius of the circular structure. name, char, timeBetweenMaintenance, animalFactStrings, menu, are inputs for the Enclosure constructor.
+    @returns: boolean representing success. Will be unsuccessful if the Structure array is full, or the circular build area has obstacles.
+    */
+    public boolean createEnclosure (Coord corner1, int maxRadiusOfBuild, String name, char structureID, int timeBetweenMaintenance, String[] animalFactStrings, Item[] menu) {
+        // if array is full
+        if (currentNumStructures == maxNumStructures) {
+            return false;
+        }
+        // if physical building cannot be built
+        if (!landMap.buildStructureBlob(corner1, structureID, maxRadiusOfBuild)) {
+            return false;
+        }
+        // calculating area of the Structure.
+        int area = landMap.areaOf(corner1);
+        structureList[currentNumStructures] = new Enclosure(name, structureID, area, timeBetweenMaintenance, 0, this, animalFactStrings, menu);
+        currentNumStructures++;
+        return true;
+    }
+
+    public boolean createPavillion (Coord corner1, int maxRadiusOfBuild, String name, char structureID, int capacity, LivingCondition condition) {
+        // if array is full
+        if (currentNumStructures == maxNumStructures) {
+            return false;
+        }
+        // if physical building cannot be built
+        if (!landMap.buildStructureBlob(corner1, structureID, maxRadiusOfBuild)) {
+            return false;
+        }
+        // calculating area of the Structure.
+        int area = landMap.areaOf(corner1);
+        structureList[currentNumStructures] = new Pavillion(name, structureID, area, capacity, this, condition);
+        currentNumStructures++;
+        return true;
+    }
+
+    /*
+    @description: removes a Structure from the structureList array and demolishes it from the map.
+    @params: int tgtIdx is the index of the Structure to be removed.
+    @returns: boolean representing success. Will be unsuccessful if the Structure's demolish method returns false.
+    */
+    public boolean removeStructureFromList (int tgtIdx) {
+        if (!structureList[tgtIdx].demolish()) {
+            return false;
+        } 
+        // shift all Structures after it down to fill in the gap. 
+        for (int i = tgtIdx; i < currentNumStructures-1; i++) {
+            structureList[i] = structureList[i+1];
+        }
+        
+        structureList[currentNumStructures-1] = null;
+
+        // update currentNumStructures
+        currentNumStructures --;
+        // remove from map by finding any coordinate with structureID and recursively erasing it from there. 
+        landMap.erase(landMap.find(structureList[tgtIdx].getStructureID()));
+        return true;
     }
 }
