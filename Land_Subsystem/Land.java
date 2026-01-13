@@ -32,6 +32,7 @@ public class Land {
         this.maxNumStructures = maxNumStructures;
     }
 
+
     /*
     @description: Saves land's map and list of structures to a file.
     @params: String filename represents the name of the file to save to.
@@ -207,6 +208,9 @@ public class Land {
 
     */
 
+    /*
+    @description: sorts the array of Structure based on each Structure's area, from smallest to largest. 
+    */
     public void sortBySmallestToLargest () {
         // bubble sort
         Structure temp;
@@ -227,6 +231,9 @@ public class Land {
         }
     }
 
+    /*
+    @description: Sorts by smallest to largest based on size (dominant attribute), and if size is equal then sort by time between maintenance, longer goes in front.
+    */
     public void sortBySizeAndTimeBetweenMaintenance () {   
         // bubble sort
         Structure temp;
@@ -237,7 +244,7 @@ public class Land {
             for (int j = 0; j < currentNumStructures-i-1; j++) {
                 
                 // if this structure is larger than the one after it, swap
-                if (structureList[j].compareToSize(structureList[j+1]) > 0) {
+                if ((structureList[j].compareToSize(structureList[j+1]) > 0) || ((structureList[j].compareToSize(structureList[j+1]) == 0) && (structureList[j].compareToSinceLastMaintenance(structureList[j+1]) < 0))) {
                     temp = structureList[j];
                     structureList[j] = structureList[j+1];
                     structureList[j+1] = temp;
@@ -247,4 +254,59 @@ public class Land {
         }
     }
 
+    /*
+    @description: prints all Structure information in standard output.
+    */
+    public void printAllStructureInfo () {
+        for (int i = 0; i < currentNumStructures; i++) {
+            System.out.println(structureList[i].toString());
+        }
+    }
+
+    /*
+    @description: prints the ID of all Structures that require maintenance
+    */
+    public void printAllStructuresNeedingMaintenance () {
+        for (int i = 0; i < currentNumStructures; i++) {
+            if (structureList[i].needsMaintenance()) {
+                System.out.println(structureList[i].getStructureID());
+            }
+        }
+    }
+
+    /*
+    @description: maintains all Structures
+    */
+    public void maintainAll () {
+        for (int i = 0; i < currentNumStructures; i++) {
+            structureList[i].maintenance();
+        }
+    }
+
+    /*
+    @description: passes day for all Structures
+    */
+    public void passDay () {
+        for (int i = 0; i < currentNumStructures; i++) {
+            structureList[i].passDay();
+        }
+    }
+
+    // CREATING STRUCTURES
+
+    public boolean createGiftShop (Coord corner1, Coord corner2, String name, char structureID, int timeBetweenMaintenance, String[] animalFactStrings. Item[] menu) {
+        // if array is full
+        if (currentNumStructures == maxNumStructures) {
+            return false;
+        }
+        // if physical building cannot be built
+        if (!landMap.buildStructureRectangular(corner1, corner2, structureID)) {
+            return false;
+        }
+        // calculating area of the Structure.
+        int area = landMap.areaOf(corner1);
+        structureList[currentNumStructures] = new GiftShop(name, structureID, area, timeBetweenMaintenance, 0, this, animalFactStrings, menu);
+        return true;
+
+    }
 }

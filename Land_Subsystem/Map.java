@@ -4,7 +4,7 @@ public class Map {
     private int length;
     private int width;
     private char[][] map;
-    private final char TEMPORARY_COUNTER = 'Σ'; // temporary character to mark counted spots for areaOf
+    public static final char TEMPORARY_COUNTER = 'Σ'; // temporary character to mark counted spots for areaOf
 
     // CONSTANTS
     public static final char EMPTY = '.'; // represents empty space on grid
@@ -53,6 +53,15 @@ public class Map {
         width = in[0].length;
     }
 
+    /*
+    @description: determines whether a character can be used in this array or not. (certain characters are reserved for things like the counting algorithm.)
+    */
+    private boolean charIsAllowed (char c) {
+        if (c != Map.EMPTY && c != Map.TEMPORARY_COUNTER) {
+            return true;
+        }
+        return false;
+    }
 
     /*
     @description: returns information of this Map object as a String, ready to be written into a file.
@@ -120,7 +129,11 @@ public class Map {
     @return: boolean indicating success
     */ 
     public boolean buildStructureRectangular (Coord corner1, Coord corner2, char id) {
-        
+        // if character is invalid
+        if (!charIsAllowed(id)) { // illegal character
+            return false;
+        }
+
         // if either corner is out of bounds
         if (!corner1.isInGrid(this.length, this.width) || !corner2.isInGrid(this.length, this.width)) {
             return false;
@@ -195,8 +208,12 @@ public class Map {
     }
 
     // wrapper method
-    public void buildStructureBlob (Coord seed, char id, int max) {
+    public boolean buildStructureBlob (Coord seed, char id, int max) {
+        if (!charIsAllowed(id)) { // illegal character
+            return false;
+        }
         buildStructureBlob(seed, id, max, 0);
+        return true;
     }
 
     /*
@@ -260,6 +277,8 @@ public class Map {
    */
    public boolean replace (Coord tgt, char replaceID) {
         if (map[tgt.getY()][tgt.getX()] == EMPTY) {
+            return false;
+        } else if (!charIsAllowed(replaceID)) { // illegal character
             return false;
         } else {
             replace (tgt, map[tgt.getY()][tgt.getX()], replaceID);
