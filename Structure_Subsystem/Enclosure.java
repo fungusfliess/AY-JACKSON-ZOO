@@ -1,5 +1,6 @@
 import Animal_Subsystem.Animal;
 import Animal_Subsystem.LivingCondition;
+import Animal_Subsystem.WaterCondition;
 
 public class Enclosure extends Habitat{
     public static int LEARNING_PER_DISPLAY = 30;
@@ -34,9 +35,18 @@ public class Enclosure extends Habitat{
         LivingCondition climate;
         if(climateType.equals("LAND")){
             double soilCompaction = Double.parseDouble(fields[index++]);
-            double //fixlater
+            double landSlope = Double.parseDouble(fields[index++]);
+            boolean hasWaterSource = Boolean.parseBoolean(fields[index++]);
+            double vegetationDensity = Double.parseDouble(fields[index++]);
+            int amountStructures = Integer.parseInt(fields[index++]);
+            climate = new LandCondition(temp, humidity, region, soilCompaction, landSlope, hasWaterSource, vegetationDensity, amountStructures);
         }else{
-            w
+            double waterAcidity = Double.parseDouble(fields[index++]);
+            double waterHardness = Double.parseDouble(fields[index++]);
+            double waterTemp = Double.parseDouble(fields[index++]);
+            boolean hasLand = Boolean.parseBoolean(fields[index++]);
+            double waterSalinity = Double.parseDouble(fields[index++]);
+            climate = new WaterCondition(waterTemp, humidity, region, waterAcidity, waterHardness, temp, hasLand, waterSalinity);
 
         }
 
@@ -47,7 +57,7 @@ public class Enclosure extends Habitat{
         int daysSinceLastMaintenance = Integer.parseInt(fields[index++]);
         int maxAnimals = Integer.parseInt(fields[index++]);
         // fix the climate crisis later
-        return new Enclosure(species, name, structureID, area, timeBetweenMaintenance, daysSinceLastMaintenance, onProperty, maxAnimals);
+        return new Enclosure(species, name, structureID, area, timeBetweenMaintenance, daysSinceLastMaintenance, onProperty, maxAnimals, climate);
     }
     
     public double calculateMaintenanceCost(){
