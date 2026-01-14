@@ -71,8 +71,7 @@ public abstract class Person {
    }
    
    /*
-    @return the role string for this Person 
+    @return the role string for this Person object
     */ 
    public abstract String getRole();
-
 }
