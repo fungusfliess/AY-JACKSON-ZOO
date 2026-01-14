@@ -68,6 +68,7 @@ public abstract class ZooKeeper extends Employee {
         certificationLevel = min(c, MAX_CERTIFICATION_LEVEL);
     }
 
+    //OTHER METHODS 
     /*
      @return the role string for this Person object
      */
@@ -126,7 +127,7 @@ public abstract class ZooKeeper extends Employee {
                 "Tasks Completed: " + dailyTasksCompleted + "\n" + 
                 "Earnings: " + earnings + "\n"; 
     }
-    
+
     /*
      @description: ends the day for ZooKeeper by calculating earnings, resetting hours worked (in Employee),
                    and resetting ZooKeeper daily counters

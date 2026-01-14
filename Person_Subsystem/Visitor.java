@@ -110,7 +110,7 @@ public abstract class Visitor extends Person {
         learningHistorySize++;
     }
 
-    //OTHER
+    //OTHER METHODS 
     /*
     @description: calculates and returns the admission ticket cost for this visitor
                  (subclasses override this with their own pricing rules)

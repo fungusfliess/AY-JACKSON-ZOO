@@ -93,6 +93,7 @@ public abstract class Employee extends Person {
       }
    }
    
+   //OTHER METHODS 
    /*
     @description: adds worked hours to the employee's daily hoursWorked total
     @param hours number of hours to add (must be > 0)

@@ -70,6 +70,7 @@ public abstract class Person {
       isActive = false; 
    }
    
+   //OTHER METHODS 
    /*
     @return the role string for this Person object (ex: "ZOOKEEPER", "SHOPSTAFF", "ADULT", "CHILD", "SENIOR")
     */ 

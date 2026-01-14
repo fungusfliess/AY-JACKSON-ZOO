@@ -59,6 +59,7 @@ public class ShopStaff {
         earnings = hourlyWage*hoursWorked*(1+ factsShared*FACTS_BONUS_PERCENTAGE);
     }
 
+    //OTHER METHODS 
     /*
      @return the role string for this Person object
     */

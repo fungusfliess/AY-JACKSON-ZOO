@@ -40,7 +40,7 @@ public class Adult extends Visitor{
       this.preferredBudgetLimit = limit;
    }
 
-   //OTHER 
+   //OTHER METHODS 
    /*
     @description: checks if the visitor stayed within their preferred budget limit
     @return true if amount spent is less than the preferred budget limit, false otherwise
@@ -80,7 +80,7 @@ public class Adult extends Visitor{
    public double calculateTicketCost(){
       return ADULT_BASE_PRICE;
    }
-   
+
    /*
     @description: returns a formatted string summary of this Adult visitor
     @return formatted visitor information
@@ -96,6 +96,6 @@ public class Adult extends Visitor{
               "Attractions Visited: " + attractionsVisited + "\n" +
               "Num Facts Learned: " + learningHistorySize + "\n" +
               "Preferred Budget Limit: " + preferredBudgetLimit + "\n"; 
-  }
+   }
 
 }
