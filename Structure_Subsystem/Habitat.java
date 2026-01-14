@@ -9,7 +9,6 @@ public class Habitat extends Structure{
     private LivingCondition climate;
     private Animal[] animals;
 
-    //needs to be fixed after onProperty
     public Habitat(String name, 
     char structureID, 
     int area, 
@@ -40,9 +39,20 @@ public class Habitat extends Structure{
         }return false;
     }
 
-    public boolean suitableHabitat(Animal animal){
-        
+    public boolean modifySpaceLeft(double amount){
+        if (spaceLeft - amount > 0){
+            spaceLeft += amount;
+            return true;
+        }return false;
     }
 
+    public void displayHabitatAnimalInfo(){
+        System.out.println("Habitat " + getName() + ":\n" + climate);
+        for(int i = 0; i < numAnimals; i++){
+            System.out.println(animals[i]); 
+        }
+    }
+
+    public abstract String saveToString();
 
 }
