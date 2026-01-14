@@ -1,10 +1,12 @@
 /*
    File Name: Adult.java
    Name: Elizabeth Wang
-   Class: ICS4U1-23
+   Class: ICS4U1-11
    Date: Jan 7, 2025
    Description: 
 */
+
+import Person_Subsystem.Visitor;
 
 public class Adult extends Visitor{
    private double preferredBudgetLimit; 

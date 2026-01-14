@@ -1,4 +1,6 @@
 import java.io.*;
+
+import Person_Subsystem.Visitor;
 public class GiftShop extends Shop{
     public final static int LEARNING_PER_PURCHASE = 12;
     public final static double MAINTENANCE_COST_PER_AREA = 10;

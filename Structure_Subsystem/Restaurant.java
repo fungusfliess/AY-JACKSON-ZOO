@@ -1,3 +1,5 @@
+import Person_Subsystem.Visitor;
+
 public class Restaurant extends Shop{
     public final static int LEARNING_PER_PURCHASE = 20;
     public final static double MAINTENANCE_COST_PER_AREA = 12;
