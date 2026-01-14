@@ -7,10 +7,7 @@ public abstract class Attraction extends Structure {
         super (name, structureID, area, timeBetweenMaintenance, daysSinceLastMaintenance, onProperty);
 
     }
-    // ABSTRACT METHODS
-    public abstract double calculateMaintenanceCost ();
-
-    public abstract void updateVisitorLearning (Visitor guest);
+    // NO ADDITONAL ABSTRACT METHODS ON TOP OF THE ONES IN STRUCTURE
 
     // demolish is the same for all Attractions, so it can be implemented in the parent class
 

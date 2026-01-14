@@ -5,7 +5,7 @@ public class Maze extends Attraction {
     
     // CONSTANTS
     public static final int LEARNING_PER_VISIT = 15;
-    public static final double MAINTNENACE_RATE_PER_UNIT = 12.0d;
+    public static final double MAINTENANCE_RATE_PER_UNIT = 12.0d;
     public static final char WALL = 'N';
     public static final char EMPTY_SPACE = '.';
     public static final char WIN = 'X';
@@ -83,15 +83,15 @@ public class Maze extends Attraction {
 
     // OVERRIDDEN ABSTRACT METHODS
     /*
-    @description: Calculates maintenance cost based on area
-    @returns: cost
+    @description: Calculates maintenance cost of the maze based on area
+    @returns: double representing cost
     */
     public double calculateMaintenanceCost() {
-        return MAINTNENACE_RATE_PER_UNIT * this.getArea();
+        return MAINTENANCE_RATE_PER_UNIT * this.getArea();
     }
 
-    public void updateVisitorLearning(Visitor guest) {
-        // waiting on arianna to tell me how
+    public void updateVisitorLearning(Visitor toUpdate) {
+        // COME_BACK_HERE waiting on how
     }
 
     // MAZE METHODS
@@ -259,7 +259,7 @@ public class Maze extends Attraction {
         String rows;
         for (int i = 0; i < this.length; i++) {
             rows = "";
-            for (int j = 0; k < this.width; j++) {
+            for (int j = 0; j < this.width; j++) {
                 rows += maze[i][j];
                 rows += " ";
             }
@@ -277,9 +277,8 @@ public class Maze extends Attraction {
         sum += "\n";
         sum += this.getDaysSinceLastMaintenance();
         sum += "\n";
-        // add extra empty line or no?? find out later when we integrate all subsystems together.
+        // COME_BACK_HERE add extra empty line or no?? find out later when we integrate all subsystems together.
 
         return sum;
-
    }
 }

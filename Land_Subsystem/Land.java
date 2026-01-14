@@ -55,6 +55,7 @@ public class Land {
             // writing Structure info into the file.
             for (int i = 0; i < this.currentNumStructures; i++) {
                 out.write(this.structureList[i].saveToString());
+                // COME_BACK_HERE
                 // any minor adjustments to formatting can be done here. (wait until Structure class is done)
             }
              
@@ -104,7 +105,7 @@ public class Land {
             // reading Structure info from the file.
             String structureType;
             
-            // I originally intended this to be a while loop until null but since the save file already has a numStructures field, a for loop is more appropriate.
+            // for loop through array of Structures.
             for (int i = 0; i < this.currentNumStructures; i++) {
                 sumString = "";
                 input = in.readLine();
@@ -210,7 +211,7 @@ public class Land {
     }
 
     /*
-    
+    COME_BACK_HERE
     ARIANNA IS DOING SORTBYANIMALS AND SORTBYSIZEANDANIMALS HERE
 
     */
@@ -379,6 +380,7 @@ public class Land {
         currentNumStructures++;
         return true;
     }
+    // COME_BACK_HERE MISSING ATTRACTIONS!!!
 
     /*
     @description: removes a Structure from the structureList array and demolishes it from the map.
