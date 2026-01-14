@@ -10,25 +10,58 @@
 import Person_Subsystem.Visitor;
 
 public class Adult extends Visitor{
+   //FIELDS 
    private double preferredBudgetLimit; 
 
-   //add adult constructor 
+   //CONSTRUCTOR
+   /*
+    @description: declares and initializes Adult visitor object
+    @param age                 the visitor's age
+    @param personID            unique ID for the visitor
+    @param firstName           the visitor's first name
+    @param lastName            the visitor's last name
+    @param balance             starting balance (money available)
+    @param learningLevel       starting learning level
+    @param visitDuration       visit duration (in minutes or your chosen unit)
+    @param preferredBudgetLimit the visitor's preferred spending limit (if negative, set to 0)
+    */
+   public Adult(int age, String personID, String firstName, String lastName, double balance, int learningLevel, int visitDuration, double preferredBudgetLimit) {
+         super(age, personID, firstName, lastName, balance, learningLevel, visitDuration);
+         this.preferredBudgetLimit = Math.max(0.0, preferredBudgetLimit);
+   }
+
+   //ACCESSOR
    public double getPreferredBudgetLimit(){
       return preferredBudgetLimit;
    }
 
+   //MUTATOR
    public void setPreferredBudgetLimit(double limit){
       this.preferredBudgetLimit = limit;
    }
 
+   //OTHER 
+   /*
+    @description: checks if the visitor stayed within their preferred budget limit
+    @return true if amount spent is less than the preferred budget limit, false otherwise
+    */
    public boolean stayedWithinBudget(){
-      return amountSpent<preferredBudgetLimit; 
+      return getAmountSpent()<preferredBudgetLimit; 
    }
 
+   /*
+    @return the role string for this Person object
+    */
+   @Override
    public String getRole(){
       return "ADULT";
    }
 
+   //EXPAND SUMMARY LATWR 
+   /*
+    @description: returns a summary message when the visitor leaves the zoo
+    @return a summary string including whether the visitor stayed within budget
+    */
    public String endVisitorSummary(){
       this.endVisitorSummary(); 
       if (stayedWithinBudget()){
@@ -38,10 +71,21 @@ public class Adult extends Visitor{
       }
    }
 
+
+   /*
+    @description: calculates the ticket cost for an Adult visitor
+    @return the admission price for an Adult visitor
+    */
+   @Override
    public double calculateTicketCost(){
       return ADULT_BASE_PRICE;
    }
-
+   
+   /*
+    @description: returns a formatted string summary of this Adult visitor
+    @return formatted visitor information
+    */
+   @Override
    public String toString(){
       return "PersonID: " + personID + "\n" + 
               "Name: " + firstName + " " + lastName + "\n" + 
