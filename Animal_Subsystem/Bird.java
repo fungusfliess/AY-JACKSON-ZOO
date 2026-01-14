@@ -5,6 +5,8 @@ public class Bird extends Animal{
     private boolean canFly;
     private int flyingAge;
     private boolean hasNest;
+    public static final LivingCondition eagleLivingCondition = new LandCondition(15,55,500,"Mountainous", 85, 25, true, 30, 12);
+    public static final LivingCondition cockatooLivingCondition = new LandCondition(24, 65, 300, "Tropical Forest", 50, 5, true, 80, 15);
     
     // Description: constructor for bird
     public Bird (Animal parent) {
@@ -77,10 +79,8 @@ public class Bird extends Animal{
     }
     public static LivingCondition livingCondition(String specie) {
         if (specie.equalsIgnoreCase("Eagle")) {
-            LivingCondition eagleLivingCondition = new LivingCondition();
             return eagleLivingCondition;
         } else if (specie.equalsIgnoreCase("Cockatoo")) {
-            LivingCondition cockatooLivingCondition = new LivingCondition();
             return cockatooLivingCondition;
         }
         return null;
@@ -175,20 +175,9 @@ public class Bird extends Animal{
 
     // Description: abstract method that formats all information of the animal
     public String toString() {
-        return  "Habitat: " + getHabitat() + "\n" +
-                "Name: " + getName() + "\n" +
-                "Specie: " + getSpecie() + "\n" +
-                "Age: " + getAge() + "\n" +
-                "Prefered Interaction: " + getPreferedInteraction() + "\n" +
-                "Happiness: " + getHappiness() + "\n" +
-                "Cleanliness: " + getCleanliness() + "\n" +
-                "Hunger: " + getHunger() + "/" + getMaxHunger() + "\n" +
-                "Gender: " + getGender() + "\n" +
-                "Weight: " + getWeight() + "\n" +
-                "Type of Foods: " + getTypeFoods() + "\n" +
-                "Life Expectancy: " + getLifeExpectancy() + "\n" +
-                "can fly: " + getCanFly() + "\n";
-
+        return  super.toString() +
+                "\nCan Fly: " + this.canFly +
+                "\nFlying Age: " + this.flyingAge;
     }
 
     // Description: creates a new animal of the same type as its parent.
@@ -209,7 +198,6 @@ public class Bird extends Animal{
 
     // Description: method that updates the age of the animal
     public void updateAge() {
-        setAge(getAge() + 1);
         if (this.getSpecie().equalsIgnoreCase("Eagle")) {
             setWeight(getWeight() + 15);
             setMaxHunger(getMaxHunger() + 5);

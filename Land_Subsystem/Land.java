@@ -55,6 +55,7 @@ public class Land {
             // writing Structure info into the file.
             for (int i = 0; i < this.currentNumStructures; i++) {
                 out.write(this.structureList[i].saveToString());
+                // COME_BACK_HERE
                 // any minor adjustments to formatting can be done here. (wait until Structure class is done)
             }
              
@@ -90,9 +91,13 @@ public class Land {
             
             // reading currentNumStructures
             input = in.readLine();
-            this.maxNumStructures = Integer.parseInt(input);
+            if (input != null) {
+                this.maxNumStructures = Integer.parseInt(input);
+            }
             input = in.readLine();
-            this.currentNumStructures = Integer.parseInt(input);
+            if (input != null) {
+                this.currentNumStructures = Integer.parseInt(input);
+            }
             // creating new array of Structure
             this.structureList = new Structure[this.maxNumStructures];
 
@@ -100,10 +105,13 @@ public class Land {
             // reading Structure info from the file.
             String structureType;
             
-            // I originally intended this to be a while loop but since the save file already has a numStrutures field, a for loop is more appropriate.
+            // for loop through array of Structures.
             for (int i = 0; i < this.currentNumStructures; i++) {
                 sumString = "";
-                structureType = in.readLine();
+                input = in.readLine();
+                if (input != null) {
+                    structureType = input;
+                }
                 // if input is an empty line, stop reading. Check null to avoid errors. This will still read the empty line.
                 while ((input = in.readLine()) != null && !input.isEmpty()) {
                     sumString += input + "\n";
@@ -203,7 +211,7 @@ public class Land {
     }
 
     /*
-    
+    COME_BACK_HERE
     ARIANNA IS DOING SORTBYANIMALS AND SORTBYSIZEANDANIMALS HERE
 
     */
@@ -372,6 +380,7 @@ public class Land {
         currentNumStructures++;
         return true;
     }
+    // COME_BACK_HERE MISSING ATTRACTIONS!!!
 
     /*
     @description: removes a Structure from the structureList array and demolishes it from the map.

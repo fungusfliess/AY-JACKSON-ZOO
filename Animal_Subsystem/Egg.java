@@ -59,4 +59,9 @@ public class Egg {
         return null;
     }
 
+    public String toString() {
+        return "Egg of " + parent.getSpecie() + "\n" +
+        "Hatch Time Remaining: " + hatchTime + " days.";
+    }   
+
 }

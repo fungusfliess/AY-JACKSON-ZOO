@@ -223,7 +223,7 @@ public abstract class Animal {
 
     // moves animal to a new habitat if possible
     public boolean relocate(Habitat newHabitat) {
-        return relocateAnimal()
+        return relocateAnimal();
     }
 
     // checks to see if the animal is suitable for the given habitat
@@ -278,10 +278,33 @@ public abstract class Animal {
         return false;
     }
 
+    public  String toString() {
+        return  "Habitat: " + habitat + "\n" +
+                "Name: " + name + "\n" +
+                "Specie: " + specie + "\n" +
+                "Age: " + age + "\n" +
+                "Prefered Interaction: " + preferedInteraction + "\n" +
+                "Happiness: " + happiness + "\n" +
+                "Cleanliness: " + cleanliness+ "\n" +
+                "Hunger: " + hunger + "/" + getMaxHunger() + "\n" +
+                "Gender: " + gender + "\n" +
+                "Weight: " + weight + "\n" +
+                "Adulthood Age: " + adultAge + "\n" +
+                "Interactions Today: " + numDailyInteractions + "/" + totalDailyInteractions + "\n" +
+                "Days passed since last birthday: " + daysPassed + "\n" +
+                "Preferred Interactions Today: " + numPreferredInteractions + "\n" +
+                "Max Hunger: " + maxHunger + "\n" +
+                "Type of Foods: " + String.join(", ", typeFoods) + "\n" +
+                "Life Expectancy: " + lifeExpectancy + "\n" +
+                "Flexibility: " + flexibility + "\n" +
+                "Living Condition: " + livingCondition.toString() + "\n" +
+                "Total Daily Interactions: " + totalDailyInteractions + "\n";
+    }
+
     // ABSTRACT METHODS
 
     // Description: abstract method that formats all information of the animal
-    public abstract String toString();
+    
 
     // Description: abstract helper method that updates the age of the animal
     public abstract void updateAge();

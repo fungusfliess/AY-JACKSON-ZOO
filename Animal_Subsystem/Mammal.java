@@ -2,7 +2,10 @@ package Animal_Subsystem;
 import Structure_Subsystem.*;
 
 public class Mammal extends Animal {
-    
+    private boolean drinksMilk;
+    public static final LivingCondition unicornLivingCondition = new LandCondition(18, 60, 400,"Enchanted Forest", 45,4,true,70,8);
+    public static final LivingCondition cabybaraLivingCondition = new LandCondition(26, 75, 250,"Wet Grassland", 30, 2, true, 80, 5);
+
     // Description: constructor for mammals
     public Mammal(Animal parent) {
         super(parent);
@@ -14,6 +17,7 @@ public class Mammal extends Animal {
         setLivingCondition(livingCondition(parent.getSpecie()));
         setTotalDailyInteractions(totalDailyInteractions(parent.getSpecie()));  
         setAdultAge(adultAge(parent.getSpecie()));
+        drinksMilk = true;
     }
     public Mammal(String name, String specie, String preferedInteraction, String gender,
                 int happiness, int cleanliness, int hunger, int age, double weight) {
@@ -27,6 +31,7 @@ public class Mammal extends Animal {
         setLivingCondition(livingCondition(specie));
         setTotalDailyInteractions(totalDailyInteractions(specie)); 
         setAdultAge(adultAge(specie));
+        updateAge();
     }
 
     // SETTING SPECIE BASED FIELDS
@@ -67,10 +72,8 @@ public class Mammal extends Animal {
     }
     public static LivingCondition livingCondition(String specie) {
         if (specie.equalsIgnoreCase("Unicorn")) {
-            LivingCondition unicornLivingCondition = new LivingCondition();
             return unicornLivingCondition;
         } else if (specie.equalsIgnoreCase("Cabybara")) {
-            LivingCondition cabybaraLivingCondition = new LivingCondition();
             return cabybaraLivingCondition;
         }
         return null;
@@ -115,6 +118,9 @@ public class Mammal extends Animal {
     public int getAdultAge() {
         return Mammal.adultAge(this.getSpecie());
     }
+    public boolean isDrinksMilk() {
+        return drinksMilk;
+    }
 
     // SETTERS
     public void setMaxHunger(int maxHunger) {
@@ -138,24 +144,17 @@ public class Mammal extends Animal {
     public void setAdultAge(int adultAge) {
         super.setAdultAge(adultAge);
     }
+    public void setDrinksMilk(boolean drinksMilk) {
+        this.drinksMilk = drinksMilk;
+    }
+    
 
     // METHODS
 
     // Description: abstract method that formats all information of the animal
     public String toString() {
-        return  "Habitat: " + getHabitat() + "\n" +
-                "Name: " + getName() + "\n" +
-                "Specie: " + getSpecie() + "\n" +
-                "Age: " + getAge() + "\n" +
-                "Prefered Interaction: " + getPreferedInteraction() + "\n" +
-                "Happiness: " + getHappiness() + "\n" +
-                "Cleanliness: " + getCleanliness() + "\n" +
-                "Hunger: " + getHunger() + "/" + getMaxHunger() + "\n" +
-                "Gender: " + getGender() + "\n" +
-                "Weight: " + getWeight() + "\n" +
-                "Type of Foods: " + getTypeFoods() + "\n" +
-                "Life Expectancy: " + getLifeExpectancy() + "\n" +
-                "Adulthood Age: " + getAdultAge() + "\n";
+        return  super.toString() +
+                "Drinks Milk: " + drinksMilk + "\n"; 
 
     }
 
@@ -180,18 +179,20 @@ public class Mammal extends Animal {
             }
 
         }
+        
     }
 
     // Description: method that updates the age of the animal
     public void updateAge() {
-        if (getDaysPassed() % 365 == 0) {
-            int newAge = getAge() + 1;
-            setAge(newAge);
-            if (this.getSpecie().equalsIgnoreCase("Unicorn") && this.getAge() > 1) {
-                setWeight(getWeight() + 15);
-            } else if (this.getSpecie().equalsIgnoreCase("Cabybara")) {
-                setWeight(getWeight() + 5);
-            }
+        if (this.getSpecie().equalsIgnoreCase("Unicorn") && this.getAge() > 1) {
+            setWeight(getWeight() + 15);
+        } else if (this.getSpecie().equalsIgnoreCase("Cabybara")) {
+            setWeight(getWeight() + 5);
         }
+        if (getAge() >= getAdultAge()) {
+            drinksMilk = false;
+            setTypeFoods(typeFoods(this.getSpecie()));
+        }
+        
     }
 }
