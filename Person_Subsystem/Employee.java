@@ -1,16 +1,17 @@
 package Person_Subsystem;
 /*
    File Name: Employee.java
-   Name: Elizabeth Wang
-   Class: ICS4U1-11
+   Author: Elizabeth Wang
+   Class: ICS4U1-11 
    Date: Jan 7, 2025
-   Description: Employee represents staff members working at the zoo. It adds job-related fields such as hourly wage, years of experience, and earnings, and 
+   Purpose: Employee represents staff members working at the zoo. It adds job-related fields such as hourly wage, years of experience, and earnings, and 
                 supports behavior related to employment. Concrete employee types inherit from this class and implement role-specific details.
 */
 
+   //SOMEHOW UPDATE YEARS OF EXPERIENCE BY KEEPING TRACKOF DAYS OF WORKING HERE?? 
+
 public abstract class Employee extends Person {
    //FIELDS 
-   //SOMEHOW UPDATE YEARS OF EXPERIENCE BY KEEPING TRACKOF DAYS OF WORKING HERE?? 
    public static final int MIN_YEARS_FOR_BENEFITS = 5; 
    private double hourlyWage; 
    private int yearsOfExperience; 
