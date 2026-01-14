@@ -4,7 +4,9 @@ package Person_Subsystem;
    Name: Elizabeth Wang
    Class: ICS4U1-23
    Date: Jan 7, 2025
-   Description: 
+   Description: Visitor represents anyone entering the zoo as a guest. It adds visit-related fields like balance (money available) and learning 
+                level, plus tracking for visit actions (ex: attractions visited / learning history). Visitor subclasses override ticket-cost 
+                logic and provide an end-of-visit summary.
 */
 
 import Zoo;

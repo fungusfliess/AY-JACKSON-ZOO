@@ -3,7 +3,8 @@
    Name: Elizabeth Wang
    Class: ICS4U1-11
    Date: Jan 7, 2025
-   Description: 
+   Description: Adult represents standard visitors who pay the regular admission price. It uses the base visitor fields for balance/learning 
+                tracking and returns "ADULT" as the role. Its ticket cost is calculated using the adult base price rules in your system.
 */
 
 import Person_Subsystem.Visitor;

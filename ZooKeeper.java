@@ -3,7 +3,8 @@
    Name: Elizabeth Wang
    Class: ICS4U1-23
    Date: Jan 7, 2025
-   Description: 
+   Description: ZooKeeper models staff who take care of animals and work directly with exhibits. It inherits wages/experience/earnings from Employee 
+                and identifies itself with a role string like "ZOOKEEPER". Its toString() summarizes both basic person info and job info.
 */
 
 import Animal_Subsystem.Animal;
