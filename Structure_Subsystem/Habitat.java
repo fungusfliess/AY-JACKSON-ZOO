@@ -10,7 +10,6 @@ public class Habitat extends Structure{
     private LivingCondition climate;
     private Animal[] animals;
 
-    //needs to be fixed after onProperty
     public Habitat(String name, 
     char structureID, 
     int area, 
@@ -27,6 +26,21 @@ public class Habitat extends Structure{
         numAnimals = 0; 
     }
 
+    //ACCESSORS
+
+    public int getNumAnimals(){
+        return numAnimals;
+    }
+
+    public int getMaxAnimals(){
+        return maxAnimals;
+    }
+
+    //MUTATORS
+    public void setNumAnimals(int num){
+        numAnimals = num;
+    }
+    
     public abstract double calculateMaintenanceCost();
 
     public abstract boolean addAnimal(Animal animal);
@@ -41,9 +55,21 @@ public class Habitat extends Structure{
         }return false;
     }
 
-    public boolean suitableHabitat(Animal animal){
-        
+    public boolean enoughSpace(int area){
+        return spaceLeft - area >= 0;
     }
 
+    public void modifySpaceLeft(double amount){
+        spaceLeft += amount;
+    }
+
+    public void displayHabitatAnimalInfo(){
+        System.out.println("Habitat " + getName() + ":\n" + climate);
+        for(int i = 0; i < numAnimals; i++){
+            System.out.println(animals[i]); 
+        }
+    }
+
+    public abstract String saveToString();
 
 }

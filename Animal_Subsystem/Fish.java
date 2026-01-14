@@ -3,6 +3,8 @@ import Structure_Subsystem.*;
 
 public class Fish extends Animal{
     private int amountEggs;
+    private static final LivingCondition sharkLivingCondition = new WaterCondition(18, 75, 2000, "Ocean", 8.1, 180, 20, false, 35);
+    private static final LivingCondition sunfishLivingCondition = new WaterCondition(22, 70, 1500, "Pelagic Zone", 8, 160, 23,false, 34);
     
     // Description: constructor for fish
     public Fish(Animal parent) {
@@ -17,10 +19,10 @@ public class Fish extends Animal{
         setAdultAge(adultAge(parent.getSpecie()));
         this.amountEggs = amountEggs(parent.getSpecie());
     }
-    public Fish(String name, String specie, String preferedInteraction, String gender,
+    public Fish(String habitatId, String name, String specie, String preferedInteraction, String gender,
                 int happiness, int cleanliness, int hunger, int age, double weight) {
 
-        super(name, specie, preferedInteraction, gender, happiness, cleanliness, hunger, age, weight);
+        super(habitatId, name, specie, preferedInteraction, gender, happiness, cleanliness, hunger, age, weight);
 
         setMaxHunger(maxHunger(specie));
         setTypeFoods(typeFoods(specie));
@@ -70,10 +72,8 @@ public class Fish extends Animal{
     }
     public static LivingCondition livingCondition(String specie) {
         if (specie.equalsIgnoreCase("Shark")) {
-            LivingCondition sharkLivingCondition = new LivingCondition();
             return sharkLivingCondition;
         } else if (specie.equalsIgnoreCase("Sunfish")) {
-            LivingCondition sunfishLivingCondition = new LivingCondition();
             return sunfishLivingCondition;
         }
         return null;
@@ -157,21 +157,8 @@ public class Fish extends Animal{
 
     // Description: abstract method that formats all information of the animal
     public String toString() {
-        return  "Habitat: " + getHabitat() + "\n" +
-                "Name: " + getName() + "\n" +
-                "Specie: " + getSpecie() + "\n" +
-                "Age: " + getAge() + "\n" +
-                "Prefered Interaction: " + getPreferedInteraction() + "\n" +
-                "Happiness: " + getHappiness() + "\n" +
-                "Cleanliness: " + getCleanliness() + "\n" +
-                "Hunger: " + getHunger() + "/" + getMaxHunger() + "\n" +
-                "Gender: " + getGender() + "\n" +
-                "Weight: " + getWeight() + "\n" +
-                "Type of Foods: " + getTypeFoods() + "\n" +
-                "Life Expectancy: " + getLifeExpectancy() + "\n" +
-                "Adulthood Age: " + getAdultAge() + "\n" +
-                "Amount of Eggs: " + getAmountEggs() + "\n";
-
+        return  super.toString() +
+                "Amount of Eggs: " + amountEggs + "\n";
     }
 
     // Description: creates a new animal of the same type as its parent.
@@ -194,16 +181,13 @@ public class Fish extends Animal{
 
     // Description: method that updates the age of the animal
     public void updateAge() {
-        if (getDaysPassed() % 365 == 0) {
-            int newAge = getAge() + 1;
-            setAge(newAge);
-            if (this.getSpecie().equalsIgnoreCase("Shark")) {
-                setWeight(getWeight() + 15);
-                setMaxHunger(getMaxHunger() + 5);
-            } else if (this.getSpecie().equalsIgnoreCase("Sunfish")) {
-                setWeight(getWeight() + 5);
-                setMaxHunger(getMaxHunger() + 2);
-            }
+        if (this.getSpecie().equalsIgnoreCase("Shark")) {
+            setWeight(getWeight() + 15);
+            setMaxHunger(getMaxHunger() + 5);
+        } else if (this.getSpecie().equalsIgnoreCase("Sunfish")) {
+            setWeight(getWeight() + 5);
+            setMaxHunger(getMaxHunger() + 2);
         }
+        
     }
 }

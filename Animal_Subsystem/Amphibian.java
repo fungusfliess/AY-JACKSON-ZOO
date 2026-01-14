@@ -7,6 +7,8 @@ public class Amphibian extends Animal{
     private int stage3Age;
     private boolean canWalk;
     private boolean canBreathUnderwater;
+    public static final LivingCondition frogLivingCondition = new WaterCondition(20, 85, "Wetland", 6.8, 60, 18, true, 0.1);
+    public static final LivingCondition axolotlLivingCondition = new WaterCondition(16, 70, "Freshwater", 7.4, 150, 15, true, 0);
 
     // Description: constructor for amphibian
     public Amphibian (Animal parent) {
@@ -25,10 +27,10 @@ public class Amphibian extends Animal{
         this.canBreathUnderwater = true;
 
     }
-    public Amphibian(String name, String specie, String preferedInteraction, String gender,
+    public Amphibian(String habitatId, String name, String specie, String preferedInteraction, String gender,
                 int happiness, int cleanliness, int hunger, int age, double weight, String currentStage) {
 
-        super(name, specie, preferedInteraction, gender, happiness, cleanliness, hunger, age, weight);
+        super(habitatId,name, specie, preferedInteraction, gender, happiness, cleanliness, hunger, age, weight);
 
         setMaxHunger(maxHunger(specie));
         setTypeFoods(typeFoods(specie));
@@ -78,10 +80,8 @@ public class Amphibian extends Animal{
     }
     public static LivingCondition livingCondition(String specie) {
         if (specie.equalsIgnoreCase("Frog")) {
-            LivingCondition frogLivingCondition = new LivingCondition();
             return frogLivingCondition;
         } else if (specie.equalsIgnoreCase("Axolotl")) {
-            LivingCondition axolotlLivingCondition = new LivingCondition();
             return axolotlLivingCondition;
         }
         return null;
@@ -95,7 +95,7 @@ public class Amphibian extends Animal{
         return -1;
     }
     private static int adultAge(String specie) {
-        if (specie.equalsIgnoreCase("Frog`")) {
+        if (specie.equalsIgnoreCase("Frog")) {
             return 5;
         } else if (specie.equalsIgnoreCase("Axolotl")) {
             return 3;
@@ -161,21 +161,10 @@ public class Amphibian extends Animal{
 
     // Description: abstract method that formats all information of the animal
     public String toString() {
-        return  "Habitat: " + getHabitat() + "\n" +
-                "Name: " + getName() + "\n" +
-                "Specie: " + getSpecie() + "\n" +
-                "Age: " + getAge() + "\n" +
-                "Prefered Interaction: " + getPreferedInteraction() + "\n" +
-                "Happiness: " + getHappiness() + "\n" +
-                "Cleanliness: " + getCleanliness() + "\n" +
-                "Hunger: " + getHunger() + "/" + getMaxHunger() + "\n" +
-                "Gender: " + getGender() + "\n" +
-                "Weight: " + getWeight() + "\n" +
-                "Type of Foods: " + getTypeFoods() + "\n" +
-                "Life Expectancy: " + getLifeExpectancy() + "\n" +
-                "Current Stage: " + currentStage + "\n" +
-                "Can Walk: " + canWalk + "\n" +
-                "Can Breath Underwater: " + canBreathUnderwater + "\n";
+        return  super.toString() +
+                "\nCurrent Stage: " + this.currentStage +
+                "\nCan Walk: " + this.canWalk +
+                "\nCan Breath Underwater: " + this.canBreathUnderwater;
     }
 
     // Description: creates a new animal of the same type as its parent.

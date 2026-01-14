@@ -7,9 +7,9 @@ public class WaterCondition extends LivingCondition {
     private boolean hasLand;
     private double waterSalinity;
 
-    public WaterCondition(double temp, double hum, double area, String region, 
+    public WaterCondition(double temp, double hum, String region, 
                           double acidity, double hardness, double temperature, boolean hasLand, double salinity) {
-        super(temp, hum, area, region);
+        super(temp, hum, region);
         this.waterAcidity = acidity;
         this.waterHardness = hardness;
         this.waterTemperature = temperature;
@@ -23,17 +23,25 @@ public class WaterCondition extends LivingCondition {
             return 0;
         }
         WaterCondition otherWaterCondition = (WaterCondition) other;
-        if (this.hasLand != otherWaterCondition.hasLand) {
+        if (this.hasLand != otherWaterCondition.hasLand || !(this.getRegion().equalsIgnoreCase(other.getRegion()))) {
             return 0; 
         }
         double diff = 0;
-        diff += Math.min(this.getTemperature(), other.getTemperature())/Math.max(this.getTemperature(), other.getTemperature());
-        diff += Math.min(this.getHumidity(), other.getHumidity())/Math.max(this.getHumidity(), other.getHumidity());
-        diff += Math.min(this.getArea(), other.getArea())/Math.max(this.getArea(), other.getArea());
         diff += Math.min(this.waterAcidity, otherWaterCondition.waterAcidity)/Math.max(this.waterAcidity, otherWaterCondition.waterAcidity);
         diff += Math.min(this.waterHardness, otherWaterCondition.waterHardness)/Math.max(this.waterHardness, otherWaterCondition.waterHardness);
         diff += Math.min(this.waterTemperature, otherWaterCondition.waterTemperature)/Math.max(this.waterTemperature, otherWaterCondition.waterTemperature);
         diff += Math.min(this.waterSalinity, otherWaterCondition.waterSalinity)/Math.max(this.waterSalinity, otherWaterCondition.waterSalinity);
-        return diff / 7;
+        diff /= 7;
+        return (diff+ super.compareTo(other))/2;
+    }
+
+    // METHODS
+    public String toString() {
+        return super.toString() +
+               "Water Acidity: " + waterAcidity + "\n" +
+               "Water Hardness: " + waterHardness + "\n" +
+               "Water Temperature: " + waterTemperature + "\n" +
+               "Has Land: " + hasLand + "\n" +
+               "Water Salinity: " + waterSalinity + "\n";
     }
 }
