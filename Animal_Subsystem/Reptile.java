@@ -3,6 +3,8 @@ import Structure_Subsystem.*;
 
 public class Reptile extends Animal{
     private int timeToShed;
+    public static final LivingCondition crocodileLivingCondition = new WaterCondition(28, 80, 200, "River Delta", 7.2, 180, 26, true, 0.5);
+    public static final LivingCondition snakeLivingCondition = new LandCondition(26, 50, 120, "Grassland", 40, 6, true, 45, 6);
 
     // Description: constructor for reptile
     public Reptile (Animal parent) {
@@ -70,10 +72,8 @@ public class Reptile extends Animal{
     }
     public static LivingCondition livingCondition(String specie) {
         if (specie.equalsIgnoreCase("Crocodile")) {
-            LivingCondition crocodileLivingCondition = new LivingCondition();
             return crocodileLivingCondition;
         } else if (specie.equalsIgnoreCase("Snake")) {
-            LivingCondition snakeLivingCondition = new LivingCondition();
             return snakeLivingCondition;
         }
         return null;
@@ -86,7 +86,7 @@ public class Reptile extends Animal{
         }
         return -1;
     }
-    private static int adultAge(String specie) {
+    public static int adultAge(String specie) {
         if (specie.equalsIgnoreCase("Crocodile")) {
             return 5;
         } else if (specie.equalsIgnoreCase("Snake")) {
@@ -94,28 +94,37 @@ public class Reptile extends Animal{
         }
         return -1;
     }
+    public static int timeToShed(String specie) {
+        if (specie.equalsIgnoreCase("Crocodile")) {
+            return 30;
+        } else if (specie.equalsIgnoreCase("Snake")) {
+            return 15;
+        }
+        return -1;
+    }   
+
     // GETTERS
 
     public int getMaxHunger() {
-        return Amphibian.maxHunger(this.getSpecie());
+        return Reptile.maxHunger(this.getSpecie());
     }
     public String[] getTypeFoods() {
-        return Amphibian.typeFoods(this.getSpecie());
+        return Reptile.typeFoods(this.getSpecie());
     }
     public int getLifeExpectancy() {
-        return Amphibian.lifeExpectancy(this.getSpecie());
+        return Reptile.lifeExpectancy(this.getSpecie());
     }
     public double getFlexibility() {
-        return Amphibian.flexibility(this.getSpecie());
+        return Reptile.flexibility(this.getSpecie());
     } 
     public LivingCondition getLivingCondition() {
-        return Amphibian.livingCondition(this.getSpecie());
+        return Reptile.livingCondition(this.getSpecie());
     }
     public int getTotalDailyInteractions() {
-        return Amphibian.totalDailyInteractions(this.getSpecie());
+        return Reptile.totalDailyInteractions(this.getSpecie());
     }
     public int getAdultAge() {
-        return Amphibian.adultAge(this.getSpecie());
+        return Reptile.adultAge(this.getSpecie());
     }
 
     // SETTERS
@@ -142,18 +151,8 @@ public class Reptile extends Animal{
 
     // Description: abstract method that formats all information of the animal
     public String toString() {
-        return  "Habitat: " + getHabitat() + "\n" +
-                "Name: " + getName() + "\n" +
-                "Specie: " + getSpecie() + "\n" +
-                "Age: " + getAge() + "\n" +
-                "Prefered Interaction: " + getPreferedInteraction() + "\n" +
-                "Happiness: " + getHappiness() + "\n" +
-                "Cleanliness: " + getCleanliness() + "\n" +
-                "Hunger: " + getHunger() + "/" + getMaxHunger() + "\n" +
-                "Gender: " + getGender() + "\n" +
-                "Weight: " + getWeight() + "\n" +
-                "Type of Foods: " + getTypeFoods() + "\n" +
-                "Life Expectancy: " + getLifeExpectancy() + "\n";
+        return super.toString() + 
+                "\nTime to Shed: " + this.timeToShed + " days";
     }
 
     // Description: creates a new animal of the same type as its parent.
@@ -180,6 +179,18 @@ public class Reptile extends Animal{
             setWeight(getWeight() + 5);
             setMaxHunger(getMaxHunger() + 2);
         }
+        this.timeToShed--;
         
+    }
+
+    public void shedSkin() {
+        if (timeToShed <= 0) {
+            System.out.println(getName() + " the " + getSpecie() + " has shed its skin!");
+            // Reset time to shed based on specie
+            this.timeToShed = timeToShed(this.getSpecie());
+            setCleanliness(MAX_STAT);
+        } else {
+            System.out.println(getName() + " the " + getSpecie() + " is not ready to shed its skin yet.");
+        }
     }
 }
