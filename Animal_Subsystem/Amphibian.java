@@ -7,8 +7,8 @@ public class Amphibian extends Animal{
     private int stage3Age;
     private boolean canWalk;
     private boolean canBreathUnderwater;
-    public static final LivingCondition frogLivingCondition = new WaterCondition(20, 85, 50, "Wetland", 6.8, 60, 18, true, 0.1);
-    public static final LivingCondition axolotlLivingCondition = new WaterCondition(16, 70, 20, "Freshwater", 7.4, 150, 15, true, 0);
+    public static final LivingCondition frogLivingCondition = new WaterCondition(20, 85, "Wetland", 6.8, 60, 18, true, 0.1);
+    public static final LivingCondition axolotlLivingCondition = new WaterCondition(16, 70, "Freshwater", 7.4, 150, 15, true, 0);
 
     // Description: constructor for amphibian
     public Amphibian (Animal parent) {
@@ -27,10 +27,10 @@ public class Amphibian extends Animal{
         this.canBreathUnderwater = true;
 
     }
-    public Amphibian(String name, String specie, String preferedInteraction, String gender,
+    public Amphibian(String habitatId, String name, String specie, String preferedInteraction, String gender,
                 int happiness, int cleanliness, int hunger, int age, double weight, String currentStage) {
 
-        super(name, specie, preferedInteraction, gender, happiness, cleanliness, hunger, age, weight);
+        super(habitatId,name, specie, preferedInteraction, gender, happiness, cleanliness, hunger, age, weight);
 
         setMaxHunger(maxHunger(specie));
         setTypeFoods(typeFoods(specie));
