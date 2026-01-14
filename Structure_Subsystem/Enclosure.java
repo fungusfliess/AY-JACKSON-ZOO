@@ -23,8 +23,22 @@ public class Enclosure extends Habitat{
     public static Enclosure loadFromString(String fromFile, Land onProperty) {
         String[] fields = fromFile.split("\n");
         int index = 0;
+        int spaceLeft = Integer.parseInt(fields[index]);
+        String species = fields[index++];
+        
+        String climateType = fields[index++];
+        double temp = Double.parseDouble(fields[index++]);
+        double humidity = Double.parseDouble(fields[index++]);
+        String region = fields[index++];
 
-        String species = fields[index];
+        LivingCondition climate;
+        if(climateType.equals("LAND")){
+            double soilCompaction = Double.parseDouble(fields[index++]);
+            double //fixlater
+        }else{
+            w
+
+        }
 
         String name = fields[index++];
         char structureID = fields[index++].charAt(0);
