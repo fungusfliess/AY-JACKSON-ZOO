@@ -4,7 +4,9 @@ package Person_Subsystem;
    Name: Elizabeth Wang
    Class: ICS4U1-23
    Date: Jan 7, 2025
-   Description: 
+   Description: Child represents younger visitors who may have discounted admission and different learning/visit behaviors. It returns "CHILD" 
+                as the role and calculates ticket cost using child pricing rules. This class is also age-validated when loading from file to 
+                prevent incorrect classifications.
 */
 
 public class Child extends Visitor{
