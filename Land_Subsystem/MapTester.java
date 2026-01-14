@@ -22,7 +22,6 @@ public class MapTester {
         //asdfasf
         test.setCharArray(testMaze);
         test.printMap();   
-        System.out.println(test.mazeSolver(new Coord(7, 5), testMaze));
         System.out.println();
         System.out.println("Solved maze: ");
         System.out.println();

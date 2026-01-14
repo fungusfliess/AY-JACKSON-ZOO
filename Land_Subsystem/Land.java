@@ -90,9 +90,13 @@ public class Land {
             
             // reading currentNumStructures
             input = in.readLine();
-            this.maxNumStructures = Integer.parseInt(input);
+            if (input != null) {
+                this.maxNumStructures = Integer.parseInt(input);
+            }
             input = in.readLine();
-            this.currentNumStructures = Integer.parseInt(input);
+            if (input != null) {
+                this.currentNumStructures = Integer.parseInt(input);
+            }
             // creating new array of Structure
             this.structureList = new Structure[this.maxNumStructures];
 
@@ -100,10 +104,13 @@ public class Land {
             // reading Structure info from the file.
             String structureType;
             
-            // I originally intended this to be a while loop but since the save file already has a numStrutures field, a for loop is more appropriate.
+            // I originally intended this to be a while loop until null but since the save file already has a numStructures field, a for loop is more appropriate.
             for (int i = 0; i < this.currentNumStructures; i++) {
                 sumString = "";
-                structureType = in.readLine();
+                input = in.readLine();
+                if (input != null) {
+                    structureType = input;
+                }
                 // if input is an empty line, stop reading. Check null to avoid errors. This will still read the empty line.
                 while ((input = in.readLine()) != null && !input.isEmpty()) {
                     sumString += input + "\n";

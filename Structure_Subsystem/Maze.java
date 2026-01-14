@@ -39,23 +39,35 @@ public class Maze extends Attraction {
     /*
     @description: constructs a Maze with default shape
     */
-    public Maze (String name, char structureID, int area, int timeBetweenMaintenance, int daysSinceLastMaintenance, Land onProperty) {
+    public Maze (String name, char structureID, int area, int timeBetweenMaintenance, int daysSinceLastMaintenance, Land onProperty, char[][] inMaze) {
         super (name, structureID, area, timeBetweenMaintenance, daysSinceLastMaintenance, onProperty);
-        this.maze = new char[MAZE_DEFAULT_SHAPE.length][MAZE_DEFAULT_SHAPE[0].length];
+        this.maze = new char[inMaze.length][inMaze[0].length];
         this.length = this.maze.length;
         this.width = this.maze[0].length;
 
-        // copying default maze. Do not point to the MAZE_DEFAULT_SHAPE, or else that will access the array it points to and potentially edit it. 
-        // Final just means that that variable cannot point to anywhere else, it does not mean that the array is constant and locked.
-        // could copy a different maze in the future, but just default for now.
+        // loading in inMaze (has to copy using for loop, because I do not want to point towards an external maze)
         for (int i = 0; i < length; i++) {
             for (int j = 0; j < width; j++) {
-                this.maze[i][j] = MAZE_DEFAULT_SHAPE[i][j];
+                this.maze[i][j] = inMaze[i][j];
             }
         }
         
         // creating solved maze
         solveMaze();
+    }
+
+    // RESET MAZE
+    public void resetMaze () {
+        // copying default maze. Do not point to the MAZE_DEFAULT_SHAPE, or else that will access the array it points to and potentially edit it. 
+        // Final just means that that variable cannot point to anywhere else, it does not mean that the array is constant and locked.
+        // could copy a different maze in the future, but just default for now.
+        this.length = MAZE_DEFAULT_SHAPE.length;
+        this.width = MAZE_DEFAULT_SHAPE[0].length;
+        for (int i = 0; i < this.length; i++) {
+            for (int j = 0; j < this.width; j++) {
+                this.maze[i][j] = MAZE_DEFAULT_SHAPE[i][j];
+            }
+        }
     }
 
     // ACCESSOR MUTATORS
@@ -172,6 +184,9 @@ public class Maze extends Attraction {
         }
    }
 
+   /*
+   @description: prints the solved maze to standard output
+   */
    public void printSolvedMaze() {
         for (int i = 0; i < this.length; i++) {
             for (int j = 0; j < this.width; j++) {
@@ -179,5 +194,92 @@ public class Maze extends Attraction {
             }
             System.out.println();
         }
+   }
+
+   // SAVE LOAD
+    /*
+    @description: loads a Maze object from a String input
+    @param: String input is the inputted String that will be processed
+    @return: newly created Maze object.
+     */
+   public static Maze loadFromString (String input, Land onProperty) {
+        // turning String into array of its lines
+        String[] fields = input.split("\n");
+        
+        // parse each line into respective parameters, starting with subclass-specific, then parent class... etc.
+        int idx = 0; // index that can count through the array of fields.
+        int lengthOfMaze = Integer.parseInt(fields[idx]);
+        idx++;
+        int widthOfMaze = Integer.parseInt(fields[idx]);
+        idx++;
+
+        char[][] loadedMaze = new char[lengthOfMaze][widthOfMaze];
+        String[] rows;
+        // loading row by row
+        for (int i = 0; i < lengthOfMaze; i++) {
+            // splitting each row into individual characters
+            rows = fields[i + idx].split(" ");
+            // setting each element of the array accordingly
+            for (int j = 0; j < widthOfMaze; j++) {
+                loadedMaze[lengthOfMaze][widthOfMaze] = rows[j].charAt(0);
+            }
+        } // ends on idx + (length-1)
+        // index is now = old index + length of maze
+        idx += lengthOfMaze;
+
+        // declaring variables to load in next.
+        String name;
+        char structureID;
+        int area, timeBetweenMaintenance, daysSinceLastMaintenance;
+
+        name = fields[idx];
+        idx++;
+        structureID = fields[idx].charAt(0);
+        idx++;
+        area = Integer.parseInt(fields[idx]);
+        idx++;
+        timeBetweenMaintenance = Integer.parseInt(fields[idx]);
+        idx++;
+        daysSinceLastMaintenance = Integer.parseInt(fields[idx]);
+        
+        Maze newMaze = new Maze (name, structureID, area, timeBetweenMaintenance, daysSinceLastMaintenance, onProperty, loadedMaze); 
+        return newMaze;
+
+   }
+
+   public String saveToString () {
+        String sum = "";
+        sum += "Maze"; // class type, reference for reading in
+        sum += "\n";
+        sum += this.length;
+        sum += "\n";
+        sum += this.width;
+        sum += "\n";
+        // loading in array
+        String rows;
+        for (int i = 0; i < this.length; i++) {
+            rows = "";
+            for (int j = 0; k < this.width; j++) {
+                rows += maze[i][j];
+                rows += " ";
+            }
+            sum += rows;
+            sum += "\n";
+        }
+        // other parameters
+        sum += this.getName();
+        sum += "\n";
+        sum += this.getStructureID();
+        sum += "\n";
+        sum += this.getArea();
+        sum += "\n";
+        sum += this.getTimeBetweenMaintenance();
+        sum += "\n";
+        sum += this.getDaysSinceLastMaintenance();
+        sum += "\n";
+        // add extra empty line or no?? find out later when we integrate all subsystems together.
+
+        return sum;
+
    }
 }
