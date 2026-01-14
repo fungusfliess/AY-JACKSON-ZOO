@@ -71,12 +71,8 @@ public abstract class Structure{
       daysSinceLastMaintenance = 0;
    }
    
-   public Coord find(){
-      return onProperty.find(structureID);     
-   }
-   
    public int compareToSize(Structure structure){
-      return this.size - structure.getArea();
+      return this.area - structure.getArea();
    }
    
    public int compareToSinceLastMaintenance(Structure structure){
@@ -88,7 +84,7 @@ public abstract class Structure{
          return ((Habitat)this).getNumAnimals() - ((Habitat)structure).getNumAnimals();
       }else if(this instanceof Habitat){
          return ((Habitat)this).getNumAnimals(); 
-      }else if(strcture instanceof Habitat){
+      }else if(structure instanceof Habitat){
          return -1 * ((Habitat)structure).getNumAnimals();
       }else{
          return 0;
