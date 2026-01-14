@@ -7,7 +7,7 @@ public abstract class Animal {
     public static final int LOW_STAT = 30;
 
     // COMMON FIELDS
-    private Habitat habitat;
+    private String habitatId;
     private String name;
     private String specie;
     private int age;
@@ -28,10 +28,6 @@ public abstract class Animal {
     private String[] typeFoods;
     private int lifeExpectancy;
     private double flexibility;
-
-    // arianna tell jerry: how do u want to handle required area.
-    private int requiredArea; 
-
     private LivingCondition livingCondition;
     private int totalDailyInteractions;
 
@@ -52,7 +48,8 @@ public abstract class Animal {
 
     }
 
-    public Animal(String name, String specie, String preferedInteraction, String gender, int happiness, int cleanliness, int hunger, int age, double weight) {
+    public Animal(String habitatId, String name, String specie, String preferedInteraction, String gender, int happiness, int cleanliness, int hunger, int age, double weight) {
+        this.habitatId = habitatId;
         this.name = name;
         this.specie = specie;
         this.preferedInteraction = preferedInteraction;
@@ -71,8 +68,8 @@ public abstract class Animal {
     // COMMON FIELDS GETTERS AND SETTERS
 
     // GETTERS
-    public Habitat getHabitat() {
-        return habitat;
+    public String getHabitatId() {
+        return habitatId;
     }
     public String getName() {
         return name;
@@ -113,11 +110,6 @@ public abstract class Animal {
     public int getAdultAge() {
         return adultAge;
     }
-
-    public int getRequiredArea() {
-        return requiredArea; 
-    }
-    
     // ABSTRACT GETTERS
     public abstract int getMaxHunger();
     public abstract String[] getTypeFoods();
@@ -128,8 +120,8 @@ public abstract class Animal {
 
     //SETTERS
 
-    public void setHabitat(Habitat habitat) {
-        this.habitat = habitat;
+    public void setHabitatId(String habitatId) {
+        this.habitatId = habitatId;
     }
     public void setName(String name) {
         this.name = name;
@@ -224,11 +216,12 @@ public abstract class Animal {
     // moves animal to a new habitat if possible
     public boolean relocate(Habitat newHabitat) {
         return relocateAnimal();
+        
     }
 
     // checks to see if the animal is suitable for the given habitat
     public boolean isSuitable(Habitat habitat) {
-        if (this.livingCondition.compareTo(habitat.getLivingCondition()) <= this.flexibility && habitat.enoughSpace(requiredArea)) {
+        if (this.livingCondition.compareTo(habitat.getLivingCondition()) >= this.flexibility && habitat.hasSpace()) {
             return true;
         }
         return false;
@@ -278,8 +271,8 @@ public abstract class Animal {
         return false;
     }
 
-    public  String toString() {
-        return  "Habitat: " + habitat + "\n" +
+    public String toString() {
+        return  "Habitat Id: " + habitatId + "\n" +
                 "Name: " + name + "\n" +
                 "Specie: " + specie + "\n" +
                 "Age: " + age + "\n" +

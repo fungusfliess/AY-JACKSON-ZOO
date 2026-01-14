@@ -168,6 +168,11 @@ public class Land {
         return -1;
     }
     
+    /*
+    @description: Searches for a Structure in the structureList by its ID.
+    @params: char structureID represents the ID of the Structure to search for.
+    @returns: int index of the Structure in the structureList array, or -1 if not found.
+    */
     public int searchIdxByID (char structureID) {
         for (int i = 0; i < currentNumStructures; i++) {
             if (structureList[i].getStructureID() == structureID) {
@@ -175,6 +180,18 @@ public class Land {
             }
         }
         return -1;
+    }
+
+    /*
+    @description: Accessor for Structure at given index.
+    @params: int idx is the index of the Structure to access.
+    @returns: Structure at given index, or null if index is out of bounds.
+    */
+    public Structure getStructureAtIdx (int idx) {
+        if (idx < 0 || idx >= currentNumStructures) {
+            return null;
+        }
+        return structureList[idx];
     }
 
     // SORT
@@ -380,7 +397,38 @@ public class Land {
         currentNumStructures++;
         return true;
     }
-    // COME_BACK_HERE MISSING ATTRACTIONS!!!
+
+    public boolean createPark (Coord corner1, int maxRadiusOfBuild, String name, char structureID, int capacity) {
+        // if array is full
+        if (currentNumStructures == maxNumStructures) {
+            return false;
+        }
+        // if physical building cannot be built
+        if (!landMap.buildStructureBlob(corner1, structureID, maxRadiusOfBuild)) {
+            return false;
+        }
+        // calculating area of the Structure.
+        int area = landMap.areaOf(corner1);
+        structureList[currentNumStructures] = new Park(name, structureID, area, capacity, this);
+        currentNumStructures++;
+        return true;
+    }
+
+    public boolean createMaze (Coord corner1, int maxRadiusOfBuild, String name, char structureID, int timeBetweenMaintenance) {
+        // if array is full
+        if (currentNumStructures == maxNumStructures) {
+            return false;
+        }
+        // if physical building cannot be built
+        if (!landMap.buildStructureBlob(corner1, structureID, maxRadiusOfBuild)) {
+            return false;
+        }
+        // calculating area of the Structure.
+        int area = landMap.areaOf(corner1);
+        structureList[currentNumStructures] = new Maze(name, structureID, area, timeBetweenMaintenance, 0, this);
+        currentNumStructures++;
+        return true;
+    }
 
     /*
     @description: removes a Structure from the structureList array and demolishes it from the map.
@@ -388,6 +436,7 @@ public class Land {
     @returns: boolean representing success. Will be unsuccessful if the Structure's demolish method returns false.
     */
     public boolean removeStructureFromList (int tgtIdx) {
+        // if demolish is unsuccessful (also calls demolish on the Structure)
         if (!structureList[tgtIdx].demolish()) {
             return false;
         } 

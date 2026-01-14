@@ -19,10 +19,10 @@ public class Mammal extends Animal {
         setAdultAge(adultAge(parent.getSpecie()));
         drinksMilk = true;
     }
-    public Mammal(String name, String specie, String preferedInteraction, String gender,
+    public Mammal(String habitatId, String name, String specie, String preferedInteraction, String gender,
                 int happiness, int cleanliness, int hunger, int age, double weight) {
 
-        super(name, specie, preferedInteraction, gender, happiness, cleanliness, hunger, age, weight);
+        super(habitatId, name, specie, preferedInteraction, gender, happiness, cleanliness, hunger, age, weight);
 
         setMaxHunger(maxHunger(specie));
         setTypeFoods(typeFoods(specie));
@@ -161,7 +161,7 @@ public class Mammal extends Animal {
     // Description: creates a new animal of the same type as its parent.
     //  This method is different for animals that produce offspring as eggs.
     //  Returns null if the animal does not have the requirements to reproduce.
-    public Animal[] reproduce(Habitat habitat, String name) {
+    public void reproduce(Habitat habitat, String name) {
         if (this.getGender().equalsIgnoreCase("Female") && 
             this.getHappiness() >= (LOW_STAT * MAX_STAT) && 
             this.getAge() >= this.getAdultAge() &&  
@@ -175,11 +175,10 @@ public class Mammal extends Animal {
                     babyMammal.setGender("Female"); // 50% chance female
                 }
                 habitat.addAnimal(babyMammal);
-                return new Animal[]{babyMammal} ;
             }
 
         }
-        
+
     }
 
     // Description: method that updates the age of the animal
