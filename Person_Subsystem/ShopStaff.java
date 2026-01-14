@@ -4,7 +4,9 @@ package Person_Subsystem;
    Name: Elizabeth Wang
    Class: ICS4U1-23
    Date: Jan 7, 2025
-   Description: 
+   Description: ShopStaff models employees who work in the zoo gift shop or admissions-related tasks. It also inherits wages/experience/earnings 
+                from Employee and returns a role identifier like "SHOPSTAFF". It is stored in the zoo’s employee list and can be sorted by 
+                earnings or experience.
 */
 
 import Item;

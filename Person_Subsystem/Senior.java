@@ -4,11 +4,12 @@ package Person_Subsystem;
    Name: Elizabeth Wang
    Class: ICS4U1-23
    Date: Jan 7, 2025
-   Description: 
+   Description: Senior represents older visitors who may receive a senior discount and can require accessibility support. It stores a boolean 
+                like requiresAccessibilitySupport and uses senior pricing rules (including free admission if your program has a free-senior age 
+                threshold). It returns "SENIOR" as the role and includes accessibility status in its summary output.
 */
 
 import Adult;
-
 public class Senior extends Adult{
    public static final double SENIOR_DISCOUNT = 0.20; 
    private boolean requiresAccessibilitySupport; 
