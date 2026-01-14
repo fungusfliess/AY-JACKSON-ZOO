@@ -376,7 +376,7 @@ public class Land {
         }
         // calculating area of the Structure.
         int area = landMap.areaOf(corner1);
-        structureList[currentNumStructures] = new Pavillion(name, structureID, area, capacity, this, condition);
+        structureList[currentNumStructures] = new Pavillion(name, structureID, area, capacity, this, , condition);
         currentNumStructures++;
         return true;
     }
