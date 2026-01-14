@@ -5,8 +5,8 @@ public class Bird extends Animal{
     private boolean canFly;
     private int flyingAge;
     private boolean hasNest;
-    public static final LivingCondition eagleLivingCondition = new LandCondition(15,55,500,"Mountainous", 85, 25, true, 30, 12);
-    public static final LivingCondition cockatooLivingCondition = new LandCondition(24, 65, 300, "Tropical Forest", 50, 5, true, 80, 15);
+    public static final LivingCondition eagleLivingCondition = new LandCondition(15,55,"Mountainous", 85, 25, true, 30, 12);
+    public static final LivingCondition cockatooLivingCondition = new LandCondition(24, 65, "Tropical Forest", 50, 5, true, 80, 15);
     
     // Description: constructor for bird
     public Bird (Animal parent) {
@@ -24,10 +24,10 @@ public class Bird extends Animal{
         this.hasNest = false;
 
     }
-    public Bird(String name, String specie, String preferedInteraction, String gender,
+    public Bird(String habitatId, String name, String specie, String preferedInteraction, String gender,
                 int happiness, int cleanliness, int hunger, int age, double weight) {
 
-        super(name, specie, preferedInteraction, gender, happiness, cleanliness, hunger, age, weight);
+        super(habitatId, name, specie, preferedInteraction, gender, happiness, cleanliness, hunger, age, weight);
 
         setMaxHunger(maxHunger(specie));
         setTypeFoods(typeFoods(specie));

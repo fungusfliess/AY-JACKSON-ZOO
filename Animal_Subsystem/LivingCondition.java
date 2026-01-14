@@ -13,7 +13,6 @@ public abstract class LivingCondition {
         double diff = 0;
         diff += Math.min(this.getTemperature(), other.getTemperature())/Math.max(this.getTemperature(), other.getTemperature());
         diff += Math.min(this.getHumidity(), other.getHumidity())/Math.max(this.getHumidity(), other.getHumidity());
-        diff += Math.min(this.getArea(), other.getArea())/Math.max(this.getArea(), other.getArea());
         return diff/3;
     }
 
@@ -41,7 +40,6 @@ public abstract class LivingCondition {
     public String toString() {
         return "Temperature: " + temperature + "\n" +
                "Humidity: " + humidity + "\n" +
-               "Area: " + area + "\n" +
                "Region: " + region + "\n";
     }
 }

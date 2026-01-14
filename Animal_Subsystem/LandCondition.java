@@ -7,9 +7,9 @@ public class LandCondition extends LivingCondition {
     private double vegetationDensity; // percentage from 0 to 100
     private int amountStructures; // number of structures present
 
-    public LandCondition(double temp, double hum, double area, String region, 
+    public LandCondition(double temp, double hum, String region, 
                          double soilCompaction, double slope, boolean hasWater, double vegetation, int structures) {
-        super(temp, hum, area, region);
+        super(temp, hum, region);
         this.soilCompaction = soilCompaction;
         this.landSlope = slope;
         this.hasWaterSource = hasWater;
