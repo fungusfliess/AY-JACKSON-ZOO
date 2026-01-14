@@ -3,8 +3,8 @@ import Structure_Subsystem.*;
 
 public class Reptile extends Animal{
     private int timeToShed;
-    public static final LivingCondition crocodileLivingCondition = new WaterCondition(28, 80, 200, "River Delta", 7.2, 180, 26, true, 0.5);
-    public static final LivingCondition snakeLivingCondition = new LandCondition(26, 50, 120, "Grassland", 40, 6, true, 45, 6);
+    public static final LivingCondition crocodileLivingCondition = new WaterCondition(28, 80, "River Delta", 7.2, 180, 26, true, 0.5);
+    public static final LivingCondition snakeLivingCondition = new LandCondition(26, 50, "Grassland", 40, 6, true, 45, 6);
 
     // Description: constructor for reptile
     public Reptile (Animal parent) {
@@ -20,9 +20,9 @@ public class Reptile extends Animal{
         this.timeToShed = timeToShed(parent.getSpecie());
 
     }
-    public Reptile(String name, String specie, String preferedInteraction, String gender,
+    public Reptile(String habitatId,String name, String specie, String preferedInteraction, String gender,
                 int happiness, int cleanliness, int hunger, int age, double weight) {
-        super(name, specie, preferedInteraction, gender, happiness, cleanliness, hunger, age, weight);
+        super(habitatId, name, specie, preferedInteraction, gender, happiness, cleanliness, hunger, age, weight);
 
         setMaxHunger(maxHunger(specie));
         setTypeFoods(typeFoods(specie));

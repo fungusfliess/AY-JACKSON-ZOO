@@ -1,11 +1,14 @@
 import Animal_Subsystem.Animal;
 import Animal_Subsystem.LivingCondition;
 
-public class Pavillion extends Habitat{
-    public static int LEARNING_PER_DISPLAY = 35;
-    public static int MAINTENANCE_RATE_PER_UNIT = 30;
+public class Enclosure extends Habitat{
+    public static int LEARNING_PER_DISPLAY = 30;
+    public static int MAINTENANCE_RATE_PER_UNIT = 26;
+    
+    private String species; 
 
-    public Pavillion(String name, 
+    public Enclosure(String species,
+        String name, 
         char structureID, 
         int area, 
         int timeBetweenMaintenance, 
@@ -14,20 +17,23 @@ public class Pavillion extends Habitat{
         int maxAnimals,
         LivingCondition climate){
             super(name, structureID, area, timeBetweenMaintenance, daysSinceLastMaintenance, onProperty, maxAnimals, climate);
+            this.species = species;
     }
 
-    public static Pavillion loadFromString(String fromFile, Land onProperty) {
+    public static Enclosure loadFromString(String fromFile, Land onProperty) {
         String[] fields = fromFile.split("\n");
         int index = 0;
 
-        String name = fields[index];
+        String species = fields[index];
+
+        String name = fields[index++];
         char structureID = fields[index++].charAt(0);
         int area = Integer.parseInt(fields[index++]);
         int timeBetweenMaintenance = Integer.parseInt(fields[index++]);
         int daysSinceLastMaintenance = Integer.parseInt(fields[index++]);
         int maxAnimals = Integer.parseInt(fields[index++]);
         // fix the climate crisis later
-        return new Pavillion(name, structureID, area, timeBetweenMaintenance, daysSinceLastMaintenance, onProperty, maxAnimals);
+        return new Enclosure(species, name, structureID, area, timeBetweenMaintenance, daysSinceLastMaintenance, onProperty, maxAnimals);
     }
     
     public double calculateMaintenanceCost(){
@@ -35,7 +41,7 @@ public class Pavillion extends Habitat{
     }
 
     public boolean addAnimal(Animal animal){
-        if(animal.isSuitable(this) && getNumAnimals() > getMaxAnimals()){
+        if(animal.isSuitable(this) && getNumAnimals() > getMaxAnimals() && (animal.getSpecie()).equals(species)){
             modifySpaceLeft(-(animal.getRequiredArea()));
             setNumAnimals(getNumAnimals() + 1);
         }
@@ -50,4 +56,3 @@ public class Pavillion extends Habitat{
         //Do this after talking to jerry about files
     }
 }
-

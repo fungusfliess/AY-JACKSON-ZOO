@@ -19,10 +19,10 @@ public class Fish extends Animal{
         setAdultAge(adultAge(parent.getSpecie()));
         this.amountEggs = amountEggs(parent.getSpecie());
     }
-    public Fish(String name, String specie, String preferedInteraction, String gender,
+    public Fish(String habitatId, String name, String specie, String preferedInteraction, String gender,
                 int happiness, int cleanliness, int hunger, int age, double weight) {
 
-        super(name, specie, preferedInteraction, gender, happiness, cleanliness, hunger, age, weight);
+        super(habitatId, name, specie, preferedInteraction, gender, happiness, cleanliness, hunger, age, weight);
 
         setMaxHunger(maxHunger(specie));
         setTypeFoods(typeFoods(specie));

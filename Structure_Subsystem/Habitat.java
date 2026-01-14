@@ -25,6 +25,21 @@ public class Habitat extends Structure{
         numAnimals = 0; 
     }
 
+    //ACCESSORS
+
+    public int getNumAnimals(){
+        return numAnimals;
+    }
+
+    public int getMaxAnimals(){
+        return maxAnimals;
+    }
+
+    //MUTATORS
+    public void setNumAnimals(int num){
+        numAnimals = num;
+    }
+    
     public abstract double calculateMaintenanceCost();
 
     public abstract boolean addAnimal(Animal animal);
@@ -39,11 +54,12 @@ public class Habitat extends Structure{
         }return false;
     }
 
-    public boolean modifySpaceLeft(double amount){
-        if (spaceLeft - amount > 0){
-            spaceLeft += amount;
-            return true;
-        }return false;
+    public boolean enoughSpace(int area){
+        return spaceLeft - area >= 0;
+    }
+
+    public void modifySpaceLeft(double amount){
+        spaceLeft += amount;
     }
 
     public void displayHabitatAnimalInfo(){
