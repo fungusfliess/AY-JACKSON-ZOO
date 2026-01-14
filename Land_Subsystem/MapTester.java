@@ -1,23 +1,30 @@
+package Land_Subsystem;
 public class MapTester {
     public static void main(String[] args) {
-        
-        Map testMap = new Map(5, 6);
-        Coord corner1 = new Coord(1, 1); 
-        Coord corner2 = new Coord(5, 3);
-
-        // Land testLand = new Land(10, testMap);
-        testMap.buildStructureBlob(corner1, 'A', 3); 
-
-        System.out.println("Initial Map:");
-        testMap.printMap();
-        //String saved = testMap.saveToString();
-
-        System.out.println(testMap.areaOf(corner1));
-
-        System.out.println("End Map:");
-        testMap.printMap();
-        // testLand.saveToFile("testMapSave.txt");
-
-        
+        Map test = new Map (16, 15);
+        // START AT (5, 7)
+        char[][] testMaze = {{'.', '.', '.', '.', '.', '.', 'N', '.', 'N', '.', '.', '.', '.', '.', '.', }, 
+                             {'.', '.', '.', '.', 'N', 'X', 'N', '.', 'N', '.', 'N', 'N', 'N', 'N', 'N', }, 
+                             {'.', 'N', 'N', 'N', 'N', 'N', 'N', '.', '.', '.', 'N', 'N', 'N', 'N', 'N', }, 
+                             {'.', 'N', '.', '.', '.', '.', '.', '.', 'N', '.', '.', '.', '.', '.', '.', }, 
+                             {'.', 'N', '.', 'N', '.', 'N', '.', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', }, 
+                             {'.', 'N', '.', 'N', '.', 'N', '.', '.', 'N', 'N', '.', '.', '.', '.', '.', }, 
+                             {'.', 'N', 'N', 'N', '.', 'N', '.', '.', '.', '.', '.', '.', '.', '.', '.', }, 
+                             {'.', '.', '.', '.', '.', 'N', '.', '.', '.', 'N', '.', '.', '.', '.', '.', }, 
+                             {'.', 'N', 'N', '.', 'N', 'N', 'N', 'N', 'N', 'N', 'N', '.', 'N', 'N', 'N', }, 
+                             {'.', '.', '.', '.', '.', '.', '.', 'N', 'N', '.', 'N', '.', '.', '.', '.', }, 
+                             {'.', 'N', '.', 'N', 'N', 'N', '.', '.', '.', '.', 'N', 'N', 'N', '.', 'N', }, 
+                             {'.', 'N', '.', 'N', '.', 'N', 'N', 'N', '.', 'N', 'N', '.', 'N', '.', '.', }, 
+                             {'.', 'N', '.', 'N', '.', 'N', '.', '.', '.', '.', '.', '.', 'N', '.', 'N', }, 
+                             {'.', 'N', '.', 'N', '.', 'N', '.', 'N', 'N', 'N', 'N', '.', 'N', '.', '.', }, 
+                             {'.', 'N', 'N', 'N', '.', 'N', '.', '.', '.', '.', 'N', '.', 'N', '.', 'N', }, 
+                             {'.', '.', '.', '.', '.', 'N', '.', 'N', '.', '.', 'N', '.', '.', '.', '.', }, };
+        //asdfasf
+        test.setCharArray(testMaze);
+        test.printMap();   
+        System.out.println();
+        System.out.println("Solved maze: ");
+        System.out.println();
+        test.printMap();  
     }
 }

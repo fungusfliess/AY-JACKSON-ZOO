@@ -1,4 +1,6 @@
 import java.util.*;
+
+import Land_Subsystem.Land;
 public abstract class Shop extends Structure{
    public static Scanner sc = new Scanner(System.in);
    private Item[] menu;
@@ -12,6 +14,10 @@ public abstract class Shop extends Structure{
    
    public AnimalFacts getAnimalFacts(){
       return animalFacts;
+   }
+
+   public Item[] getMenu(){
+      return menu;
    }
    
    public abstract double calculateMaintenanceCost(); 
@@ -45,32 +51,10 @@ public abstract class Shop extends Structure{
 
    }
    
-   public void deductMoney(Visitor buyer, double cost){
-      return buyer.recordPurchase(cost);
-   }
-   
    //tell elizabeth to make this accessor later
    protected void displayAnimalFact(Visitor visitor){
       System.out.println((visitor.getLearningHistory)[visitor.getLearningHistorySize() - 1]);
    }
 
-   public String saveToString(){
-      String saveToString = menu.length + "\n";
-      for (int i = 0; i < menu.length; i++){
-         saveToString += menu[i].getName()+ "\n" + menu[i].getPrice() + "\n";
-      }
-      int animalLength = animalFacts.getLength();
-      saveToString += animalLength;
-      for (int j = 0; j < animalLength; j++){
-         saveToString += animalFacts.getAnimalFact(j) + "\n";
-      }
-      // fix ts
-      saveToString += getName() 
-      + "\n" + getStructureID() 
-      + "\n" + getArea() 
-      + "\n" + getTimeBetweenMaintenance() 
-      + "\n" + getDaysSinceLastMaintenance() 
-      + "\n";
-
-   }
+   public abstract String saveToString();
 }

@@ -23,7 +23,6 @@ public class Senior extends Adult{
       return requiresAccessibilitySupport;
    }
 
-   // setter with param (recommended)
    public void setRequiresAccessibilitySupport(boolean requiresSupport) {
       this.requiresAccessibilitySupport = requiresSupport;
    }
