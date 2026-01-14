@@ -1,5 +1,8 @@
 import Animal_Subsystem.Animal;
+import Land_Subsystem.Land;
+import Person_Subsystem.Visitor;
 import Animal_Subsystem.LivingCondition;
+import Animal_Subsystem.LandCondition;
 import Animal_Subsystem.WaterCondition;
 
 public class Enclosure extends Habitat{
@@ -24,8 +27,7 @@ public class Enclosure extends Habitat{
     public static Enclosure loadFromString(String fromFile, Land onProperty) {
         String[] fields = fromFile.split("\n");
         int index = 0;
-        int spaceLeft = Integer.parseInt(fields[index]);
-        String species = fields[index++];
+        String species = fields[index];
         
         String climateType = fields[index++];
         double temp = Double.parseDouble(fields[index++]);
@@ -56,7 +58,7 @@ public class Enclosure extends Habitat{
         int timeBetweenMaintenance = Integer.parseInt(fields[index++]);
         int daysSinceLastMaintenance = Integer.parseInt(fields[index++]);
         int maxAnimals = Integer.parseInt(fields[index++]);
-        // fix the climate crisis later
+
         return new Enclosure(species, name, structureID, area, timeBetweenMaintenance, daysSinceLastMaintenance, onProperty, maxAnimals, climate);
     }
     
@@ -65,7 +67,7 @@ public class Enclosure extends Habitat{
     }
 
     public boolean addAnimal(Animal animal){
-        if(animal.isSuitable(this) && getNumAnimals() > getMaxAnimals() && (animal.getSpecie()).equals(species)){
+        if(animal.isSuitable((this)) && getNumAnimals() > getMaxAnimals() && (animal.getSpecie()).equals(species)){
             modifySpaceLeft(-(animal.getRequiredArea()));
             setNumAnimals(getNumAnimals() + 1);
         }
@@ -77,6 +79,15 @@ public class Enclosure extends Habitat{
     }
 
     public String saveToString(){
-        //Do this after talking to jerry about files
+
+        return "Enclosure\n"
+            + species
+            + getClimate() + "\n"//change after jerry
+            + getName() + "\n"
+            + getStructureID() + "\n"
+            + getArea() + "\n"
+            + getTimeBetweenMaintenance() + "\n"
+            + getDaysSinceLastMaintenance() + "\n"
+            + getMaxAnimals() + "\n";
     }
 }

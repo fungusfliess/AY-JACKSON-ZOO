@@ -1,4 +1,5 @@
-import Person_Subsystem.Visitor;
+import Land_Subsystem.*;
+import Person_Subsystem.*;
 
 public abstract class Structure{
    private String name;

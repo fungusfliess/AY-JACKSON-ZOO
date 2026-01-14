@@ -36,6 +36,14 @@ public class Habitat extends Structure{
         return maxAnimals;
     }
 
+    public double getSpaceLeft(){
+        return spaceLeft; 
+    }
+    
+    public LivingCondition getClimate(){
+        return climate;
+    }
+
     //MUTATORS
     public void setNumAnimals(int num){
         numAnimals = num;
