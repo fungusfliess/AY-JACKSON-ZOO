@@ -1,3 +1,4 @@
+package Person_Subsystem;
 /*
    File Name: Senior.java
    Name: Elizabeth Wang
@@ -5,6 +6,8 @@
    Date: Jan 7, 2025
    Description: 
 */
+
+import Adult;
 
 public class Senior extends Adult{
    public static final double SENIOR_DISCOUNT = 0.20; 

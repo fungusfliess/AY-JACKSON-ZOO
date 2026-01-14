@@ -1,3 +1,5 @@
+import Person_Subsystem.Visitor;
+
 public abstract class Structure{
    private String name;
    private char structureID;

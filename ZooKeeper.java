@@ -7,6 +7,7 @@
 */
 
 import Animal_Subsystem.Animal;
+import Person_Subsystem.Employee;
 
 public abstract class ZooKeeper extends Employee {
    //fields 

@@ -1,3 +1,4 @@
+package Person_Subsystem;
 /*
    File Name: ShopStaff.java
    Name: Elizabeth Wang
@@ -6,6 +7,7 @@
    Description: 
 */
 
+import Item;
 public class ShopStaff {
     public static final double FACTS_BONUS_PERCENTAGE = 0.02; 
     private int itemsSold; 

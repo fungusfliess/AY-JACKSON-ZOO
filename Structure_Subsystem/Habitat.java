@@ -1,6 +1,7 @@
 import Animal_Subsystem.Animal;
 import Animal_Subsystem.LivingCondition;
 import Land_Subsystem.Land;
+import Person_Subsystem.Visitor;
 
 public class Habitat extends Structure{
     private double spaceLeft;

@@ -1,6 +1,7 @@
 import java.util.*;
 
 import Land_Subsystem.Land;
+import Person_Subsystem.Visitor;
 public abstract class Shop extends Structure{
    public static Scanner sc = new Scanner(System.in);
    private Item[] menu;

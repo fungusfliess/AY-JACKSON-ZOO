@@ -1,3 +1,4 @@
+package Person_Subsystem;
 /*
    File Name: Visitor.java
    Name: Elizabeth Wang
@@ -6,6 +7,7 @@
    Description: 
 */
 
+import Zoo;
 import Structure_Subsystem.Item;
 import Structure_Subsystem.Structure;
 
@@ -116,6 +118,7 @@ public abstract class Visitor extends Person {
         this.deactivate();
     }
 
+    //WORK IN PROGRESS NOT DONE YET 
     public boolean visit(String structureID){
         if (structureID == null || structureID.isEmpty()){return false;}   //ADD OR DEMOLISHED to reutnr false condition 
         //CALL specifif mehods for visit, called by user  
