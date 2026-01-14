@@ -28,6 +28,10 @@ public abstract class Animal {
     private String[] typeFoods;
     private int lifeExpectancy;
     private double flexibility;
+
+    // arianna tell jerry: how do u want to handle required area.
+    private int requiredArea; 
+
     private LivingCondition livingCondition;
     private int totalDailyInteractions;
 
@@ -109,6 +113,11 @@ public abstract class Animal {
     public int getAdultAge() {
         return adultAge;
     }
+
+    public int getRequiredArea() {
+        return requiredArea; 
+    }
+    
     // ABSTRACT GETTERS
     public abstract int getMaxHunger();
     public abstract String[] getTypeFoods();
@@ -219,7 +228,7 @@ public abstract class Animal {
 
     // checks to see if the animal is suitable for the given habitat
     public boolean isSuitable(Habitat habitat) {
-        if (this.livingCondition.compareTo(habitat.getLivingCondition()) <= this.flexibility && habitat.hasSpace()) {
+        if (this.livingCondition.compareTo(habitat.getLivingCondition()) <= this.flexibility && habitat.enoughSpace(requiredArea)) {
             return true;
         }
         return false;

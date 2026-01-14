@@ -7,9 +7,9 @@ public class LandCondition extends LivingCondition {
     private double vegetationDensity; // percentage from 0 to 100
     private int amountStructures; // number of structures present
 
-    public LandCondition(double temp, double hum, double area, String region, 
+    public LandCondition(double temp, double hum, String region, 
                          double soilType, double slope, boolean hasWater, double vegetation, int structures) {
-        super(temp, hum, area, region);
+        super(temp, hum, region);
         this.soilType = soilType;
         this.landSlope = slope;
         this.hasWaterSource = hasWater;
@@ -29,7 +29,6 @@ public class LandCondition extends LivingCondition {
         double diff = 0;
         diff += Math.min(this.getTemperature(), other.getTemperature())/Math.max(this.getTemperature(), other.getTemperature());
         diff += Math.min(this.getHumidity(), other.getHumidity())/Math.max(this.getHumidity(), other.getHumidity());
-        diff += Math.min(this.getArea(), other.getArea())/Math.max(this.getArea(), other.getArea());
         diff += Math.min(this.soilType, otherLandCondition.soilType)/Math.max(this.soilType, otherLandCondition.soilType);
         diff += Math.min(this.landSlope, otherLandCondition.    landSlope)/Math.max(this.landSlope, otherLandCondition.landSlope);
         diff += Math.min(this.vegetationDensity, otherLandCondition.vegetationDensity)/Math.max(this.vegetationDensity, otherLandCondition.vegetationDensity);

@@ -95,7 +95,7 @@ public class Amphibian extends Animal{
         return -1;
     }
     private static int adultAge(String specie) {
-        if (specie.equalsIgnoreCase("Frog`")) {
+        if (specie.equalsIgnoreCase("Frog")) {
             return 5;
         } else if (specie.equalsIgnoreCase("Axolotl")) {
             return 3;

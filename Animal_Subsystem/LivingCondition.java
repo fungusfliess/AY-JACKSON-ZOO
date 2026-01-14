@@ -2,13 +2,11 @@ package Animal_Subsystem;
 public abstract class LivingCondition {
     private double temperature;
     private double humidity;
-    private double area;
     private String region;
 
-    public LivingCondition(double temp, double hum, double area, String region) {
+    public LivingCondition(double temp, double hum, String region) {
         this.temperature = temp;
         this.humidity = hum;
-        this.area = area;
         this.region = region;
     }  
     public abstract double compareTo(LivingCondition other);
@@ -20,9 +18,6 @@ public abstract class LivingCondition {
     public double getHumidity() {
         return humidity;
     }
-    public double getArea() {
-        return area;
-    }
     public String getRegion() {
         return region;
     }
@@ -32,9 +27,6 @@ public abstract class LivingCondition {
     }
     public void setHumidity(double humidity) {
         this.humidity = humidity;
-    }
-    public void setArea(double area) {
-        this.area = area;
     }
     public void setRegion(String region) {
         this.region = region;
