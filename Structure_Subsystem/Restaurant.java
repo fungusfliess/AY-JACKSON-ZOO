@@ -1,6 +1,6 @@
 public class Restaurant extends Shop{
     public final static int LEARNING_PER_PURCHASE = 20;
-    public final static double MAINTENANCE_COST_PER_AREA = 12;
+    public final static double MAINTENANCE_RATE_PER_UNIT = 12;
     public final static String EATING_MESSAGE = "Meal Eaten: yummy!!";
 
     public Restaurant(String name, 
@@ -18,7 +18,7 @@ public class Restaurant extends Shop{
         String[] fields = fromFile.split("\n");
         int index = 0;
 
-        int numItems = Integer.parseInt(fields[index++]);
+        int numItems = Integer.parseInt(fields[index]);
         Item[] menu = new Item[numItems];
 
         String itemName;
@@ -50,13 +50,13 @@ public class Restaurant extends Shop{
             timeBetweenMaintenance,
             daysSinceLastMaintenance,
             onProperty,
-            menu,
-            facts
+            facts,
+            menu
         );
     }
 
     public double calculateMaintenanceCost(){
-        return this.getArea() * MAINTENANCE_COST_PER_AREA;
+        return this.getArea() * MAINTENANCE_RATE_PER_UNIT;
     }
     public void updateVisitorLearning(Visitor toUpdate){
         toUpdate.addLearningLevel(LEARNING_PER_PURCHASE);
@@ -66,7 +66,7 @@ public class Restaurant extends Shop{
    
     public boolean buy(Visitor buyer, Item product){
         if(buyer.canAffordItem(product)){}
-            deductMoney(buyer, product.getPrice());
+            buyer.recordPurchase(product.getPrice());
             buyer.addItem(product);
             updateVisitorLearning(buyer);
             System.out.println(EATING_MESSAGE + "\n");
@@ -75,5 +75,30 @@ public class Restaurant extends Shop{
            return false;
         }        
     }
+
+    public String saveToString(){
+        String saveToString;
+
+        saveToString = "Restaurant\n" ;
+
+        saveToString = menu.length + "\n";
+        for (int i = 0; i < menu.length; i++){
+            saveToString += menu[i].getName()+ "\n" + menu[i].getPrice() + "\n";
+        }
+        int animalLength = animalFacts.getLength();
+        saveToString += animalLength;
+        for (int j = 0; j < animalLength; j++){
+            saveToString += animalFacts.getAnimalFact(j) + "\n";
+        }
+      
+        saveToString += getName() 
+        + "\n" + getStructureID() 
+        + "\n" + getArea() 
+        + "\n" + getTimeBetweenMaintenance() 
+        + "\n" + getDaysSinceLastMaintenance() 
+        + "\n";
+        return saveToString;
+
+   }
 
 }
