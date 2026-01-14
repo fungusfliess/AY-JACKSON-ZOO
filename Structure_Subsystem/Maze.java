@@ -249,12 +249,9 @@ public class Maze extends Attraction {
 
    public String saveToString () {
         String sum = "";
-        sum += "Maze"; // class type, reference for reading in
-        sum += "\n";
-        sum += this.length;
-        sum += "\n";
-        sum += this.width;
-        sum += "\n";
+        sum += "Maze" + "\n"; // class type, reference for reading in
+        sum += this.length + "\n";
+        sum += this.width + "\n";
         // loading in array
         String rows;
         for (int i = 0; i < this.length; i++) {
@@ -263,22 +260,37 @@ public class Maze extends Attraction {
                 rows += maze[i][j];
                 rows += " ";
             }
-            sum += rows;
-            sum += "\n";
+            sum += rows + "\n";
         }
         // other parameters
-        sum += this.getName();
-        sum += "\n";
-        sum += this.getStructureID();
-        sum += "\n";
-        sum += this.getArea();
-        sum += "\n";
-        sum += this.getTimeBetweenMaintenance();
-        sum += "\n";
-        sum += this.getDaysSinceLastMaintenance();
-        sum += "\n";
+        sum += this.getName() + "\n";
+        sum += this.getStructureID() + "\n";
+        sum += this.getArea() + "\n";
+        sum += this.getTimeBetweenMaintenance() + "\n";
+        sum += this.getDaysSinceLastMaintenance() + "\n";
         // COME_BACK_HERE add extra empty line or no?? find out later when we integrate all subsystems together.
 
+        return sum;
+   }
+
+   /*
+   @description: returns a String representation of the Maze object
+   @return: String representing the data of this Maze object
+   */
+   public String toString () {
+        String sum = "";
+        sum += "Maze Name: " + this.getName() + "\n";
+        sum += "Structure ID: " + this.getStructureID() + "\n";
+        sum += "Area: " + this.getArea() + "\n";
+        sum += "Time Between Maintenance: " + this.getTimeBetweenMaintenance() + "\n";
+        sum += "Days Since Last Maintenance: " + this.getDaysSinceLastMaintenance() + "\n";
+        sum += "Maze Layout: \n";
+        for (int i = 0; i < this.length; i++) {
+            for (int j = 0; j < this.width; j++) {
+                sum += this.maze[i][j] + " ";
+            }
+            sum += "\n";
+        }
         return sum;
    }
 }

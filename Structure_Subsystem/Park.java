@@ -57,17 +57,12 @@ public class Park extends Attraction {
 
    public String saveToString () {
         String sum = "";
-        sum += "Park"; // class type, reference for reading in
-        sum += this.getName();
-        sum += "\n";
-        sum += this.getStructureID();
-        sum += "\n";
-        sum += this.getArea();
-        sum += "\n";
-        sum += this.getTimeBetweenMaintenance();
-        sum += "\n";
-        sum += this.getDaysSinceLastMaintenance();
-        sum += "\n";
+        sum += "Park" + "\n"; // class type, reference for reading in
+        sum += this.getName() +"\n";
+        sum += this.getStructureID() + "\n";
+        sum += this.getArea() + "\n";
+        sum += this.getTimeBetweenMaintenance() + "\n";
+        sum += this.getDaysSinceLastMaintenance() + "\n";
         // COME_BACK_HERE add extra empty line or no?? find out later when we integrate all subsystems together.
 
         return sum;
