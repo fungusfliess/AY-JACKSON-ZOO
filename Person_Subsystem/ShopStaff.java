@@ -23,9 +23,17 @@ public class ShopStaff {
         factsShared = 0; 
     }
 
-    public int getItemsSold(){return itemsSold;}
-    public double getTotalSales(){return totalSales;}
-    public int getFactsShared(){return factsShared;}
+    public int getItemsSold(){
+        return itemsSold;
+    }
+    
+    public double getTotalSales(){
+        return totalSales;
+    }
+
+    public int getFactsShared(){
+        return factsShared;
+    }
 
     public void setEarnings(){
         earnings = hourlyWage*hoursWorked*(1+ factsShared*FACTS_BONUS_PERCENTAGE);
