@@ -168,6 +168,11 @@ public class Land {
         return -1;
     }
     
+    /*
+    @description: Searches for a Structure in the structureList by its ID.
+    @params: char structureID represents the ID of the Structure to search for.
+    @returns: int index of the Structure in the structureList array, or -1 if not found.
+    */
     public int searchIdxByID (char structureID) {
         for (int i = 0; i < currentNumStructures; i++) {
             if (structureList[i].getStructureID() == structureID) {
@@ -175,6 +180,18 @@ public class Land {
             }
         }
         return -1;
+    }
+
+    /*
+    @description: Accessor for Structure at given index.
+    @params: int idx is the index of the Structure to access.
+    @returns: Structure at given index, or null if index is out of bounds.
+    */
+    public Structure getStructureAtIdx (int idx) {
+        if (idx < 0 || idx >= currentNumStructures) {
+            return null;
+        }
+        return structureList[idx];
     }
 
     // SORT
