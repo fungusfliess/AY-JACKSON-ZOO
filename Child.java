@@ -68,6 +68,6 @@ public class Child extends Visitor{
       "Num Facts Learned: " + learningHistorySize + "\n" +
       "Preferred Budget Limit: " + preferredBudgetLimit + "\n"; 
       "Guardian ID: " + guardianID; + "\n";
-      "Stroller Needed " + strollerNeeded; + "\n";
+      "Stroller Needed: " + strollerNeeded; + "\n";
    }
 }
