@@ -37,25 +37,54 @@ public class testZoo {
         return zooLand.getStructureAtIdx(idx);
     }
 
-    /*
-    @description: Searches for a Structure in the land subsystem by both its ID and name.
-    @params: char id represents the ID of the Structure to search for.
-    @returns: Structure object if found with matching ID and name, null otherwise.
-    */
-    public Structure searchStructureByIDAndName (char id, String name) {
-        int idx = zooLand.searchIdxByID(id);
-        // if not found, then searchIdxByID returns -1
-        if (idx == -1) {
-            return null;
-        }
-        // Structure is found, now check name
-        Structure temp = zooLand.getStructureAtIdx(idx);
-        // if name is equal, return Structure, else return null
-        if (temp.getName().equals(name)) {
-            return temp;
-        }
-        return null;
+    public Structure searchByNumberAnimalsAndSize (int numAnimals, int size) {
+        return zooLand.searchByNumberAnimalsAndSize(numAnimals, size);
     }
 
+    public Habitat searchHabitatMostAnimalsAndLivingConditions (String condition) {
+        return zooLand.searchHabitatMostAnimalsAndLivingConditions(condition);
+    }
+
+    public void sortStructuresByDaysSinceLastMaintenance (int numToSort) {
+        zooLand.sortByDaysSinceLastMaintenance(numToSort);
+    }
+
+    public void sortStructuresByLeastAnimals () {
+        zooLand.sortByLeastAnimals();
+    }
+
+    public void printMap() {
+        zooLand.printMap();
+    }
+
+    public void sortStructureBySize () {
+        zooLand.sortBySmallestToLargest();
+    }
+
+    public void sortBySizeAndTimeBetweenMaintenance () {
+        zooLand.sortBySizeAndTimeBetweenMaintenance();
+    }
+
+    public void sortByMostAnimals () {
+        zooLand.sortByMostAnimals();
+    }
+ 
+    public void printAllStructuresNeedingMaintenance () {
+        zooLand.printAllStructuresNeedingMaintenance();
+    }
+
+    public void printAllStructureInfo () {
+        zooLand.printAllStructureInfo();
+    }
+
+    public void maintainAll () {
+        zooLand.maintainAll();
+    }
+
+    public void maintain(Structure input) {
+        input.maintenance();
+    } 
+
+    
 
 }
