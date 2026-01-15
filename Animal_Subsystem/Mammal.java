@@ -3,8 +3,8 @@ import Structure_Subsystem.*;
 
 public class Mammal extends Animal {
     private boolean drinksMilk;
-    public static final LivingCondition unicornLivingCondition = new LandCondition(18, 60, 400,"Enchanted Forest", 45,4,true,70,8);
-    public static final LivingCondition cabybaraLivingCondition = new LandCondition(26, 75, 250,"Wet Grassland", 30, 2, true, 80, 5);
+    public static final LivingCondition unicornLivingCondition = new LandCondition(18, 60, "Enchanted Forest", 45,4,true,70,8);
+    public static final LivingCondition cabybaraLivingCondition = new LandCondition(26, 75, "Wet Grassland", 30, 2, true, 80, 5);
 
     // Description: constructor for mammals
     public Mammal(Animal parent) {
@@ -17,6 +17,7 @@ public class Mammal extends Animal {
         setLivingCondition(livingCondition(parent.getSpecie()));
         setTotalDailyInteractions(totalDailyInteractions(parent.getSpecie()));  
         setAdultAge(adultAge(parent.getSpecie()));
+        setRequiredArea(requiredArea(getSpecie()));
         drinksMilk = true;
     }
     public Mammal(String habitatId, String name, String specie, String preferedInteraction, String gender,
@@ -31,6 +32,7 @@ public class Mammal extends Animal {
         setLivingCondition(livingCondition(specie));
         setTotalDailyInteractions(totalDailyInteractions(specie)); 
         setAdultAge(adultAge(specie));
+        setRequiredArea(requiredArea(specie));
         updateAge();
     }
 
@@ -94,6 +96,14 @@ public class Mammal extends Animal {
         }
         return -1;
     }
+    public static double requiredArea(String specie) {
+        if (specie.equalsIgnoreCase("Unicorn")) {
+            return 50.0;
+        } else if (specie.equalsIgnoreCase("Cabybara")) {
+            return 30.0;
+        }
+        return 0;
+    }
 
     // GETTERS
 
@@ -118,7 +128,10 @@ public class Mammal extends Animal {
     public int getAdultAge() {
         return Mammal.adultAge(this.getSpecie());
     }
-    public boolean isDrinksMilk() {
+    public double getRequiredArea() {
+        return Mammal.requiredArea(this.getSpecie());
+    }
+    public boolean drinksMilk() {
         return drinksMilk;
     }
 
@@ -144,8 +157,8 @@ public class Mammal extends Animal {
     public void setAdultAge(int adultAge) {
         super.setAdultAge(adultAge);
     }
-    public void setDrinksMilk(boolean drinksMilk) {
-        this.drinksMilk = drinksMilk;
+    public void setRequiredArea(double requiredArea) {
+        super.setRequiredArea(requiredArea);
     }
     
 

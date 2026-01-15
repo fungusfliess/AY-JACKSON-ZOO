@@ -17,6 +17,7 @@ public class Reptile extends Animal{
         setLivingCondition(livingCondition(parent.getSpecie()));
         setTotalDailyInteractions(totalDailyInteractions(parent.getSpecie()));
         setAdultAge(adultAge(parent.getSpecie()));
+        setRequiredArea(requiredArea(parent.getSpecie()));
         this.timeToShed = timeToShed(parent.getSpecie());
 
     }
@@ -31,6 +32,7 @@ public class Reptile extends Animal{
         setLivingCondition(livingCondition(specie));
         setTotalDailyInteractions(totalDailyInteractions(specie)); 
         setAdultAge(adultAge(specie));
+        setRequiredArea(requiredArea(specie));
         updateAge();
     }
 
@@ -94,6 +96,14 @@ public class Reptile extends Animal{
         }
         return -1;
     }
+    public static double requiredArea(String specie) {
+        if (specie.equalsIgnoreCase("Crocodile")) {
+            return 50.0;
+        } else if (specie.equalsIgnoreCase("Snake")) {
+            return 20.0;
+        }
+        return 0;
+    }
     public static int timeToShed(String specie) {
         if (specie.equalsIgnoreCase("Crocodile")) {
             return 30;
@@ -125,6 +135,12 @@ public class Reptile extends Animal{
     }
     public int getAdultAge() {
         return Reptile.adultAge(this.getSpecie());
+    }
+    public double getRequiredArea() {
+        return Reptile.requiredArea(this.getSpecie());
+    }
+    public int getTimeToShed() {
+        return timeToShed;
     }
 
     // SETTERS

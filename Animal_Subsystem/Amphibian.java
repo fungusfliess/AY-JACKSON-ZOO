@@ -21,6 +21,7 @@ public class Amphibian extends Animal{
         setLivingCondition(livingCondition(parent.getSpecie()));
         setTotalDailyInteractions(totalDailyInteractions(parent.getSpecie()));
         setAdultAge(adultAge(parent.getSpecie()));
+        setRequiredArea(requiredArea(parent.getSpecie()));
         this.stage2Age = stage2Age(parent.getSpecie());
         this.stage3Age = stage3Age(parent.getSpecie());
         this.canWalk = false;
@@ -39,6 +40,7 @@ public class Amphibian extends Animal{
         setLivingCondition(livingCondition(specie));
         setTotalDailyInteractions(totalDailyInteractions(specie)); 
         setAdultAge(adultAge(specie));
+        setRequiredArea(requiredArea(specie));
         updateAge();
     }
 
@@ -112,6 +114,11 @@ public class Amphibian extends Animal{
         if (specie.equalsIgnoreCase("Axolotl")) return 2;
         return 0;
     }
+    private static double requiredArea(String specie) {
+        if (specie.equalsIgnoreCase("Frog")) return 10.0;
+        if (specie.equalsIgnoreCase("Axolotl")) return 8.0;
+        return 0;
+    }
 
     // GETTERS
 
@@ -136,6 +143,9 @@ public class Amphibian extends Animal{
     public int getAdultAge() {
         return Amphibian.adultAge(this.getSpecie());
     }
+    public double getRequiredArea() {
+        return (int) Amphibian.requiredArea(this.getSpecie());
+    }
 
     // SETTERS
     public void setMaxHunger(int maxHunger) {
@@ -155,6 +165,9 @@ public class Amphibian extends Animal{
     }
     public void setTotalDailyInteractions(int totalDailyInteractions) {
         super.setTotalDailyInteractions(totalDailyInteractions);
+    }
+    public void setAdultAge(int adultAge) {
+        super.setAdultAge(adultAge);
     }
 
     // METHODS

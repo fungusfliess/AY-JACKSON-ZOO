@@ -19,6 +19,7 @@ public class Bird extends Animal{
         setLivingCondition(livingCondition(parent.getSpecie()));
         setTotalDailyInteractions(totalDailyInteractions(parent.getSpecie()));
         setAdultAge(adultAge(parent.getSpecie()));
+        setRequiredArea(requiredArea(parent.getSpecie()));
         this.canFly = canFly(parent.getSpecie());
         this.flyingAge = flyingAge(parent.getSpecie());  
         this.hasNest = false;
@@ -36,6 +37,7 @@ public class Bird extends Animal{
         setLivingCondition(livingCondition(specie));
         setTotalDailyInteractions(totalDailyInteractions(specie)); 
         setAdultAge(adultAge(specie));
+        setRequiredArea(requiredArea(specie));
         this.canFly = canFly(specie);
         this.flyingAge = flyingAge(specie);  
         this.hasNest = false;
@@ -93,7 +95,23 @@ public class Bird extends Animal{
         }
         return -1;
     }
-    private static boolean canFly(String specie) {
+    public static int adultAge(String specie) {
+        if (specie.equalsIgnoreCase("Eagle")) {
+            return 5;
+        } else if (specie.equalsIgnoreCase("Cockatoo")) {
+            return 3;
+        }
+        return -1;
+    }
+    public static double requiredArea(String specie) {
+        if (specie.equalsIgnoreCase("Eagle")) {
+            return 30.0;
+        } else if (specie.equalsIgnoreCase("Cockatoo")) {
+            return 15.0;
+        }
+        return 0;
+    }
+    public static boolean canFly(String specie) {
         if (specie.equalsIgnoreCase("Eagle")) {
             return true;
         } else if (specie.equalsIgnoreCase("Cockatoo")) {
@@ -101,21 +119,13 @@ public class Bird extends Animal{
         }
         return false;
     }
-    private static int flyingAge(String specie) {
+    public static int flyingAge(String specie) {
         if (specie.equalsIgnoreCase("Eagle")) {
             return 3;
         } else if (specie.equalsIgnoreCase("Cockatoo")) {
             return 2;
         }
         return 0;
-    }
-    private static int adultAge(String specie) {
-        if (specie.equalsIgnoreCase("Eagle")) {
-            return 5;
-        } else if (specie.equalsIgnoreCase("Cockatoo")) {
-            return 3;
-        }
-        return -1;
     }
 
     // GETTERS
@@ -138,14 +148,20 @@ public class Bird extends Animal{
     public int getTotalDailyInteractions() {
         return Bird.totalDailyInteractions(this.getSpecie());
     }
+    public int getAdultAge() {
+        return Bird.adultAge(this.getSpecie());
+    }
+    public double getRequiredArea() {
+        return Bird.requiredArea(this.getSpecie());
+    }
     public boolean getCanFly() {
         return canFly;
     }   
     public int getFlyingAge() {
         return flyingAge;
     }
-    public int getAdultAge() {
-        return Bird.adultAge(this.getSpecie());
+    public boolean hasNest() {
+        return hasNest;
     }
 
     // SETTERS
@@ -166,9 +182,6 @@ public class Bird extends Animal{
     }
     public void setTotalDailyInteractions(int totalDailyInteractions) {
         super.setTotalDailyInteractions(totalDailyInteractions);
-    }
-    public void canFly(boolean canFly) {
-        this.canFly = canFly;
     }
 
     // METHODS
@@ -194,6 +207,10 @@ public class Bird extends Animal{
             return egg;
         }
         return null;
+    }
+
+    public void buildNest() {
+        this.hasNest = true;
     }
 
     // Description: method that updates the age of the animal

@@ -17,7 +17,6 @@ public abstract class Animal {
     private int hunger;
     private String gender;
     private double weight;
-    private int adultAge;
 
     private int numDailyInteractions;
     private int daysPassed;
@@ -30,6 +29,8 @@ public abstract class Animal {
     private double flexibility;
     private LivingCondition livingCondition;
     private int totalDailyInteractions;
+    private int adultAge;
+    private double requiredArea;
 
     
     public Animal(Animal parent) {
@@ -107,16 +108,7 @@ public abstract class Animal {
     public int getNumPreferredInteractions() {  
         return numPreferredInteractions;
     }   
-    public int getAdultAge() {
-        return adultAge;
-    }
-    // ABSTRACT GETTERS
-    public abstract int getMaxHunger();
-    public abstract String[] getTypeFoods();
-    public abstract int getLifeExpectancy();
-    public abstract double getFlexibility();
-    public abstract LivingCondition getLivingCondition();
-    public abstract int getTotalDailyInteractions();
+    
 
     //SETTERS
 
@@ -150,9 +142,7 @@ public abstract class Animal {
     public void setWeight(double weight) {
         this.weight = weight;
     }  
-    public void setAdultAge(int adultAge) {
-        this.adultAge = adultAge;
-    }
+    
 
     // SPECIE BASED FIELDS GETTERS AND SETTERS
     // SETTERS
@@ -174,6 +164,21 @@ public abstract class Animal {
     public void setTotalDailyInteractions(int totalDailyInteractions) {
         this.totalDailyInteractions = totalDailyInteractions;
     }
+    public void setAdultAge(int adultAge) {
+        this.adultAge = adultAge;
+    }
+    public void setRequiredArea(double requiredArea) {
+        this.requiredArea = requiredArea;
+    }
+    // ABSTRACT GETTERS
+    public abstract int getMaxHunger();
+    public abstract String[] getTypeFoods();
+    public abstract int getLifeExpectancy();
+    public abstract double getFlexibility();
+    public abstract LivingCondition getLivingCondition();
+    public abstract int getTotalDailyInteractions();
+    public abstract int getAdultAge();
+    public abstract double getRequiredArea();
 
 
     // NON-ABSTRACT METHODS
@@ -216,12 +221,12 @@ public abstract class Animal {
     // moves animal to a new habitat if possible
     public boolean relocate(Habitat newHabitat) {
         return relocateAnimal();
-        
+
     }
 
     // checks to see if the animal is suitable for the given habitat
     public boolean isSuitable(Habitat habitat) {
-        if (this.livingCondition.compareTo(habitat.getLivingCondition()) >= this.flexibility && habitat.hasSpace()) {
+        if (this.livingCondition.compareTo(habitat.getLivingCondition()) >= this.flexibility && habitat.enoughSpace(requiredArea)) {
             return true;
         }
         return false;
