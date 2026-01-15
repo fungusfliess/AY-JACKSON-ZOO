@@ -118,14 +118,14 @@ public abstract class ZooKeeper extends Employee {
      @return formatted employee information
      */
     @Override
-    public String toString(){
-        return "PersonID: " + personID + "\n" + 
-                "Name: " + firstName + " " + lastName + "\n" + 
-                "Age: " + age + "\n" + 
-                "Role: " + this.getRole() + "\n" + 
+    public String toString() {
+        return "PersonID: " + getPersonID() + "\n" +
+                "Name: " + getFirstName() + " " + getLastName() + "\n" +
+                "Age: " + getAge() + "\n" +
+                "Role: " + getRole() + "\n" +
                 "Certification Level: " + certificationLevel + "\n" + 
                 "Tasks Completed: " + dailyTasksCompleted + "\n" + 
-                "Earnings: " + earnings + "\n"; 
+                "Earnings: " + getEarnings() + "\n";
     }
 
     /*

@@ -9,7 +9,6 @@ package Person_Subsystem;
                 earnings or experience.
 */
 import Structure_Subsystem.Item;
-
 public class ShopStaff extends Employee {
 
     //CONSTANTS
