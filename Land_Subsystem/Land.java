@@ -236,7 +236,7 @@ public class Land {
             if(current.getNumAnimals() == numAnimals && current.getSize() == size){
                 index = middle;
                 found = true;
-            }else if(current.getNumAnimals() < numAnimals || current.getSize() < size){
+            }else if(current.getNumAnimals() < numAnimals || (current.getNumAnimals() == numAnimals && current.getSize() < size)){
                 bottom = middle + 1;
             }else{
                 top = middle -1;
