@@ -56,8 +56,10 @@ public abstract class ZooKeeper extends Employee {
      @note: includes a bonus multiplier based on certification level
      */
     @Override
-    public void setEarnings(){
-        earnings = (hourlyWage*hoursWorked)*(1 + CERTIFICATION_BONUS_PERCENTAGE);
+    public void setEarnings() {
+        double multiplier = 1.0 + (getCertificationLevel() * CERTIFICATION_BONUS_PERCENTAGE);
+        double dayPay = getHourlyWage() * getHoursWorked() * multiplier;
+        addToEarnings(dayPay);
     }
 
     /*
@@ -65,7 +67,7 @@ public abstract class ZooKeeper extends Employee {
      @param c new certification level
      */
     public void setCertificationLevel(int c){
-        certificationLevel = min(c, MAX_CERTIFICATION_LEVEL);
+        certificationLevel = Math.min(c, MAX_CERTIFICATION_LEVEL);
     }
 
     //OTHER METHODS 
