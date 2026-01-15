@@ -1,3 +1,4 @@
+package Person_Subsystem;
 /*
    File Name: ZooKeeper.java
    Name: Elizabeth Wang
@@ -8,7 +9,6 @@
 */
 
 import Animal_Subsystem.Animal;
-import Person_Subsystem.Employee;
 
 public abstract class ZooKeeper extends Employee {
     //CONSTANTS 
