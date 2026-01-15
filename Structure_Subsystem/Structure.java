@@ -42,6 +42,9 @@ public abstract class Structure{
    public int getDaysSinceLastMaintenance(){
       return daysSinceLastMaintenance; 
    }
+   public int getNumAnimals(){
+      return 0;
+   }
    
    //Mutator
    
@@ -80,15 +83,7 @@ public abstract class Structure{
    }
    
    public int compareToNumAnimals(Structure structure){  
-      if(this instanceof Habitat && structure instanceof Habitat){
-         return ((Habitat)this).getNumAnimals() - ((Habitat)structure).getNumAnimals();
-      }else if(this instanceof Habitat){
-         return ((Habitat)this).getNumAnimals(); 
-      }else if(structure instanceof Habitat){
-         return -1 * ((Habitat)structure).getNumAnimals();
-      }else{
-         return 0;
-      }
+      return getNumAnimals() - structure.getNumAnimals(); 
    }
    
    public abstract String saveToString();

@@ -183,6 +183,52 @@ public class Land {
     }
 
     /*
+    @description: Searches for a Structure with matching parameters 
+    @params: numAnimals and size represents user desired number of Animals and size
+    @returns: returns Structure object 
+    */
+
+    public Structure searchByNumberAnimalsAndSize(int numAnimals, int size){
+        structureList.sortBySizeAndAnimals();
+        Structure current;
+        int top = structureList.length -1, bottom = 0, middle, index = -1;
+        boolean found = false;
+        while(top >= bottom && !found){
+            middle = top + bottom/2; 
+            current = structureList[middle];
+            if(current.getNumAnimals() == numAnimals && current.getSize() == size){
+                index = middle;
+                found = true;
+            }else if(current.getNumAnimals() < numAnimals || current.getSize() < size){
+                bottom = middle -1;
+            }else{
+                top = middle -1;
+            }
+        }
+        return getStructureAtIdx(index);
+    }
+
+    /*
+    @description: Searches for Structure with matching climate and most Animals
+    @params: climate represents user desired LivingCondition 
+    @returns: returns Structure object 
+    */
+
+    public Structure searchMostAnimalsAndLivingCondition(LivingCondition climate){
+        Structure mostAnimals = null;
+        for(int i = 0; i < currentNumStructures; i++){
+            if((structureList[i].getClimate()).equals(climate)){
+                if(mostAnimals = null){
+                    mostAnimals = structureList[i];
+                }else if(structureList[i].compareToNumAnimals(mostAnimals) > 0){
+                    mostAnimals = structureList[i];
+                }
+            }
+        }
+        return mostAnimals;
+    }
+
+    /*
     @description: Accessor for Structure at given index.
     @params: int idx is the index of the Structure to access.
     @returns: Structure at given index, or null if index is out of bounds.

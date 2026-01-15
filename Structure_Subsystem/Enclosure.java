@@ -1,9 +1,6 @@
-import Animal_Subsystem.Animal;
+import Animal_Subsystem.*;
 import Land_Subsystem.Land;
 import Person_Subsystem.Visitor;
-import Animal_Subsystem.LivingCondition;
-import Animal_Subsystem.LandCondition;
-import Animal_Subsystem.WaterCondition;
 
 public class Enclosure extends Habitat{
     public static int LEARNING_PER_DISPLAY = 30;

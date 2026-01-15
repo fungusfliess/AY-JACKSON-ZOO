@@ -3,7 +3,7 @@ import Animal_Subsystem.LivingCondition;
 import Land_Subsystem.Land;
 import Person_Subsystem.Visitor;
 
-public class Habitat extends Structure{
+public abstract class Habitat extends Structure{
     private double spaceLeft;
     private int numAnimals;
     private int maxAnimals;

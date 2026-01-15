@@ -1,4 +1,5 @@
 import Person_Subsystem.Visitor;
+import Land_Subsystem.*;
 
 public class Restaurant extends Shop{
     public final static int LEARNING_PER_PURCHASE = 20;
@@ -83,14 +84,14 @@ public class Restaurant extends Shop{
 
         saveToString = "Restaurant\n" ;
 
-        saveToString = menu.length + "\n";
-        for (int i = 0; i < menu.length; i++){
-            saveToString += menu[i].getName()+ "\n" + menu[i].getPrice() + "\n";
+        saveToString = (getMenu()).length + "\n";
+        for (int i = 0; i < (getMenu()).length; i++){
+            saveToString += ((getMenu())[i]).getName()+ "\n" + ((getMenu())[i]).getPrice() + "\n";
         }
-        int animalLength = animalFacts.getLength();
+        int animalLength = (getAnimalFacts()).getLength();
         saveToString += animalLength;
         for (int j = 0; j < animalLength; j++){
-            saveToString += animalFacts.getAnimalFact(j) + "\n";
+            saveToString += (getAnimalFacts()).getAnimalFact(j) + "\n";
         }
       
         saveToString += getName() 
