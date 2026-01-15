@@ -36,11 +36,19 @@ public class Habitat extends Structure{
         return maxAnimals;
     }
 
+    public double getSpaceLeft(){
+        return spaceLeft; 
+    }
+    
+    public LivingCondition getClimate(){
+        return climate;
+    }
+
     //MUTATORS
     public void setNumAnimals(int num){
         numAnimals = num;
     }
-    
+
     public abstract double calculateMaintenanceCost();
 
     public abstract boolean addAnimal(Animal animal);
@@ -69,6 +77,7 @@ public class Habitat extends Structure{
             System.out.println(animals[i]); 
         }
     }
+
 
     public abstract String saveToString();
 

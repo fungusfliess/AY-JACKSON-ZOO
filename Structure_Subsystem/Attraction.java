@@ -1,4 +1,4 @@
-package Structure_Subsystem;
+
 import Land_Subsystem.*;
 
 public abstract class Attraction extends Structure {
