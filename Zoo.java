@@ -10,6 +10,18 @@ import Person_Subsystem.Visitor;
 import Structure_Subsystem.Habitat;
 
 public class Zoo {
+    //CONSTANTS 
+    private static final String PERSON_FILE = "person.txt";
+    private static final int MAX_STAFF = 200;
+    private static final int MAX_VISITORS = 2000;
+    
+    //FIELDS
+    private Employee[] staffList = new Employee[MAX_STAFF];
+    private Visitor[] visitorList = new Visitor[MAX_VISITORS];
+    private int numEmployees = 0;
+    private int numVisitors = 0;
+
+    
     int numberOfAnimals;
     private Animal[] animals;
     private LivingCondition[] livingConditions;
@@ -106,17 +118,6 @@ public class Zoo {
         return "This zoo has " + numVisitors + "visitors\n"; 
     }
 
-
-    //CONSTANTS 
-    private static final String PERSON_FILE = "person.txt";
-    private static final int MAX_STAFF = 200;
-    private static final int MAX_VISITORS = 2000;
-    
-    //FIELDS
-    private Employee[] staffList = new Employee[MAX_STAFF];
-    private Visitor[] visitorList = new Visitor[MAX_VISITORS];
-    private int numEmployees = 0;
-    private int numVisitors = 0;
    
     /*
         @description: checks whether a Person with the given personID exists in the current Zoo system
