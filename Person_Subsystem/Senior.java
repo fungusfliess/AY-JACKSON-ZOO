@@ -88,6 +88,17 @@ public abstract class Senior extends Adult {
              "Preferred Budget Limit: " + getPreferredBudgetLimit() + "\n" +
              "Requires Accessibility Support: " + requiresAccessibilitySupport + "\n";
    }
+
+   /*
+   @description: returns this Senior in file format (includes accessibility support field)
+   @return a string formatted for writing to person.txt
+   */
+   @Override
+   public String saveToString() {
+      return super.saveToString() +
+            getRequiresAccessibilitySupport() + "\n";
+   }
+
 }
 
 

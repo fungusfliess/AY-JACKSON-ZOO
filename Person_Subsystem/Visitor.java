@@ -203,7 +203,6 @@ public abstract class Visitor extends Person {
         this.deactivate();
     }
 
-    //WORK IN PROGRESS (visit a structure by ID)
    /*
     @description: visits a structure and updates visitor learning/attraction count if valid
     @param structureID the ID of the structure to visit
@@ -220,6 +219,22 @@ public abstract class Visitor extends Person {
         attractionsVisited++;
         return true;
     }
+
+    /*
+    @description: returns this Visitor in file format (role + base fields + visitor fields)
+    @return a string formatted for writing to person.txt
+    */
+    @Override
+    public String saveToString() {
+    return getRole() + "\n" +
+            getPersonID() + "\n" +
+            getFirstName() + "\n" +
+            getLastName() + "\n" +
+            getAge() + "\n" +
+            getBalance() + "\n" +
+            getLearningLevel() + "\n";
+    }
+
 }
 
 

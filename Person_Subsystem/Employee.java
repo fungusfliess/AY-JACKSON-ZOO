@@ -124,4 +124,21 @@ public abstract class Employee extends Person {
          earnings += amount;
       }
    }
+
+   /*
+   @description: returns this Employee in file format (role + base fields + employee fields)
+   @return a string formatted for writing to person.txt
+   */
+   @Override
+   public String saveToString() {
+      return getRole() + "\n" +
+            getPersonID() + "\n" +
+            getFirstName() + "\n" +
+            getLastName() + "\n" +
+            getAge() + "\n" +
+            getHourlyWage() + "\n" +
+            getYearsOfExperience() + "\n" +
+            getEarnings() + "\n";
+   }
+
 }
