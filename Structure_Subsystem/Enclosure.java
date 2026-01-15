@@ -6,7 +6,6 @@
    Description: Enclosure represents a living space for animals within the zoo.
 */
 import Animal_Subsystem.*;
-import Land_Subsystem.Land;
 import Person_Subsystem.Visitor;
 
 public class Enclosure extends Habitat{

@@ -120,7 +120,7 @@ public class Restaurant extends Shop{
 
         //check if buyer can afford item
 
-        if(buyer.canAffordItem(product)){}
+        if(buyer.canAffordItem(product)){
 
             //records purchase and adds item to visitor's inventory
 
@@ -145,7 +145,7 @@ public class Restaurant extends Shop{
 
         //saves subclass-specific fields
 
-        saveToString = (getMenu()).length + "\n";
+        saveToString += (getMenu()).length + "\n";
         for (int i = 0; i < (getMenu()).length; i++){
             saveToString += ((getMenu())[i]).getName()+ "\n" + ((getMenu())[i]).getPrice() + "\n";
         }

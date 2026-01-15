@@ -6,7 +6,7 @@
    Description: Shop represents a shop within the zoo. 
 */
 import java.util.*;
-import Land_Subsystem.Land;
+
 import Person_Subsystem.*;
 public abstract class Shop extends Structure{
 

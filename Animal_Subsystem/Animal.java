@@ -1,6 +1,7 @@
 package Animal_Subsystem;
 
 import Structure_Subsystem.*;
+import Land;
 import Land_Subsystem.*;
 
 public abstract class Animal {
