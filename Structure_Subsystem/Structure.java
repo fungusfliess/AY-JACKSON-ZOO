@@ -1,3 +1,4 @@
+
 import Land_Subsystem.*;
 import Person_Subsystem.*;
 
@@ -85,6 +86,6 @@ public abstract class Structure{
    public int compareToNumAnimals(Structure structure){  
       return getNumAnimals() - structure.getNumAnimals(); 
    }
-   
+
    public abstract String saveToString();
 }

@@ -3,8 +3,8 @@ import Structure_Subsystem.*;
 
 public class Fish extends Animal{
     private int amountEggs;
-    private static final LivingCondition sharkLivingCondition = new WaterCondition(18, 75, 2000, "Ocean", 8.1, 180, 20, false, 35);
-    private static final LivingCondition sunfishLivingCondition = new WaterCondition(22, 70, 1500, "Pelagic Zone", 8, 160, 23,false, 34);
+    private static final LivingCondition sharkLivingCondition = new WaterCondition(18, 75, "Ocean", 8.1, 180, 20, false, 35);
+    private static final LivingCondition sunfishLivingCondition = new WaterCondition(22, 70, "Pelagic Zone", 8, 160, 23,false, 34);
     
     // Description: constructor for fish
     public Fish(Animal parent) {
@@ -17,6 +17,7 @@ public class Fish extends Animal{
         setLivingCondition(livingCondition(parent.getSpecie()));
         setTotalDailyInteractions(totalDailyInteractions(parent.getSpecie()));  
         setAdultAge(adultAge(parent.getSpecie()));
+        setRequiredArea(requiredArea(getSpecie()));
         this.amountEggs = amountEggs(parent.getSpecie());
     }
     public Fish(String habitatId, String name, String specie, String preferedInteraction, String gender,
@@ -30,7 +31,8 @@ public class Fish extends Animal{
         setFlexibility(flexibility(specie));
         setLivingCondition(livingCondition(specie));
         setTotalDailyInteractions(totalDailyInteractions(specie)); 
-
+        setAdultAge(adultAge(specie));
+        setRequiredArea(requiredArea(specie));
         this.amountEggs = amountEggs(specie);
     }
 
@@ -86,16 +88,24 @@ public class Fish extends Animal{
         }
         return -1;
     }
-    private static int amountEggs(String specie) {
+    public static int amountEggs(String specie) {
         if (specie.equalsIgnoreCase("Shark")) return 2;
         if (specie.equalsIgnoreCase("Sunfish")) return 10;
         return 0;
     }
-    private static int adultAge(String specie) {
+    public static int adultAge(String specie) {
         if (specie.equalsIgnoreCase("Shark")) {
             return 5;
         } else if (specie.equalsIgnoreCase("Sunfish")) {
             return 3;
+        }
+        return -1;
+    }
+    public static double requiredArea(String specie) {
+        if (specie.equalsIgnoreCase("Shark")) {
+            return 150.0;
+        } else if (specie.equalsIgnoreCase("Sunfish")) {
+            return 80.0;
         }
         return -1;
     }
@@ -120,12 +130,15 @@ public class Fish extends Animal{
     public int getTotalDailyInteractions() {
         return Fish.totalDailyInteractions(this.getSpecie());
     }
-    public int getAmountEggs() {
-        return amountEggs;
-    }   
     public int getAdultAge() {
         return Fish.adultAge(this.getSpecie());
     }
+    public double getRequiredArea() {
+        return Fish.requiredArea(this.getSpecie());
+    }
+    public int getAmountEggs() {
+        return amountEggs;
+    }   
 
     // SETTERS
     public void setMaxHunger(int maxHunger) {
@@ -146,11 +159,14 @@ public class Fish extends Animal{
     public void setTotalDailyInteractions(int totalDailyInteractions) {
         super.setTotalDailyInteractions(totalDailyInteractions);
     }
-    public void setAmountEggs(int amountEggs) {
-        this.amountEggs = amountEggs;
-    }
     public void setAdultAge(int adultAge) {
         super.setAdultAge(adultAge);
+    }
+    public void setRequiredArea(double requiredArea) {
+        super.setRequiredArea(requiredArea);
+    }
+    public void setAmountEggs(int amountEggs) {
+        this.amountEggs = amountEggs;
     }
 
     // METHODS
