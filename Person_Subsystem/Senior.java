@@ -77,16 +77,16 @@ public abstract class Senior extends Adult {
     */
    @Override
    public String toString() {
-      return "PersonID: " + personID + "\n" + 
-      "Name: " + firstName + " " + lastName + "\n" + 
-      "Age: " + age + "\n" + 
-      "Role: " + this.getRole() + "\n" + 
-      "Balance: " + balance + "\n" + 
-      "Learning Level: " + learningLevel + "\n" + 
-      "Attractions Visited: " + attractionsVisited + "\n" +
-      "Num Facts Learned: " + learningHistorySize + "\n" +
-      "Preferred Budget Limit: " + preferredBudgetLimit + "\n"; 
-      "Requires Accessibility Support: " + requiresAccessibilitySupport; + "\n";
+      return "PersonID: " + getPersonID() + "\n" +
+             "Name: " + getFirstName() + " " + getLastName() + "\n" +
+             "Age: " + getAge() + "\n" +
+             "Role: " + getRole() + "\n" +
+             "Balance: " + getBalance() + "\n" +
+             "Learning Level: " + getLearningLevel() + "\n" +
+             "Attractions Visited: " + getAttractionsVisited() + "\n" +
+             "Num Facts Learned: " + getLearningHistorySize() + "\n" +
+             "Preferred Budget Limit: " + getPreferredBudgetLimit() + "\n" +
+             "Requires Accessibility Support: " + requiresAccessibilitySupport + "\n";
    }
 }
 
