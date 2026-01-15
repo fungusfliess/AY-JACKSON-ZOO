@@ -206,8 +206,7 @@ public abstract class Visitor extends Person {
     @return true if the visit occurred, false otherwise
     */ 
     public boolean visit(String structureID){
-        if (structureID == null || structureID.isEmpty()){return false;}   //ADD OR DEMOLISHED to reutnr false condition 
-        //CALL specifif mehods for visit, called by user  
+        if (structureID == null || structureID.isEmpty()){return false;}  
         Structure s = Zoo.getStructureByID(structureID);
 
         if (s == null) return false;
