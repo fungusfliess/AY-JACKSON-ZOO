@@ -13,6 +13,8 @@ public class Land {
     private Map landMap;
     private Structure[] structureList;
 
+    // CONSTANTS
+    public static final char EMPTY = '.'; // represents empty space on grid
 
     // CONSTRUCTOR
     public Land(int maxNumStructures, Map landMap) {
