@@ -1,210 +1,58 @@
 package Animal_Subsystem;
+
 import Structure_Subsystem.*;
 
-public class Mammal extends Animal {
-    private boolean drinksMilk;
-    public static final LivingCondition unicornLivingCondition = new LandCondition(18, 60, "Enchanted Forest", 45,4,true,70,8);
-    public static final LivingCondition cabybaraLivingCondition = new LandCondition(26, 75, "Wet Grassland", 30, 2, true, 80, 5);
+public abstract class Mammal extends Animal {
 
-    // Description: constructor for mammals
+    protected boolean drinksMilk = true;
+
+    // Description: constructor for mammals (template-based)
     public Mammal(Animal parent) {
         super(parent);
-
-        setMaxHunger(maxHunger(parent.getSpecie()));
-        setTypeFoods(new String[]{"Milk"});
-        setLifeExpectancy(lifeExpectancy(parent.getSpecie()));
-        setFlexibility(flexibility(parent.getSpecie()));
-        setLivingCondition(livingCondition(parent.getSpecie()));
-        setTotalDailyInteractions(totalDailyInteractions(parent.getSpecie()));  
-        setAdultAge(adultAge(parent.getSpecie()));
-        setRequiredArea(requiredArea(getSpecie()));
-        drinksMilk = true;
-    }
-    public Mammal(String habitatId, String name, String specie, String preferedInteraction, String gender,
-                int happiness, int cleanliness, int hunger, int age, double weight) {
-
-        super(habitatId, name, specie, preferedInteraction, gender, happiness, cleanliness, hunger, age, weight);
-
-        setMaxHunger(maxHunger(specie));
-        setTypeFoods(typeFoods(specie));
-        setLifeExpectancy(lifeExpectancy(specie));
-        setFlexibility(flexibility(specie));
-        setLivingCondition(livingCondition(specie));
-        setTotalDailyInteractions(totalDailyInteractions(specie)); 
-        setAdultAge(adultAge(specie));
-        setRequiredArea(requiredArea(specie));
-        updateAge();
     }
 
-    // SETTING SPECIE BASED FIELDS
-    public static int maxHunger(String specie) {
-        if (specie.equalsIgnoreCase("Unicorn")) {
-            return 120;
-        } else if (specie.equalsIgnoreCase("Cabybara")) {
-            return 80;
-        }
-        return -1;
-    }
-    public static String[] typeFoods(String specie) {
-        if (specie.equalsIgnoreCase("Unicorn")) {
-            String[] foods = {"Grass", "Hay", "Fruits"};
-            return foods;
-        } else if (specie.equalsIgnoreCase("Cabybara")) {
-            String[] foods = {"Grass", "Vegetables"};
-            return foods;
-        }
-        return new String[0];
+    // Description: full constructor
+    public Mammal(char habitatId, String name, String specie, String preferedInteraction, String gender,
+                  int happiness, int cleanliness, int hunger, int age, double weight) {
+
+        super(habitatId, name, specie, preferedInteraction, gender,
+              happiness, cleanliness, hunger, age, weight);
     }
 
-    public static int lifeExpectancy(String specie) {
-        if (specie.equalsIgnoreCase("Unicorn")) {
-            return 30;
-        } else if (specie.equalsIgnoreCase("Cabybara")) {
-            return 10;
-        }
-        return -1;
-    }
-    public static double flexibility(String specie) {
-        if (specie.equalsIgnoreCase("Unicorn")) {
-            return 0.4;
-        } else if (specie.equalsIgnoreCase("Cabybara")) {
-            return 0.7;
-        }
-        return -1;
-    }
-    public static LivingCondition livingCondition(String specie) {
-        if (specie.equalsIgnoreCase("Unicorn")) {
-            return unicornLivingCondition;
-        } else if (specie.equalsIgnoreCase("Cabybara")) {
-            return cabybaraLivingCondition;
-        }
-        return null;
-    }
-    public static int totalDailyInteractions(String specie) {
-        if (specie.equalsIgnoreCase("Unicorn")) {
-            return 3;
-        } else if (specie.equalsIgnoreCase("Cabybara")) {
-            return 5;
-        }
-        return -1;
-    }
-    public static int adultAge(String specie) {
-        if (specie.equalsIgnoreCase("Unicorn")) {
-            return 3;
-        } else if (specie.equalsIgnoreCase("Cabybara")) {
-            return 2;
-        }
-        return -1;
-    }
-    public static double requiredArea(String specie) {
-        if (specie.equalsIgnoreCase("Unicorn")) {
-            return 50.0;
-        } else if (specie.equalsIgnoreCase("Cabybara")) {
-            return 30.0;
-        }
-        return 0;
-    }
+    // =========================
+    // SHARED MAMMAL METHODS
+    // =========================
 
-    // GETTERS
-
-    public int getMaxHunger() {
-        return Mammal.maxHunger(this.getSpecie());
-    }
-    public String[] getTypeFoods() {
-        return Mammal.typeFoods(this.getSpecie());
-    }
-    public int getLifeExpectancy() {
-        return Mammal.lifeExpectancy(this.getSpecie());
-    }
-    public double getFlexibility() {
-        return Mammal.flexibility(this.getSpecie());
-    } 
-    public LivingCondition getLivingCondition() {
-        return Mammal.livingCondition(this.getSpecie());
-    }
-    public int getTotalDailyInteractions() {
-        return Mammal.totalDailyInteractions(this.getSpecie());
-    }
-    public int getAdultAge() {
-        return Mammal.adultAge(this.getSpecie());
-    }
-    public double getRequiredArea() {
-        return Mammal.requiredArea(this.getSpecie());
-    }
-    public boolean drinksMilk() {
-        return drinksMilk;
-    }
-
-    // SETTERS
-    public void setMaxHunger(int maxHunger) {
-        super.setMaxHunger(maxHunger);
-    }
-    public void setTypeFoods(String[] typeFoods) {
-        super.setTypeFoods(typeFoods);
-    }
-    public void setLifeExpectancy(int lifeExpectancy) {
-        super.setLifeExpectancy(lifeExpectancy);
-    }
-    public void setFlexibility(double flexibility) {
-        super.setFlexibility(flexibility);
-    }
-    public void setLivingCondition(LivingCondition livingCondition) {
-        super.setLivingCondition(livingCondition);
-    }
-    public void setTotalDailyInteractions(int totalDailyInteractions) {
-        super.setTotalDailyInteractions(totalDailyInteractions);
-    }
-    public void setAdultAge(int adultAge) {
-        super.setAdultAge(adultAge);
-    }
-    public void setRequiredArea(double requiredArea) {
-        super.setRequiredArea(requiredArea);
-    }
-    
-
-    // METHODS
-
-    // Description: abstract method that formats all information of the animal
+    @Override
     public String toString() {
-        return  super.toString() +
-                "Drinks Milk: " + drinksMilk + "\n"; 
-
+        return super.toString() +
+               "Drinks Milk: " + drinksMilk + "\n";
     }
 
-    // Description: creates a new animal of the same type as its parent.
-    //  This method is different for animals that produce offspring as eggs.
-    //  Returns null if the animal does not have the requirements to reproduce.
+    // Description: creates a new mammal offspring
     public void reproduce(Habitat habitat, String name) {
-        if (this.getGender().equalsIgnoreCase("Female") && 
-            this.getHappiness() >= (LOW_STAT * MAX_STAT) && 
-            this.getAge() >= this.getAdultAge() &&  
+        if (this.getGender().equalsIgnoreCase("Female") &&
+            this.getHappiness() >= (LOW_STAT * MAX_STAT) &&
+            this.getAge() >= this.getAdultAge() &&
             this.getHunger() <= (LOW_STAT * this.getMaxHunger())) {
-                if (this.isSuitable(habitat)) {
-                Mammal babyMammal = new Mammal(this);
-                babyMammal.setName(name);
+
+            if (this.isSuitable(habitat)) {
+                Mammal baby = createOffspring();
+                baby.setName(name);
                 if (Math.random() < 0.5) {
-                    babyMammal.setGender("Male"); // 50% chance male
+                    baby.setGender("Male");
                 } else {
-                    babyMammal.setGender("Female"); // 50% chance female
+                    baby.setGender("Female");
                 }
-                habitat.addAnimal(babyMammal);
+                habitat.addAnimal(baby);
             }
-
         }
-
     }
 
-    // Description: method that updates the age of the animal
-    public void updateAge() {
-        if (this.getSpecie().equalsIgnoreCase("Unicorn") && this.getAge() > 1) {
-            setWeight(getWeight() + 15);
-        } else if (this.getSpecie().equalsIgnoreCase("Cabybara")) {
-            setWeight(getWeight() + 5);
-        }
-        if (getAge() >= getAdultAge()) {
-            drinksMilk = false;
-            setTypeFoods(typeFoods(this.getSpecie()));
-        }
-        
-    }
+    // =========================
+    // SPECIES HOOKS
+    // =========================
+
+    // Each species knows how to make its own baby
+    protected abstract Mammal createOffspring();
 }
