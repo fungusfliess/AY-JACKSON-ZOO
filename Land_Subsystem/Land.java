@@ -340,6 +340,9 @@ public class Land {
         }
     }
 
+    /*
+    @description: Sorts array of Structures based on # of Animals, from most to least. Leaves non-habitat Structures in their original order, but pushed back.
+    */
     public void sortByMostAnimals () {
         // if a structure is not a Habitat, disregard it entirely. 
         int blankIdx;
