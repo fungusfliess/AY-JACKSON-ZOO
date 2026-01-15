@@ -35,6 +35,18 @@ public class Land {
         this.maxNumStructures = maxNumStructures;
     }
 
+    /*
+    @description: Accessor for Structure at given index.
+    @params: int idx is the index of the Structure to access.
+    @returns: Structure at given index, or null if index is out of bounds.
+    */
+    public Structure getStructureAtIdx (int idx) {
+        if (idx < 0 || idx >= currentNumStructures) {
+            return null;
+        }
+        return structureList[idx];
+    }
+
 
     /*
     @description: Saves land's map and list of structures to a file.
@@ -101,9 +113,9 @@ public class Land {
             // creating new array of Structure
             this.structureList = new Structure[this.maxNumStructures];
 
-            in.skip(1);
+            in.readLine();
             // reading Structure info from the file.
-            String structureType;
+            String structureType = "";
             
             // for loop through array of Structures.
             for (int i = 0; i < this.currentNumStructures; i++) {
@@ -111,6 +123,8 @@ public class Land {
                 input = in.readLine();
                 if (input != null) {
                     structureType = input;
+                } else {
+                    return false;
                 }
                 // if input is an empty line, stop reading. Check null to avoid errors. This will still read the empty line.
                 while ((input = in.readLine()) != null && !input.isEmpty()) {
@@ -185,13 +199,13 @@ public class Land {
     /*
     @description: Searches for a Structure with matching parameters 
     @params: numAnimals and size represents user desired number of Animals and size
-    @returns: returns Structure object 
+    @returns: returns Structure object, null if not found
     */
 
     public Structure searchByNumberAnimalsAndSize(int numAnimals, int size){
-        structureList.sortByAnimalsAndSize();
+        this.sortByAnimalsAndSize();
         Structure current;
-        int top = structureList.length -1, bottom = 0, middle, index = -1;
+        int top = currentNumStructures -1, bottom = 0, middle, index = -1;
         boolean found = false;
         while(top >= bottom && !found){
             middle = (top + bottom)/2; 
@@ -200,7 +214,7 @@ public class Land {
                 index = middle;
                 found = true;
             }else if(current.getNumAnimals() < numAnimals || current.getSize() < size){
-                bottom = middle -1;
+                bottom = middle + 1;
             }else{
                 top = middle -1;
             }
@@ -218,7 +232,7 @@ public class Land {
         Structure mostAnimals = null;
         for(int i = 0; i < currentNumStructures; i++){
             if((structureList[i].getClimate()).equals(climate)){
-                if(mostAnimals = null){
+                if(mostAnimals == null){
                     mostAnimals = structureList[i];
                 }else if(structureList[i].compareToNumAnimals(mostAnimals) > 0){
                     mostAnimals = structureList[i];
@@ -229,18 +243,58 @@ public class Land {
     }
 
     /*
-    @description: Accessor for Structure at given index.
-    @params: int idx is the index of the Structure to access.
-    @returns: Structure at given index, or null if index is out of bounds.
+    @description: Searches for a Structure in the structureList by its ID using binary search.
+    @params: char tgtIdx represents the ID of the Structure to search for.
+    @returns: Structure object if found, or null if not found.
     */
-    public Structure getStructureAtIdx (int idx) {
-        if (idx < 0 || idx >= currentNumStructures) {
-            return null;
+    public Structure binarySearchByID (char tgtIdx) {
+        // sort by ID first
+        this.sortByID();
+        Structure tgt = null;
+        int left = 0, right = currentNumStructures-1;
+        int mid; 
+        boolean found = false;
+        // binary search
+        while (!found && (left <= right)) {
+            mid = (left + right)/2;
+            if (structureList[mid].getStructureID() == tgtIdx) { // if found
+                tgt = structureList[mid];
+                found = true;
+            } else if (structureList[mid].getStructureID() < tgtIdx) { // if target is to the right
+                left = mid+1;
+            } else if (structureList[mid].getStructureID() > tgtIdx) { // if target is to the left
+                right = mid-1;
+            }
         }
-        return structureList[idx];
+        return tgt;
     }
 
+
+
+
     // SORT
+    /*
+    @description: Sorts array of Structures based on their ID in ascending order.
+    */
+    public void sortByID () {
+        // bubble sort
+        Structure temp;
+        // early termination variable
+        boolean swapped = true;
+        for (int i = 0; i < currentNumStructures-1 && swapped; i++) {
+            swapped = false;
+            for (int j = 0; j < currentNumStructures-i-1; j++) {
+                
+                // if this structure's ID is greater in terms of ASCII code than the one after it, swap
+                if (structureList[j].compareToID(structureList[j+1]) > 0) {
+                    temp = structureList[j];
+                    structureList[j] = structureList[j+1];
+                    structureList[j+1] = temp;
+                    swapped = true;
+                }
+            }
+        }
+    }
 
     /*
     @description: Sorts array of Structures based on how urgently they need maintenance
@@ -249,17 +303,17 @@ public class Land {
     public void sortByDaysSinceLastMaintenance(int numToSort) {
 
         // if input is negative, then sort the entire array.
-        if (numToSort < 0) {
+        if (numToSort < 0 || numToSort > currentNumStructures) {
             numToSort = currentNumStructures;
         }
         Structure temp;
         int highest;
         // selection sort
-        for (int i = 0; i < numToSort && i < currentNumStructures; i++) {
+        for (int i = 0; i < numToSort; i++) {
 
             // find highest num of days without maintenance
-            highest = 0;
-            for (int j = 0; j < currentNumStructures; j++) {
+            highest = i;
+            for (int j = i+1; j < currentNumStructures; j++) {
                 if (structureList[j].compareToSinceLastMaintenance(structureList[highest]) > 0) {
                     highest = j;
                 }
@@ -282,7 +336,7 @@ public class Land {
         boolean sorted = false;
         for(int i = currentNumStructures - 1; i > 0 && !sorted; i--){
             sorted = true;
-            for(int j = 0; j < i; i++){
+            for(int j = 0; j < i; j++){
                 if(structureList[j].compareToNumAnimals(structureList[j + 1]) > 0){
                     temp = structureList[j];
                     structureList[j] = structureList[j + 1];
@@ -322,7 +376,7 @@ public class Land {
         // bubble sort
         Structure temp;
         // early termination boolean
-        boolean swapped = false;
+        boolean swapped = true;
         for (int i = 0; i < currentNumStructures-1 && swapped; i++) {
             swapped = false;
             for (int j = 0; j < currentNumStructures-i-1; j++) {
@@ -345,7 +399,7 @@ public class Land {
         // bubble sort
         Structure temp;
         // early termination boolean
-        boolean swapped = false;
+        boolean swapped = true;
         for (int i = 0; i < currentNumStructures-1 && swapped; i++) {
             swapped = false;
             for (int j = 0; j < currentNumStructures-i-1; j++) {
@@ -475,7 +529,7 @@ public class Land {
         }
         // calculating area of the Structure.
         int area = landMap.areaOf(corner1);
-        structureList[currentNumStructures] = new Pavillion(name, structureID, area, capacity, this, , condition);
+        structureList[currentNumStructures] = new Pavillion(name, structureID, area, 0, this, capacity, condition);
         currentNumStructures++;
         return true;
     }
@@ -519,6 +573,7 @@ public class Land {
     */
     public boolean removeStructureFromList (int tgtIdx) {
         // if demolish is unsuccessful (also calls demolish on the Structure)
+        char tempID = structureList[tgtIdx].getStructureID();
         if (!structureList[tgtIdx].demolish()) {
             return false;
         } 
@@ -532,7 +587,7 @@ public class Land {
         // update currentNumStructures
         currentNumStructures --;
         // remove from map by finding any coordinate with structureID and recursively erasing it from there. 
-        landMap.erase(landMap.find(structureList[tgtIdx].getStructureID()));
+        landMap.erase(landMap.find(tempID));
         return true;
     }
 }
