@@ -7,6 +7,9 @@ public class Sunfish extends Fish {
     private static final LivingCondition SUNFISH_CONDITION =
         new WaterCondition(22, 70, "Pelagic Zone", 8, 160, 23, false, 34);
 
+    private static final int WEIGHT_GAIN_PER_YEAR = 6;
+    private static final int HUNGER_GAIN_PER_YEAR = 4;
+
     public Sunfish(Animal parent) {
         super(parent);
         setupStats();
@@ -74,8 +77,8 @@ public class Sunfish extends Fish {
 
     @Override
     public void updateAge() {
-        setWeight(getWeight() + 5);
-        setMaxHunger(getMaxHunger() + 2);
+        setWeight(getWeight() + getAge()*WEIGHT_GAIN_PER_YEAR);
+        setMaxHunger(getMaxHunger() + getAge()*HUNGER_GAIN_PER_YEAR);
     }
 
     @Override

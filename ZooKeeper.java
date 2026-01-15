@@ -56,8 +56,10 @@ public abstract class ZooKeeper extends Employee {
      @note: includes a bonus multiplier based on certification level
      */
     @Override
-    public void setEarnings(){
-        earnings = (hourlyWage*hoursWorked)*(1 + CERTIFICATION_BONUS_PERCENTAGE);
+    public void setEarnings() {
+        double multiplier = 1.0 + (getCertificationLevel() * CERTIFICATION_BONUS_PERCENTAGE);
+        double dayPay = getHourlyWage() * getHoursWorked() * multiplier;
+        addToEarnings(dayPay);
     }
 
     /*
@@ -65,7 +67,7 @@ public abstract class ZooKeeper extends Employee {
      @param c new certification level
      */
     public void setCertificationLevel(int c){
-        certificationLevel = min(c, MAX_CERTIFICATION_LEVEL);
+        certificationLevel = Math.min(c, MAX_CERTIFICATION_LEVEL);
     }
 
     //OTHER METHODS 
@@ -118,14 +120,14 @@ public abstract class ZooKeeper extends Employee {
      @return formatted employee information
      */
     @Override
-    public String toString(){
-        return "PersonID: " + personID + "\n" + 
-                "Name: " + firstName + " " + lastName + "\n" + 
-                "Age: " + age + "\n" + 
-                "Role: " + this.getRole() + "\n" + 
+    public String toString() {
+        return "PersonID: " + getPersonID() + "\n" +
+                "Name: " + getFirstName() + " " + getLastName() + "\n" +
+                "Age: " + getAge() + "\n" +
+                "Role: " + getRole() + "\n" +
                 "Certification Level: " + certificationLevel + "\n" + 
                 "Tasks Completed: " + dailyTasksCompleted + "\n" + 
-                "Earnings: " + earnings + "\n"; 
+                "Earnings: " + getEarnings() + "\n";
     }
 
     /*

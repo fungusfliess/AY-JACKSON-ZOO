@@ -289,8 +289,8 @@ public abstract class Animal {
         numDailyInteractions = 0;
         numPreferredInteractions = 0;
 
-        hunger = Math.max(0, hunger - DAILY_HUNGER_DECREASE);
-        cleanliness = Math.max(0, cleanliness - DAILY_CLEANLINESS_DECREASE);
+        hunger = Math.max(0, hunger - maxHunger*DAILY_HUNGER_DECREASE);
+        cleanliness = Math.max(0, cleanliness - MAX_STAT*DAILY_CLEANLINESS_DECREASE);
 
         if (daysPassed % DAYS_PER_YEAR == 0) {
             age++;

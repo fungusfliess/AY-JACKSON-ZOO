@@ -42,6 +42,11 @@ public abstract class Amphibian extends Animal {
         }
         return null;
     }
+    
+    @Override
+    public String saveToString() {
+        return super.saveToString() + "\n" + currentStage;
+    }
 
     @Override
     public String toString() {

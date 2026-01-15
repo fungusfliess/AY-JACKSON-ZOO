@@ -7,6 +7,9 @@ public class Eagle extends Bird {
     private static final LivingCondition EAGLE_CONDITION =
         new LandCondition(15, 55, "Mountainous", 85, 25, true, 30, 12);
 
+    private static final int WEIGHT_GAIN_PER_YEAR = 3;
+    private static final int HUNGER_GAIN_PER_YEAR = 5;
+
     public Eagle(Animal parent) {
         super(parent);
         setupStats();
@@ -77,8 +80,8 @@ public class Eagle extends Bird {
     // =========================
 
     public void updateAge() {
-        setWeight(getWeight() + 15);
-        setMaxHunger(getMaxHunger() + 5);
+        setWeight(getWeight() + getAge()*WEIGHT_GAIN_PER_YEAR);
+        setMaxHunger(getMaxHunger() + getAge()*HUNGER_GAIN_PER_YEAR);
 
         if (getAge() >= flyingAge) {
             canFly = true;

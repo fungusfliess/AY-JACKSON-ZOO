@@ -7,6 +7,9 @@ public class Cockatoo extends Bird {
     private static final LivingCondition COCKATOO_CONDITION =
         new LandCondition(24, 65, "Tropical Forest", 50, 5, true, 80, 15);
 
+    private static final int WEIGHT_GAIN_PER_YEAR = 1;
+    private static final int HUNGER_GAIN_PER_YEAR = 4;
+
     public Cockatoo(Animal parent) {
         super(parent);
         setupStats();
@@ -73,8 +76,8 @@ public class Cockatoo extends Bird {
     // ===== METHODS =====
 
     public void updateAge() {
-        setWeight(getWeight() + 5);
-        setMaxHunger(getMaxHunger() + 2);
+        setWeight(getWeight() + getAge()*WEIGHT_GAIN_PER_YEAR);
+        setMaxHunger(getMaxHunger() + getAge()*HUNGER_GAIN_PER_YEAR);
 
         if (getAge() >= flyingAge) {
             canFly = true;

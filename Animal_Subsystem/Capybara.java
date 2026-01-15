@@ -7,6 +7,9 @@ public class Capybara extends Mammal {
     private static final LivingCondition CAPYBARA_CONDITION =
         new LandCondition(26, 75, "Wet Grassland", 30, 2, true, 80, 5);
 
+    private static final int WEIGHT_GAIN_PER_YEAR = 8;
+    private static final int HUNGER_GAIN_PER_YEAR = 5;
+    
     public Capybara(Animal parent) {
         super(parent);
         setupStats();
@@ -76,7 +79,8 @@ public class Capybara extends Mammal {
     }
 
     public void updateAge() {
-        setWeight(getWeight() + 5);
+        setWeight(getWeight() + getAge()*WEIGHT_GAIN_PER_YEAR);
+        setMaxHunger(getMaxHunger() + getAge()*HUNGER_GAIN_PER_YEAR);
 
         if (getAge() >= getAdultAge()) {
             drinksMilk = false;

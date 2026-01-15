@@ -46,6 +46,11 @@ public abstract class Reptile extends Animal {
     }
 
     @Override
+    public String saveToString() {
+        return super.saveToString() + "\n" + timeToShed;
+    }
+
+    @Override
     public String toString() {
         return super.toString() +
                "\nTime to Shed: " + timeToShed + " days";

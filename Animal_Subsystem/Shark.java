@@ -7,6 +7,9 @@ public class Shark extends Fish {
     private static final LivingCondition SHARK_CONDITION =
         new WaterCondition(18, 75, "Ocean", 8.1, 180, 20, false, 35);
 
+    private static final int WEIGHT_GAIN_PER_YEAR = 10;
+    private static final int HUNGER_GAIN_PER_YEAR = 6;
+
     public Shark(Animal parent) {
         super(parent);
         setupStats();
@@ -73,8 +76,8 @@ public class Shark extends Fish {
     // ===== METHODS =====
 
     public void updateAge() {
-        setWeight(getWeight() + 15);
-        setMaxHunger(getMaxHunger() + 5);
+        setWeight(getWeight() + getAge()*15);
+        setMaxHunger(getMaxHunger() + getAge()*5);
     }
 
     public String description() {
