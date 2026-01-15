@@ -17,13 +17,14 @@ public abstract class Fish extends Animal {
 
         super(habitatId, name, specie, preferedInteraction, gender,
               happiness, cleanliness, hunger, age, weight);
+        
     }
 
     // =========================
     // SHARED FISH METHODS
     // =========================
 
-    public Egg[] reproduce(Habitat habitat) {
+    public Egg[] reproduce() {
         if (this.getGender().equalsIgnoreCase("Female") &&
             this.getHappiness() >= (LOW_STAT * MAX_STAT) &&
             this.getAge() >= this.getAdultAge() &&

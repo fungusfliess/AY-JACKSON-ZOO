@@ -19,6 +19,7 @@ public class Egg {
     private int hatchTime;
     private boolean hatched;
     private Animal parent;
+    private int index;
 
     // =========================
     // CONSTRUCTOR
@@ -44,6 +45,10 @@ public class Egg {
         return hatched;
     }
 
+    public int index() {
+        return index;
+    }
+
     // =========================
     // SETTERS
     // =========================
@@ -53,6 +58,10 @@ public class Egg {
 
     public void setParent(Animal parent) {
         this.parent = parent;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
     }
 
     // =========================

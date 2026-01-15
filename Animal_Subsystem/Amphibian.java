@@ -31,7 +31,7 @@ public abstract class Amphibian extends Animal {
     // SHARED AMPHIBIAN METHODS
     // =========================
 
-    public Egg reproduce(Habitat habitat) {
+    public Egg reproduce() {
         if (this.getGender().equalsIgnoreCase("Female") &&
             this.getHappiness() >= (LOW_STAT * MAX_STAT) &&
             this.getAge() >= this.getAdultAge() &&

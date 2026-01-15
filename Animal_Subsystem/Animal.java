@@ -291,9 +291,9 @@ public abstract class Animal {
         hunger = Math.max(0, hunger - maxHunger*DAILY_HUNGER_DECREASE);
         cleanliness = Math.max(0, cleanliness - MAX_STAT*DAILY_CLEANLINESS_DECREASE);
 
+        updateAge();
         if (daysPassed % DAYS_PER_YEAR == 0) {
             age++;
-            updateAge();
         }
     }
 
@@ -323,36 +323,18 @@ public abstract class Animal {
     // =========================
 
     public String saveToString() {
-        // used string builder to put it into savable format
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(habitatId).append("\n")
-          .append(name).append("\n")
-          .append(specie).append("\n")
-          .append(preferedInteraction).append("\n")
-          .append(gender).append("\n")
-          .append(happiness).append("\n")
-          .append(cleanliness).append("\n")
-          .append(hunger).append("\n")
-          .append(age).append("\n")
-          .append(weight).append("\n")
-          .append(maxHunger).append("\n");
-
-        if (typeFoods != null) {
-            for (String food : typeFoods) {
-                sb.append(food).append("\n");
-            }
-        }
-
-        sb.append(lifeExpectancy).append("\n")
-          .append(flexibility).append("\n")
-          .append(livingCondition).append("\n")
-          .append(totalDailyInteractions).append("\n")
-          .append(adultAge).append("\n")
-          .append(requiredArea);
-
-        return sb.toString();
+        return habitatId + "\n" +
+            name + "\n" +
+            specie + "\n" +
+            preferedInteraction + "\n" +
+            gender + "\n" +
+            happiness + "\n" +
+            cleanliness + "\n" +
+            hunger + "\n" +
+            age + "\n" +
+            weight;
     }
+    
     public String description() {
     return "Name: " + getName() + "\n" +
            "Specie: " + getSpecie() + "\n" +

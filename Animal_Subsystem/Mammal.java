@@ -44,7 +44,6 @@ public abstract class Mammal extends Animal {
                 } else {
                     baby.setGender("Female");
                 }
-                habitat.addAnimal(baby);
                 System.out.println(name + " has been born!");
                 return baby;
             }
@@ -52,7 +51,6 @@ public abstract class Mammal extends Animal {
             System.out.println("reproduction failed");
             return null;
         }
-        
     }
 
     // =========================
