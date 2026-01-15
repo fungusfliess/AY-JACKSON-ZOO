@@ -9,7 +9,7 @@
 
 import Person_Subsystem.Visitor;
 
-public class Adult extends Visitor{
+public abstract class Adult extends Visitor{
    //FIELDS 
    private double preferredBudgetLimit; 
 
