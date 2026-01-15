@@ -90,7 +90,7 @@ public abstract class Visitor extends Person {
         return learningHistorySize;
     }
 
-    public String[] getAmountSpent() {
+    public double getAmountSpent() {
         return amountSpent;
     }
  

@@ -45,7 +45,7 @@ public abstract class Adult extends Visitor{
     @return true if amount spent is less than the preferred budget limit, false otherwise
     */
    public boolean stayedWithinBudget(){
-      return getAmountSpent()<preferredBudgetLimit; 
+      return this.getAmountSpent()<preferredBudgetLimit; 
    }
 
    /*
