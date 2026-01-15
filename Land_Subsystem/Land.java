@@ -189,7 +189,7 @@ public class Land {
     */
 
     public Structure searchByNumberAnimalsAndSize(int numAnimals, int size){
-        structureList.sortBySizeAndAnimals();
+        structureList.sortByAnimalsAndSize();
         Structure current;
         int top = structureList.length -1, bottom = 0, middle, index = -1;
         boolean found = false;
@@ -278,6 +278,38 @@ public class Land {
     ARIANNA IS DOING SORTBYANIMALS AND SORTBYSIZEANDANIMALS HERE
 
     */
+    public void sortByLeastAnimals(){
+        Structure temp;
+        boolean sorted = false;
+        for(int i = currentNumStructures - 1; i > 0 && !sorted; i--){
+            sorted = true;
+            for(int j = 0; j < i; i++){
+                if(structureList[j].compareToNumAnimals(structureList[j + 1]) > 0){
+                    temp = structureList[j];
+                    structureList[j] = structureList[j + 1];
+                    structureList[j + 1] = temp;
+                    sorted = false; 
+                }
+            }
+        }
+    }
+
+    public void sortByAnimalsAndSize(){
+        Structure temp;
+        int blankIndex; 
+        for(int i = 1; i < currentNumStructures; i++){
+            temp = structureList[i];
+            blankIndex = i;
+            while(blankIndex > 0 && (structureList[blankIndex - 1].compareToNumAnimals(temp) > 0 
+            || (structureList[blankIndex - 1].compareToNumAnimals(temp) == 0 
+            && structureList[blankIndex - 1].compareToSize(temp) > 0))){
+                structureList[blankIndex] = structureList[blankIndex - 1];
+                blankIndex--;
+            }
+            structureList[blankIndex] = temp;
+        }
+    }
+
 
     /*
     @description: sorts the array of Structure based on each Structure's area, from smallest to largest. 
