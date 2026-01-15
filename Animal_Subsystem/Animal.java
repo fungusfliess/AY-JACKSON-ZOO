@@ -1,13 +1,24 @@
 package Animal_Subsystem;
+
 import Structure_Subsystem.*;
+import Land_Subsystem.*;
 
 public abstract class Animal {
 
+    // =========================
+    // CONSTANTS
+    // =========================
     public static final int MAX_STAT = 100;
     public static final int LOW_STAT = 30;
 
+    private static final int DAILY_HUNGER_DECREASE = 10;
+    private static final int DAILY_CLEANLINESS_DECREASE = 5;
+    private static final int DAYS_PER_YEAR = 365;
+
+    // =========================
     // COMMON FIELDS
-    private String habitatId;
+    // =========================
+    private char habitatId;
     private String name;
     private String specie;
     private int age;
@@ -17,22 +28,29 @@ public abstract class Animal {
     private int hunger;
     private String gender;
     private double weight;
-    private int adultAge;
 
     private int numDailyInteractions;
     private int daysPassed;
     private int numPreferredInteractions;
 
-    // SPECIE BASED FIELDS
-    private int maxHunger;
-    private String[] typeFoods;
-    private int lifeExpectancy;
-    private double flexibility;
-    private LivingCondition livingCondition;
-    private int totalDailyInteractions;
+    // =========================
+    // SPECIE-BASED FIELDS
+    // =========================
+    protected int maxHunger;
+    protected String[] typeFoods;
+    protected int lifeExpectancy;
+    protected double flexibility;
+    protected LivingCondition livingCondition;
+    protected int totalDailyInteractions;
+    protected int adultAge;
+    protected double requiredArea;
 
-    
+    // =========================
+    // CONSTRUCTORS
+    // =========================
+
     public Animal(Animal parent) {
+        this.habitatId = Land.EMPTY_SPACE;
         this.name = "";
         this.specie = parent.getSpecie();
         this.preferedInteraction = parent.getPreferedInteraction();
@@ -42,13 +60,15 @@ public abstract class Animal {
         this.hunger = 50;
         this.age = 0;
         this.weight = 0.0;
-        numDailyInteractions = 0;
-        daysPassed = 0;
-        numPreferredInteractions = 0;
 
+        this.numDailyInteractions = 0;
+        this.daysPassed = 0;
+        this.numPreferredInteractions = 0;
     }
 
-    public Animal(String habitatId, String name, String specie, String preferedInteraction, String gender, int happiness, int cleanliness, int hunger, int age, double weight) {
+    public Animal(char habitatId, String name, String specie, String preferedInteraction, String gender,
+                  int happiness, int cleanliness, int hunger, int age, double weight) {
+
         this.habitatId = habitatId;
         this.name = name;
         this.specie = specie;
@@ -59,248 +79,306 @@ public abstract class Animal {
         this.hunger = hunger;
         this.age = age;
         this.weight = weight;
-        numDailyInteractions = 0;
-        daysPassed = 0;
-        numPreferredInteractions = 0;
+
+        this.numDailyInteractions = 0;
+        this.daysPassed = 0;
+        this.numPreferredInteractions = 0;
     }
-    // METHODS
 
-    // COMMON FIELDS GETTERS AND SETTERS
-
+    // =========================
     // GETTERS
-    public String getHabitatId() {
+    // =========================
+
+    public int getHabitatId() {
         return habitatId;
     }
+
     public String getName() {
         return name;
-    } 
+    }
+
     public String getSpecie() {
         return specie;
     }
+
     public int getAge() {
         return age;
     }
+
     public String getPreferedInteraction() {
         return preferedInteraction;
     }
+
     public int getHappiness() {
         return happiness;
     }
+
     public int getCleanliness() {
         return cleanliness;
     }
+
     public int getHunger() {
         return hunger;
     }
+
     public String getGender() {
         return gender;
     }
+
     public double getWeight() {
         return weight;
     }
+
     public int getNumDailyInteractions() {
         return numDailyInteractions;
     }
+
     public int getDaysPassed() {
         return daysPassed;
     }
-    public int getNumPreferredInteractions() {  
+
+    public int getNumPreferredInteractions() {
         return numPreferredInteractions;
-    }   
-    public int getAdultAge() {
-        return adultAge;
     }
-    // ABSTRACT GETTERS
+
+    // =========================
+    // SETTERS
+    // =========================
+
+    public void setHabitatId(char habitatId) {
+        this.habitatId = habitatId;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSpecie(String specie) {
+        this.specie = specie;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public void setPreferedInteraction(String preferedInteraction) {
+        this.preferedInteraction = preferedInteraction;
+    }
+
+    public void setHappiness(int happiness) {
+        this.happiness = happiness;
+    }
+
+    public void setCleanliness(int cleanliness) {
+        this.cleanliness = cleanliness;
+    }
+
+    public void setHunger(int hunger) {
+        this.hunger = hunger;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    // =========================
+    // SPECIE-BASED SETTERS
+    // =========================
+
+    public void setMaxHunger(int maxHunger) {
+        this.maxHunger = maxHunger;
+    }
+
+    public void setTypeFoods(String[] typeFoods) {
+        this.typeFoods = typeFoods;
+    }
+
+    public void setLifeExpectancy(int lifeExpectancy) {
+        this.lifeExpectancy = lifeExpectancy;
+    }
+
+    public void setFlexibility(double flexibility) {
+        this.flexibility = flexibility;
+    }
+
+    public void setLivingCondition(LivingCondition livingCondition) {
+        this.livingCondition = livingCondition;
+    }
+
+    public void setTotalDailyInteractions(int totalDailyInteractions) {
+        this.totalDailyInteractions = totalDailyInteractions;
+    }
+
+    public void setAdultAge(int adultAge) {
+        this.adultAge = adultAge;
+    }
+
+    public void setRequiredArea(double requiredArea) {
+        this.requiredArea = requiredArea;
+    }
+
+    // =========================
+    // ABSTRACT SPECIES GETTERS
+    // =========================
     public abstract int getMaxHunger();
     public abstract String[] getTypeFoods();
     public abstract int getLifeExpectancy();
     public abstract double getFlexibility();
     public abstract LivingCondition getLivingCondition();
     public abstract int getTotalDailyInteractions();
+    public abstract int getAdultAge();
+    public abstract double getRequiredArea();
 
-    //SETTERS
+    // =========================
+    // BEHAVIOUR METHODS
+    // =========================
 
-    public void setHabitatId(String habitatId) {
-        this.habitatId = habitatId;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-    public void setSpecie(String specie) {
-        this.specie = specie;
-    }
-    public void setAge(int age) {
-        this.age = age;
-    }
-    public void setPreferedInteraction (String preferedInteraction) {
-        this.preferedInteraction = preferedInteraction;
-    }
-    public void setHappiness(int happiness) {
-        this.happiness = happiness;
-    }
-    public void setCleanliness(int cleanliness) {
-        this.cleanliness = cleanliness;
-    }
-    public void setHunger(int hunger) {
-        this.hunger = hunger;
-    }
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-    public void setWeight(double weight) {
-        this.weight = weight;
-    }  
-    public void setAdultAge(int adultAge) {
-        this.adultAge = adultAge;
-    }
-
-    // SPECIE BASED FIELDS GETTERS AND SETTERS
-    // SETTERS
-    public void setMaxHunger(int maxHunger) {
-        this.maxHunger = maxHunger;
-    }
-    public void setTypeFoods(String[] typeFoods) {
-        this.typeFoods = typeFoods;
-    }
-    public void setLifeExpectancy(int lifeExpectancy) {
-        this.lifeExpectancy = lifeExpectancy;
-    }
-    public void setFlexibility(double flexibility) {
-        this.flexibility = flexibility;
-    }   
-    public void setLivingCondition(LivingCondition livingCondition) {
-        this.livingCondition = livingCondition;
-    }
-    public void setTotalDailyInteractions(int totalDailyInteractions) {
-        this.totalDailyInteractions = totalDailyInteractions;
-    }
-
-
-    // NON-ABSTRACT METHODS
-    // feeds the animal with given food, if possible
     public boolean eat(String food, int amount) {
-        if (this.getTypeFoods() != null) {
-            for (int i =0; i <this.typeFoods.length; i++) {
-                if (food.equalsIgnoreCase(this.typeFoods[i])) {
-                    this.hunger += amount;
-                    if (this.hunger > this.maxHunger) {
-                        this.hunger = this.maxHunger;
-                    }
-                    return true;
-                }
+        if (food == null || amount <= 0 || typeFoods == null) return false;
+
+        for (String f : typeFoods) {
+            if (f != null && food.equalsIgnoreCase(f)) {
+                hunger = Math.min(hunger + amount, maxHunger);
+                return true;
             }
-        } 
+        }
         return false;
     }
 
-    // updates the animal's happiness based on cleanliness, hunger, and interactions.
     public void calculateHappiness() {
-        double average =0;
-        average += this.cleanliness/MAX_STAT;
-        average += this.hunger/this.maxHunger;
-        average += Math.min(this.numDailyInteractions, this.totalDailyInteractions)/Math.max(this.numDailyInteractions, this.totalDailyInteractions);
-        average += numPreferredInteractions;
-        this.happiness = (int) ((average/4) * MAX_STAT);
+        double avg = 0.0;
+
+        avg += (double) cleanliness / MAX_STAT;
+        if (maxHunger > 0) avg += (double) hunger / maxHunger;
+        if (totalDailyInteractions > 0)
+            avg += (double) Math.min(numDailyInteractions, totalDailyInteractions) / totalDailyInteractions;
+        avg += numPreferredInteractions;
+
+        happiness = (int) ((avg / 4.0) * MAX_STAT);
+        happiness = Math.max(0, Math.min(MAX_STAT, happiness));
     }
 
-    // interacts with the animal given the name of said interaction.
     public void interact(String interaction) {
+        if (interaction == null) return;
+
         if (numDailyInteractions < totalDailyInteractions) {
             numDailyInteractions++;
-            if (interaction.equalsIgnoreCase(this.preferedInteraction)) {
+            if (interaction.equalsIgnoreCase(preferedInteraction)) {
                 numPreferredInteractions++;
             }
         }
     }
 
-    // moves animal to a new habitat if possible
-    public boolean relocate(Habitat newHabitat) {
-        return relocateAnimal();
-        
-    }
-
-    // checks to see if the animal is suitable for the given habitat
     public boolean isSuitable(Habitat habitat) {
-        if (this.livingCondition.compareTo(habitat.getLivingCondition()) >= this.flexibility && habitat.hasSpace()) {
-            return true;
+        if (habitat == null || livingCondition == null || habitat.getLivingCondition() == null) {
+            return false;
         }
-        return false;
+
+        return livingCondition.compareTo(habitat.getLivingCondition()) >= flexibility
+                && habitat.enoughSpace(requiredArea);
     }
 
-    // Description: simulates a day passing for animals
     public void passDay() {
         daysPassed++;
+
         numDailyInteractions = 0;
         numPreferredInteractions = 0;
-        hunger -= 10;
-        if (hunger < 0) {
-            hunger = 0;
-        }
-        cleanliness -= 5;
-        if (cleanliness < 0) {
-            cleanliness = 0;
-        }
-        // if a year has passed, update age
-        if (getDaysPassed() % 365 == 0) {
-            setAge(getAge() + 1);
+
+        hunger = Math.max(0, hunger - DAILY_HUNGER_DECREASE);
+        cleanliness = Math.max(0, cleanliness - DAILY_CLEANLINESS_DECREASE);
+
+        if (daysPassed % DAYS_PER_YEAR == 0) {
+            age++;
             updateAge();
         }
     }
 
-    // Description: determines if the animals hunger is low
     public boolean lowHunger() {
-        if (this.hunger <= (LOW_STAT * this.maxHunger) / 100) {
-            return true;
-        }
-        return false;
+        return maxHunger <= 0 || hunger <= (LOW_STAT * maxHunger) / 100;
     }
 
-    // Description: determines if the animals cleanliness is low
     public boolean lowCleansiness() {
-        if (this.cleanliness <= LOW_STAT) {
-            return true;
-        }
-        return false;
+        return cleanliness <= LOW_STAT;
     }
 
-    // Description: determines if the animals happiness is low
     public boolean lowHappiness() {
-        if (this.happiness <= LOW_STAT) {
-            return true;
-        }
-        return false;
+        return happiness <= LOW_STAT;
     }
 
+    public void leaveHabitat() {
+        habitatId = Land.EMPTY_SPACE;
+    }
+
+    // =========================
+    // ABSTRACT
+    // =========================
+    public abstract void updateAge();
+
+    // =========================
+    // SAVE / STRING
+    // =========================
+
+    public String saveToString() {
+        // used string builder to put it into savable format
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(habitatId).append("\n")
+          .append(name).append("\n")
+          .append(specie).append("\n")
+          .append(preferedInteraction).append("\n")
+          .append(gender).append("\n")
+          .append(happiness).append("\n")
+          .append(cleanliness).append("\n")
+          .append(hunger).append("\n")
+          .append(age).append("\n")
+          .append(weight).append("\n")
+          .append(maxHunger).append("\n");
+
+        if (typeFoods != null) {
+            for (String food : typeFoods) {
+                sb.append(food).append("\n");
+            }
+        }
+
+        sb.append(lifeExpectancy).append("\n")
+          .append(flexibility).append("\n")
+          .append(livingCondition).append("\n")
+          .append(totalDailyInteractions).append("\n")
+          .append(adultAge).append("\n")
+          .append(requiredArea);
+
+        return sb.toString();
+    }
+    public String description() {
+    return "Name: " + getName() + "\n" +
+           "Specie: " + getSpecie() + "\n" +
+           "Age: " + getAge() + "\n";
+    }
+
+    @Override
     public String toString() {
         return  "Habitat Id: " + habitatId + "\n" +
                 "Name: " + name + "\n" +
                 "Specie: " + specie + "\n" +
-                "Age: " + age + "\n" +
-                "Prefered Interaction: " + preferedInteraction + "\n" +
-                "Happiness: " + happiness + "\n" +
-                "Cleanliness: " + cleanliness+ "\n" +
-                "Hunger: " + hunger + "/" + getMaxHunger() + "\n" +
                 "Gender: " + gender + "\n" +
+                "Age: " + age + "\n" +
                 "Weight: " + weight + "\n" +
-                "Adulthood Age: " + adultAge + "\n" +
+                "Prefered Interaction: " + preferedInteraction + "\n\n" +
+                "Happiness: " + happiness + "/" + MAX_STAT + "\n" +
+                "Cleanliness: " + cleanliness + "/" + MAX_STAT + "\n" +
+                "Hunger: " + hunger + "/" + maxHunger + "\n\n" +
                 "Interactions Today: " + numDailyInteractions + "/" + totalDailyInteractions + "\n" +
-                "Days passed since last birthday: " + daysPassed + "\n" +
                 "Preferred Interactions Today: " + numPreferredInteractions + "\n" +
-                "Max Hunger: " + maxHunger + "\n" +
-                "Type of Foods: " + String.join(", ", typeFoods) + "\n" +
+                "Days Passed: " + daysPassed + "\n\n" +
+                "=== Species Requirements ===\n" +
                 "Life Expectancy: " + lifeExpectancy + "\n" +
+                "Adult Age: " + adultAge + "\n" +
                 "Flexibility: " + flexibility + "\n" +
-                "Living Condition: " + livingCondition.toString() + "\n" +
-                "Total Daily Interactions: " + totalDailyInteractions + "\n";
+                "Living Condition: " + livingCondition + "\n" +
+                "Required Area: " + requiredArea + "\n";
     }
-
-    // ABSTRACT METHODS
-
-    // Description: abstract method that formats all information of the animal
-    
-
-    // Description: abstract helper method that updates the age of the animal
-    public abstract void updateAge();
-    
-
 }

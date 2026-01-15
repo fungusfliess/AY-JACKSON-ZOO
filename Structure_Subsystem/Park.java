@@ -1,5 +1,6 @@
-package Structure_Subsystem;
+
 import Land_Subsystem.*;
+import Person_Subsystem.Visitor;
 
 public class Park extends Attraction {
 
