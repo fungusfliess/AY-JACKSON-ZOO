@@ -6,6 +6,8 @@ public class Axolotl extends Amphibian {
 
     private static final LivingCondition AXOLOTL_CONDITION =
         new WaterCondition(16, 70, "Freshwater", 7.4, 150, 15, true, 0);
+    private static final int WEIGHT_GAIN_PER_YEAR = 1;
+    private static final int HUNGER_GAIN_PER_YEAR = 2;
 
     public Axolotl(Animal parent) {
         super(parent);
@@ -76,8 +78,10 @@ public class Axolotl extends Amphibian {
     // ===== METHODS =====
 
     public void updateAge() {
-        setWeight(getWeight() + 5);
-        setMaxHunger(getMaxHunger() + 2);
+        if (getAge() < adultAge) {
+            setWeight(getWeight() + getAge()*WEIGHT_GAIN_PER_YEAR);
+            setMaxHunger(getMaxHunger() + getAge()*HUNGER_GAIN_PER_YEAR);
+        }
 
         if (getAge() > stage3Age) {
             currentStage = STAGE_ADULT;

@@ -7,6 +7,9 @@ public class Crocodile extends Reptile {
     private static final LivingCondition CROCODILE_CONDITION =
         new WaterCondition(28, 80, "River Delta", 7.2, 180, 26, true, 0.5);
 
+    private static final int WEIGHT_GAIN_PER_YEAR = 12;
+    private static final int HUNGER_GAIN_PER_YEAR = 4;
+
     public Crocodile(Animal parent) {
         super(parent);
         setupStats();
@@ -78,8 +81,8 @@ public class Crocodile extends Reptile {
     // ===== METHODS =====
 
     public void updateAge() {
-        setWeight(getWeight() + 15);
-        setMaxHunger(getMaxHunger() + 5);
+        setWeight(getWeight() + getAge()*WEIGHT_GAIN_PER_YEAR);
+        setMaxHunger(getMaxHunger() + getAge()*HUNGER_GAIN_PER_YEAR);
         timeToShed--;
     }
 

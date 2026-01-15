@@ -6,6 +6,9 @@ public class Frog extends Amphibian {
 
     private static final LivingCondition FROG_CONDITION =
         new WaterCondition(20, 85, "Wetland", 6.8, 60, 18, true, 0.1);
+    private static final int WEIGHT_GAIN_PER_YEAR = 2;
+    private static final int HUNGER_GAIN_PER_YEAR = 3;
+
 
     public Frog(Animal parent) {
         super(parent);
@@ -76,8 +79,8 @@ public class Frog extends Amphibian {
     // ===== METHODS =====
 
     public void updateAge() {
-        setWeight(getWeight() + 15);
-        setMaxHunger(getMaxHunger() + 5);
+        setWeight(getWeight() + getAge()*WEIGHT_GAIN_PER_YEAR);
+        setMaxHunger(getMaxHunger() + getAge()*HUNGER_GAIN_PER_YEAR);
 
         if (getAge() > stage3Age) {
             currentStage = STAGE_ADULT;

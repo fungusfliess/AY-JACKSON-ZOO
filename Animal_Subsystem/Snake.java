@@ -7,6 +7,9 @@ public class Snake extends Reptile {
     private static final LivingCondition SNAKE_CONDITION =
         new LandCondition(26, 50, "Grassland", 40, 6, true, 45, 6);
 
+    private static final int WEIGHT_GAIN_PER_YEAR = 4;
+    private static final int HUNGER_GAIN_PER_YEAR = 2;
+
     public Snake(Animal parent) {
         super(parent);
         setupStats();
@@ -78,8 +81,8 @@ public class Snake extends Reptile {
     // ===== METHODS =====
 
     public void updateAge() {
-        setWeight(getWeight() + 5);
-        setMaxHunger(getMaxHunger() + 2);
+        setWeight(getWeight() + getAge()*WEIGHT_GAIN_PER_YEAR);
+        setMaxHunger(getMaxHunger() + getAge()*HUNGER_GAIN_PER_YEAR);
         timeToShed--;
     }
 

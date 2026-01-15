@@ -44,6 +44,11 @@ public abstract class Bird extends Animal {
     public void buildNest() {
         this.hasNest = true;
     }
+    
+    @Override
+    public String saveToString() {
+        return super.saveToString() + "\n" + hasNest;
+    }
 
     @Override
     public String toString() {
