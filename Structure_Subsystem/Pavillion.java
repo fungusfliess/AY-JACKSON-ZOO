@@ -1,4 +1,4 @@
-import Animal_Subsystem.Animal;
+import Animal_Subsystem.*;
 import Animal_Subsystem.LandCondition;
 import Animal_Subsystem.LivingCondition;
 import Animal_Subsystem.WaterCondition;

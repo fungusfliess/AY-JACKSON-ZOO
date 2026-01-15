@@ -78,6 +78,33 @@ public abstract class Habitat extends Structure{
         }
     }
 
+    public boolean removeAnimal(Animal animal){
+        int idx = findAnimalIdx(animal);
+        Animal temp;
+        if(idx != -1){
+            for (int i = idx; i < numAnimals - 1; i++) {
+            animals[i] = animals[i + 1];
+            }
+            animal.leaveHabitat();
+            animals[numAnimals - 1] = null;
+            numAnimals--;   
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public int findAnimalIdx(Animal animal){
+        int missing = - 1; 
+        for(int i = 0; i < numAnimals; i++){
+            if(animals[i] == animal){
+                return i;
+            }
+        }
+        return missing;
+    }
+
 
     public abstract String saveToString();
 
