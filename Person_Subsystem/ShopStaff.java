@@ -116,4 +116,5 @@ public class ShopStaff extends Employee {
     public void addFactShared() {
         factsShared++;
     }
+
 }

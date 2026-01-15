@@ -52,7 +52,7 @@ public abstract class Visitor extends Person {
     @param learningLevel learning level (if negative, set to 0)
     @param visitDuration visit duration (if negative, set to 0)
     */
-    public Visitor(int age, String personID, String firstName, String lastNamedouble balance, int learningLevel, int visitDuration) {
+    public Visitor(int age, String personID, String firstName, String lastName, double balance, int learningLevel, int visitDuration) {
         super(age, personID, firstName, lastName);
         
         this.balance = Math.max(0.0, balance);
@@ -89,6 +89,10 @@ public abstract class Visitor extends Person {
     public int getLearningHistorySize() {
         return learningHistorySize;
     }
+
+    public double getAmountSpent() {
+        return amountSpent;
+    }
  
     public String[] getLearningHistory() {
         return learningHistory;
@@ -113,7 +117,7 @@ public abstract class Visitor extends Person {
         if (fact == null) return;
 
         if (fact.isEmpty()) return;
-        ensureLearningHistoryCapacity(learningHistorySize + 1);
+        if (learningHistorySize==MAX_LEARNING_HISTORY_SIZE){return;}
         learningHistory[learningHistorySize] = fact;
         learningHistorySize++;
     }
@@ -199,24 +203,38 @@ public abstract class Visitor extends Person {
         this.deactivate();
     }
 
-    //WORK IN PROGRESS (visit a structure by ID)
    /*
     @description: visits a structure and updates visitor learning/attraction count if valid
     @param structureID the ID of the structure to visit
     @return true if the visit occurred, false otherwise
     */ 
     public boolean visit(String structureID){
-        if (structureID == null || structureID.isEmpty()){return false;}   //ADD OR DEMOLISHED to reutnr false condition 
-        //CALL specifif mehods for visit, called by user  
+        if (structureID == null || structureID.isEmpty()){return false;}  
         Structure s = Zoo.getStructureByID(structureID);
 
-        if (structure == null) return false;
-        if (structure.isDemolished()) return false;
+        if (s == null) return false;
+        if (s.isDemolished()) return false;
 
-        structure.updateVisitorLearning(this);
+        s.updateVisitorLearning(this);
         attractionsVisited++;
         return true;
     }
+
+    /*
+    @description: returns this Visitor in file format (role + base fields + visitor fields)
+    @return a string formatted for writing to person.txt
+    */
+    @Override
+    public String saveToString() {
+    return getRole() + "\n" +
+            getPersonID() + "\n" +
+            getFirstName() + "\n" +
+            getLastName() + "\n" +
+            getAge() + "\n" +
+            getBalance() + "\n" +
+            getLearningLevel() + "\n";
+    }
+
 }
 
 

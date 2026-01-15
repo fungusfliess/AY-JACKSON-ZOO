@@ -7,7 +7,6 @@
 */
 import Animal_Subsystem.*;
 import Animal_Subsystem.LivingCondition;
-import Land_Subsystem.Land;
 import Person_Subsystem.Visitor;
 
 public abstract class Habitat extends Structure{

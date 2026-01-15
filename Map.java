@@ -1,4 +1,4 @@
-package Land_Subsystem;
+
 public class Map {
     
     // FIELDS
@@ -45,13 +45,31 @@ public class Map {
     }
 
     /*
-    @description: overwrites old character array map.
-    @param: char[][] in. A new 2D character array. Must be of positive length and width. 
+    @description: overwrites old character array map. USE WITH CAUTION
+    @param: char[][] in. A new RECTANGULAR 2D character array. Must be of positive length and width. 
     */ 
     public void setCharArray (char[][] in) { // will override current map, use with caution.
-        this.map = in;
+        if (in == null || in.length == 0 || in[0].length == 0) {
+            System.out.println("Inputted array is invalid.");
+            return;
+        }
+
+        // checking if rectangular
+        for (int i = 0; i < in.length; i++) {
+            if (in[i].length != in[0].length) {
+                System.out.println("Inputted array is not rectangular.");
+            }
+        }
+        
+        // copy over
         length = in.length;
         width = in[0].length;
+        for (int i = 0; i < length; i++) {
+            for (int j = 0; j < width; j++) {
+                this.map[i][j] = in[i][j];
+            }
+        }
+        
     }
 
     /*
@@ -191,7 +209,7 @@ public class Map {
     /*
     @description: Random boolean generator, with a modifiable probability that will approach 100% true as count --> max. Used by recursive blob generation.
     @parameters: int max, int count. These are used in the probability calculation. Max is the maximum sprawl, and count is to change the probability with each call from buildStructureBlob's recursive algorithm.
-    @return: boolean with a 1/(max-count) chance of being true. 
+    @return: boolean with a 1/(max-count) chance of being false. 
     */ 
     private boolean probabilityOfEnd (int max, int count) {
         int den = max - count;
@@ -211,6 +229,12 @@ public class Map {
     // wrapper method
     public boolean buildStructureBlob (Coord seed, char id, int max) {
         if (!charIsAllowed(id)) { // illegal character
+            return false;
+        }
+        if (!seed.isInGrid(this.length, this.width)) {
+            return false;
+        }
+        if (this.map[seed.getY()][seed.getX()] != EMPTY) {
             return false;
         }
         buildStructureBlob(seed, id, max, 0);

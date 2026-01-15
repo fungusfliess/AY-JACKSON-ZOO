@@ -75,4 +75,11 @@ public abstract class Person {
     @return the role string for this Person object (ex: "ZOOKEEPER", "SHOPSTAFF", "ADULT", "CHILD", "SENIOR")
     */ 
    public abstract String getRole();
+
+   /*
+   @description: returns this Person in file format (one field per line) so it can be saved and reloaded later
+   @return a string formatted for writing to person.txt
+   */
+   public abstract String saveToString();
+
 }

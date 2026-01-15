@@ -98,16 +98,15 @@ public class Child extends Visitor{
     */
    @Override
    public String toString() {
-      return "PersonID: " + personID + "\n" + 
-      "Name: " + firstName + " " + lastName + "\n" + 
-      "Age: " + age + "\n" + 
-      "Role: " + this.getRole() + "\n" + 
-      "Balance: " + balance + "\n" + 
-      "Learning Level: " + learningLevel + "\n" + 
-      "Attractions Visited: " + attractionsVisited + "\n" +
-      "Num Facts Learned: " + learningHistorySize + "\n" +
-      "Preferred Budget Limit: " + preferredBudgetLimit + "\n"; 
-      "Guardian ID: " + guardianID; + "\n";
-      "Stroller Needed: " + strollerNeeded; + "\n";
+      return "PersonID: " + getPersonID() + "\n" +
+             "Name: " + getFirstName() + " " + getLastName() + "\n" +
+             "Age: " + getAge() + "\n" +
+             "Role: " + getRole() + "\n" +
+             "Balance: " + getBalance() + "\n" +
+             "Learning Level: " + getLearningLevel() + "\n" +
+             "Attractions Visited: " + getAttractionsVisited() + "\n" +
+             "Num Facts Learned: " + getLearningHistorySize() + "\n" +
+             "Guardian ID: " + guardianID + "\n" +
+             "Stroller Needed: " + strollerNeeded + "\n";
    }
 }
