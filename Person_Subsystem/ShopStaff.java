@@ -8,16 +8,17 @@ package Person_Subsystem;
                 from Employee and returns a role identifier like "SHOPSTAFF". It is stored in the zoo’s employee list and can be sorted by 
                 earnings or experience.
 */
+import Structure_Subsystem.Item;
 
-import Item;
-public class ShopStaff {
-    //CONSTANTS 
-    public static final double FACTS_BONUS_PERCENTAGE = 0.02; 
+public class ShopStaff extends Employee {
 
-    //FIELDS 
-    private int itemsSold; 
-    private double totalSales; 
-    private int factsShared; 
+    //CONSTANTS
+    public static final double FACTS_BONUS_PERCENTAGE = 0.02;
+
+    //FIELDS
+    private int itemsSold;
+    private double totalSales;
+    private int factsShared;
 
     //CONSTRUCTOR
     /*
@@ -29,60 +30,57 @@ public class ShopStaff {
      @param hourlyWage        the employee's hourly wage
      @param yearsOfExperience the employee's years of experience
      */
-    public ShopStaff(int age, String personID, String firstName, String lastName, double hourlyWage, int yearsOfExperience){
+    public ShopStaff(int age, String personID, String firstName, String lastName,
+                     double hourlyWage, int yearsOfExperience) {
         super(age, personID, firstName, lastName, hourlyWage, yearsOfExperience);
-        itemsSold = 0; 
-        totalSales = 0.0; 
-        factsShared = 0; 
+        itemsSold = 0;
+        totalSales = 0.0;
+        factsShared = 0;
     }
 
     //ACCESSOR
-    public int getItemsSold(){
-        return itemsSold;
-    }
+    public int getItemsSold() { return itemsSold; }
+    public double getTotalSales() { return totalSales; }
+    public int getFactsShared() { return factsShared; }
 
-    public double getTotalSales(){
-        return totalSales;
-    }
-
-    public int getFactsShared(){
-        return factsShared;
-    }
-
-    //MUTATOR
     /*
      @description: updates the employee's total earnings for the day using ShopStaff pay rules
-     @note: earnings depends on hours worked and a bonus based on factsShared
+     @note: day pay = hourlyWage * hoursWorked * (1 + factsShared * FACTS_BONUS_PERCENTAGE)
     */
     @Override
-    public void setEarnings(){
-        earnings = hourlyWage*hoursWorked*(1+ factsShared*FACTS_BONUS_PERCENTAGE);
+    public void setEarnings() {
+        double multiplier = 1 + factsShared * FACTS_BONUS_PERCENTAGE;
+        double dayPay = getHourlyWage() * getHoursWorked() * multiplier;
+
+        // requires Employee to have protected addToEarnings(double)
+        addToEarnings(dayPay);
     }
 
-    //OTHER METHODS 
     /*
      @return the role string for this Person object
     */
     @Override
-    public String getRole(){
+    public String getRole() {
         return "SHOPSTAFF";
     }
-    
+
     /*
      @description: sells an item to a visitor if the visitor can afford it
      @param item    the item being sold
      @param visitor the visitor buying the item
      @return true if the sale was successful, false otherwise
     */
-    public boolean sellItem(Item item, Visitor visitor){
-        if (visitor!=null && visitor.canAffordItem(item)){
-            balance -= item.getPrice();         //set balance for Visitor 
-            visitor.addItem(item);
-            itemsSold++; 
-            totalSales+=item.getPrice(); 
-            return true; 
-        } 
-        return false; 
+    public boolean sellItem(Item item, Visitor visitor) {
+        if (item == null || visitor == null) return false;
+        if (!visitor.canAffordItem(item)) return false;
+
+        // Let Visitor update its own balance/spending
+        visitor.recordPurchase(item.getPrice());
+        visitor.addItem(item);
+
+        itemsSold++;
+        totalSales += item.getPrice();
+        return true;
     }
 
     /*
@@ -90,14 +88,15 @@ public class ShopStaff {
      @return formatted employee information
     */
     @Override
-    public String toString(){
-        return "PersonID: " + personID + "\n" + 
-                "Name: " + firstName + " " + lastName + "\n" + 
-                "Age: " + age + "\n" + 
-                "Role: " + this.getRole() + "\n" + 
-                "Num Items Sold: " + certificationLevel + "\n" + 
-                "Num Facts Shared: " + dailyTasksCompleted + "\n" + 
-                "Earnings: " + earnings + "\n"; 
+    public String toString() {
+        return "PersonID: " + getPersonID() + "\n" +
+               "Name: " + getFirstName() + " " + getLastName() + "\n" +
+               "Age: " + getAge() + "\n" +
+               "Role: " + getRole() + "\n" +
+               "Items Sold: " + itemsSold + "\n" +
+               "Total Sales: " + totalSales + "\n" +
+               "Facts Shared: " + factsShared + "\n" +
+               "Earnings: " + getEarnings() + "\n";
     }
 
     /*
@@ -105,11 +104,11 @@ public class ShopStaff {
                    and resetting ShopStaff daily counters
     */
     @Override
-    public void passDay(){
-        super(); 
-        itemsSold = 0; 
-        totalSales = 0.0; 
-        factsShared = 0; 
+    public void passDay() {
+        super.passDay();
+        itemsSold = 0;
+        totalSales = 0.0;
+        factsShared = 0;
     }
 
     /*

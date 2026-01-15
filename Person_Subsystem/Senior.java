@@ -9,7 +9,7 @@ package Person_Subsystem;
                 age threshold). It returns "SENIOR" as the role and includes accessibility status in its summary output.
 */
 
-public class Senior extends Adult{
+public abstract class Senior extends Adult {
    //CONSTANTS 
    public static final double SENIOR_DISCOUNT = 0.20; 
 
