@@ -1,6 +1,7 @@
 package Land_Subsystem;
 import Structure_Subsystem.*;
 import java.io.*;
+import java.util.logging.Handler;
 
 import Animal_Subsystem.LivingCondition;
 
@@ -12,6 +13,8 @@ public class Land {
     private Map landMap;
     private Structure[] structureList;
 
+    // CONSTANTS
+    public static final char EMPTY = '.'; // represents empty space on grid
 
     // CONSTRUCTOR
     public Land(int maxNumStructures, Map landMap) {
@@ -179,7 +182,7 @@ public class Land {
                 return i;
             }
         }
-        return -1;
+        return -1; // if not found
     }
     
     /*
@@ -194,6 +197,26 @@ public class Land {
             }
         }
         return -1;
+    }
+
+    /*
+    @description: Searches for a Structure in the land subsystem by both its ID and name.
+    @params: char id represents the ID of the Structure to search for.
+    @returns: Structure object if found with matching ID and name, null otherwise.
+    */
+    public Structure searchStructureByIDAndName (char id, String name) {
+        int idx = this.searchIdxByID(id);
+        // if not found, then searchIdxByID returns -1
+        if (idx == -1) {
+            return null;
+        }
+        // Structure is found, now check name
+        Structure temp = zooLand.getStructureAtIdx(idx);
+        // if name is equal, return Structure, else return null
+        if (temp.getName().equals(name)) {
+            return temp;
+        }
+        return null;
     }
 
     /*
@@ -213,7 +236,7 @@ public class Land {
             if(current.getNumAnimals() == numAnimals && current.getSize() == size){
                 index = middle;
                 found = true;
-            }else if(current.getNumAnimals() < numAnimals || current.getSize() < size){
+            }else if(current.getNumAnimals() < numAnimals || (current.getNumAnimals() == numAnimals && current.getSize() < size)){
                 bottom = middle + 1;
             }else{
                 top = middle -1;
@@ -237,6 +260,30 @@ public class Land {
                 }else if(structureList[i].compareToNumAnimals(mostAnimals) > 0){
                     mostAnimals = structureList[i];
                 }
+            }
+        }
+        return mostAnimals;
+    }
+
+    /*
+    @description: Finds the habitat with the most animals that satisfies the inputted livingCondition
+    @params: LivingCondition condition2 is the LivingCondition these habitats must match. If null, then it'll be ignored.
+    @returns: Habitat with the most animals that satisfies a specific LivingCondition, null if not found.
+    */
+    public Habitat searchHabitatMostAnimalsAndLivingConditions (LivingCondition condition2) {
+        Habitat mostAnimals = null;
+        Habitat currentHabitat = null;
+        // finding largest num of animals
+        for (int i = 0; i < currentNumStructures; i++) {
+            // must be a habitat
+            if (structureList[i] instanceof Habitat) {
+                currentHabitat = (Habitat)structureList[i];
+                if (condition2 == null || currentHabitat.getClimate().compareTo(condition2) == 0) { // must have a specific living condition, if it was null then we ignore it and do not compare based off of it. 
+                    // if more animals that current mostAnimals
+                    if ((mostAnimals == null || (currentHabitat.getNumAnimals() > mostAnimals.getNumAnimals()))) {
+                        mostAnimals = currentHabitat;
+                    }
+                }  
             }
         }
         return mostAnimals;
@@ -269,9 +316,6 @@ public class Land {
         return tgt;
     }
 
-
-
-
     // SORT
     /*
     @description: Sorts array of Structures based on their ID in ascending order.
@@ -296,13 +340,33 @@ public class Land {
         }
     }
 
+    public void sortByMostAnimals () {
+        // if a structure is not a Habitat, disregard it entirely. 
+        int blankIdx;
+        Structure temp;
+        for (int i = 1; i < currentNumStructures; i++) {
+            blankIdx = i;
+            temp = structureList[i];
+            // insertion sort
+            if (temp instanceof Habitat) { // only pushes forward if it is a habitat, leaving non-habitats in order. 
+                // stopping conditions: pushed all the way to index of 0, or the Habitat in front of temp is greater in terms of number of animals. 
+                // Will push if the Structure to the left is NOT a Habitat 
+                while (!(blankIdx == 0 || ((structureList[blankIdx-1] instanceof Habitat) && (((Habitat)structureList[blankIdx-1]).getNumAnimals() < ((Habitat)temp).getNumAnimals())))) {
+                    structureList[blankIdx] = structureList[blankIdx-1];
+                    blankIdx--;
+                }
+            }
+            structureList[blankIdx] = temp;
+        }
+    }
+
     /*
     @description: Sorts array of Structures based on how urgently they need maintenance
     @params: int numToSort is the number of Structures the user wnats sorted. 
     */
     public void sortByDaysSinceLastMaintenance(int numToSort) {
 
-        // if input is negative, then sort the entire array.
+        // if input is negative or too large, then sort the entire array.
         if (numToSort < 0 || numToSort > currentNumStructures) {
             numToSort = currentNumStructures;
         }
@@ -518,6 +582,11 @@ public class Land {
         return true;
     }
 
+    /*
+    @description: creates a Pavillion for the zoo. Creates and stores an instance of the class, as well as the structure on the map.
+    @params: corner1 is to tell where to start building the blob structure. maxRadiusOfBuild is the maximum radius of sprawl of the blob generation. name, char, capacity, condition are parameters for the Pavillion constructor.
+    @returns: boolean representing success. Will be unsuccessful if the Structure array is full, or the blob build area has obstacles.
+    */
     public boolean createPavillion (Coord corner1, int maxRadiusOfBuild, String name, char structureID, int capacity, LivingCondition condition) {
         // if array is full
         if (currentNumStructures == maxNumStructures) {
@@ -550,18 +619,24 @@ public class Land {
         return true;
     }
 
-    public boolean createMaze (Coord corner1, int maxRadiusOfBuild, String name, char structureID, int timeBetweenMaintenance) {
+    /*
+    @description: creates a Maze for the zoo. Creates and stores an instance of the class, as well as the structure on the map.
+    @params: corner1 is to tell where to start the maze structure (top left corner). structureID, timeBetweenMaintenance, mazeLayout are parameters for the Maze constructor.
+    @returns: boolean representing success. Will be unsuccessful if the Structure array is full, or the maze build area has obstacles.
+    */
+    public boolean createMaze (Coord corner1, String name, char structureID, int timeBetweenMaintenance, char[][] mazeLayout) {
         // if array is full
         if (currentNumStructures == maxNumStructures) {
             return false;
         }
+        Coord corner2 = new Coord(corner1.getX() + mazeLayout[0].length-1, corner1.getY() + mazeLayout.length-1); 
         // if physical building cannot be built
-        if (!landMap.buildStructureBlob(corner1, structureID, maxRadiusOfBuild)) {
+        if (!landMap.buildStructureRectangular(corner1, corner2, structureID)) {
             return false;
         }
         // calculating area of the Structure.
         int area = landMap.areaOf(corner1);
-        structureList[currentNumStructures] = new Maze(name, structureID, area, timeBetweenMaintenance, 0, this);
+        structureList[currentNumStructures] = new Maze(name, structureID, area, timeBetweenMaintenance, 0, this, mazeLayout);
         currentNumStructures++;
         return true;
     }
@@ -589,5 +664,9 @@ public class Land {
         // remove from map by finding any coordinate with structureID and recursively erasing it from there. 
         landMap.erase(landMap.find(tempID));
         return true;
+    }
+
+    public void printMap() {
+        landMap.printMap();
     }
 }
