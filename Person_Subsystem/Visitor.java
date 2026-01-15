@@ -85,6 +85,14 @@ public abstract class Visitor extends Person {
     public int getNumItems(){
         return numItems;
     }
+
+    public int getLearningHistorySize() {
+        return learningHistorySize;
+    }
+ 
+    public String[] getLearningHistory() {
+        return learningHistory;
+    }
     
     //MUTATOR
     /*
