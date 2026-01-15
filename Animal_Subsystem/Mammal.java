@@ -30,7 +30,7 @@ public abstract class Mammal extends Animal {
     }
 
     // Description: creates a new mammal offspring
-    public void reproduce(Habitat habitat, String name) {
+    public Animal reproduce(Habitat habitat, String name) {
         if (this.getGender().equalsIgnoreCase("Female") &&
             this.getHappiness() >= (LOW_STAT * MAX_STAT) &&
             this.getAge() >= this.getAdultAge() &&
@@ -45,8 +45,14 @@ public abstract class Mammal extends Animal {
                     baby.setGender("Female");
                 }
                 habitat.addAnimal(baby);
+                System.out.println(name + " has been born!");
+                return baby;
             }
+        } else {
+            System.out.println("reproduction failed");
+            return null;
         }
+        
     }
 
     // =========================

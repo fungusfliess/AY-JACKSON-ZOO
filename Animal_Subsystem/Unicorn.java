@@ -7,6 +7,8 @@ public class Unicorn extends Mammal {
     private static final LivingCondition UNICORN_CONDITION =
         new LandCondition(18, 60, "Enchanted Forest", 45, 4, true, 70, 8);
 
+    private static final int WEIGHT_GAIN_PER_YEAR = 15;
+    private static final int HUNGER_GAIN_PER_YEAR = 6;
     public Unicorn(Animal parent) {
         super(parent);
         setupStats();
@@ -75,9 +77,8 @@ public class Unicorn extends Mammal {
     }
 
     public void updateAge() {
-        if (getAge() > 1) {
-            setWeight(getWeight() + 15);
-        }
+        setWeight(getWeight() + getAge()*WEIGHT_GAIN_PER_YEAR);
+        setMaxHunger(getMaxHunger() + getAge()*HUNGER_GAIN_PER_YEAR);
 
         if (getAge() >= getAdultAge()) {
             drinksMilk = false;
