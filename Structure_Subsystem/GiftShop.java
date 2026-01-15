@@ -146,7 +146,7 @@ public class GiftShop extends Shop{
         saveToString = "GiftShop\n" ;
 
         // saves subclass-specific fields
-        saveToString = (getMenu()).length + "\n";
+        saveToString += (getMenu()).length + "\n";
         for (int i = 0; i < (getMenu()).length; i++){
             saveToString += (getMenu())[i].getName()+ "\n" + (getMenu())[i].getPrice() + "\n";
         }
