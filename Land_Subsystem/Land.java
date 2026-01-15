@@ -194,7 +194,7 @@ public class Land {
         int top = structureList.length -1, bottom = 0, middle, index = -1;
         boolean found = false;
         while(top >= bottom && !found){
-            middle = top + bottom/2; 
+            middle = (top + bottom)/2; 
             current = structureList[middle];
             if(current.getNumAnimals() == numAnimals && current.getSize() == size){
                 index = middle;
@@ -274,10 +274,9 @@ public class Land {
     }
 
     /*
-    COME_BACK_HERE
-    ARIANNA IS DOING SORTBYANIMALS AND SORTBYSIZEANDANIMALS HERE
-
+    @description: Sorts array of Structures based on # of Animals, from least to most
     */
+
     public void sortByLeastAnimals(){
         Structure temp;
         boolean sorted = false;
@@ -293,6 +292,11 @@ public class Land {
             }
         }
     }
+
+    /*
+    @description: Sorts array of Structures based on # of Animals, from least to most, 
+    and size from least to most if # of Animals is the same
+    */
 
     public void sortByAnimalsAndSize(){
         Structure temp;
