@@ -469,7 +469,7 @@ public class Zoo {
 
     public void saveZoo(){
         savePersons();
-        saveAnimals());
+        saveAnimals();
         saveEggs();
         saveLand();
         try{
@@ -496,10 +496,10 @@ public class Zoo {
 
     public void passDay(){
         for(int i = 0; i < numEmployees; i++){
-            ((getStaffList())[i]).passDay();
+            (staffList[i]).passDay();
         }
         for(int i = 0; i < numVisitors; i++){
-            ((getVisitorList())[i]).passDay();
+            (visitorList[i]).passDay();
         }
         zooLand.passDay();
     }
