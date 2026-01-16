@@ -1,4 +1,12 @@
-
+/*
+   File Name: Adult.java
+   Name: Elizabeth Wang
+   Class: ICS4U1-23
+   Date: Jan 7, 2025
+   Description: Adult is a concrete subclass of Visitor that represents standard visitors who pay the regular
+                admission price. It tracks a preferred budget limit and can report whether the visitor stayed
+                within budget. Adult returns the role identifier "ADULT" and uses adult ticket pricing rules.
+*/
 
 public abstract class Adult extends Visitor{
    //FIELDS 
