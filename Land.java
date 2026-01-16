@@ -604,7 +604,7 @@ public class Land {
         return true;
     }
 
-    public boolean createPark (Coord corner1, int maxRadiusOfBuild, String name, char structureID, int capacity) {
+    public boolean createPark (Coord corner1, int maxRadiusOfBuild, String name, char structureID, int timeBetweenMaintenance) {
         // if array is full
         if (currentNumStructures == maxNumStructures) {
             return false;
@@ -615,7 +615,7 @@ public class Land {
         }
         // calculating area of the Structure.
         int area = landMap.areaOf(corner1);
-        structureList[currentNumStructures] = new Park(name, structureID, area, capacity, this);
+        structureList[currentNumStructures] = new Park(name, structureID, area, timeBetweenMaintenance, 0, this);
         currentNumStructures++;
         return true;
     }

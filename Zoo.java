@@ -222,7 +222,41 @@ public class Zoo {
                             displayAllEmployees();
                             break;
                         case 9:
-                            System.out.print()
+                            if(createStructure("GiftShop")){        
+                            }else{
+                                System.out.println("Could Not Build Structure Due to Insuffient Space.");
+                            }
+                            break;
+                        case 10: 
+                            if(createStructure("Restaurant")){        
+                            }else{
+                                System.out.println("Could Not Build Structure Due to Insuffient Space.");
+                            }
+                            break;
+                        case 11: 
+                            if(createStructure("Pavillion")){        
+                            }else{
+                                System.out.println("Could Not Build Structure Due to Insuffient Space.");
+                            }
+                            break;
+                        case 12: 
+                            if(createStructure("Enclosure")){        
+                            }else{
+                                System.out.println("Could Not Build Structure Due to Insuffient Space.");
+                            }
+                            break;
+                        case 13: 
+                            if(createStructure("Park")){        
+                            }else{
+                                System.out.println("Could Not Build Structure Due to Insuffient Space.");
+                            }
+                            break;
+                        case 14: 
+                            if(createStructure("Maze")){        
+                            }else{
+                                System.out.println("Could Not Build Structure Due to Insuffient Space.");
+                            }
+                            break;
                         default: 
                             System.out.println("Sorry, that is not a valid option!\n");
                             break;
@@ -432,7 +466,8 @@ public class Zoo {
             
 
         }else if(type == "Enclosure"){
-            System.out.print//come back here
+            System.out.print("Enter species: ");
+            String species = sc.nextLine();
             System.out.print("Enter climate type (LAND or WATER): ");
             climateType = sc.nextLine();
 
@@ -511,7 +546,7 @@ public class Zoo {
 
             System.out.print("Enter maximum animals: ");
             maxAnimals = Integer.parseInt(sc.nextLine());
-            return zooLand.createPavillion(c1, area, name, id, maxAnimals, climate);
+            return zooLand.createEnclosure(c1, area, species, name, id, timeBetweenMaintenance, maxAnimals, climate);
 
         }else if(type == "Pavillion"){
             System.out.print("Enter climate type (LAND or WATER): ");
@@ -592,11 +627,13 @@ public class Zoo {
 
             System.out.print("Enter maximum animals: ");
             maxAnimals = Integer.parseInt(sc.nextLine());
-            return zooLand.createPavillion(c1, area, name, id, maxAnimals, climate);
+            return zooLand.createPavillion(c1, area, name, id, timeBetweenMaintenance, maxAnimals, climate);
 
         }else if(type == "Maze"){
+            
 
-        }else{
+        }else if(type == "Park"){
+            
             
         }
 
