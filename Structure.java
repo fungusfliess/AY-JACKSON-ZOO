@@ -6,9 +6,6 @@
    Description: Structure represents a building or facility within the zoo. It includes fields for name, ID, area, maintenance cost, and other properties related to the structure's condition and usage.
 */
 
-import Land_Subsystem.*;
-import Person_Subsystem.*;
-
 public abstract class Structure{
 
    //FIELDS

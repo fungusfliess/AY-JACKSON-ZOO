@@ -7,7 +7,6 @@
 */
 import java.util.*;
 
-import Person_Subsystem.*;
 public abstract class Shop extends Structure{
 
    public static Scanner sc = new Scanner(System.in);

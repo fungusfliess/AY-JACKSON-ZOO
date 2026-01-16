@@ -106,7 +106,7 @@ public abstract class Habitat extends Structure{
         @param area: the area required for the animal
         @return: true if there is enough space, false otherwise
     */
-    public boolean enoughSpace(int area){
+    public boolean enoughSpace(double area){
         return spaceLeft - area >= 0;
     }
 
