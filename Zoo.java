@@ -743,9 +743,9 @@ public class Zoo {
 
 
     public String toString() {
-        return "This zoo has " + numAnimals + " animals.\n" ;
-        return "This zoo has " + numEmployees + "employees\n"; 
-        return "This zoo has " + numVisitors + "visitors\n"; 
+        return "This zoo has " + numAnimals + " animals.\n" +
+                "This zoo has " + numEmployees + "employees\n" + 
+                "This zoo has " + numVisitors + "visitors\n"; 
     }
 
    
