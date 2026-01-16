@@ -124,6 +124,7 @@ public abstract class Employee extends Person {
       // Every 365 days worked -> +1 year of experience
       if (daysWorked == DAYS_PER_YEAR) {
          yearsOfExperience++;
+         daysWorked = 0; 
          setBenefitsEligible(); 
       }
       setEarnings(); 
@@ -133,19 +134,31 @@ public abstract class Employee extends Person {
    /*
     @description: adds a positive amount to the employee's total earnings
     @param amount amount to add (must be > 0)
+    @return a boolean to indicate whether adding was successful or not
     */
-   protected void addToEarnings(double amount) {
+   public boolean addToEarnings(double amount) {
       if (amount > 0.0) {
          earnings += amount;
+         return true;
       }
+      return false; 
    }
 
    /*
-   @description: returns this Employee in file format (role + base fields + employee fields)
-   @return a string formatted for writing to person.txt
+   @description: returns this Employee in file format so it can be saved and reloaded later
+   @return a string formatted for writing to persons.txt
    */
    @Override
    public String saveToString() {
+      // For employees, the 3rd role-specific line is:
+      // - ZooKeeper: certificationLevel
+      // - ShopStaff: placeholder value of 0
+
+      int thirdField = 0;
+      if (this instanceof ZooKeeper) {
+         thirdField = ((ZooKeeper) this).getCertificationLevel();
+      }
+
       return getRole() + "\n" +
             getPersonID() + "\n" +
             getFirstName() + "\n" +
@@ -153,6 +166,7 @@ public abstract class Employee extends Person {
             getAge() + "\n" +
             getHourlyWage() + "\n" +
             getYearsOfExperience() + "\n" +
+            thirdField + "\n";
    }
 
 }

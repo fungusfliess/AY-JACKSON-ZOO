@@ -11,6 +11,7 @@
 public abstract class ZooKeeper extends Employee {
     //CONSTANTS 
     public static final int MAX_CERTIFICATION_LEVEL = 5; 
+    public static final int MIN_CERTIFICATION_LEVEL = 1; 
     public static final double CERTIFICATION_BONUS_PERCENTAGE = 0.05;
    
     //FIELDS 
@@ -33,8 +34,12 @@ public abstract class ZooKeeper extends Employee {
         this.certificationLevel = certificationLevel;
 
         //ensure certification level is within valid range
-        if (certificationLevel<1){
-            this.certificationLevel = 1; 
+        if (certificationLevel<MIN_CERTIFICATION_LEVEL){
+            this.certificationLevel = MIN_CERTIFICATION_LEVEL; 
+        } else if (certificationLevel>MAX_CERTIFICATION_LEVEL){
+            this.certificationLevel = MAX_CERTIFICATION_LEVEL; 
+        } else {
+            this.certificationLevel = certificationLevel; 
         }
         dailyTasksCompleted = 0; 
     }   
@@ -137,14 +142,4 @@ public abstract class ZooKeeper extends Employee {
         super.passDay(); 
         dailyTasksCompleted =0; 
     }
-
-    /*
-   @description: returns this ZooKeeper in file format
-   @return a string formatted for writing to person.txt
-   */
-   @Override
-   public String saveToString() {
-        super.saveToString();
-        return certificationLevel + "\n";
-   }
 }
