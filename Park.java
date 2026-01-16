@@ -1,6 +1,4 @@
 
-import Land_Subsystem.*;
-
 public class Park extends Attraction {
 
     //CONSTANTS

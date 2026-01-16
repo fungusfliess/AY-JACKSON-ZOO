@@ -1,8 +1,4 @@
-
-import Structure_Subsystem.*;
 import java.io.*;
-import java.util.logging.Handler;
-
 public class Land {
     
     // FIELDS
@@ -209,7 +205,7 @@ public class Land {
             return null;
         }
         // Structure is found, now check name
-        Structure temp = zooLand.getStructureAtIdx(idx);
+        Structure temp = this.getStructureAtIdx(idx);
         // if name is equal, return Structure, else return null
         if (temp.getName().equals(name)) {
             return temp;
@@ -231,10 +227,10 @@ public class Land {
         while(top >= bottom && !found){
             middle = (top + bottom)/2; 
             current = structureList[middle];
-            if(current.getNumAnimals() == numAnimals && current.getSize() == size){
+            if(current.getNumAnimals() == numAnimals && current.getArea() == size){
                 index = middle;
                 found = true;
-            }else if(current.getNumAnimals() < numAnimals || (current.getNumAnimals() == numAnimals && current.getSize() < size)){
+            }else if(current.getNumAnimals() < numAnimals || (current.getNumAnimals() == numAnimals && current.getArea() < size)){
                 bottom = middle + 1;
             }else{
                 top = middle -1;
@@ -244,20 +240,27 @@ public class Land {
     }
 
     /*
-    @description: Searches for Structure with matching climate and most Animals
+    @description: Searches for Habitat with matching climate and most Animals
     @params: climate represents user desired LivingCondition 
     @returns: returns Structure object 
     */
 
-    public Structure searchMostAnimalsAndLivingCondition(LivingCondition climate){
-        Structure mostAnimals = null;
+    public Habitat searchMostAnimalsAndLivingCondition(LivingCondition climate){
+        Habitat mostAnimals = null;
+        Structure current;
+        Habitat currentHabitat;
         for(int i = 0; i < currentNumStructures; i++){
-            if((structureList[i].getClimate()).equals(climate)){
-                if(mostAnimals == null){
-                    mostAnimals = structureList[i];
-                }else if(structureList[i].compareToNumAnimals(mostAnimals) > 0){
-                    mostAnimals = structureList[i];
+            current = structureList[i];
+            // must be habitat, or else not considered.
+            if (current instanceof Habitat) {
+                currentHabitat = (Habitat) current;
+                // look for most animals
+                if (currentHabitat.getClimate() == climate) {
+                    if (mostAnimals == null || currentHabitat.compareToNumAnimals(mostAnimals) > 0) {
+                        mostAnimals = currentHabitat;
+                    }   
                 }
+
             }
         }
         return mostAnimals;
@@ -604,6 +607,11 @@ public class Land {
         return true;
     }
 
+    /*
+    @description: creates a park for the zoo. Creates and stores an instance of the class, as well as a structure on the map.
+    @params: corner1 is to tell where to start building the blob structure. maxRadiusOfBuild is the maximum radius of sprawl of the blob generation. name, char, capacity, condition are parameters for the Park constructor.
+    @returns: boolean representing success. Will be unsuccessful if the Structure array is full, or the blob build area has obstacles.
+    */
     public boolean createPark (Coord corner1, int maxRadiusOfBuild, String name, char structureID, int timeBetweenMaintenance) {
         // if array is full
         if (currentNumStructures == maxNumStructures) {

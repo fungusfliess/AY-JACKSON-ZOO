@@ -1,5 +1,11 @@
-
-import Land_Subsystem.*;
+/*
+    File Name: Maze.java
+    Name: Jason Liu
+    Class: ICS4U1-23
+    Date: Jan 7, 2025
+    Description: Maze is a concrete subclass of Attraction that represents a maze attraction within the zoo.
+                 It includes a character array representing the maze layout and methods to solve and display the maze.
+*/
 
 public class Maze extends Attraction {
     
@@ -86,6 +92,7 @@ public class Maze extends Attraction {
     @description: Calculates maintenance cost of the maze based on area
     @returns: double representing cost
     */
+   @Override
     public double calculateMaintenanceCost() {
         return MAINTENANCE_RATE_PER_UNIT * this.getArea();
     }
@@ -246,7 +253,7 @@ public class Maze extends Attraction {
         return newMaze;
 
    }
-
+   @Override
    public String saveToString () {
         String sum = "";
         sum += "Maze" + "\n"; // class type, reference for reading in
@@ -277,6 +284,7 @@ public class Maze extends Attraction {
    @description: returns a String representation of the Maze object
    @return: String representing the data of this Maze object
    */
+  @Override
    public String toString () {
         String sum = "";
         sum += "Maze Name: " + this.getName() + "\n";

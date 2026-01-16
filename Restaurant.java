@@ -5,8 +5,6 @@
    Date: Jan 7, 2025
    Description: Restaurant represents a restaurant within the zoo.
 */
-import Land_Subsystem.*;
-
 public class Restaurant extends Shop{
 
     //CONSTANTS
@@ -164,6 +162,10 @@ public class Restaurant extends Shop{
         + "\n";
         return saveToString;
 
+   }
+
+   public String toString () {
+      return "Restaurant Name: " + getName() + "\nStructure ID: " + getStructureID() + "\nArea: " + getArea() + "\nMaintenance Cost: " + getMaintenanceCost() + "\nTime Between Maintenance: " + getTimeBetweenMaintenance() + "\nDays Since Last Maintenance: " + getDaysSinceLastMaintenance();
    }
 
 }
