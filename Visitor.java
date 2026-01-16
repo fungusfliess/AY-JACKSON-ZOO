@@ -203,7 +203,7 @@ public abstract class Visitor extends Person {
     public String endVisitorSummary() {
         String summary = "";
         summary += "=== Visitor Summary ===\n";
-        summary += "PersonID: " + + getPersonID() + "\n";
+        summary += "PersonID: " + getPersonID() + "\n";
         summary += "Name: " + getFirstName() + " " + getLastName() + "\n";
         summary += "Role: " + getRole() + "\n";
         summary += "Learning Level: " + getLearningLevel() + "\n";
