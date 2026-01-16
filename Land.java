@@ -588,7 +588,7 @@ public class Land {
     @params: corner1 is to tell where to start building the blob structure. maxRadiusOfBuild is the maximum radius of sprawl of the blob generation. name, char, capacity, condition are parameters for the Pavillion constructor.
     @returns: boolean representing success. Will be unsuccessful if the Structure array is full, or the blob build area has obstacles.
     */
-    public boolean createPavillion (Coord corner1, int maxRadiusOfBuild, String name, char structureID, int capacity, LivingCondition condition) {
+    public boolean createPavillion (Coord corner1, int maxRadiusOfBuild, String name, char structureID, int timeBetweenMaintenance, int capacity, LivingCondition condition) {
         // if array is full
         if (currentNumStructures == maxNumStructures) {
             return false;
@@ -599,7 +599,7 @@ public class Land {
         }
         // calculating area of the Structure.
         int area = landMap.areaOf(corner1);
-        structureList[currentNumStructures] = new Pavillion(name, structureID, area, 0, this, capacity, condition);
+        structureList[currentNumStructures] = new Pavillion(name, structureID, area, timeBetweenMaintenance, 0, this, capacity, condition);
         currentNumStructures++;
         return true;
     }
