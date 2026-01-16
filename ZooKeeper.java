@@ -87,9 +87,9 @@ public class ZooKeeper extends Employee {
      @param a the Animal to feed
      @return true if the animal was fed, false otherwise
      */
-    public boolean feedAnimal(Animal a){
-        if (a==null){return false;}             //OR if animal is NOT avaible, has passed away. etc 
-        a.eat(); 
+    public boolean feedAnimal(Animal a, String food, int amount){
+        if (a==null){return false;}             
+        a.eat(food, amount); 
         dailyTasksCompleted++; 
         return true; 
     }
