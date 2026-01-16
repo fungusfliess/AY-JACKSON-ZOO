@@ -905,25 +905,172 @@ public class Zoo {
     }
     
     /*
-        @description: writes all Person records to person.txt in correct format
-                    - first line: total number of persons
-                    - then all employees, then all visitors (one field per line)
-    */
+    @description: writes all Person records to person.txt in correct format
+                  - first line: total number of persons
+                  - then all employees, then all visitors (one field per line)
+   */
     private void savePersons() {
-        try (PrintWriter out = new PrintWriter(new FileWriter(PERSON_FILE))) {
-            out.println(numEmployees + numVisitors);
+        try (BufferedWriter out = new BufferedWriter(new FileWriter(PERSON_FILE))) {
 
-            for (int i = 0; i < numEmployees; i++) {
-                if (staffList[i] != null) out.print(staffList[i].saveToString());
-            }
+        // total number of people
+        out.write(Integer.toString(numEmployees + numVisitors));
+        out.newLine();
 
-            for (int i = 0; i < numVisitors; i++) {
-                if (visitorList[i] != null) out.print(visitorList[i].saveToString());
+        // save employees
+        for (int i = 0; i < numEmployees; i++) {
+            if (staffList[i] != null) {
+                out.write(staffList[i].saveToString());
+                out.newLine();
             }
+        }
+
+        // save visitors
+        for (int i = 0; i < numVisitors; i++) {
+            if (visitorList[i] != null) {
+                out.write(visitorList[i].saveToString());
+                out.newLine();
+            }
+        }
+        out.close(); 
 
         } catch (IOException e) {
-            System.out.println("ERROR failed to save persons: " + e.getMessage());
+        System.out.println("ERROR failed to save persons: " + e.getMessage());
         }
+    }
+    
+
+    /*
+    @description: loads all Person records from persons.txt using the assignment file format
+                    (role + base fields + fixed role-specific fields)
+    */
+    public void loadPersons() {
+        try (BufferedReader br = new BufferedReader(new FileReader(PERSON_FILE))) {
+    
+        int n = Integer.parseInt(next(br)); 
+    
+        for (int i = 0; i < n; i++) {
+    
+            String role = next(br).toUpperCase(Locale.ROOT);
+    
+            String personID = next(br);
+            String firstName = next(br);
+            String lastName = next(br);
+    
+            int age = Integer.parseInt(next(br));
+            if (age < 0) age = 0;
+    
+            Person p = null;
+    
+            // -------- Employees --------
+            if (role.equals("ZOOKEEPER") || role.equals("SHOPSTAFF")) {
+    
+                double hourlyWage = Double.parseDouble(next(br));
+                int yearsExp = Integer.parseInt(next(br));
+                int thirdField = Integer.parseInt(next(br)); // certLevel or placeholder
+    
+                if (hourlyWage < 0 || yearsExp < 0) {
+                    System.out.println("[WARN] Invalid employee fields for '" + personID + "'. Skipping.");
+                    continue;
+                }
+    
+                if (role.equals("ZOOKEEPER")) {
+                    p = new ZooKeeper(age, personID, firstName, lastName, hourlyWage, yearsExp, thirdField);
+                } else {
+                    p = new ShopStaff(age, personID, firstName, lastName, hourlyWage, yearsExp);
+                }
+            }
+    
+            // -------- Adult --------
+            else if (role.equals("ADULT")) {
+    
+                double balance = Double.parseDouble(next(br));
+                int learningLevel = Integer.parseInt(next(br));
+                int visitDuration = Integer.parseInt(next(br));
+                double preferredBudgetLimit = Double.parseDouble(next(br));
+    
+                if (!ageMatchesVisitorRole("ADULT", age)) {
+                    System.out.println("[WARN] Age " + age + " does not match ADULT for '" + personID + "'. Skipping.");
+                    continue;
+                }
+    
+                p = new Adult(age, personID, firstName, lastName,
+                            Math.max(0.0, balance),
+                            Math.max(0, learningLevel),
+                            Math.max(0, visitDuration),
+                            Math.max(0.0, preferredBudgetLimit));
+            }
+    
+            // -------- Child --------
+            else if (role.equals("CHILD")) {
+    
+                double balance = Double.parseDouble(next(br));
+                int learningLevel = Integer.parseInt(next(br));
+                int visitDuration = Integer.parseInt(next(br));
+                boolean strollerNeeded = Boolean.parseBoolean(next(br));
+                String guardianID = next(br);
+    
+                if (!ageMatchesVisitorRole("CHILD", age)) {
+                    System.out.println("[WARN] Age " + age + " does not match CHILD for '" + personID + "'. Skipping.");
+                    continue;
+                }
+    
+                p = new Child(age, personID, firstName, lastName,
+                            Math.max(0.0, balance),
+                            Math.max(0, learningLevel),
+                            Math.max(0, visitDuration),
+                            strollerNeeded,
+                            guardianID);
+            }
+    
+            // -------- Senior --------
+            else if (role.equals("SENIOR")) {
+                // If your file includes SENIOR, use:
+                // balance, learningLevel, visitDuration, preferredBudgetLimit, requiresAccessibilitySupport
+    
+                double balance = Double.parseDouble(next(br));
+                int learningLevel = Integer.parseInt(next(br));
+                int visitDuration = Integer.parseInt(next(br));
+                double preferredBudgetLimit = Double.parseDouble(next(br));
+                boolean requiresSupport = Boolean.parseBoolean(next(br));
+    
+                if (!ageMatchesVisitorRole("SENIOR", age)) {
+                    System.out.println("[WARN] Age " + age + " does not match SENIOR for '" + personID + "'. Skipping.");
+                    continue;
+                }
+    
+                p = new Senior(age, personID, firstName, lastName,
+                                Math.max(0.0, balance),
+                                Math.max(0, learningLevel),
+                                Math.max(0, visitDuration),
+                                Math.max(0.0, preferredBudgetLimit),
+                                requiresSupport);
+            }
+    
+            // Add to system
+            if (p != null) {
+                boolean ok = addPerson(p);
+                if (!ok) System.out.println("[WARN] Could not add '" + personID + "' (array full?).");
+            }
+        }
+        br.close();
+    
+        } catch (FileNotFoundException e) {
+            System.out.println("[INFO] " + PERSON_FILE + " not found yet (first run is ok).");
+        } catch (Exception e) {
+            System.out.println("[ERROR] loadPersons failed: " + e.getMessage());
+        }
+    }
+ 
+    /*
+    @description: reads the next non-empty line (skips blank lines)
+    */
+    private static String next(BufferedReader br) throws IOException {
+        String line;
+        while ((line = br.readLine()) != null) {
+        line = line.trim();
+        if (!line.isEmpty()) return line;
+        }
+        return null;
     }
 
     // =========================
