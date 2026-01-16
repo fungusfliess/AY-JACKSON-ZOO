@@ -683,6 +683,18 @@ public class Land {
         return true;
     }
 
+    /*
+    @description: checks if a character is allowed to be placed on the land map.
+    @params: char in is the character to check.
+    @returns: boolean representing if the character is allowed.
+    */
+    public boolean charIsAllowed (char in) {
+        return landMap.charIsAllowed(in);
+    }
+
+    /*
+    @description: prints the land map to standard output
+    */
     public void printMap() {
         landMap.printMap();
     }
