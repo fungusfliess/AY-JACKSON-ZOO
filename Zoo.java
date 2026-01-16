@@ -399,22 +399,56 @@ public class Zoo {
     // =========================
 
     // RELOCATE ANIMAL
-    public boolean relocateAnimal(Habitat habitat, Animal animal) {
-        Habitat originalHabitat = (Habitat)searchStructureByID(animal.getHabitatId());
-        originalHabitat.removeAnimal();
-        animal.leaveHabitat();
-        if (animal.isSuitable(habitat)) {
-            animal.setHabitatId(habitat.getHabitatId()); 
+    public boolean relocateAnimal(Habitat newHabitat, Animal animal) {
+
+        if (animal == null || newHabitat == null) {
+            return false;
         }
-    } 
+
+        if (!animal.isSuitable(newHabitat)) {
+            System.out.println("Relocation failed: habitat unsuitable.");
+            return false;
+        }
+
+        Habitat originalHabitat =
+            (Habitat) searchStructureByID(animal.getHabitatId());
+
+        if (originalHabitat != null) {
+            originalHabitat.removeAnimal(animal);
+        }
+
+        animal.leaveHabitat();
+        animal.setHabitatId(newHabitat.getStructureID());
+        newHabitat.addAnimal(animal);
+
+        return true;
+    }
+
     // ADD ANIMAL
     public boolean addAnimal(Habitat habitat, Animal animal) {
-        animals[numAnimals] = animal;
-        if (animal.isSuitable(habitat)) {
-            animal.setHabitatId(habitat.getStructureID());
-            habitat.addAnimal(animal);
+
+        if (animal == null || habitat == null) {
+            return false;
         }
+
+        if (numAnimals >= animals.length) {
+            return false;
+        }
+
+        if (!animal.isSuitable(habitat)) {
+            System.out.println("Add animal failed: habitat unsuitable.");
+            return false;
+        }
+
+        animals[numAnimals] = animal;
+        numAnimals++;
+
+        animal.setHabitatId(habitat.getStructureID());
+        habitat.addAnimal(animal);
+
+        return true;
     }
+
 
     // =========================
     // FIND ANIMAL METHODS
