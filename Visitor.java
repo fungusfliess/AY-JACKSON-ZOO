@@ -263,7 +263,6 @@ public abstract class Visitor extends Person {
             learningLevel + "\n" + 
             visitDuration + "\n";
     }
-
 }
 
 
