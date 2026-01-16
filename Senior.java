@@ -7,6 +7,7 @@
                 or free admission depending on age. It stores whether accessibility support is required and returns
                 the role identifier "SENIOR". Senior overrides calculateTicketCost() and includes support info in output.
 */
+
 public abstract class Senior extends Adult {
    //CONSTANTS 
    public static final double SENIOR_DISCOUNT = 0.20; 
