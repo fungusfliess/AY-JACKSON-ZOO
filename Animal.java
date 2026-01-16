@@ -233,16 +233,23 @@ public abstract class Animal {
     // =========================
 
     public boolean eat(String food, int amount) {
-        if (food == null || amount <= 0 || typeFoods == null) return false;
+        if (food == null || amount <= 0 || typeFoods == null) {
+            return false;
+        }
 
-        for (String f : typeFoods) {
-            if (f != null && food.equalsIgnoreCase(f)) {
-                hunger = Math.min(hunger + amount, maxHunger);
+        for (int i = 0; i < typeFoods.length; i++) {
+            if (typeFoods[i] != null && food.equalsIgnoreCase(typeFoods[i])) {
+                hunger = hunger + amount;
+                if (hunger > maxHunger) {
+                    hunger = maxHunger;
+                }
                 return true;
             }
         }
+
         return false;
     }
+
 
     public void calculateHappiness() {
         double avg = 0.0;
