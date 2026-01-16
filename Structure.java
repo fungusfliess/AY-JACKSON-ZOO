@@ -63,7 +63,9 @@ public abstract class Structure{
    public int getNumAnimals(){
       return 0;
    }
-
+   public boolean isDemolished(){
+      return demolished; 
+   }
    public Land getOnProperty(){
       return onProperty;
    }
@@ -150,9 +152,15 @@ public abstract class Structure{
       return getNumAnimals() - structure.getNumAnimals(); 
    }
 
+   public int compareToID (Structure structure) {
+      return this.getStructureID() - structure.getStructureID();
+   }
+
    /* 
      @description: saves the structure to a string
       @return the structure as a string
    */
    public abstract String saveToString();
+
+   public abstract String toString();
 }
