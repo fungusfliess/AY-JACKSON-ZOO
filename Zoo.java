@@ -1,44 +1,318 @@
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
-import Animal_Subsystem.*;
-import Structure_Subsystem.Habitat;
 
 public class Zoo {
+
+    public static Scanner sc = new Scanner(System.in);
+
     //CONSTANTS 
-    private static final String PERSON_FILE = "person.txt";
-    private static final int MAX_STAFF = 200;
-    private static final int MAX_VISITORS = 2000;
-    private static final int MAX_ANIMALS = 200;
-    private static final int MAX_EGGS = 100;
+    public static final String ZOO_CONSTRUCTOR_FILE = "zoo.txt";
+    public static final String ANIMAL_FILE = "animal.txt";
+    public static final String EGG_FILE = "eggs.txt";
+    public static final String PERSON_FILE = "persons.txt";
+    public static final String LAND_FILE = "land.txt";
+    public static final String ADMIN_PIN = "0000";
+
+    public static final String QUIT = "quit";
     
     //FIELDS
-    private Employee[] staffList = new Employee[MAX_STAFF];
-    private Visitor[] visitorList = new Visitor[MAX_VISITORS];
-    private int numEmployees = 0;
-    private int numVisitors = 0;
-    private int numAnimals = 0;
-    private int numEggs = 0;
+    private Employee[] staffList;
+    private Visitor[] visitorList;
+
+    private int maxPerson;
+    private int maxAnimal;
+    private int maxEggs;
+    
+    private int numPerson; 
+    private int numEmployees;
+    private int numVisitors;
+    private int numAnimals;
+    private int numEggs; 
+
+    private double zooBalance;
 
     
-    int numberOfAnimals;
     private Animal[] animals;
     private Egg[] eggs;
-    private LivingCondition[] livingConditions;
-    private Habitat[] habitats;
     private Land zooLand;
 
-    public Zoo(int numberOfAnimals) {
-        this.numberOfAnimals = numberOfAnimals;
+    public Zoo(){
+        try{
+            BufferedReader br = new BufferedReader(new FileReader(ZOO_CONSTRUCTOR_FILE));
+            double balance = Double.parseDouble(br.readLine());
+            int animals = Integer.parseInt(br.readLine());
+            int eggs = Integer.parseInt(br.readLine());
+            int person = Integer.parseInt(br.readLine());
+            
+            
+            this.zooBalance = balance;
+            this.maxAnimal = animals;
+            this.maxEggs = eggs;
+            this.maxPerson = person;
+            
+            this.zooAnimals = new Animal[maxAnimal];
+            this.incubator = new Egg[maxEggs];
+            this.persons = new Person[maxPerson];
+            
+            br.close();
+         
+        }catch(IOException e){
+            System.out.println("Error reading file.");
+        }
+        loadPersons();
+        loadAnimals();
+        loadStructures();
+        loadMap();
+        System.out.println("Zoo Successfully Loaded!");
     }
-    public Zoo(String file) {
-        
-        // Load animals, habitats, and living conditions from files
+   
+    public void welcomeMenu(){
+        boolean quit = false;
+        String input; 
+        Person user;
+        System.out.println("Welcome To The Zoo's Main Menu!\n");
+        do{
+            try{
+                System.out.println("(Type quit to quit)\n" 
+                + "Enter # To Access Specific Menu: "
+                + "\n1 - Admin Menu"
+                + "\n2 - Employee Menu"
+                + "\n3 - Visitor Menu"
+                + "\n4 - Display Map");
+            
+                input = sc.nextLine();
+                
+                switch(Integer.parseInt(input)){
+                    case 1: 
+                        adminMenu();
+                        break;
+                    case 2:
+                        System.out.println("Enter Employee ID: ");
+                        input = sc.nextLine();
+                        user = searchPersonByID(input);
+                        if(user != null && user instanceof Employee){
+                    
+                            employeeMenu((Employee)user);
+                            
+                        }else{
+                            System.out.println("Employee Does Not Exist. ");
+                        }  
+                        break;  
+                    case 3:
+                        System.out.println("Enter Visitor ID: ");
+                        input = sc.nextLine();
+                        user = searchPersonByID(input);
+                        if(user != null && user instanceof Visitor){
+                    
+                            visitorMenu((Visitor)user);
+                        
+                        }else{
+                            System.out.println("Visitor Does Not Exist. ");
+                        }
+                        break;
+                    case 4:
+                        displayMap();
+                        break;
+                    default: 
+                        System.out.println("Sorry, that is not a valid option! \n");
+                        break;
+                }
+            }catch(NumberFormatException e){
+                if(input.equalsIgnoreCase(QUIT)){
+                    System.out.println("See You Next Time!");
+                    quit = true;
+                }else{
+                System.out.println("Sorry, that is not a valid option! \n");
+                }
+            }        
+        }while(quit!=true);      
+    }
+   
+    public void adminMenu(){
+        Person search;
+        boolean quit = false;
+        boolean login = false;
+        String input;
+   
+        while(!quit && !login){
+            System.out.println("(Type quit to return to Main Menu)\nEnter Admin PIN: ");
+            input = sc.nextLine();
+   
+            if(input.equalsIgnoreCase(QUIT)){
+                System.out.println("Returning To Main Menu...");
+                quit = true;
+            }else if(input.equals(ADMIN_PIN)){
+                login = true;
+            }else{
+                System.out.println("PIN ENTERED WRONG.");
+            }
+        }
+   
+        while(login && !quit){
+            System.out.println("Admin Menu:\n"
+                + "(Type quit to return to Main Menu)\n"
+                + "Enter # To Run Command:\n"
+                + "1  -  Pass Time\n"
+                + "2  -  Display Zoo Balance\n"
+                + "3  -  Search Person By ID\n"
+                + "4  -  Search Person By ID & Earnings\n"
+                + "5  -  Sort Visitors By Name Alphabetically\n"
+                + "6  -  Sort Employees From Highest To Lowest Earnings\n"
+                + "7  -  Sort Employees By Experience, Then By Wage\n"
+                + "8  -  Display All Employees\n"
+                + "9  -  Create Gift Shop\n"
+                + "10 -  Create Restaurant\n"
+                + "11 -  Create Pavillion\n"
+                + "12 -  Create Enclosure\n"
+                + "13 -  Create Park\n"
+                + "14 -  Create Maze\n";
+            );
+   
+            input = sc.nextLine();
+   
+            if(input.equalsIgnoreCase(QUIT)){
+                System.out.println("Returning To Main Menu...");
+                quit = true;
+            }else{
+                try{
+                    switch(Integer.parseInt(input)){
+                        case 1:
+                            System.out.print("Enter Days: ");
+                            passTime(Integer.parseInt(sc.nextLine()));
+                            break;
+                        case 2: 
+                            System.out.println("Zoo Balance: $" + zooBalance);
+                            break;
+                        case 3:
+                            System.out.print("Enter ID: ");
+                            input = sc.nextLine();
+                            search = searchByPersonID(input);
+                            if(search != null){
+                                System.out.println(search);
+                            }else{
+                                System.out.println("Person Does Not Exist.");
+                            }
+                            break;
+                        case 4:
+                            System.out.print("Enter ID: ");
+                            input = sc.nextLine();
+                            System.out.println("Enter Earnings: ");
+                            search = searchByPersonIDAndEarnings(input, sc.nextDouble());
+
+                            sc.nextLine();
+                            if(search != null){
+                                System.out.println(search);
+                            }else{
+                                System.out.println("Matching Person Could Not Be Found.");
+                            }
+                            break;
+                        case 5:
+                            sortVisitorByName();
+                            break; 
+                        case 6:
+                            sortEmployeesByEarnings();
+                            break;
+                        case 7:
+                            sortEmployeesByExperienceAndWage();
+                            break;
+                        case 8:
+                            displayAllEmployees();
+                            break;
+                        case 9:
+                            System.out.print()
+                        default: 
+                            System.out.println("Sorry, that is not a valid option!\n");
+                            break;
+                    }
+   
+                }catch(NumberFormatException e){
+                    System.out.println("Sorry, that is not a valid option/input!\n");
+                }
+            }
+        }
+    }
+   
+    public void employeeMenu(Employee employee){
+        boolean quit = false;
+        String input;
+   
+        System.out.println("Employee Menu:\n");
+   
+        while(!quit){
+            System.out.println("(Type quit to return to Main Menu)\n"
+                + "Enter # To Run Command:\n"
+                + /*add menu*/);
+   
+            input = sc.nextLine();
+   
+            if(input.equalsIgnoreCase(QUIT)){
+                System.out.println("Returning Back To Main Menu...\n");
+                quit = true;
+            }else{
+                try{
+                    switch(Integer.parseInt(input)){
+                        case 1:
+                     
+                        case 2: // add menu
+                     
+                        default:
+                            System.out.println("Sorry, that is not a valid option!\n");
+                    }
+                }catch(NumberFormatException e){
+                    System.out.println("Sorry, that is not a valid option!\n");
+                }
+            }
+        }
+    
+   
+    public void visitorMenu(Visitor visitor){
+        boolean quit = false;
+        String input;
+   
+        System.out.println("Visitor Menu:\n");
+   
+        while(!quit){
+            System.out.println("(Type quit to return to Main Menu)\n"
+                + "Enter # To Run Command:\n"
+                + /* add menu */);
+   
+            input = sc.nextLine();
+   
+            if(input.equalsIgnoreCase(QUIT)){
+                System.out.println("Returning Back To Main Menu...\n");
+                quit = true;
+            }else{
+                try{   
+                    switch(Integer.parseInt(input)){
+                        case 1:
+                            //add menu         
+                        default:
+                            System.out.println("Sorry, that is not a valid option!\n");
+                    }        
+   
+                }catch(NumberFormatException e){
+                    System.out.println("Sorry, that is not a valid option!\n");
+                }
+            }
+        }
+    }
+    
+    public void passTime(int days){
+        for(int i = 0; i < days; i++){
+            passDay();
+        }
     }
 
+    public void passDay(){
+        for(int i = 0; i < numEmployees; i++){
+            ((getStaffList())[i]).passDay();
+        }
+        for(int i = 0; i < numVisitors; i++){
+            ((getVisitorList())[i]).passDay();
+        }
+        zooLand.passDay();
+    }
 
     // LAND METHODS
     public boolean loadLandFromFile () { 
@@ -534,9 +808,8 @@ public class Zoo {
      * Return:
      *   true if the egg was removed, false if index was invalid
      */
-    public boolean removeEgg(Egg egg) {
+    public boolean removeEgg(int index) {
 
-        int index = egg.getIndex();
         if (index < 0 || index >= numEggs) {
             return false;
         }
@@ -549,25 +822,6 @@ public class Zoo {
         numEggs--;
 
         return true;
-    }
-    /**
-     * Description:
-     * Attempts to hatch the given egg. If the egg successfully hatches,
-     * the egg is removed from the incubator and the newborn animal is returned.
-     */
-    public Animal hatchEgg(Egg egg, String name) {
-
-        if (egg == null) {
-            return null;
-        }
-
-        Animal baby = egg.hatch(name);
-
-        if (baby != null) {
-            removeEgg(egg); // remove by reference, not index
-        }
-
-        return baby;
     }
     // =========================
     // DISPLAY LOW STAT METHODS
@@ -702,5 +956,25 @@ public class Zoo {
                 }
             }
         }
+    }
+    
+    /**
+     * Description:
+     * Attempts to hatch the given egg. If the egg successfully hatches,
+     * the egg is removed from the incubator and the newborn animal is returned.
+     */
+    public Animal hatchEgg(Egg egg, String name) {
+
+        if (egg == null) {
+            return null;
+        }
+
+        Animal baby = egg.hatch(name);
+
+        if (baby != null) {
+            removeEgg(egg); // remove by reference, not index
+        }
+
+        return baby;
     }
 }
