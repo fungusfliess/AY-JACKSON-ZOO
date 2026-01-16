@@ -567,7 +567,7 @@ public class Land {
     @params: corner1 is to tell where to build the circular structure. maxRadiusOfBuild is the maximum radius of the circular structure. name, char, timeBetweenMaintenance, animalFactStrings, menu, are inputs for the Enclosure constructor.
     @returns: boolean representing success. Will be unsuccessful if the Structure array is full, or the circular build area has obstacles.
     */
-    public boolean createEnclosure (Coord corner1, int maxRadiusOfBuild, String name, char structureID, int timeBetweenMaintenance, String[] animalFactStrings, Item[] menu) {
+    public boolean createEnclosure (Coord corner1, int maxRadiusOfBuild, String species, String name, char structureID, int timeBetweenMaintenance, int maxAnimal, LivingCondition climate) {
         // if array is full
         if (currentNumStructures == maxNumStructures) {
             return false;
@@ -578,7 +578,7 @@ public class Land {
         }
         // calculating area of the Structure.
         int area = landMap.areaOf(corner1);
-        structureList[currentNumStructures] = new Enclosure(name, structureID, area, timeBetweenMaintenance, 0, this, animalFactStrings, menu);
+        structureList[currentNumStructures] = new Enclosure(name, species, structureID, area, timeBetweenMaintenance, 0, this, maxAnimal, climate);
         currentNumStructures++;
         return true;
     }

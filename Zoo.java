@@ -36,6 +36,7 @@ public class Zoo {
     private Animal[] animals;
     private Egg[] eggs;
     private Land zooLand;
+    private Map map;
 
     public Zoo(){
         try{
@@ -64,6 +65,7 @@ public class Zoo {
         loadAnimals();
         loadStructures();
         loadMap();
+        map = zooLand.getMap();
         System.out.println("Zoo Successfully Loaded!");
     }
    
@@ -314,6 +316,291 @@ public class Zoo {
         zooLand.passDay();
     }
 
+    public boolean createStructure(String type){
+        int numItems;
+        Item[] menu;
+        String itemName;
+        double price;
+
+        int numFacts;
+        String[] facts;
+
+        String climateType;
+        double temp;
+        double humidity;
+        String region;
+        LivingCondition climate;
+
+        int maxAnimals; 
+
+        String name;
+        char structureID;    
+        int area = 0;
+        int timeBetweenMaintenance;
+
+        Coord c1 = null;
+        Coord c2 = null;
+        char id;
+
+        System.out.print("Enter New ID: ");
+        id = sc.nextLine().charAt(0);
+
+        
+        if(type.equals("GiftShop") || type.equals("Restaurant")){
+            System.out.print("Enter X and Y for Coordinate 1: ");
+            c1 = new Coord(Integer.parseInt(sc.nextLine()), Integer.parseInt(sc.nextLine()));
+            System.out.print("Enter Desired Size: ");
+            area = Integer.parseInt(sc.nextLine());
+
+        }else {
+            System.out.print("Enter X and Y for Coordinate 1: ");
+            c1 = new Coord(Integer.parseInt(sc.nextLine()), Integer.parseInt(sc.nextLine()));
+            System.out.print("Enter X and Y for Coordinate 2: ");
+            c2 = new Coord(Integer.parseInt(sc.nextLine()), Integer.parseInt(sc.nextLine()));    
+        }
+
+        
+        if(type == "GiftShop"){
+
+            System.out.print("Enter number of items: ");
+            numItems = Integer.parseInt(sc.nextLine());
+            menu = new Item[numItems];
+
+            for(int i = 0; i < numItems; i++){
+                System.out.print("Enter item name: ");
+                itemName = sc.nextLine();
+
+                System.out.print("Enter item price: ");
+                price = Double.parseDouble(sc.nextLine());
+
+                menu[i] = new Item(itemName, price);
+            }
+
+            System.out.print("Enter number of facts: ");
+            numFacts = Integer.parseInt(sc.nextLine());
+            facts = new String[numFacts];
+
+            for(int i = 0; i < numFacts; i++){
+                System.out.print("Enter fact: ");
+                facts[i] = sc.nextLine();
+            }
+
+            //initializes superclass fields
+
+            System.out.print("Enter structure name: ");
+            name = sc.nextLine();
+
+            System.out.print("Enter time between maintenance: ");
+            timeBetweenMaintenance = Integer.parseInt(sc.nextLine());
+            
+            return zooLand.createGiftShop(c1, c2, name, id, timeBetweenMaintenance, facts, menu );
+            
+
+        }else if(type == "Restaurant"){
+            System.out.print("Enter number of items: ");
+            numItems = Integer.parseInt(sc.nextLine());
+            menu = new Item[numItems];
+
+            for(int i = 0; i < numItems; i++){
+                System.out.print("Enter item name: ");
+                itemName = sc.nextLine();
+
+                System.out.print("Enter item price: ");
+                price = Double.parseDouble(sc.nextLine());
+
+                menu[i] = new Item(itemName, price);
+            }
+
+            System.out.print("Enter number of facts: ");
+            numFacts = Integer.parseInt(sc.nextLine());
+            facts = new String[numFacts];
+
+            for(int i = 0; i < numFacts; i++){
+                System.out.print("Enter fact: ");
+                facts[i] = sc.nextLine();
+            }
+
+            //initializes superclass fields
+
+            System.out.print("Enter structure name: ");
+            name = sc.nextLine();
+
+            System.out.print("Enter time between maintenance: ");
+            timeBetweenMaintenance = Integer.parseInt(sc.nextLine());
+
+            return zooLand.createRestaurant(c1, c2, name, id, timeBetweenMaintenance, facts, menu );
+            
+
+        }else if(type == "Enclosure"){
+            System.out.print//come back here
+            System.out.print("Enter climate type (LAND or WATER): ");
+            climateType = sc.nextLine();
+
+            System.out.print("Enter temperature: ");
+            temp = Double.parseDouble(sc.nextLine());
+
+            System.out.print("Enter humidity: ");
+            humidity = Double.parseDouble(sc.nextLine());
+
+            System.out.print("Enter region: ");
+            region = sc.nextLine();
+
+            //checks which subclass of LivingCondition to create
+
+            if(climateType.equals("LAND")){
+                System.out.print("Enter soil compaction: ");
+                double soilCompaction = Double.parseDouble(sc.nextLine());
+
+                System.out.print("Enter land slope: ");
+                double landSlope = Double.parseDouble(sc.nextLine());
+
+                System.out.print("Has water source (true/false): ");
+                boolean hasWaterSource = Boolean.parseBoolean(sc.nextLine());
+
+                System.out.print("Enter vegetation density: ");
+                double vegetationDensity = Double.parseDouble(sc.nextLine());
+
+                System.out.print("Enter number of nearby structures: ");
+                int amountStructures = Integer.parseInt(sc.nextLine());
+
+                climate = new LandCondition(
+                    temp,
+                    humidity,
+                    region,
+                    soilCompaction,
+                    landSlope,
+                    hasWaterSource,
+                    vegetationDensity,
+                    amountStructures
+                );
+            }else{
+                System.out.print("Enter water acidity: ");
+                double waterAcidity = Double.parseDouble(sc.nextLine());
+
+                System.out.print("Enter water hardness: ");
+                double waterHardness = Double.parseDouble(sc.nextLine());
+
+                System.out.print("Enter water temperature: ");
+                double waterTemp = Double.parseDouble(sc.nextLine());
+
+                System.out.print("Has land access (true/false): ");
+                boolean hasLand = Boolean.parseBoolean(sc.nextLine());
+
+                System.out.print("Enter water salinity: ");
+                double waterSalinity = Double.parseDouble(sc.nextLine());
+
+                climate = new WaterCondition(
+                    waterTemp,
+                    humidity,
+                    region,
+                    waterAcidity,
+                    waterHardness,
+                    temp,
+                    hasLand,
+                    waterSalinity
+                );
+            }
+
+            //initializes superclass fields
+
+            System.out.print("Enter structure name: ");
+            name = sc.nextLine();
+
+            System.out.print("Enter time between maintenance: ");
+            timeBetweenMaintenance = Integer.parseInt(sc.nextLine());
+
+            System.out.print("Enter maximum animals: ");
+            maxAnimals = Integer.parseInt(sc.nextLine());
+            return zooLand.createPavillion(c1, area, name, id, maxAnimals, climate);
+
+        }else if(type == "Pavillion"){
+            System.out.print("Enter climate type (LAND or WATER): ");
+            climateType = sc.nextLine();
+
+            System.out.print("Enter temperature: ");
+            temp = Double.parseDouble(sc.nextLine());
+
+            System.out.print("Enter humidity: ");
+            humidity = Double.parseDouble(sc.nextLine());
+
+            System.out.print("Enter region: ");
+            region = sc.nextLine();
+
+            //checks which subclass of LivingCondition to create
+
+            if(climateType.equals("LAND")){
+                System.out.print("Enter soil compaction: ");
+                double soilCompaction = Double.parseDouble(sc.nextLine());
+
+                System.out.print("Enter land slope: ");
+                double landSlope = Double.parseDouble(sc.nextLine());
+
+                System.out.print("Has water source (true/false): ");
+                boolean hasWaterSource = Boolean.parseBoolean(sc.nextLine());
+
+                System.out.print("Enter vegetation density: ");
+                double vegetationDensity = Double.parseDouble(sc.nextLine());
+
+                System.out.print("Enter number of nearby structures: ");
+                int amountStructures = Integer.parseInt(sc.nextLine());
+
+                climate = new LandCondition(
+                    temp,
+                    humidity,
+                    region,
+                    soilCompaction,
+                    landSlope,
+                    hasWaterSource,
+                    vegetationDensity,
+                    amountStructures
+                );
+            }else{
+                System.out.print("Enter water acidity: ");
+                double waterAcidity = Double.parseDouble(sc.nextLine());
+
+                System.out.print("Enter water hardness: ");
+                double waterHardness = Double.parseDouble(sc.nextLine());
+
+                System.out.print("Enter water temperature: ");
+                double waterTemp = Double.parseDouble(sc.nextLine());
+
+                System.out.print("Has land access (true/false): ");
+                boolean hasLand = Boolean.parseBoolean(sc.nextLine());
+
+                System.out.print("Enter water salinity: ");
+                double waterSalinity = Double.parseDouble(sc.nextLine());
+
+                climate = new WaterCondition(
+                    waterTemp,
+                    humidity,
+                    region,
+                    waterAcidity,
+                    waterHardness,
+                    temp,
+                    hasLand,
+                    waterSalinity
+                );
+            }
+
+            //initializes superclass fields
+
+            System.out.print("Enter structure name: ");
+            name = sc.nextLine();
+
+            System.out.print("Enter time between maintenance: ");
+            timeBetweenMaintenance = Integer.parseInt(sc.nextLine());
+
+            System.out.print("Enter maximum animals: ");
+            maxAnimals = Integer.parseInt(sc.nextLine());
+            return zooLand.createPavillion(c1, area, name, id, maxAnimals, climate);
+
+        }else if(type == "Maze"){
+
+        }else{
+            
+        }
+
+    }
     // LAND METHODS
     public boolean loadLandFromFile () { 
         return zooLand.loadFromFile(LAND_FILE);
@@ -957,7 +1244,7 @@ public class Zoo {
             }
         }
     }
-    
+
     /**
      * Description:
      * Attempts to hatch the given egg. If the egg successfully hatches,
