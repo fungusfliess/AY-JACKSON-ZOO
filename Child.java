@@ -108,4 +108,15 @@ public class Child extends Visitor{
              "Guardian ID: " + guardianID + "\n" +
              "Stroller Needed: " + strollerNeeded + "\n";
    }
+
+   /*
+   @description: returns this Child in file format (includes accessibility support field)
+   @return a string formatted for writing to person.txt
+   */
+   @Override
+   public String saveToString() {
+      return super.saveToString() +
+            strollerNeeded + "\n" + 
+            guardianID + "\n";
+   }
 }

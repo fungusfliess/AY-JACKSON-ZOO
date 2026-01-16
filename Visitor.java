@@ -93,6 +93,10 @@ public abstract class Visitor extends Person {
     public String[] getLearningHistory() {
         return learningHistory;
     }
+
+    public int getVisitDuration(){
+        return visitDuration;
+    }
     
     //MUTATOR
     /*
@@ -227,8 +231,9 @@ public abstract class Visitor extends Person {
             getFirstName() + "\n" +
             getLastName() + "\n" +
             getAge() + "\n" +
-            getBalance() + "\n" +
-            getLearningLevel() + "\n";
+            balance + "\n" +
+            learningLevel + "\n" + 
+            visitDuration + "\n";
     }
 
 }

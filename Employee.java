@@ -152,8 +152,7 @@ public abstract class Employee extends Person {
             getLastName() + "\n" +
             getAge() + "\n" +
             getHourlyWage() + "\n" +
-            getYearsOfExperience() + "\n" +
-            getEarnings() + "\n";
+            getYearsOfExperience() + "\n";
    }
 
 }

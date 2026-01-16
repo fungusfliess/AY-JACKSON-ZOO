@@ -137,4 +137,14 @@ public abstract class ZooKeeper extends Employee {
         super.passDay(); 
         dailyTasksCompleted =0; 
     }
+
+    /*
+   @description: returns this ZooKeeper in file format 
+   @return a string formatted for writing to person.txt
+   */
+   @Override
+   public String saveToString() {
+        super.saveToString();
+        return certificationLevel + "\n";
+   }
 }

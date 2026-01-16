@@ -24,7 +24,11 @@ public abstract class Person {
     @param lastName  the person's last name
     */ 
    public Person(int age, String personID, String firstName, String lastName){
-      this.age = age; 
+      if (age<0){
+         age = 0
+      } else {
+         this.age = age; 
+      }
       this.personID = personID; 
       this.firstName = firstName;
       this.lastName = lastName; 
@@ -46,7 +50,6 @@ public abstract class Person {
 
    public String getLastName(){
       return lastName;
-
    }
 
    public boolean getIsActive(){

@@ -96,4 +96,14 @@ public abstract class Adult extends Visitor{
              "Preferred Budget Limit: " + getPreferredBudgetLimit() + "\n";
    }
 
+   /*
+   @description: returns this Adult in file format (includes accessibility support field)
+   @return a string formatted for writing to person.txt
+   */
+   @Override
+   public String saveToString() {
+      return super.saveToString() +
+            preferredBudgetLimit() + "\n";
+   }
+
 }
