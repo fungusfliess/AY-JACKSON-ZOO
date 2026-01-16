@@ -74,8 +74,10 @@ public class Map {
 
     /*
     @description: determines whether a character can be used in this array or not. (certain characters are reserved for things like the counting algorithm.)
+    @param: char c is the character to be checked
+    @return: boolean indicating whether character is allowed or not
     */
-    private boolean charIsAllowed (char c) {
+    public boolean charIsAllowed (char c) {
         if (c != Map.EMPTY && c != Map.TEMPORARY_COUNTER) {
             return true;
         }

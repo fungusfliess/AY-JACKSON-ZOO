@@ -96,7 +96,11 @@ public class Maze extends Attraction {
     public double calculateMaintenanceCost() {
         return MAINTENANCE_RATE_PER_UNIT * this.getArea();
     }
-
+    /*
+    @description: updates the learning of a visitor when they visit the maze
+    @param toUpdate: the visitor whose learning is to be updated
+    */
+    @Override
     public void updateVisitorLearning(Visitor toUpdate) {
         // COME_BACK_HERE waiting on how
     }

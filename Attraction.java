@@ -1,4 +1,13 @@
 
+/*
+   File Name: Attraction.java
+   Name: Jason Liu
+   Class: ICS4U1-23
+   Date: Jan 7, 2025
+   Description: Attraction is an abstract subclass of Structure that represents attractions within the zoo.
+                It serves as a base class for specific types of attractions like Park and Maze.
+*/
+
 public abstract class Attraction extends Structure {
     // CONSTRUCTOR
     public Attraction (String name, char structureID, int area, int timeBetweenMaintenance, int daysSinceLastMaintenance, Land onProperty) {

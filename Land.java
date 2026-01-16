@@ -1,3 +1,11 @@
+/*
+    File Name: Land.java
+    Name: Jason Liu
+    Class: ICS4U1-23
+    Date: Jan 7, 2025
+    Description: Land represents the physical land of the zoo, managing the map and structures within the zoo.
+*/
+
 import java.io.*;
 public class Land {
     
@@ -185,6 +193,7 @@ public class Land {
     @returns: int index of the Structure in the structureList array, or -1 if not found.
     */
     public int searchIdxByID (char structureID) {
+        if (!charIsAllowed(structureID)) {return -1;}
         for (int i = 0; i < currentNumStructures; i++) {
             if (structureList[i].getStructureID() == structureID) {
                 return i;
@@ -675,6 +684,18 @@ public class Land {
         return true;
     }
 
+    /*
+    @description: checks if a character is allowed to be placed on the land map.
+    @params: char in is the character to check.
+    @returns: boolean representing if the character is allowed.
+    */
+    public boolean charIsAllowed (char in) {
+        return landMap.charIsAllowed(in);
+    }
+
+    /*
+    @description: prints the land map to standard output
+    */
     public void printMap() {
         landMap.printMap();
     }
