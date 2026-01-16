@@ -363,6 +363,9 @@ public class Map {
    @parameters: char input is the character to be found.
    */
    public Coord find (char input) {
+        if (!charIsAllowed(input)) { // illegal character
+            return null;
+        }
         // loop down rows first (y), then across columns (x)
         for (int i = 0; i < this.length; i++) {
             for (int j = 0; j < this.width; j++) {
