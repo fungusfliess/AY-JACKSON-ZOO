@@ -1,3 +1,11 @@
+/*
+    File Name: Land.java
+    Name: Jason Liu
+    Class: ICS4U1-23
+    Date: Jan 7, 2025
+    Description: Land represents the physical land of the zoo, managing the map and structures within the zoo.
+*/
+
 import java.io.*;
 public class Land {
     
