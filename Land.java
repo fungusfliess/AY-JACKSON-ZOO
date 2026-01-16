@@ -3,8 +3,6 @@ import Structure_Subsystem.*;
 import java.io.*;
 import java.util.logging.Handler;
 
-import Animal_Subsystem.LivingCondition;
-
 public class Land {
     
     // FIELDS
