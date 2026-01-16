@@ -34,29 +34,35 @@ public class Cockatoo extends Bird {
         canFly = false;
     }
 
-    // ===== ABSTRACT GETTERS =====
+    // ===== GETTERS =====
 
+    @Override
     public int getMaxHunger() {
         return 50;
     }
 
+    @Override
     public String[] getTypeFoods() {
         String[] foods = {"Seeds", "Fruits"};
         return foods;
     }
 
+    @Override
     public int getLifeExpectancy() {
         return 10;
     }
 
+    @Override
     public double getFlexibility() {
         return 0.7;
     }
 
+    @Override
     public LivingCondition getLivingCondition() {
         return COCKATOO_CONDITION;
     }
 
+    @Override
     public int getTotalDailyInteractions() {
         return 5;
     }
@@ -65,12 +71,14 @@ public class Cockatoo extends Bird {
         return 3;
     }
 
+    @Override
     public double getRequiredArea() {
         return 15.0;
     }
 
     // ===== METHODS =====
-
+    
+    @Override
     public void updateAge() {
         setWeight(getWeight() + getAge()*WEIGHT_GAIN_PER_YEAR);
         setMaxHunger(getMaxHunger() + getAge()*HUNGER_GAIN_PER_YEAR);
@@ -80,6 +88,7 @@ public class Cockatoo extends Bird {
         }
     }
 
+    @Override
     public String description() {
         return super.description() +
                "Cockatoos are social birds that live in tropical forests and require frequent interaction.";

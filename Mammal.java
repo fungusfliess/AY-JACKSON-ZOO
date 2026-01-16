@@ -52,5 +52,5 @@ public abstract class Mammal extends Animal {
     // =========================
 
     // Each species knows how to make its own baby
-    protected abstract Mammal createOffspring();
+    public abstract Mammal createOffspring();
 }

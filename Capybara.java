@@ -34,15 +34,18 @@ public class Capybara extends Mammal {
 
     // ===== ABSTRACT GETTERS =====
 
+    @Override
     public int getMaxHunger() {
         return 80;
     }
 
+    @Override
     public String[] getTypeFoods() {
         String[] foods = {"Grass", "Vegetables"};
         return foods;
     }
-
+    
+    @Override
     public int getLifeExpectancy() {
         return 10;
     }
@@ -51,6 +54,7 @@ public class Capybara extends Mammal {
         return 0.7;
     }
 
+    @Override
     public LivingCondition getLivingCondition() {
         return CAPYBARA_CONDITION;
     }
@@ -59,10 +63,12 @@ public class Capybara extends Mammal {
         return 5;
     }
 
+    @Override
     public int getAdultAge() {
         return 2;
     }
 
+    @Override
     public double getRequiredArea() {
         return 30.0;
     }
@@ -70,7 +76,7 @@ public class Capybara extends Mammal {
 
     // ===== METHODS =====
 
-    protected Mammal createOffspring() {
+    public Mammal createOffspring() {
     return new Capybara(this);
     }
 

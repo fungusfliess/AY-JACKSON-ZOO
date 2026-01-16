@@ -35,9 +35,10 @@ public class Eagle extends Bird {
     }
 
     // =========================
-    // REQUIRED ABSTRACT GETTERS
+    //  GETTERS
     // =========================
 
+    @Override
     public int getMaxHunger() {
         return 80;
     }
@@ -47,26 +48,32 @@ public class Eagle extends Bird {
         return foods;
     }
 
+    @Override
     public int getLifeExpectancy() {
         return 30;
     }
 
+    @Override
     public double getFlexibility() {
         return 0.4;
     }
 
+    @Override
     public LivingCondition getLivingCondition() {
         return EAGLE_CONDITION;
     }
 
+    @Override
     public int getTotalDailyInteractions() {
         return 3;
     }
 
+    @Override
     public int getAdultAge() {
         return 5;
     }
 
+    @Override
     public double getRequiredArea() {
         return 30.0;
     }
@@ -75,6 +82,7 @@ public class Eagle extends Bird {
     // METHODS
     // =========================
 
+    @Override
     public void updateAge() {
         setWeight(getWeight() + getAge()*WEIGHT_GAIN_PER_YEAR);
         setMaxHunger(getMaxHunger() + getAge()*HUNGER_GAIN_PER_YEAR);
@@ -84,6 +92,7 @@ public class Eagle extends Bird {
         }
     }
 
+    @Override
     public String description() {
         return super.description() +
                "Eagles are large birds of prey that live in mountainous regions. " +

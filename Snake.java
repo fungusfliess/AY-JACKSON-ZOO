@@ -35,53 +35,64 @@ public class Snake extends Reptile {
 
     // ===== ABSTRACT GETTERS =====
 
+    @Override
     public int getMaxHunger() {
         return 50;
     }
 
+    @Override
     public String[] getTypeFoods() {
         String[] foods = {"Rats", "Birds"};
         return foods;
     }
 
+    @Override
     public int getLifeExpectancy() {
         return 20;
     }
 
+    @Override
     public double getFlexibility() {
         return 0.7;
     }
 
+    @Override
     public LivingCondition getLivingCondition() {
         return SNAKE_CONDITION;
     }
 
+    @Override
     public int getTotalDailyInteractions() {
         return 5;
     }
 
+    @Override
     public int getAdultAge() {
         return 3;
     }
 
+    @Override
     public double getRequiredArea() {
         return 20.0;
     }
 
-    // ===== REPTILE HOOK =====
+    // ===== REPTILE METHODS =====
 
-    protected int getInitialTimeToShed() {
+    @Override
+    public int getInitialTimeToShed() {
         return 15;
     }
 
     // ===== METHODS =====
 
+    @Override
     public void updateAge() {
         setWeight(getWeight() + getAge()*WEIGHT_GAIN_PER_YEAR);
         setMaxHunger(getMaxHunger() + getAge()*HUNGER_GAIN_PER_YEAR);
         timeToShed--;
     }
 
+    @Override
     public String description() {
         return super.description() +
                "Snakes are legless reptiles that live in grasslands and hunt small animals such as rats and birds.";
