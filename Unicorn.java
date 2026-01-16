@@ -33,45 +33,55 @@ public class Unicorn extends Mammal {
 
     // ===== ABSTRACT GETTERS =====
 
+    @Override
     public int getMaxHunger() {
         return 120;
     }
 
+    @Override
     public String[] getTypeFoods() {
         String[] foods = {"Grass", "Hay", "Fruits"};
         return foods;
     }
 
+    @Override
     public int getLifeExpectancy() {
         return 30;
     }
 
+    @Override
     public double getFlexibility() {
         return 0.4;
     }
 
+    @Override
     public LivingCondition getLivingCondition() {
         return UNICORN_CONDITION;
     }
 
+    @Override
     public int getTotalDailyInteractions() {
         return 3;
     }
 
+    @Override
     public int getAdultAge() {
         return 3;
     }
 
+    @Override
     public double getRequiredArea() {
         return 50.0;
     }
 
     // ===== METHODS =====
 
-    protected Mammal createOffspring() {
+    @Override
+    public Mammal createOffspring() {
         return new Unicorn(this);
     }
 
+    @Override
     public void updateAge() {
         setWeight(getWeight() + getAge()*WEIGHT_GAIN_PER_YEAR);
         setMaxHunger(getMaxHunger() + getAge()*HUNGER_GAIN_PER_YEAR);
@@ -81,6 +91,7 @@ public class Unicorn extends Mammal {
         }
     }
 
+    @Override
     public String description() {
         return super.description() +
                "Unicorns are magical mammals that thrive in enchanted forests and require pristine habitats.";

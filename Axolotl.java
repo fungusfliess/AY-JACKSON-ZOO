@@ -36,25 +36,30 @@ public class Axolotl extends Amphibian {
         canBreathUnderwater = true;
     }
 
-    // ===== ABSTRACT GETTERS =====
+    // ===== GETTERS =====
 
+    @Override
     public int getMaxHunger() {
         return 20;
     }
 
+    @Override
     public String[] getTypeFoods() {
         String[] foods = {"Insects", "Small Fish"};
         return foods;
     }
 
+    @Override
     public int getLifeExpectancy() {
         return 15;
     }
 
+    @Override
     public double getFlexibility() {
         return 0.7;
     }
-
+    
+    @Override
     public LivingCondition getLivingCondition() {
         return AXOLOTL_CONDITION;
     }
@@ -63,18 +68,21 @@ public class Axolotl extends Amphibian {
         return 5;
     }
 
+    @Override
     public int getAdultAge() {
         return 3;
     }
 
+    @Override
     public double getRequiredArea() {
         return 8.0;
     }
 
     // ===== METHODS =====
 
+    @Override
     public void updateAge() {
-        if (getAge() < adultAge) {
+        if (getAge() < getAdultAge()) {
             setWeight(getWeight() + getAge()*WEIGHT_GAIN_PER_YEAR);
             setMaxHunger(getMaxHunger() + getAge()*HUNGER_GAIN_PER_YEAR);
         }

@@ -31,14 +31,14 @@ public abstract class Animal {
     // =========================
     // SPECIE-BASED FIELDS
     // =========================
-    protected int maxHunger;
-    protected String[] typeFoods;
-    protected int lifeExpectancy;
-    protected double flexibility;
-    protected LivingCondition livingCondition;
-    protected int totalDailyInteractions;
-    protected int adultAge;
-    protected double requiredArea;
+    private int maxHunger;
+    private String[] typeFoods;
+    private int lifeExpectancy;
+    private double flexibility;
+    private LivingCondition livingCondition;
+    private int totalDailyInteractions;
+    private int adultAge;
+    private double requiredArea;
 
     // =========================
     // CONSTRUCTORS

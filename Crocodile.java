@@ -33,44 +33,53 @@ public class Crocodile extends Reptile {
         timeToShed = 30;
     }
 
-    // ===== ABSTRACT GETTERS =====
+    // ===== GETTERS =====
 
+    @Override
     public int getMaxHunger() {
         return 120;
     }
 
+    @Override
     public String[] getTypeFoods() {
         String[] foods = {"Meat", "Fish"};
         return foods;
     }
 
+    @Override
     public int getLifeExpectancy() {
         return 50;
     }
 
+    @Override
     public double getFlexibility() {
         return 0.4;
     }
 
+    @Override
     public LivingCondition getLivingCondition() {
         return CROCODILE_CONDITION;
     }
 
+    @Override
     public int getTotalDailyInteractions() {
         return 3;
     }
 
+    @Override
     public int getAdultAge() {
         return 5;
     }
 
+    @Override
     public double getRequiredArea() {
         return 50.0;
     }
 
-    // ===== REPTILE HOOK =====
+    // ===== REPTILE METHODs =====
 
-    protected int getInitialTimeToShed() {
+    @Override
+    public int getInitialTimeToShed() {
         return 30;
     }
 

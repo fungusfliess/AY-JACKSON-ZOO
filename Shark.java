@@ -71,11 +71,13 @@ public class Shark extends Fish {
 
     // ===== METHODS =====
 
+    @Override
     public void updateAge() {
-        setWeight(getWeight() + getAge()*15);
-        setMaxHunger(getMaxHunger() + getAge()*5);
+        setWeight(getWeight() + getAge()*WEIGHT_GAIN_PER_YEAR);
+        setMaxHunger(getMaxHunger() + getAge()*HUNGER_GAIN_PER_YEAR);
     }
 
+    @Override
     public String description() {
         return super.description() +
                "Sharks are large predatory fish that live in oceans and require vast open water habitats.";

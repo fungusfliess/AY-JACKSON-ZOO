@@ -37,43 +37,50 @@ public class Frog extends Amphibian {
         canBreathUnderwater = true;
     }
 
-    // ===== ABSTRACT GETTERS =====
-
+    // ===== GETTERS =====
+    @Override
     public int getMaxHunger() {
         return 50;
     }
 
+    @Override
     public String[] getTypeFoods() {
         String[] foods = {"Flies", "Worms"};
         return foods;
     }
 
+    @Override
     public int getLifeExpectancy() {
         return 5;
     }
 
+    @Override
     public double getFlexibility() {
         return 0.4;
     }
 
+    @Override
     public LivingCondition getLivingCondition() {
         return FROG_CONDITION;
     }
 
+    @Override
     public int getTotalDailyInteractions() {
         return 3;
     }
 
+    @Override
     public int getAdultAge() {
         return 5;
     }
 
+    @Override
     public double getRequiredArea() {
         return 10.0;
     }
 
     // ===== METHODS =====
-
+    @Override
     public void updateAge() {
         setWeight(getWeight() + getAge()*WEIGHT_GAIN_PER_YEAR);
         setMaxHunger(getMaxHunger() + getAge()*HUNGER_GAIN_PER_YEAR);
@@ -93,6 +100,7 @@ public class Frog extends Amphibian {
         }
     }
 
+    @Override
     public String description() {
         return super.description() +
                "Frogs are amphibians that live in wetlands and undergo metamorphosis from larva to adult.";

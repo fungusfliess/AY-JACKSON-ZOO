@@ -56,5 +56,5 @@ public abstract class Reptile extends Animal {
     // SPECIES HOOKS
     // =========================
 
-    protected abstract int getInitialTimeToShed();
+    public abstract int getInitialTimeToShed();
 }
