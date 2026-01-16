@@ -193,6 +193,7 @@ public class Land {
     @returns: int index of the Structure in the structureList array, or -1 if not found.
     */
     public int searchIdxByID (char structureID) {
+        if (!charIsAllowed(structureID)) {return -1;}
         for (int i = 0; i < currentNumStructures; i++) {
             if (structureList[i].getStructureID() == structureID) {
                 return i;
