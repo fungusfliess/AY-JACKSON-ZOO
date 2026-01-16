@@ -128,7 +128,8 @@ public class Zoo {
                 System.out.println("Sorry, that is not a valid option! \n");
                 }
             }        
-        }while(quit!=true);      
+        }while(quit!=true);  
+        saveZoo();    
     }
    
     public void adminMenu(){
