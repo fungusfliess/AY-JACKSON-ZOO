@@ -1,7 +1,3 @@
-
-
-import Structure_Subsystem.*;
-
 public abstract class Reptile extends Animal {
 
     protected int timeToShed;

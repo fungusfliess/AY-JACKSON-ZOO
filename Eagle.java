@@ -1,7 +1,3 @@
-
-
-import Structure_Subsystem.*;
-
 public class Eagle extends Bird {
 
     private static final LivingCondition EAGLE_CONDITION =

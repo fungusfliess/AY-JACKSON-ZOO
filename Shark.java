@@ -1,7 +1,3 @@
-
-
-import Structure_Subsystem.*;
-
 public class Shark extends Fish {
 
     private static final LivingCondition SHARK_CONDITION =

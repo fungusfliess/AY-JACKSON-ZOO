@@ -1,7 +1,3 @@
-
-
-import Structure_Subsystem.*;
-
 public class Crocodile extends Reptile {
 
     private static final LivingCondition CROCODILE_CONDITION =

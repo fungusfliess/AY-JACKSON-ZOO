@@ -1,7 +1,3 @@
-
-
-import Structure_Subsystem.*;
-
 public class Frog extends Amphibian {
 
     private static final LivingCondition FROG_CONDITION =

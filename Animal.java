@@ -1,8 +1,3 @@
-
-
-import Land_Subsystem.*;
-import Structure_Subsystem.*;
-
 public abstract class Animal {
 
     // =========================
@@ -50,7 +45,7 @@ public abstract class Animal {
     // =========================
 
     public Animal(Animal parent) {
-        this.habitatId = Land.EMPTY_SPACE;
+        this.habitatId = Land.EMPTY;
         this.name = "";
         this.specie = parent.getSpecie();
         this.preferedInteraction = parent.getPreferedInteraction();
@@ -274,11 +269,11 @@ public abstract class Animal {
     }
 
     public boolean isSuitable(Habitat habitat) {
-        if (habitat == null || livingCondition == null || habitat.getLivingCondition() == null) {
+        if (habitat == null || livingCondition == null || habitat.getClimate() == null) {
             return false;
         }
 
-        return livingCondition.compareTo(habitat.getLivingCondition()) >= flexibility
+        return livingCondition.compareTo(habitat.getClimate()) >= flexibility
                 && habitat.enoughSpace(requiredArea);
     }
 
@@ -310,7 +305,7 @@ public abstract class Animal {
     }
 
     public void leaveHabitat() {
-        habitatId = Land.EMPTY_SPACE;
+        habitatId = Land.EMPTY;
     }
 
     // =========================

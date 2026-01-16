@@ -1,7 +1,3 @@
-
-
-import Structure_Subsystem.*;
-
 public class Sunfish extends Fish {
 
     private static final LivingCondition SUNFISH_CONDITION =

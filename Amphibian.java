@@ -1,7 +1,3 @@
-
-
-import Structure_Subsystem.*;
-
 public abstract class Amphibian extends Animal {
 
     protected String currentStage;

@@ -1,7 +1,3 @@
-
-
-import Structure_Subsystem.*;
-
 public class Snake extends Reptile {
 
     private static final LivingCondition SNAKE_CONDITION =

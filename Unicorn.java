@@ -1,7 +1,3 @@
-
-
-import Structure_Subsystem.*;
-
 public class Unicorn extends Mammal {
 
     private static final LivingCondition UNICORN_CONDITION =

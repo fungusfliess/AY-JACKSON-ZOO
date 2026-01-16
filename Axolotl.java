@@ -1,7 +1,3 @@
-
-
-import Structure_Subsystem.*;
-
 public class Axolotl extends Amphibian {
 
     private static final LivingCondition AXOLOTL_CONDITION =

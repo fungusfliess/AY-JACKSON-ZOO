@@ -1,6 +1,3 @@
-
-import Structure_Subsystem.*;
-
 public class Egg {
 
     // =========================

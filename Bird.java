@@ -1,7 +1,3 @@
-
-
-import Structure_Subsystem.*;
-
 public abstract class Bird extends Animal {
 
     protected boolean canFly;

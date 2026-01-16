@@ -1,7 +1,3 @@
-
-
-import Structure_Subsystem.*;
-
 public class Cockatoo extends Bird {
 
     private static final LivingCondition COCKATOO_CONDITION =

@@ -1,7 +1,3 @@
-
-
-import Structure_Subsystem.*;
-
 public abstract class Mammal extends Animal {
 
     protected boolean drinksMilk = true;

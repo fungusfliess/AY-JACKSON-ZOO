@@ -1,7 +1,3 @@
-
-
-import Structure_Subsystem.*;
-
 public abstract class Fish extends Animal {
 
     protected int amountEggs;

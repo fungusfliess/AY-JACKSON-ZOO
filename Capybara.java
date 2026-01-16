@@ -1,7 +1,3 @@
-
-
-import Structure_Subsystem.*;
-
 public class Capybara extends Mammal {
 
     private static final LivingCondition CAPYBARA_CONDITION =
