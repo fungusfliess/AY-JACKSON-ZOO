@@ -1,4 +1,13 @@
-
+/*
+   File Name: Employee.java
+   Name: Elizabeth Wang
+   Class: ICS4U1-23
+   Date: Jan 7, 2025
+   Description: Employee is an abstract subclass of Person that represents all zoo staff members. It stores
+                job-related data such as hourly wage, years of experience, hours worked, total earnings, and
+                benefits eligibility. Concrete subclasses (ex: ZooKeeper, ShopStaff) implement setEarnings()
+                and provide role-specific behavior.
+*/
 
 //SOMEHOW UPDATE YEARS OF EXPERIENCE BY KEEPING TRACKOF DAYS OF WORKING HERE?? 
 

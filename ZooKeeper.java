@@ -1,3 +1,13 @@
+/*
+   File Name: ZooKeeper.java
+   Name: Elizabeth Wang
+   Class: ICS4U1-23
+   Date: Jan 7, 2025
+   Description: ZooKeeper is a concrete subclass of Employee that represents staff who care for animals and work with
+                exhibits. It tracks certification level and daily tasks completed, and calculates earnings using a
+                certification-based bonus. ZooKeeper returns the role identifier "ZOOKEEPER" and provides animal-care actions.
+*/
+
 public abstract class ZooKeeper extends Employee {
     //CONSTANTS 
     public static final int MAX_CERTIFICATION_LEVEL = 5; 
