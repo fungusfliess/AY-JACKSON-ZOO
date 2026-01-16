@@ -8,7 +8,7 @@
                 certification-based bonus. ZooKeeper returns the role identifier "ZOOKEEPER" and provides animal-care actions.
 */
 
-public abstract class ZooKeeper extends Employee {
+public class ZooKeeper extends Employee {
     //CONSTANTS 
     public static final int MAX_CERTIFICATION_LEVEL = 5; 
     public static final int MIN_CERTIFICATION_LEVEL = 1; 
