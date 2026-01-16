@@ -107,8 +107,8 @@ public abstract class Employee extends Person {
     * @param other the Employee to compare to
     * @return negative if this should come before other
     */
-   public int compareToByEarnings(Employee other) {
-      return Double.compare(other.getEarnings(), this.getEarnings());
+   public double compareToByEarnings(Employee other) {
+      return other.getEarnings()-this.getEarnings();
    }
 
    /**
@@ -125,8 +125,8 @@ public abstract class Employee extends Person {
     * @param other the Employee to compare to
     * @return negative if this should come before other
     */
-   public int compareToByWage(Employee other) {
-      return Double.compare(other.getHourlyWage(), this.getHourlyWage());
+   public double compareToByWage(Employee other) {
+      return other.getHourlyWage()- this.getHourlyWage();
    }
 
    /*
