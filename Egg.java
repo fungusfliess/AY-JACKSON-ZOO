@@ -42,7 +42,7 @@ public class Egg {
         return hatched;
     }
 
-    public int index() {
+    public int getIndex() {
         return index;
     }
 
@@ -78,7 +78,7 @@ public class Egg {
     // =========================
     // HATCH METHOD
     // =========================
-    public Animal hatch(Habitat habitat, String name) {
+    public Animal hatch(String name) {
 
         // already hatched
         if (hatched) {
@@ -89,11 +89,6 @@ public class Egg {
         // not ready
         if (!readyToHatch()) {
             System.out.println("The egg is not ready to hatch yet.");
-            return null;
-        }
-
-        if (habitat == null) {
-            System.out.println("No habitat provided for hatching.");
             return null;
         }
 
@@ -124,12 +119,6 @@ public class Egg {
             return null;
         }
 
-        // ===== CHECK HABITAT SUITABILITY =====
-        if (!baby.isSuitable(habitat)) {
-            System.out.println("Habitat is unsuitable for this animal.");
-            return null;
-        }
-
         // ===== FINALIZE BIRTH =====
         baby.setName(name);
 
@@ -138,8 +127,6 @@ public class Egg {
         } else {
             baby.setGender("Female");
         }
-
-        habitat.addAnimal(baby);
         hatched = true;
 
         System.out.println(name + " has been born!");

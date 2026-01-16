@@ -534,8 +534,9 @@ public class Zoo {
      * Return:
      *   true if the egg was removed, false if index was invalid
      */
-    public boolean removeEgg(int index) {
+    public boolean removeEgg(Egg egg) {
 
+        int index = egg.getIndex();
         if (index < 0 || index >= numEggs) {
             return false;
         }
@@ -548,6 +549,25 @@ public class Zoo {
         numEggs--;
 
         return true;
+    }
+    /**
+     * Description:
+     * Attempts to hatch the given egg. If the egg successfully hatches,
+     * the egg is removed from the incubator and the newborn animal is returned.
+     */
+    public Animal hatchEgg(Egg egg, String name) {
+
+        if (egg == null) {
+            return null;
+        }
+
+        Animal baby = egg.hatch(name);
+
+        if (baby != null) {
+            removeEgg(egg); // remove by reference, not index
+        }
+
+        return baby;
     }
     // =========================
     // DISPLAY LOW STAT METHODS
