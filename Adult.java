@@ -81,7 +81,7 @@ public class Adult extends Visitor{
              "Learning Level: " + getLearningLevel() + "\n" +
              "Attractions Visited: " + getAttractionsVisited() + "\n" +
              "Num Facts Learned: " + getLearningHistorySize() + "\n" +
-             "Preferred Budget Limit: " + getPreferredBudgetLimit() + "\n";
+             "Preferred Budget Limit: " + getPreferredBudgetLimit() + "\n" + 
              "Visit Duration: " + getVisitDuration() + "\n" +
              "Num Items: " + getNumItems() + "\n";
    }
