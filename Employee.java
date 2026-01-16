@@ -9,13 +9,13 @@
                 and provide role-specific behavior.
 */
 
-//SOMEHOW UPDATE YEARS OF EXPERIENCE BY KEEPING TRACKOF DAYS OF WORKING HERE?? 
-
 public abstract class Employee extends Person {
    //FIELDS 
    public static final int MIN_YEARS_FOR_BENEFITS = 5; 
+   public static final int DAYS_PER_YEAR = 365; 
    private double hourlyWage; 
    private int yearsOfExperience; 
+   private int daysWorked; 
    private double hoursWorked; 
    private double earnings; 
    private boolean benefitsEligible; 
@@ -47,6 +47,9 @@ public abstract class Employee extends Person {
          this.yearsOfExperience = yearsOfExperience;       
       }
       
+      //start with 0 days worked
+      daysWorked = 0; 
+
       //start day with 0 hours worked and 0 earnings added for that day
       this.hoursWorked = 0.0; 
       this.earnings = 0.0; 
@@ -66,6 +69,10 @@ public abstract class Employee extends Person {
 
    public int getYearsOfExperience(){
       return yearsOfExperience;
+   }
+
+   public int getDaysWorked(){
+      return daysWorked;
    }
 
    public boolean getBenefitsEligible(){
@@ -112,6 +119,13 @@ public abstract class Employee extends Person {
     @description: ends the day for an employee by updating earnings and resetting hoursWorked
     */
    public void passDay(){
+      daysWorked++;
+
+      // Every 365 days worked -> +1 year of experience
+      if (daysWorked == DAYS_PER_YEAR) {
+         yearsOfExperience++;
+         setBenefitsEligible(); 
+      }
       setEarnings(); 
       hoursWorked = 0.0; 
    }
@@ -120,7 +134,7 @@ public abstract class Employee extends Person {
     @description: adds a positive amount to the employee's total earnings
     @param amount amount to add (must be > 0)
     */
-    protected void addToEarnings(double amount) {
+   protected void addToEarnings(double amount) {
       if (amount > 0.0) {
          earnings += amount;
       }
