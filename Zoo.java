@@ -114,7 +114,7 @@ public class Zoo {
                         }
                         break;
                     case 4:
-                        displayMap();
+                        printMap();
                         break;
                     default: 
                         System.out.println("Sorry, that is not a valid option! \n");
@@ -170,7 +170,19 @@ public class Zoo {
                 + "13 -  Create Park\n"
                 + "14 -  Create Maze\n"
                 + "15 -  Remove Structure\n"
-                + "16 -  Maintain All Structures\n";
+                + "16 -  Maintain All Structures\n"
+                + "17 -  Add Animal\n"
+                + "18 -  Relocate Animal\n"
+                + "19 -  List All Animals Of Specified Species\n"
+                + "20 -  Add Egg\n"
+                + "21 -  Display Animals With Low Happiness\n"
+                + "22 -  Display Animals With High Hunger\n"
+                + "23 -  Display Animals With Low Cleansiness\n" 
+                + "24 -  Sort Animals By Name, Then Species\n"
+                + "25 -  Sort Animals By Age\n"
+                + "26 -  Sort Animals By Happiness\n"
+                + "27 -  Sort Animals By Hunger\n"
+                + "28 -  Sort Animals By Cleanliness\n"
             );
    
             input = sc.nextLine();
@@ -266,9 +278,60 @@ public class Zoo {
                             }else{
                                 System.out.println("Removal Unseccesful.");
                             }
+                            break;
                         case 16: 
                             System.out.println("Maintaining All Structures...");
                             maintainAll();
+                            break;
+                        case 17:
+                            if(addAnimal()){
+                                System.out.println("Animal Successfully Added.");
+                            }else{
+                                System.out.println("Animal Failed To Be Added.");
+                            }
+                            break;
+                        case 18:
+                            if(relocateAnimal()){
+                                System.out.println("Relocation Successful!");
+                            }else{
+                                System.out.println("Relocation Failed.");
+                            }
+                            break;
+                        case 19:
+                            System.out.print("Enter Species: ");
+                            listAllSameSpecie(sc.nextLine());
+                            break;
+                        case 20:
+                            if(addEgg()){
+                                System.out.println("Egg Successfully Added.");
+                            }else{
+                                System.out.println("Egg Failed To Be Added.");
+                            }
+                            break;
+                        case 21:
+                            displayAnimalsLowHappiness();
+                            break;
+                        case 22:
+                            displayAnimalsLowHunger();
+                            break;
+                        case 23: 
+                            displayAnimalsLowCleansiness();
+                            break;
+                        case 24:
+                            sortAnimalsByNameThenSpecie();
+                            break;
+                        case 25:
+                            sortAnimalsByAge();
+                            break;
+                        case 26:
+                            sortAnimalsByHappiness();
+                            break;
+                        case 27:
+                            sortAnimalsByHunger();
+                            break;
+                        case 28: 
+                            sortAnimalsByCleanliness();
+                            break;
                         default: 
                             System.out.println("Sorry, that is not a valid option!\n");
                             break;
@@ -284,15 +347,22 @@ public class Zoo {
     public void employeeMenu(Employee employee){
         boolean quit = false;
         String input;
-   
-        System.out.println("Employee Menu:\n");
+
    
         while(!quit){
-            System.out.println("(Type quit to return to Main Menu)\n"
+            System.out.println("Employee Menu:\n"
                 + "(Type quit to return to Main Menu)\n"
                 + "Enter # To Run Command:\n"
                 + "1  -  Search Structure By Number Of Animals And Size\n"
                 + "2  -  Search Habitat By Living Condition & With Most Animals\n"
+                + "3  -  Sort Structures By Size\n"
+                + "4  -  Sort Structures By Size, Then Time Between Maintenance\n"
+                + "5  -  Sort Structures By Size, Then Number Of Animals\n"
+                + "6  -  Print Structures Needing Maintenace\n"
+                + "7  -  Maintain Structure\n" 
+                + "8  -  Maintain All Structures\n"
+                + "9  -  Print All Structures\n"
+                + "10 -  Add Person\n"
                 );
    
             input = sc.nextLine();
@@ -305,10 +375,46 @@ public class Zoo {
                     switch(Integer.parseInt(input)){
                         case 1:
                             System.out.println("Enter Number Of Animals And Size");
-                            System.out.print(searchByNumberAnimalsAndSize(Integer.parseInt(sc.nextLine()), Integer.parseInt(sc.nextLine())));
+                            System.out.println(searchByNumberAnimalsAndSize(Integer.parseInt(sc.nextLine()), Integer.parseInt(sc.nextLine())));
+                            break;
                      
                         case 2: 
-                     
+                            System.out.println(searchHabitatMostAnimalsAndLivingConditions(LivingCondition.createLivingCondition()));
+                            break;
+
+                        case 3:
+                            sortStructureBySize();
+                            System.out.println("Sorting Complete.");
+                            break;
+                        
+                        case 4:
+                            sortBySizeAndTimeBetweenMaintenance();
+                            System.out.println("Sorting Complete.");
+                            break;
+                        case 5:
+                            sortBySizeAndMostAnimals();
+                            System.out.println("Sorting Complete.");
+                            break;
+                        case 6:
+                            printAllStructuresNeedingMaintenance();
+                            break;
+                        case 7: 
+                            System.out.print("Enter Structure ID: ");
+                            maintain(searchStructureByID(sc.nextLine().charAt(0))); 
+                            break;
+                        case 8:
+                            maintainAll();
+                            break;
+                        case 9:
+                            printAllStructureInfo();
+                            break;
+                        case 10:
+                            if(addPerson()){
+                                System.out.println("Person Added.");
+                            }else{
+                                System.out.println("Zoo has reached max capacity, Person could not be added!");
+                            }
+                            break;
                         default:
                             System.out.println("Sorry, that is not a valid option!\n");
                     }
@@ -323,13 +429,15 @@ public class Zoo {
         boolean quit = false;
         String input;
    
-        System.out.println("Visitor Menu:\n");
-   
         while(!quit){
-            System.out.println("(Type quit to return to Main Menu)\n"
+            System.out.println("Visitor Menu:\n"
+                + "(Type quit to return to Main Menu)\n"
                 + "Enter # To Run Command:\n"
-                + /* add menu */);
-   
+                + "1  -  Visit Structure\n"
+                + "2  -  Learning Summary\n"
+                + "3  -  Sort Structures From Least To Most Animals()\n"
+            );
+            
             input = sc.nextLine();
    
             if(input.equalsIgnoreCase(QUIT)){
@@ -339,7 +447,14 @@ public class Zoo {
                 try{   
                     switch(Integer.parseInt(input)){
                         case 1:
-                            //add menu         
+                            System.out.print("Enter Structure ID: ");
+                            visitor.visit(searchStructureByID(sc.nextLine().charAt(0)));  
+                            break;
+                        case 2: 
+                            endOfDaySummary();   
+                            break;   
+                        case 3:
+                            sortStructuresByLeastAnimals();
                         default:
                             System.out.println("Sorry, that is not a valid option!\n");
                     }        
@@ -348,6 +463,27 @@ public class Zoo {
                     System.out.println("Sorry, that is not a valid option!\n");
                 }
             }
+        }
+    }
+
+    public void saveZoo(){
+        savePersons();
+        saveAnimals());
+        saveEggs();
+        saveLand();
+        try{
+            BufferedWriter bw = new BufferedWriter(new FileWriter(ZOO_CONSTRUCTOR_FILE, false));
+            bw.write(String.valueOf(zooBalance));
+            bw.newLine();;
+            bw.write(maxAnimal);
+            bw.newLine();
+            bw.write(maxEggs);
+            bw.newLine();
+            bw.write(maxPerson);
+            bw.close();
+
+        }catch(IOException e){
+
         }
     }
     
@@ -375,12 +511,6 @@ public class Zoo {
 
         int numFacts;
         String[] facts;
-
-        String climateType;
-        double temp;
-        double humidity;
-        String region;
-        LivingCondition climate;
 
         int maxAnimals; 
 
@@ -565,7 +695,7 @@ public class Zoo {
         return zooLand.searchByNumberAnimalsAndSize(numAnimals, size);
     }
 
-    public Habitat searchHabitatMostAnimalsAndLivingConditions (String condition) {
+    public Habitat searchHabitatMostAnimalsAndLivingConditions (LivingCondition condition) {
         return zooLand.searchHabitatMostAnimalsAndLivingConditions(condition);
     }
 
