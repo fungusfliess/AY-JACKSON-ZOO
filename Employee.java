@@ -114,6 +114,19 @@ public abstract class Employee extends Person {
       } 
       return false; 
    }
+
+   /*
+    @description: adds a positive amount to the employee's total earnings
+    @param amount amount to add (must be > 0)
+    @return a boolean to indicate whether adding was successful or not
+    */
+    public boolean addToEarnings(double amount) {
+      if (amount > 0.0) {
+         earnings += amount;
+         return true;
+      }
+      return false; 
+   }
    
    /*
     @description: ends the day for an employee by updating earnings and resetting hoursWorked
@@ -129,19 +142,6 @@ public abstract class Employee extends Person {
       }
       setEarnings(); 
       hoursWorked = 0.0; 
-   }
-
-   /*
-    @description: adds a positive amount to the employee's total earnings
-    @param amount amount to add (must be > 0)
-    @return a boolean to indicate whether adding was successful or not
-    */
-   public boolean addToEarnings(double amount) {
-      if (amount > 0.0) {
-         earnings += amount;
-         return true;
-      }
-      return false; 
    }
 
    /*
