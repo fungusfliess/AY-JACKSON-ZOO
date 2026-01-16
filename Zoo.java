@@ -168,7 +168,9 @@ public class Zoo {
                 + "11 -  Create Pavillion\n"
                 + "12 -  Create Enclosure\n"
                 + "13 -  Create Park\n"
-                + "14 -  Create Maze\n";
+                + "14 -  Create Maze\n"
+                + "15 -  Remove Structure\n"
+                + "16 -  Maintain All Structures\n";
             );
    
             input = sc.nextLine();
@@ -257,6 +259,16 @@ public class Zoo {
                                 System.out.println("Could Not Build Structure Due to Insuffient Space.");
                             }
                             break;
+                        case 15:
+                            System.out.print("Enter Structure ID");
+                            if(removeStructure(sc.nextLine().charAt(0))){
+                                System.out.println("Removal Successful.");
+                            }else{
+                                System.out.println("Removal Unseccesful.");
+                            }
+                        case 16: 
+                            System.out.println("Maintaining All Structures...");
+                            maintainAll();
                         default: 
                             System.out.println("Sorry, that is not a valid option!\n");
                             break;
@@ -277,8 +289,11 @@ public class Zoo {
    
         while(!quit){
             System.out.println("(Type quit to return to Main Menu)\n"
+                + "(Type quit to return to Main Menu)\n"
                 + "Enter # To Run Command:\n"
-                + /*add menu*/);
+                + "1  -  Search Structure By Number Of Animals And Size\n"
+                + "2  -  Search Habitat By Living Condition & With Most Animals\n"
+                );
    
             input = sc.nextLine();
    
@@ -289,8 +304,10 @@ public class Zoo {
                 try{
                     switch(Integer.parseInt(input)){
                         case 1:
+                            System.out.println("Enter Number Of Animals And Size");
+                            System.out.print(searchByNumberAnimalsAndSize(Integer.parseInt(sc.nextLine()), Integer.parseInt(sc.nextLine())));
                      
-                        case 2: // add menu
+                        case 2: 
                      
                         default:
                             System.out.println("Sorry, that is not a valid option!\n");
@@ -465,76 +482,23 @@ public class Zoo {
             return zooLand.createRestaurant(c1, c2, name, id, timeBetweenMaintenance, facts, menu );
             
 
-        }else if(type == "Enclosure"){
+        }else if(type.equals("Enclosure")){
             System.out.print("Enter species: ");
             String species = sc.nextLine();
-            System.out.print("Enter climate type (LAND or WATER): ");
-            climateType = sc.nextLine();
+            
+            //initializes superclass fields
 
-            System.out.print("Enter temperature: ");
-            temp = Double.parseDouble(sc.nextLine());
+            System.out.print("Enter structure name: ");
+            name = sc.nextLine();
 
-            System.out.print("Enter humidity: ");
-            humidity = Double.parseDouble(sc.nextLine());
+            System.out.print("Enter time between maintenance: ");
+            timeBetweenMaintenance = Integer.parseInt(sc.nextLine());
 
-            System.out.print("Enter region: ");
-            region = sc.nextLine();
+            System.out.print("Enter maximum animals: ");
+            maxAnimals = Integer.parseInt(sc.nextLine());
+            return zooLand.createEnclosure(c1, area, species, name, id, timeBetweenMaintenance, maxAnimals, LivingCondition.createLivingCondition());
 
-            //checks which subclass of LivingCondition to create
-
-            if(climateType.equals("LAND")){
-                System.out.print("Enter soil compaction: ");
-                double soilCompaction = Double.parseDouble(sc.nextLine());
-
-                System.out.print("Enter land slope: ");
-                double landSlope = Double.parseDouble(sc.nextLine());
-
-                System.out.print("Has water source (true/false): ");
-                boolean hasWaterSource = Boolean.parseBoolean(sc.nextLine());
-
-                System.out.print("Enter vegetation density: ");
-                double vegetationDensity = Double.parseDouble(sc.nextLine());
-
-                System.out.print("Enter number of nearby structures: ");
-                int amountStructures = Integer.parseInt(sc.nextLine());
-
-                climate = new LandCondition(
-                    temp,
-                    humidity,
-                    region,
-                    soilCompaction,
-                    landSlope,
-                    hasWaterSource,
-                    vegetationDensity,
-                    amountStructures
-                );
-            }else{
-                System.out.print("Enter water acidity: ");
-                double waterAcidity = Double.parseDouble(sc.nextLine());
-
-                System.out.print("Enter water hardness: ");
-                double waterHardness = Double.parseDouble(sc.nextLine());
-
-                System.out.print("Enter water temperature: ");
-                double waterTemp = Double.parseDouble(sc.nextLine());
-
-                System.out.print("Has land access (true/false): ");
-                boolean hasLand = Boolean.parseBoolean(sc.nextLine());
-
-                System.out.print("Enter water salinity: ");
-                double waterSalinity = Double.parseDouble(sc.nextLine());
-
-                climate = new WaterCondition(
-                    waterTemp,
-                    humidity,
-                    region,
-                    waterAcidity,
-                    waterHardness,
-                    temp,
-                    hasLand,
-                    waterSalinity
-                );
-            }
+        }else if(type.equals("Pavillion")){
 
             //initializes superclass fields
 
@@ -546,78 +510,9 @@ public class Zoo {
 
             System.out.print("Enter maximum animals: ");
             maxAnimals = Integer.parseInt(sc.nextLine());
-            return zooLand.createEnclosure(c1, area, species, name, id, timeBetweenMaintenance, maxAnimals, climate);
+            return zooLand.createPavillion(c1, area, name, id, timeBetweenMaintenance, maxAnimals, LivingCondition.createLivingCondition());
 
-        }else if(type == "Pavillion"){
-            System.out.print("Enter climate type (LAND or WATER): ");
-            climateType = sc.nextLine();
-
-            System.out.print("Enter temperature: ");
-            temp = Double.parseDouble(sc.nextLine());
-
-            System.out.print("Enter humidity: ");
-            humidity = Double.parseDouble(sc.nextLine());
-
-            System.out.print("Enter region: ");
-            region = sc.nextLine();
-
-            //checks which subclass of LivingCondition to create
-
-            if(climateType.equals("LAND")){
-                System.out.print("Enter soil compaction: ");
-                double soilCompaction = Double.parseDouble(sc.nextLine());
-
-                System.out.print("Enter land slope: ");
-                double landSlope = Double.parseDouble(sc.nextLine());
-
-                System.out.print("Has water source (true/false): ");
-                boolean hasWaterSource = Boolean.parseBoolean(sc.nextLine());
-
-                System.out.print("Enter vegetation density: ");
-                double vegetationDensity = Double.parseDouble(sc.nextLine());
-
-                System.out.print("Enter number of nearby structures: ");
-                int amountStructures = Integer.parseInt(sc.nextLine());
-
-                climate = new LandCondition(
-                    temp,
-                    humidity,
-                    region,
-                    soilCompaction,
-                    landSlope,
-                    hasWaterSource,
-                    vegetationDensity,
-                    amountStructures
-                );
-            }else{
-                System.out.print("Enter water acidity: ");
-                double waterAcidity = Double.parseDouble(sc.nextLine());
-
-                System.out.print("Enter water hardness: ");
-                double waterHardness = Double.parseDouble(sc.nextLine());
-
-                System.out.print("Enter water temperature: ");
-                double waterTemp = Double.parseDouble(sc.nextLine());
-
-                System.out.print("Has land access (true/false): ");
-                boolean hasLand = Boolean.parseBoolean(sc.nextLine());
-
-                System.out.print("Enter water salinity: ");
-                double waterSalinity = Double.parseDouble(sc.nextLine());
-
-                climate = new WaterCondition(
-                    waterTemp,
-                    humidity,
-                    region,
-                    waterAcidity,
-                    waterHardness,
-                    temp,
-                    hasLand,
-                    waterSalinity
-                );
-            }
-
-            //initializes superclass fields
+        }else if(type.equals("Maze")){
 
             System.out.print("Enter structure name: ");
             name = sc.nextLine();
@@ -625,19 +520,22 @@ public class Zoo {
             System.out.print("Enter time between maintenance: ");
             timeBetweenMaintenance = Integer.parseInt(sc.nextLine());
 
-            System.out.print("Enter maximum animals: ");
-            maxAnimals = Integer.parseInt(sc.nextLine());
-            return zooLand.createPavillion(c1, area, name, id, timeBetweenMaintenance, maxAnimals, climate);
-
-        }else if(type == "Maze"){
+            return zooLand.createMaze(c1, name, id, timeBetweenMaintenance, null);
             
 
-        }else if(type == "Park"){
+        }else if(type.equals("Park")){
             
-            
+            System.out.print("Enter structure name: ");
+            name = sc.nextLine();
+
+            System.out.print("Enter time between maintenance: ");
+            timeBetweenMaintenance = Integer.parseInt(sc.nextLine());
+
+            return zooLand.createPark(c1, area, name, id, timeBetweenMaintenance);
         }
 
     }
+    
     // LAND METHODS
     public boolean loadLandFromFile () { 
         return zooLand.loadFromFile(LAND_FILE);
