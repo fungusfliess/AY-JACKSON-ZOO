@@ -1,0 +1,95 @@
+
+
+public abstract class Senior extends Adult {
+   //CONSTANTS 
+   public static final double SENIOR_DISCOUNT = 0.20; 
+
+   //FIELDS
+   private boolean requiresAccessibilitySupport; 
+
+   //CONSTRUCTOR
+   /*
+    @description: declares and initializes Senior visitor object
+    @param age                 the visitor's age
+    @param personID            unique ID for the visitor
+    @param firstName           the visitor's first name
+    @param lastName            the visitor's last name
+    @param balance             starting balance (money available)
+    @param learningLevel       starting learning level
+    @param visitDuration       visit duration (in minutes or your chosen unit)
+    @param preferredLimit      preferred spending limit for this visitor
+    @param requiresSupport     true if accessibility support is required, false otherwise
+    */
+   public Senior(int age, String personID, String firstName, String lastName, double balance, int learningLevel, int visitDuration, double preferredLimit, boolean requiresSupport) {
+      super(age, personID, firstName, lastName, balance, learningLevel, visitDuration, preferredLimit);
+      this.requiresAccessibilitySupport = requiresSupport;
+   }
+
+   //ACCESSOR
+   public double getSeniorDiscount() {
+      return SENIOR_DISCOUNT;
+   }
+
+   public boolean getRequiresAccessibilitySupport() {
+      return requiresAccessibilitySupport;
+   }
+
+   //MUTATOR
+   public void setRequiresAccessibilitySupport(boolean requiresSupport) {
+      this.requiresAccessibilitySupport = requiresSupport;
+   }
+
+   //OTHER METHODS
+   /*
+    @return the role string for this Person object
+    */
+   @Override
+   public String getRole() {
+      return "SENIOR";
+   }
+
+   /*
+    @description: calculates the ticket cost for a Senior visitor
+                 - if age >= FREE_SENIOR_AGE_MIN, admission is free
+                 - otherwise, senior pays adult price with SENIOR_DISCOUNT applied
+    @return the admission price for a Senior visitor
+    */
+   @Override
+   public double calculateTicketCost() {
+      if (getAge() >= FREE_SENIOR_AGE_MIN) {
+         return 0.0;
+      }
+      return ADULT_BASE_PRICE * (1.0 - SENIOR_DISCOUNT);
+   }
+
+   /*
+    @description: returns a formatted string summary of this Senior visitor
+    @return formatted visitor information including accessibility support status
+    */
+   @Override
+   public String toString() {
+      return "PersonID: " + getPersonID() + "\n" +
+             "Name: " + getFirstName() + " " + getLastName() + "\n" +
+             "Age: " + getAge() + "\n" +
+             "Role: " + getRole() + "\n" +
+             "Balance: " + getBalance() + "\n" +
+             "Learning Level: " + getLearningLevel() + "\n" +
+             "Attractions Visited: " + getAttractionsVisited() + "\n" +
+             "Num Facts Learned: " + getLearningHistorySize() + "\n" +
+             "Preferred Budget Limit: " + getPreferredBudgetLimit() + "\n" +
+             "Requires Accessibility Support: " + requiresAccessibilitySupport + "\n";
+   }
+
+   /*
+   @description: returns this Senior in file format (includes accessibility support field)
+   @return a string formatted for writing to person.txt
+   */
+   @Override
+   public String saveToString() {
+      return super.saveToString() +
+            getRequiresAccessibilitySupport() + "\n";
+   }
+
+}
+
+
