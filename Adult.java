@@ -1,6 +1,14 @@
+/*
+   File Name: Adult.java
+   Name: Elizabeth Wang
+   Class: ICS4U1-23
+   Date: Jan 7, 2025
+   Description: Adult is a concrete subclass of Visitor that represents standard visitors who pay the regular
+                admission price. It tracks a preferred budget limit and can report whether the visitor stayed
+                within budget. Adult returns the role identifier "ADULT" and uses adult ticket pricing rules.
+*/
 
-
-public abstract class Adult extends Visitor{
+public class Adult extends Visitor{
    //FIELDS 
    private double preferredBudgetLimit; 
 
@@ -28,7 +36,9 @@ public abstract class Adult extends Visitor{
 
    //MUTATOR
    public void setPreferredBudgetLimit(double limit){
-      this.preferredBudgetLimit = limit;
+      if (limit>0){
+         this.preferredBudgetLimit = limit;
+      }
    }
 
    //OTHER METHODS 
@@ -37,7 +47,7 @@ public abstract class Adult extends Visitor{
     @return true if amount spent is less than the preferred budget limit, false otherwise
     */
    public boolean stayedWithinBudget(){
-      return this.getAmountSpent()<preferredBudgetLimit; 
+      return this.getAmountSpent()<=preferredBudgetLimit; 
    }
 
    /*
@@ -47,21 +57,6 @@ public abstract class Adult extends Visitor{
    public String getRole(){
       return "ADULT";
    }
-
-   //EXPAND SUMMARY LATWR 
-   /*
-    @description: returns a summary message when the visitor leaves the zoo
-    @return a summary string including whether the visitor stayed within budget
-    */
-   public String endVisitorSummary(){
-      this.endVisitorSummary(); 
-      if (stayedWithinBudget()){
-         return "You stayed within your budget.\n";
-      } else {
-         return "You exceeded your budget.\n";
-      }
-   }
-
 
    /*
     @description: calculates the ticket cost for an Adult visitor
@@ -87,6 +82,18 @@ public abstract class Adult extends Visitor{
              "Attractions Visited: " + getAttractionsVisited() + "\n" +
              "Num Facts Learned: " + getLearningHistorySize() + "\n" +
              "Preferred Budget Limit: " + getPreferredBudgetLimit() + "\n";
+             "Visit Duration: " + getVisitDuration() + "\n" +
+             "Num Items: " + getNumItems() + "\n";
+   }
+
+   /*
+   @description: returns this Adult in file format (includes accessibility support field)
+   @return a string formatted for writing to person.txt
+   */
+   @Override
+   public String saveToString() {
+      return super.saveToString() +
+            preferredBudgetLimit + "\n";
    }
 
 }

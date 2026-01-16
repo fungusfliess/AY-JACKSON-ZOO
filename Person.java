@@ -1,5 +1,12 @@
-
-
+/*
+   File Name: Person.java
+   Name: Elizabeth Wang
+   Class: ICS4U1-23
+   Date: Jan 7, 2025
+   Description: Person is the abstract base class for everyone in the zoo system. It stores shared identity
+                information (personID, first/last name, age) and an active status flag. Subclasses must
+                implement getRole() and may override methods like toString() and saveToString().
+*/
 public abstract class Person {
    //FIELDS 
    private int age; 
@@ -17,7 +24,11 @@ public abstract class Person {
     @param lastName  the person's last name
     */ 
    public Person(int age, String personID, String firstName, String lastName){
-      this.age = age; 
+      if (age<0){
+         age = 0
+      } else {
+         this.age = age; 
+      }
       this.personID = personID; 
       this.firstName = firstName;
       this.lastName = lastName; 
@@ -39,12 +50,10 @@ public abstract class Person {
 
    public String getLastName(){
       return lastName;
-
    }
 
    public boolean getIsActive(){
       return isActive;
-
    }
    
    //MUTATOR 
@@ -69,7 +78,7 @@ public abstract class Person {
    public abstract String getRole();
 
    /*
-   @description: returns this Person in file format (one field per line) so it can be saved and reloaded later
+   @description: returns this Person in file format so it can be saved and reloaded later
    @return a string formatted for writing to person.txt
    */
    public abstract String saveToString();

@@ -1,12 +1,21 @@
-
-
-//SOMEHOW UPDATE YEARS OF EXPERIENCE BY KEEPING TRACKOF DAYS OF WORKING HERE?? 
+/*
+   File Name: Employee.java
+   Name: Elizabeth Wang
+   Class: ICS4U1-23
+   Date: Jan 7, 2025
+   Description: Employee is an abstract subclass of Person that represents all zoo staff members. It stores
+                job-related data such as hourly wage, years of experience, hours worked, total earnings, and
+                benefits eligibility. Concrete subclasses (ex: ZooKeeper, ShopStaff) implement setEarnings()
+                and provide role-specific behavior.
+*/
 
 public abstract class Employee extends Person {
    //FIELDS 
    public static final int MIN_YEARS_FOR_BENEFITS = 5; 
+   public static final int DAYS_PER_YEAR = 365; 
    private double hourlyWage; 
    private int yearsOfExperience; 
+   private int daysWorked; 
    private double hoursWorked; 
    private double earnings; 
    private boolean benefitsEligible; 
@@ -38,6 +47,9 @@ public abstract class Employee extends Person {
          this.yearsOfExperience = yearsOfExperience;       
       }
       
+      //start with 0 days worked
+      daysWorked = 0; 
+
       //start day with 0 hours worked and 0 earnings added for that day
       this.hoursWorked = 0.0; 
       this.earnings = 0.0; 
@@ -57,6 +69,10 @@ public abstract class Employee extends Person {
 
    public int getYearsOfExperience(){
       return yearsOfExperience;
+   }
+
+   public int getDaysWorked(){
+      return daysWorked;
    }
 
    public boolean getBenefitsEligible(){
@@ -98,31 +114,51 @@ public abstract class Employee extends Person {
       } 
       return false; 
    }
+
+   /*
+    @description: adds a positive amount to the employee's total earnings
+    @param amount amount to add (must be > 0)
+    @return a boolean to indicate whether adding was successful or not
+    */
+    public boolean addToEarnings(double amount) {
+      if (amount > 0.0) {
+         earnings += amount;
+         return true;
+      }
+      return false; 
+   }
    
    /*
     @description: ends the day for an employee by updating earnings and resetting hoursWorked
     */
    public void passDay(){
+      daysWorked++;
+
+      // Every 365 days worked -> +1 year of experience
+      if (daysWorked == DAYS_PER_YEAR) {
+         yearsOfExperience++;
+         daysWorked = 0; 
+         setBenefitsEligible(); 
+      }
       setEarnings(); 
       hoursWorked = 0.0; 
    }
 
    /*
-    @description: adds a positive amount to the employee's total earnings
-    @param amount amount to add (must be > 0)
-    */
-    protected void addToEarnings(double amount) {
-      if (amount > 0.0) {
-         earnings += amount;
-      }
-   }
-
-   /*
-   @description: returns this Employee in file format (role + base fields + employee fields)
-   @return a string formatted for writing to person.txt
+   @description: returns this Employee in file format so it can be saved and reloaded later
+   @return a string formatted for writing to persons.txt
    */
    @Override
    public String saveToString() {
+      // For employees, the 3rd role-specific line is:
+      // - ZooKeeper: certificationLevel
+      // - ShopStaff: placeholder value of 0
+
+      int thirdField = 0;
+      if (this instanceof ZooKeeper) {
+         thirdField = ((ZooKeeper) this).getCertificationLevel();
+      }
+
       return getRole() + "\n" +
             getPersonID() + "\n" +
             getFirstName() + "\n" +
@@ -130,7 +166,7 @@ public abstract class Employee extends Person {
             getAge() + "\n" +
             getHourlyWage() + "\n" +
             getYearsOfExperience() + "\n" +
-            getEarnings() + "\n";
+            thirdField + "\n";
    }
 
 }

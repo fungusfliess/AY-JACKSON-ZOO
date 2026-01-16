@@ -1,6 +1,14 @@
+/*
+   File Name: Senior.java
+   Name: Elizabeth Wang
+   Class: ICS4U1-23
+   Date: Jan 7, 2025
+   Description: Senior is a concrete subclass of Adult that represents senior visitors who may receive discounted
+                or free admission depending on age. It stores whether accessibility support is required and returns
+                the role identifier "SENIOR". Senior overrides calculateTicketCost() and includes support info in output.
+*/
 
-
-public abstract class Senior extends Adult {
+public class Senior extends Adult {
    //CONSTANTS 
    public static final double SENIOR_DISCOUNT = 0.20; 
 
@@ -69,16 +77,19 @@ public abstract class Senior extends Adult {
    @Override
    public String toString() {
       return "PersonID: " + getPersonID() + "\n" +
-             "Name: " + getFirstName() + " " + getLastName() + "\n" +
-             "Age: " + getAge() + "\n" +
-             "Role: " + getRole() + "\n" +
-             "Balance: " + getBalance() + "\n" +
-             "Learning Level: " + getLearningLevel() + "\n" +
-             "Attractions Visited: " + getAttractionsVisited() + "\n" +
-             "Num Facts Learned: " + getLearningHistorySize() + "\n" +
-             "Preferred Budget Limit: " + getPreferredBudgetLimit() + "\n" +
-             "Requires Accessibility Support: " + requiresAccessibilitySupport + "\n";
+            "Name: " + getFirstName() + " " + getLastName() + "\n" +
+            "Age: " + getAge() + "\n" +
+            "Role: " + getRole() + "\n" +
+            "Balance: " + getBalance() + "\n" +
+            "Learning Level: " + getLearningLevel() + "\n" +
+            "Visit Duration: " + getVisitDuration() + "\n" +
+            "Attractions Visited: " + getAttractionsVisited() + "\n" +
+            "Num Items: " + getNumItems() + "\n" +
+            "Num Facts Learned: " + getLearningHistorySize() + "\n" +
+            "Preferred Budget Limit: " + getPreferredBudgetLimit() + "\n" +
+            "Requires Accessibility Support: " + requiresAccessibilitySupport + "\n";
    }
+
 
    /*
    @description: returns this Senior in file format (includes accessibility support field)

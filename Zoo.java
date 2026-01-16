@@ -1,45 +1,672 @@
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
-import Animal_Subsystem.*;
-import Structure_Subsystem.Habitat;
 
 public class Zoo {
+
+    public static Scanner sc = new Scanner(System.in);
+
     //CONSTANTS 
-    private static final String PERSON_FILE = "person.txt";
-    private static final int MAX_STAFF = 200;
-    private static final int MAX_VISITORS = 2000;
-    private static final int MAX_ANIMALS = 200;
-    private static final int MAX_EGGS = 100;
+    public static final String ZOO_CONSTRUCTOR_FILE = "zoo.txt";
+    public static final String ANIMAL_FILE = "animal.txt";
+    public static final String EGG_FILE = "eggs.txt";
+    public static final String PERSON_FILE = "persons.txt";
+    public static final String LAND_FILE = "land.txt";
+    public static final String ADMIN_PIN = "0000";
+
+    public static final String QUIT = "quit";
     
     //FIELDS
-    private Employee[] staffList = new Employee[MAX_STAFF];
-    private Visitor[] visitorList = new Visitor[MAX_VISITORS];
-    private int numEmployees = 0;
-    private int numVisitors = 0;
-    private int numAnimals = 0;
-    private int numEggs = 0;
+    private Employee[] staffList;
+    private Visitor[] visitorList;
+
+    private int maxPerson;
+    private int maxAnimal;
+    private int maxEggs;
+    
+    private int numPerson; 
+    private int numEmployees;
+    private int numVisitors;
+    private int numAnimals;
+    private int numEggs; 
+
+    private double zooBalance;
 
     
-    int numberOfAnimals;
     private Animal[] animals;
     private Egg[] eggs;
-    private LivingCondition[] livingConditions;
-    private Habitat[] habitats;
     private Land zooLand;
+    private Map map;
 
-    public Zoo(int numberOfAnimals) {
-        this.numberOfAnimals = numberOfAnimals;
+    public Zoo(){
+        try{
+            BufferedReader br = new BufferedReader(new FileReader(ZOO_CONSTRUCTOR_FILE));
+            double balance = Double.parseDouble(br.readLine());
+            int animals = Integer.parseInt(br.readLine());
+            int eggs = Integer.parseInt(br.readLine());
+            int person = Integer.parseInt(br.readLine());
+            
+            
+            this.zooBalance = balance;
+            this.maxAnimal = animals;
+            this.maxEggs = eggs;
+            this.maxPerson = person;
+            
+            this.zooAnimals = new Animal[maxAnimal];
+            this.incubator = new Egg[maxEggs];
+            this.persons = new Person[maxPerson];
+            
+            br.close();
+         
+        }catch(IOException e){
+            System.out.println("Error reading file.");
+        }
+        loadPersons();
+        loadAnimals();
+        loadStructures();
+        loadMap();
+        map = zooLand.getMap();
+        System.out.println("Zoo Successfully Loaded!");
     }
-    public Zoo(String file) {
+   
+    public void welcomeMenu(){
+        boolean quit = false;
+        String input; 
+        Person user;
+        System.out.println("Welcome To The Zoo's Main Menu!\n");
+        do{
+            try{
+                System.out.println("(Type quit to quit)\n" 
+                + "Enter # To Access Specific Menu: "
+                + "\n1 - Admin Menu"
+                + "\n2 - Employee Menu"
+                + "\n3 - Visitor Menu"
+                + "\n4 - Display Map");
+            
+                input = sc.nextLine();
+                
+                switch(Integer.parseInt(input)){
+                    case 1: 
+                        adminMenu();
+                        break;
+                    case 2:
+                        System.out.println("Enter Employee ID: ");
+                        input = sc.nextLine();
+                        user = searchByPersonID(input);
+                        if(user != null && user instanceof Employee){
+                    
+                            employeeMenu((Employee)user);
+                            
+                        }else{
+                            System.out.println("Employee Does Not Exist. ");
+                        }  
+                        break;  
+                    case 3:
+                        System.out.println("Enter Visitor ID: ");
+                        input = sc.nextLine();
+                        user = searchByPersonID(input);
+                        if(user != null && user instanceof Visitor){
+                    
+                            visitorMenu((Visitor)user);
+                        
+                        }else{
+                            System.out.println("Visitor Does Not Exist. ");
+                        }
+                        break;
+                    case 4:
+                        printMap();
+                        break;
+                    default: 
+                        System.out.println("Sorry, that is not a valid option! \n");
+                        break;
+                }
+            }catch(NumberFormatException e){
+                if(input.equalsIgnoreCase(QUIT)){
+                    System.out.println("See You Next Time!");
+                    quit = true;
+                }else{
+                System.out.println("Sorry, that is not a valid option! \n");
+                }
+            }        
+        }while(quit!=true);  
+        saveZoo();    
+    }
+   
+    public void adminMenu(){
+        Person search;
+        boolean quit = false;
+        boolean login = false;
+        String input;
+   
+        while(!quit && !login){
+            System.out.println("(Type quit to return to Main Menu)\nEnter Admin PIN: ");
+            input = sc.nextLine();
+   
+            if(input.equalsIgnoreCase(QUIT)){
+                System.out.println("Returning To Main Menu...");
+                quit = true;
+            }else if(input.equals(ADMIN_PIN)){
+                login = true;
+            }else{
+                System.out.println("PIN ENTERED WRONG.");
+            }
+        }
+   
+        while(login && !quit){
+            System.out.println("Admin Menu:\n"
+                + "(Type quit to return to Main Menu)\n"
+                + "Enter # To Run Command:\n"
+                + "1  -  Pass Time\n"
+                + "2  -  Display Zoo Balance\n"
+                + "3  -  Search Person By ID\n"
+                + "4  -  Search Person By ID & Earnings\n"
+                + "5  -  Sort Visitors By Name Alphabetically\n"
+                + "6  -  Sort Employees From Highest To Lowest Earnings\n"
+                + "7  -  Sort Employees By Experience, Then By Wage\n"
+                + "8  -  Display All Employees\n"
+                + "9  -  Create Gift Shop\n"
+                + "10 -  Create Restaurant\n"
+                + "11 -  Create Pavillion\n"
+                + "12 -  Create Enclosure\n"
+                + "13 -  Create Park\n"
+                + "14 -  Create Maze\n"
+                + "15 -  Remove Structure\n"
+                + "16 -  Maintain All Structures\n"
+                + "17 -  Add Animal\n"
+                + "18 -  Relocate Animal\n"
+                + "19 -  List All Animals Of Specified Species\n"
+                + "20 -  Add Egg\n"
+                + "21 -  Display Animals With Low Happiness\n"
+                + "22 -  Display Animals With High Hunger\n"
+                + "23 -  Display Animals With Low Cleansiness\n" 
+                + "24 -  Sort Animals By Name, Then Species\n"
+                + "25 -  Sort Animals By Age\n"
+                + "26 -  Sort Animals By Happiness\n"
+                + "27 -  Sort Animals By Hunger\n"
+                + "28 -  Sort Animals By Cleanliness\n"
+            );
+   
+            input = sc.nextLine();
+   
+            if(input.equalsIgnoreCase(QUIT)){
+                System.out.println("Returning To Main Menu...");
+                quit = true;
+            }else{
+                try{
+                    switch(Integer.parseInt(input)){
+                        case 1:
+                            System.out.print("Enter Days: ");
+                            passTime(Integer.parseInt(sc.nextLine()));
+                            break;
+                        case 2: 
+                            System.out.println("Zoo Balance: $" + zooBalance);
+                            break;
+                        case 3:
+                            System.out.print("Enter ID: ");
+                            input = sc.nextLine();
+                            search = searchByPersonID(input);
+                            if(search != null){
+                                System.out.println(search);
+                            }else{
+                                System.out.println("Person Does Not Exist.");
+                            }
+                            break;
+                        case 4:
+                            System.out.print("Enter ID: ");
+                            input = sc.nextLine();
+                            System.out.println("Enter Earnings: ");
+                            search = searchByPersonIDAndEarnings(input, sc.nextDouble());
+
+                            sc.nextLine();
+                            if(search != null){
+                                System.out.println(search);
+                            }else{
+                                System.out.println("Matching Person Could Not Be Found.");
+                            }
+                            break;
+                        case 5:
+                            sortVisitorByName();
+                            break; 
+                        case 6:
+                            sortEmployeesByEarnings();
+                            break;
+                        case 7:
+                            sortEmployeesByExperienceAndWage();
+                            break;
+                        case 8:
+                            displayAllEmployees();
+                            break;
+                        case 9:
+                            if(createStructure("GiftShop")){        
+                            }else{
+                                System.out.println("Could Not Build Structure Due to Insuffient Space.");
+                            }
+                            break;
+                        case 10: 
+                            if(createStructure("Restaurant")){        
+                            }else{
+                                System.out.println("Could Not Build Structure Due to Insuffient Space.");
+                            }
+                            break;
+                        case 11: 
+                            if(createStructure("Pavillion")){        
+                            }else{
+                                System.out.println("Could Not Build Structure Due to Insuffient Space.");
+                            }
+                            break;
+                        case 12: 
+                            if(createStructure("Enclosure")){        
+                            }else{
+                                System.out.println("Could Not Build Structure Due to Insuffient Space.");
+                            }
+                            break;
+                        case 13: 
+                            if(createStructure("Park")){        
+                            }else{
+                                System.out.println("Could Not Build Structure Due to Insuffient Space.");
+                            }
+                            break;
+                        case 14: 
+                            if(createStructure("Maze")){        
+                            }else{
+                                System.out.println("Could Not Build Structure Due to Insuffient Space.");
+                            }
+                            break;
+                        case 15:
+                            System.out.print("Enter Structure ID");
+                            if(removeStructure(sc.nextLine().charAt(0))){
+                                System.out.println("Removal Successful.");
+                            }else{
+                                System.out.println("Removal Unseccesful.");
+                            }
+                            break;
+                        case 16: 
+                            System.out.println("Maintaining All Structures...");
+                            maintainAll();
+                            break;
+                        case 17:
+                            if(addAnimal()){
+                                System.out.println("Animal Successfully Added.");
+                            }else{
+                                System.out.println("Animal Failed To Be Added.");
+                            }
+                            break;
+                        case 18:
+                            if(relocateAnimal()){
+                                System.out.println("Relocation Successful!");
+                            }else{
+                                System.out.println("Relocation Failed.");
+                            }
+                            break;
+                        case 19:
+                            System.out.print("Enter Species: ");
+                            listAllSameSpecie(sc.nextLine());
+                            break;
+                        case 20:
+                            if(addEgg()){
+                                System.out.println("Egg Successfully Added.");
+                            }else{
+                                System.out.println("Egg Failed To Be Added.");
+                            }
+                            break;
+                        case 21:
+                            displayAnimalsLowHappiness();
+                            break;
+                        case 22:
+                            displayAnimalsLowHunger();
+                            break;
+                        case 23: 
+                            displayAnimalsLowCleansiness();
+                            break;
+                        case 24:
+                            sortAnimalsByNameThenSpecie();
+                            break;
+                        case 25:
+                            sortAnimalsByAge();
+                            break;
+                        case 26:
+                            sortAnimalsByHappiness();
+                            break;
+                        case 27:
+                            sortAnimalsByHunger();
+                            break;
+                        case 28: 
+                            sortAnimalsByCleanliness();
+                            break;
+                        default: 
+                            System.out.println("Sorry, that is not a valid option!\n");
+                            break;
+                    }
+   
+                }catch(NumberFormatException e){
+                    System.out.println("Sorry, that is not a valid option/input!\n");
+                }
+            }
+        }
+    }
+   
+    public void employeeMenu(Employee employee){
+        boolean quit = false;
+        String input;
+
+   
+        while(!quit){
+            System.out.println("Employee Menu:\n"
+                + "(Type quit to return to Main Menu)\n"
+                + "Enter # To Run Command:\n"
+                + "1  -  Search Structure By Number Of Animals And Size\n"
+                + "2  -  Search Habitat By Living Condition & With Most Animals\n"
+                + "3  -  Sort Structures By Size\n"
+                + "4  -  Sort Structures By Size, Then Time Between Maintenance\n"
+                + "5  -  Sort Structures By Size, Then Number Of Animals\n"
+                + "6  -  Print Structures Needing Maintenace\n"
+                + "7  -  Maintain Structure\n" 
+                + "8  -  Maintain All Structures\n"
+                + "9  -  Print All Structures\n"
+                + "10 -  Add Person\n"
+                );
+   
+            input = sc.nextLine();
+   
+            if(input.equalsIgnoreCase(QUIT)){
+                System.out.println("Returning Back To Main Menu...\n");
+                quit = true;
+            }else{
+                try{
+                    switch(Integer.parseInt(input)){
+                        case 1:
+                            System.out.println("Enter Number Of Animals And Size");
+                            System.out.println(searchByNumberAnimalsAndSize(Integer.parseInt(sc.nextLine()), Integer.parseInt(sc.nextLine())));
+                            break;
+                     
+                        case 2: 
+                            System.out.println(searchHabitatMostAnimalsAndLivingConditions(LivingCondition.createLivingCondition()));
+                            break;
+
+                        case 3:
+                            sortStructureBySize();
+                            System.out.println("Sorting Complete.");
+                            break;
+                        
+                        case 4:
+                            sortBySizeAndTimeBetweenMaintenance();
+                            System.out.println("Sorting Complete.");
+                            break;
+                        case 5:
+                            sortBySizeAndMostAnimals();
+                            System.out.println("Sorting Complete.");
+                            break;
+                        case 6:
+                            printAllStructuresNeedingMaintenance();
+                            break;
+                        case 7: 
+                            System.out.print("Enter Structure ID: ");
+                            maintain(searchStructureByID(sc.nextLine().charAt(0))); 
+                            break;
+                        case 8:
+                            maintainAll();
+                            break;
+                        case 9:
+                            printAllStructureInfo();
+                            break;
+                        case 10:
+                            if(addPerson()){
+                                System.out.println("Person Added.");
+                            }else{
+                                System.out.println("Zoo has reached max capacity, Person could not be added!");
+                            }
+                            break;
+                        default:
+                            System.out.println("Sorry, that is not a valid option!\n");
+                    }
+                }catch(NumberFormatException e){
+                    System.out.println("Sorry, that is not a valid option!\n");
+                }
+            }
+        }
+    
+   
+    public void visitorMenu(Visitor visitor){
+        boolean quit = false;
+        String input;
+   
+        while(!quit){
+            System.out.println("Visitor Menu:\n"
+                + "(Type quit to return to Main Menu)\n"
+                + "Enter # To Run Command:\n"
+                + "1  -  Visit Structure\n"
+                + "2  -  Learning Summary\n"
+                + "3  -  Sort Structures From Least To Most Animals()\n"
+            );
+            
+            input = sc.nextLine();
+   
+            if(input.equalsIgnoreCase(QUIT)){
+                System.out.println("Returning Back To Main Menu...\n");
+                quit = true;
+            }else{
+                try{   
+                    switch(Integer.parseInt(input)){
+                        case 1:
+                            System.out.print("Enter Structure ID: ");
+                            visitor.visit(searchStructureByID(sc.nextLine().charAt(0)));  
+                            break;
+                        case 2: 
+                            endOfDaySummary();   
+                            break;   
+                        case 3:
+                            sortStructuresByLeastAnimals();
+                        default:
+                            System.out.println("Sorry, that is not a valid option!\n");
+                    }        
+   
+                }catch(NumberFormatException e){
+                    System.out.println("Sorry, that is not a valid option!\n");
+                }
+            }
+        }
+    }
+
+    public void saveZoo(){
+        savePersons();
+        saveAnimals());
+        saveEggs();
+        saveLand();
+        try{
+            BufferedWriter bw = new BufferedWriter(new FileWriter(ZOO_CONSTRUCTOR_FILE, false));
+            bw.write(String.valueOf(zooBalance));
+            bw.newLine();;
+            bw.write(maxAnimal);
+            bw.newLine();
+            bw.write(maxEggs);
+            bw.newLine();
+            bw.write(maxPerson);
+            bw.close();
+
+        }catch(IOException e){
+
+        }
+    }
+    
+    public void passTime(int days){
+        for(int i = 0; i < days; i++){
+            passDay();
+        }
+    }
+
+    public void passDay(){
+        for(int i = 0; i < numEmployees; i++){
+            ((getStaffList())[i]).passDay();
+        }
+        for(int i = 0; i < numVisitors; i++){
+            ((getVisitorList())[i]).passDay();
+        }
+        zooLand.passDay();
+    }
+
+    public boolean createStructure(String type){
+        int numItems;
+        Item[] menu;
+        String itemName;
+        double price;
+
+        int numFacts;
+        String[] facts;
+
+        int maxAnimals; 
+
+        String name;
+        char structureID;    
+        int area = 0;
+        int timeBetweenMaintenance;
+
+        Coord c1 = null;
+        Coord c2 = null;
+        char id;
+
+        System.out.print("Enter New ID: ");
+        id = sc.nextLine().charAt(0);
+
         
-        // Load animals, habitats, and living conditions from files
+        if(type.equals("GiftShop") || type.equals("Restaurant")){
+            System.out.print("Enter X and Y for Coordinate 1: ");
+            c1 = new Coord(Integer.parseInt(sc.nextLine()), Integer.parseInt(sc.nextLine()));
+            System.out.print("Enter Desired Size: ");
+            area = Integer.parseInt(sc.nextLine());
+
+        }else {
+            System.out.print("Enter X and Y for Coordinate 1: ");
+            c1 = new Coord(Integer.parseInt(sc.nextLine()), Integer.parseInt(sc.nextLine()));
+            System.out.print("Enter X and Y for Coordinate 2: ");
+            c2 = new Coord(Integer.parseInt(sc.nextLine()), Integer.parseInt(sc.nextLine()));    
+        }
+
+        
+        if(type == "GiftShop"){
+
+            System.out.print("Enter number of items: ");
+            numItems = Integer.parseInt(sc.nextLine());
+            menu = new Item[numItems];
+
+            for(int i = 0; i < numItems; i++){
+                System.out.print("Enter item name: ");
+                itemName = sc.nextLine();
+
+                System.out.print("Enter item price: ");
+                price = Double.parseDouble(sc.nextLine());
+
+                menu[i] = new Item(itemName, price);
+            }
+
+            System.out.print("Enter number of facts: ");
+            numFacts = Integer.parseInt(sc.nextLine());
+            facts = new String[numFacts];
+
+            for(int i = 0; i < numFacts; i++){
+                System.out.print("Enter fact: ");
+                facts[i] = sc.nextLine();
+            }
+
+            //initializes superclass fields
+
+            System.out.print("Enter structure name: ");
+            name = sc.nextLine();
+
+            System.out.print("Enter time between maintenance: ");
+            timeBetweenMaintenance = Integer.parseInt(sc.nextLine());
+            
+            return zooLand.createGiftShop(c1, c2, name, id, timeBetweenMaintenance, facts, menu );
+            
+
+        }else if(type == "Restaurant"){
+            System.out.print("Enter number of items: ");
+            numItems = Integer.parseInt(sc.nextLine());
+            menu = new Item[numItems];
+
+            for(int i = 0; i < numItems; i++){
+                System.out.print("Enter item name: ");
+                itemName = sc.nextLine();
+
+                System.out.print("Enter item price: ");
+                price = Double.parseDouble(sc.nextLine());
+
+                menu[i] = new Item(itemName, price);
+            }
+
+            System.out.print("Enter number of facts: ");
+            numFacts = Integer.parseInt(sc.nextLine());
+            facts = new String[numFacts];
+
+            for(int i = 0; i < numFacts; i++){
+                System.out.print("Enter fact: ");
+                facts[i] = sc.nextLine();
+            }
+
+            //initializes superclass fields
+
+            System.out.print("Enter structure name: ");
+            name = sc.nextLine();
+
+            System.out.print("Enter time between maintenance: ");
+            timeBetweenMaintenance = Integer.parseInt(sc.nextLine());
+
+            return zooLand.createRestaurant(c1, c2, name, id, timeBetweenMaintenance, facts, menu );
+            
+
+        }else if(type.equals("Enclosure")){
+            System.out.print("Enter species: ");
+            String species = sc.nextLine();
+            
+            //initializes superclass fields
+
+            System.out.print("Enter structure name: ");
+            name = sc.nextLine();
+
+            System.out.print("Enter time between maintenance: ");
+            timeBetweenMaintenance = Integer.parseInt(sc.nextLine());
+
+            System.out.print("Enter maximum animals: ");
+            maxAnimals = Integer.parseInt(sc.nextLine());
+            return zooLand.createEnclosure(c1, area, species, name, id, timeBetweenMaintenance, maxAnimals, LivingCondition.createLivingCondition());
+
+        }else if(type.equals("Pavillion")){
+
+            //initializes superclass fields
+
+            System.out.print("Enter structure name: ");
+            name = sc.nextLine();
+
+            System.out.print("Enter time between maintenance: ");
+            timeBetweenMaintenance = Integer.parseInt(sc.nextLine());
+
+            System.out.print("Enter maximum animals: ");
+            maxAnimals = Integer.parseInt(sc.nextLine());
+            return zooLand.createPavillion(c1, area, name, id, timeBetweenMaintenance, maxAnimals, LivingCondition.createLivingCondition());
+
+        }else if(type.equals("Maze")){
+
+            System.out.print("Enter structure name: ");
+            name = sc.nextLine();
+
+            System.out.print("Enter time between maintenance: ");
+            timeBetweenMaintenance = Integer.parseInt(sc.nextLine());
+
+            return zooLand.createMaze(c1, name, id, timeBetweenMaintenance, null);
+            
+
+        }else if(type.equals("Park")){
+            
+            System.out.print("Enter structure name: ");
+            name = sc.nextLine();
+
+            System.out.print("Enter time between maintenance: ");
+            timeBetweenMaintenance = Integer.parseInt(sc.nextLine());
+
+            return zooLand.createPark(c1, area, name, id, timeBetweenMaintenance);
+        }
+
     }
-
-
+    
     // LAND METHODS
     public boolean loadLandFromFile () { 
         return zooLand.loadFromFile(LAND_FILE);
@@ -69,7 +696,7 @@ public class Zoo {
         return zooLand.searchByNumberAnimalsAndSize(numAnimals, size);
     }
 
-    public Habitat searchHabitatMostAnimalsAndLivingConditions (String condition) {
+    public Habitat searchHabitatMostAnimalsAndLivingConditions (LivingCondition condition) {
         return zooLand.searchHabitatMostAnimalsAndLivingConditions(condition);
     }
 
@@ -278,25 +905,172 @@ public class Zoo {
     }
     
     /*
-        @description: writes all Person records to person.txt in correct format
-                    - first line: total number of persons
-                    - then all employees, then all visitors (one field per line)
-    */
+    @description: writes all Person records to person.txt in correct format
+                  - first line: total number of persons
+                  - then all employees, then all visitors (one field per line)
+   */
     private void savePersons() {
-        try (PrintWriter out = new PrintWriter(new FileWriter(PERSON_FILE))) {
-            out.println(numEmployees + numVisitors);
+        try (BufferedWriter out = new BufferedWriter(new FileWriter(PERSON_FILE))) {
 
-            for (int i = 0; i < numEmployees; i++) {
-                if (staffList[i] != null) out.print(staffList[i].saveToString());
-            }
+        // total number of people
+        out.write(Integer.toString(numEmployees + numVisitors));
+        out.newLine();
 
-            for (int i = 0; i < numVisitors; i++) {
-                if (visitorList[i] != null) out.print(visitorList[i].saveToString());
+        // save employees
+        for (int i = 0; i < numEmployees; i++) {
+            if (staffList[i] != null) {
+                out.write(staffList[i].saveToString());
+                out.newLine();
             }
+        }
+
+        // save visitors
+        for (int i = 0; i < numVisitors; i++) {
+            if (visitorList[i] != null) {
+                out.write(visitorList[i].saveToString());
+                out.newLine();
+            }
+        }
+        out.close(); 
 
         } catch (IOException e) {
-            System.out.println("ERROR failed to save persons: " + e.getMessage());
+        System.out.println("ERROR failed to save persons: " + e.getMessage());
         }
+    }
+    
+
+    /*
+    @description: loads all Person records from persons.txt using the assignment file format
+                    (role + base fields + fixed role-specific fields)
+    */
+    public void loadPersons() {
+        try (BufferedReader br = new BufferedReader(new FileReader(PERSON_FILE))) {
+    
+        int n = Integer.parseInt(next(br)); 
+    
+        for (int i = 0; i < n; i++) {
+    
+            String role = next(br).toUpperCase(Locale.ROOT);
+    
+            String personID = next(br);
+            String firstName = next(br);
+            String lastName = next(br);
+    
+            int age = Integer.parseInt(next(br));
+            if (age < 0) age = 0;
+    
+            Person p = null;
+    
+            // -------- Employees --------
+            if (role.equals("ZOOKEEPER") || role.equals("SHOPSTAFF")) {
+    
+                double hourlyWage = Double.parseDouble(next(br));
+                int yearsExp = Integer.parseInt(next(br));
+                int thirdField = Integer.parseInt(next(br)); // certLevel or placeholder
+    
+                if (hourlyWage < 0 || yearsExp < 0) {
+                    System.out.println("[WARN] Invalid employee fields for '" + personID + "'. Skipping.");
+                    continue;
+                }
+    
+                if (role.equals("ZOOKEEPER")) {
+                    p = new ZooKeeper(age, personID, firstName, lastName, hourlyWage, yearsExp, thirdField);
+                } else {
+                    p = new ShopStaff(age, personID, firstName, lastName, hourlyWage, yearsExp);
+                }
+            }
+    
+            // -------- Adult --------
+            else if (role.equals("ADULT")) {
+    
+                double balance = Double.parseDouble(next(br));
+                int learningLevel = Integer.parseInt(next(br));
+                int visitDuration = Integer.parseInt(next(br));
+                double preferredBudgetLimit = Double.parseDouble(next(br));
+    
+                if (!ageMatchesVisitorRole("ADULT", age)) {
+                    System.out.println("[WARN] Age " + age + " does not match ADULT for '" + personID + "'. Skipping.");
+                    continue;
+                }
+    
+                p = new Adult(age, personID, firstName, lastName,
+                            Math.max(0.0, balance),
+                            Math.max(0, learningLevel),
+                            Math.max(0, visitDuration),
+                            Math.max(0.0, preferredBudgetLimit));
+            }
+    
+            // -------- Child --------
+            else if (role.equals("CHILD")) {
+    
+                double balance = Double.parseDouble(next(br));
+                int learningLevel = Integer.parseInt(next(br));
+                int visitDuration = Integer.parseInt(next(br));
+                boolean strollerNeeded = Boolean.parseBoolean(next(br));
+                String guardianID = next(br);
+    
+                if (!ageMatchesVisitorRole("CHILD", age)) {
+                    System.out.println("[WARN] Age " + age + " does not match CHILD for '" + personID + "'. Skipping.");
+                    continue;
+                }
+    
+                p = new Child(age, personID, firstName, lastName,
+                            Math.max(0.0, balance),
+                            Math.max(0, learningLevel),
+                            Math.max(0, visitDuration),
+                            strollerNeeded,
+                            guardianID);
+            }
+    
+            // -------- Senior --------
+            else if (role.equals("SENIOR")) {
+                // If your file includes SENIOR, use:
+                // balance, learningLevel, visitDuration, preferredBudgetLimit, requiresAccessibilitySupport
+    
+                double balance = Double.parseDouble(next(br));
+                int learningLevel = Integer.parseInt(next(br));
+                int visitDuration = Integer.parseInt(next(br));
+                double preferredBudgetLimit = Double.parseDouble(next(br));
+                boolean requiresSupport = Boolean.parseBoolean(next(br));
+    
+                if (!ageMatchesVisitorRole("SENIOR", age)) {
+                    System.out.println("[WARN] Age " + age + " does not match SENIOR for '" + personID + "'. Skipping.");
+                    continue;
+                }
+    
+                p = new Senior(age, personID, firstName, lastName,
+                                Math.max(0.0, balance),
+                                Math.max(0, learningLevel),
+                                Math.max(0, visitDuration),
+                                Math.max(0.0, preferredBudgetLimit),
+                                requiresSupport);
+            }
+    
+            // Add to system
+            if (p != null) {
+                boolean ok = addPerson(p);
+                if (!ok) System.out.println("[WARN] Could not add '" + personID + "' (array full?).");
+            }
+        }
+        br.close();
+    
+        } catch (FileNotFoundException e) {
+            System.out.println("[INFO] " + PERSON_FILE + " not found yet (first run is ok).");
+        } catch (Exception e) {
+            System.out.println("[ERROR] loadPersons failed: " + e.getMessage());
+        }
+    }
+ 
+    /*
+    @description: reads the next non-empty line (skips blank lines)
+    */
+    private static String next(BufferedReader br) throws IOException {
+        String line;
+        while ((line = br.readLine()) != null) {
+        line = line.trim();
+        if (!line.isEmpty()) return line;
+        }
+        return null;
     }
 
     // =========================
@@ -534,9 +1308,8 @@ public class Zoo {
      * Return:
      *   true if the egg was removed, false if index was invalid
      */
-    public boolean removeEgg(Egg egg) {
+    public boolean removeEgg(int index) {
 
-        int index = egg.getIndex();
         if (index < 0 || index >= numEggs) {
             return false;
         }
@@ -549,25 +1322,6 @@ public class Zoo {
         numEggs--;
 
         return true;
-    }
-    /**
-     * Description:
-     * Attempts to hatch the given egg. If the egg successfully hatches,
-     * the egg is removed from the incubator and the newborn animal is returned.
-     */
-    public Animal hatchEgg(Egg egg, String name) {
-
-        if (egg == null) {
-            return null;
-        }
-
-        Animal baby = egg.hatch(name);
-
-        if (baby != null) {
-            removeEgg(egg); // remove by reference, not index
-        }
-
-        return baby;
     }
     // =========================
     // DISPLAY LOW STAT METHODS
@@ -702,5 +1456,25 @@ public class Zoo {
                 }
             }
         }
+    }
+
+    /**
+     * Description:
+     * Attempts to hatch the given egg. If the egg successfully hatches,
+     * the egg is removed from the incubator and the newborn animal is returned.
+     */
+    public Animal hatchEgg(Egg egg, String name) {
+
+        if (egg == null) {
+            return null;
+        }
+
+        Animal baby = egg.hatch(name);
+
+        if (baby != null) {
+            removeEgg(egg); // remove by reference, not index
+        }
+
+        return baby;
     }
 }
