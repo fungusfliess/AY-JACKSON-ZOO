@@ -197,6 +197,34 @@ public abstract class Visitor extends Person {
     }
 
     /*
+    @description: generates summary of Visitor’s experience when leaving the Zoo
+    @return formatted summary string showing learning, attractions visited, items purchased, and learned facts
+    */
+    public String endVisitorSummary() {
+        String summary = "";
+        summary += "=== Visitor Summary ===\n";
+        summary += "PersonID: " + + getPersonID() + "\n";
+        summary += "Name: " + getFirstName() + " " + getLastName() + "\n";
+        summary += "Role: " + getRole() + "\n";
+        summary += "Learning Level: " + getLearningLevel() + "\n";
+        summary += "Attractions Visited: " + getAttractionsVisited() + "\n";
+        summary += "Items Purchased: " + getNumItems() + "\n";
+        summary += "Amount Spent: $" + String.format("%.2f", getAmountSpent()) + "\n";
+
+        summary += "Learned Facts (" + getLearningHistorySize() + "):\n";
+        if (getLearningHistorySize() == 0) {
+            summary += "  (none)\n";
+        } else {
+            String[] hist = getLearningHistory();
+            for (int i = 0; i < getLearningHistorySize(); i++) {
+                summary += "  - " + hist[i] + "\n";
+            }
+        }
+
+        return summary;
+    }
+
+    /*
     @description: ends the visitor's day in the Zoo system (default behavior: deactivate visitor)
     */
     public void passDay(){

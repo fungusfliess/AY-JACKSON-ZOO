@@ -56,20 +56,6 @@ public abstract class Adult extends Visitor{
       return "ADULT";
    }
 
-   //EXPAND SUMMARY LATWR 
-   /*
-    @description: returns a summary message when the visitor leaves the zoo
-    @return a summary string including whether the visitor stayed within budget
-    */
-   public String endVisitorSummary(){
-      this.endVisitorSummary(); 
-      if (stayedWithinBudget()){
-         return "You stayed within your budget.\n";
-      } else {
-         return "You exceeded your budget.\n";
-      }
-   }
-
    /*
     @description: calculates the ticket cost for an Adult visitor
     @return the admission price for an Adult visitor
