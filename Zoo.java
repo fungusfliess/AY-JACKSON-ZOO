@@ -20,7 +20,8 @@ public class Zoo {
     private Employee[] staffList;
     private Visitor[] visitorList;
 
-    private int maxPerson;
+    private int maxStaff;
+    private int maxVisitor;
     private int maxAnimal;
     private int maxEggs;
     
@@ -33,8 +34,8 @@ public class Zoo {
     private double zooBalance;
 
     
-    private Animal[] animals;
-    private Egg[] eggs;
+    private Animal[] zooAnimals;
+    private Egg[] incubator;
     private Land zooLand;
     private Map map;
 
@@ -50,11 +51,12 @@ public class Zoo {
             this.zooBalance = balance;
             this.maxAnimal = animals;
             this.maxEggs = eggs;
-            this.maxPerson = person;
+            this.maxStaff = person;
             
             this.zooAnimals = new Animal[maxAnimal];
             this.incubator = new Egg[maxEggs];
-            this.persons = new Person[maxPerson];
+            this.staffList = new Employee[maxStaff];
+            this.visitorList = new Visitor[maxVisitor];
             
             br.close();
          
@@ -74,7 +76,8 @@ public class Zoo {
         String input; 
         Person user;
         System.out.println("Welcome To The Zoo's Main Menu!\n");
-        do{
+        input = sc.nextLine();
+        do {
             try{
                 System.out.println("(Type quit to quit)\n" 
                 + "Enter # To Access Specific Menu: "
@@ -82,8 +85,6 @@ public class Zoo {
                 + "\n2 - Employee Menu"
                 + "\n3 - Visitor Menu"
                 + "\n4 - Display Map");
-            
-                input = sc.nextLine();
                 
                 switch(Integer.parseInt(input)){
                     case 1: 
@@ -120,7 +121,7 @@ public class Zoo {
                         System.out.println("Sorry, that is not a valid option! \n");
                         break;
                 }
-            }catch(NumberFormatException e){
+            } catch(NumberFormatException e){
                 if(input.equalsIgnoreCase(QUIT)){
                     System.out.println("See You Next Time!");
                     quit = true;
@@ -128,7 +129,7 @@ public class Zoo {
                 System.out.println("Sorry, that is not a valid option! \n");
                 }
             }        
-        }while(quit!=true);  
+        } while(quit!=true);  
         saveZoo();    
     }
    
@@ -285,14 +286,27 @@ public class Zoo {
                             maintainAll();
                             break;
                         case 17:
-                            if(addAnimal()){
+                            System.out.println("input name of the animal");
+                            String name = sc.nextLine();
+                            System.out.println("input specie of the animal");
+                            String specie = sc.nextLine();
+                            Animal animal = findAnimal(name,specie);
+                            if(addAnimal(animal)){
                                 System.out.println("Animal Successfully Added.");
                             }else{
                                 System.out.println("Animal Failed To Be Added.");
                             }
                             break;
                         case 18:
-                            if(relocateAnimal()){
+                            System.out.println("input name of the animal");
+                            String name = sc.nextLine();
+                            System.out.println("input specie of the animal");
+                            String specie = sc.nextLine();
+                            Animal animal = findAnimal(name,specie);
+                            System.out.println("input habitat id");
+                            char habitatId = sc.nextLine().charAt(0);
+                            Habitat habitat = (Habitat)searchStructureByID(habitatId);
+                            if(relocateAnimal(habitat, animal)){
                                 System.out.println("Relocation Successful!");
                             }else{
                                 System.out.println("Relocation Failed.");
@@ -1239,9 +1253,9 @@ public class Zoo {
      */
     public Animal findAnimal(String name, String specie) {
         for (int i = 0; i < numAnimals; i++) {
-            if (animals[i].getName().equalsIgnoreCase(name) &&
-                animals[i].getSpecie().equalsIgnoreCase(specie)) {
-                return animals[i];
+            if (zooAnimals[i].getName().equalsIgnoreCase(name) &&
+                zooAnimals[i].getSpecie().equalsIgnoreCase(specie)) {
+                return zooAnimals[i];
             }
         }
         return null;
