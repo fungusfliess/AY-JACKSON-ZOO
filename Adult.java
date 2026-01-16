@@ -8,7 +8,7 @@
                 within budget. Adult returns the role identifier "ADULT" and uses adult ticket pricing rules.
 */
 
-public abstract class Adult extends Visitor{
+public class Adult extends Visitor{
    //FIELDS 
    private double preferredBudgetLimit; 
 
@@ -36,7 +36,9 @@ public abstract class Adult extends Visitor{
 
    //MUTATOR
    public void setPreferredBudgetLimit(double limit){
-      this.preferredBudgetLimit = limit;
+      if (limit>0){
+         this.preferredBudgetLimit = limit;
+      }
    }
 
    //OTHER METHODS 
@@ -45,7 +47,7 @@ public abstract class Adult extends Visitor{
     @return true if amount spent is less than the preferred budget limit, false otherwise
     */
    public boolean stayedWithinBudget(){
-      return this.getAmountSpent()<preferredBudgetLimit; 
+      return this.getAmountSpent()<=preferredBudgetLimit; 
    }
 
    /*
@@ -80,6 +82,8 @@ public abstract class Adult extends Visitor{
              "Attractions Visited: " + getAttractionsVisited() + "\n" +
              "Num Facts Learned: " + getLearningHistorySize() + "\n" +
              "Preferred Budget Limit: " + getPreferredBudgetLimit() + "\n";
+             "Visit Duration: " + getVisitDuration() + "\n" +
+             "Num Items: " + getNumItems() + "\n";
    }
 
    /*

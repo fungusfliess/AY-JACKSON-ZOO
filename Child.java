@@ -110,7 +110,7 @@ public class Child extends Visitor{
    }
 
    /*
-   @description: returns this Child in file format (includes accessibility support field)
+   @description: returns this Child in file format
    @return a string formatted for writing to person.txt
    */
    @Override
