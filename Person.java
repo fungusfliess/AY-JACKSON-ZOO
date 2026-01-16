@@ -25,7 +25,7 @@ public abstract class Person {
     */ 
    public Person(int age, String personID, String firstName, String lastName){
       if (age<0){
-         age = 0
+         age = 0;
       } else {
          this.age = age; 
       }
