@@ -92,7 +92,7 @@ public class Zoo {
                     case 2:
                         System.out.println("Enter Employee ID: ");
                         input = sc.nextLine();
-                        user = searchPersonByID(input);
+                        user = searchByPersonID(input);
                         if(user != null && user instanceof Employee){
                     
                             employeeMenu((Employee)user);
@@ -104,7 +104,7 @@ public class Zoo {
                     case 3:
                         System.out.println("Enter Visitor ID: ");
                         input = sc.nextLine();
-                        user = searchPersonByID(input);
+                        user = searchByPersonID(input);
                         if(user != null && user instanceof Visitor){
                     
                             visitorMenu((Visitor)user);
