@@ -72,6 +72,15 @@ public abstract class Person {
    }
    
    //OTHER METHODS 
+   /**
+      Compares this person to another person by First Name (A–Z), ignoring case.
+      @param other the Person to compare to
+      @return negative if this comes before other, 0 if equal, positive if after
+    */
+   public int compareToByName(Person other) {
+      return this.getFirstName().compareToIgnoreCase(other.getFirstName());
+   }
+
    /*
     @return the role string for this Person object (ex: "ZOOKEEPER", "SHOPSTAFF", "ADULT", "CHILD", "SENIOR")
     */ 
