@@ -1,4 +1,3 @@
-
 /*
    File Name: ShopStaff.java
    Name: Elizabeth Wang
@@ -8,7 +7,7 @@
                 from Employee and returns a role identifier like "SHOPSTAFF". It is stored in the zoo’s employee list and can be sorted by 
                 earnings or experience.
 */
-import Structure_Subsystem.Item;
+
 public class ShopStaff extends Employee {
 
     //CONSTANTS

@@ -1,4 +1,12 @@
-
+/*
+   File Name: Child.java
+   Name: Elizabeth Wang
+   Class: ICS4U1-23
+   Date: Jan 7, 2025
+   Description: Child is a concrete subclass of Visitor that represents younger visitors. It may receive free
+                or discounted admission, applies a learning boost when gaining learning level, and stores extra
+                information such as strollerNeeded and guardianID. Child returns the role identifier "CHILD".
+*/
 
 public class Child extends Visitor{
    //CONSTANTS 

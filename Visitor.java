@@ -1,7 +1,13 @@
-
-
-import Structure_Subsystem.Item;
-import Structure_Subsystem.Structure;
+/*
+   File Name: Visitor.java
+   Name: Elizabeth Wang
+   Class: ICS4U1-23
+   Date: Jan 7, 2025
+   Description: Visitor is an abstract subclass of Person that represents guests visiting the zoo. It stores
+                visit-related data such as balance, learning level, visit duration, attractions visited, and
+                learning history. Visitor subclasses (Adult, Child, Senior) override calculateTicketCost()
+                and may provide an end-of-visit summary.
+*/
 
 public abstract class Visitor extends Person {
     //CONSTANTS 
