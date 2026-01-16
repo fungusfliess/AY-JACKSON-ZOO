@@ -103,7 +103,7 @@ public abstract class Adult extends Visitor{
    @Override
    public String saveToString() {
       return super.saveToString() +
-            preferredBudgetLimit() + "\n";
+            preferredBudgetLimit + "\n";
    }
 
 }
