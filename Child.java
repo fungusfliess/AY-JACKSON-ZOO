@@ -61,7 +61,7 @@ public class Child extends Visitor{
    /*
     @return the role string for this Person object
     */
-    @Override
+   @Override
    public String getRole() {
       return "CHILD";
    }
@@ -94,7 +94,7 @@ public class Child extends Visitor{
    /*
     @description: returns a formatted string summary of this Child visitor
     @return formatted visitor information including guardianID and stroller status
-    */
+   */
    @Override
    public String toString() {
       return "PersonID: " + getPersonID() + "\n" +

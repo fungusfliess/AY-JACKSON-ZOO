@@ -51,7 +51,6 @@ public abstract class Person {
 
    public boolean getIsActive(){
       return isActive;
-
    }
    
    //MUTATOR 
@@ -76,7 +75,7 @@ public abstract class Person {
    public abstract String getRole();
 
    /*
-   @description: returns this Person in file format (one field per line) so it can be saved and reloaded later
+   @description: returns this Person in file format so it can be saved and reloaded later
    @return a string formatted for writing to person.txt
    */
    public abstract String saveToString();

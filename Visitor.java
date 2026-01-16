@@ -38,7 +38,7 @@ public abstract class Visitor extends Person {
     private double amountSpent;
 
     //CONSTRUCTOR
-   /*
+    /*
     @description: declares and initializes Visitor object
     @param age           the visitor's age (handled in Person)
     @param personID      unique ID for the visitor

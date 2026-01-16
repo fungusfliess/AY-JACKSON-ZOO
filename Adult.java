@@ -70,7 +70,6 @@ public abstract class Adult extends Visitor{
       }
    }
 
-
    /*
     @description: calculates the ticket cost for an Adult visitor
     @return the admission price for an Adult visitor
