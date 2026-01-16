@@ -139,7 +139,7 @@ public abstract class ZooKeeper extends Employee {
     }
 
     /*
-   @description: returns this ZooKeeper in file format 
+   @description: returns this ZooKeeper in file format
    @return a string formatted for writing to person.txt
    */
    @Override
