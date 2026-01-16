@@ -1,5 +1,12 @@
-
-
+/*
+   File Name: Senior.java
+   Name: Elizabeth Wang
+   Class: ICS4U1-23
+   Date: Jan 7, 2025
+   Description: Senior is a concrete subclass of Adult that represents senior visitors who may receive discounted
+                or free admission depending on age. It stores whether accessibility support is required and returns
+                the role identifier "SENIOR". Senior overrides calculateTicketCost() and includes support info in output.
+*/
 public abstract class Senior extends Adult {
    //CONSTANTS 
    public static final double SENIOR_DISCOUNT = 0.20; 
