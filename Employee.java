@@ -102,6 +102,33 @@ public abstract class Employee extends Person {
    }
    
    //OTHER METHODS 
+   /**
+    * Compares this employee to another employee by total earnings (highest first).
+    * @param other the Employee to compare to
+    * @return negative if this should come before other
+    */
+   public double compareToByEarnings(Employee other) {
+      return other.getEarnings()-this.getEarnings();
+   }
+
+   /**
+    * Compares this employee to another employee by years of experience (highest first).
+    * @param other the Employee to compare to
+    * @return negative if this should come before other
+    */
+   public int compareToByExperience(Employee other) {
+      return other.getYearsOfExperience() - this.getYearsOfExperience();
+   }
+
+   /**
+    * Compares this employee to another employee by hourly wage (highest first).
+    * @param other the Employee to compare to
+    * @return negative if this should come before other
+    */
+   public double compareToByWage(Employee other) {
+      return other.getHourlyWage()- this.getHourlyWage();
+   }
+
    /*
     @description: adds worked hours to the employee's daily hoursWorked total
     @param hours number of hours to add (must be > 0)

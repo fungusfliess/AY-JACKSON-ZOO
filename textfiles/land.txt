@@ -1,0 +1,94 @@
+10 
+5
+ .    c   c   c    .    .    .    .    .    .  
+ .    c   c   c    .    .    .    .    .    . 
+ .    .    .    .    .    .    .   o   o    . 
+ n  n    .    .    .    .    .   o   o   o 
+ n  n    .    .    .    .    .    .   o   o 
+
+6
+
+Restaurant
+1
+Pasta
+23.55
+1
+Dolphins have pink milk!
+Rain Forest Cafe
+c
+6
+300
+260
+
+GiftShop
+1
+Octopus Stuffed Animal
+5.50
+2
+Octopuses have 3 hearts!
+Male seahorses can give birth!
+Zoo Gift Shop
+d
+4
+120
+15
+
+Enclosure
+Giraffe
+LAND
+22.5
+0.60
+Ontario
+12
+23
+True
+45
+2
+Giraffe Enclosure
+o
+7
+40
+12
+10
+
+
+Pavilion
+WATER
+23.1 
+12
+Florida Everglades
+12
+33
+3
+23
+24
+9
+North American Pavillion 
+n
+4
+100
+68
+4
+20
+
+Maze
+4
+4
+N N N N
+N N .  N
+N .   .  N
+N N N N      
+Corn Maze
+m
+16
+5
+4
+
+Park
+Zoo Central Field
+
+p
+6
+14
+7
+

@@ -5,7 +5,6 @@
    Date: Jan 7, 2025
    Description: Pavillion represents a pavillion habitat within the zoo.
 */
-import Animal_Subsystem.*;
 
 public class Pavillion extends Habitat{
 
@@ -111,7 +110,7 @@ public class Pavillion extends Habitat{
 
             // adds animal to pavillion, updates space and number of animals
             modifySpaceLeft(-(animal.getRequiredArea()));
-            animals[getNumAnimals()] = animal;
+            (getAnimals())[getNumAnimals()] = animal;
             setNumAnimals(getNumAnimals() + 1);
             return true;
         }else{
@@ -142,6 +141,10 @@ public class Pavillion extends Habitat{
             + getTimeBetweenMaintenance() + "\n"
             + getDaysSinceLastMaintenance() + "\n"
             + getMaxAnimals() + "\n"; 
+    }
+
+    public String toString(){
+        return "Pavillion Name: " + getName() + "\nStructure ID: " + getStructureID() + "\nArea: " + getArea() + "\nMaintenance Cost: " + calculateMaintenanceCost() + "\nTime Between Maintenance: " + getTimeBetweenMaintenance() + "\nDays Since Last Maintenance: " + getDaysSinceLastMaintenance();
     }
 }
 
