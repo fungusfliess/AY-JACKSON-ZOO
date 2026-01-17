@@ -71,10 +71,10 @@ public class Child extends Visitor{
     @param add the base amount to increase learning level by (must be > 0)
     */
    @Override
-   public void addLeavingLevel(int add) {
+   public void addLearningLevel(int add) {
       if (add <= 0) return;
       int boosted = (int) Math.round(add * (1.0 + LEARNING_BOOST_FACTOR));
-      super.addLeavingLevel(boosted);
+      super.addLearningLevel(boosted);
    }
 
    /*
