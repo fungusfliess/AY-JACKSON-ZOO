@@ -247,7 +247,9 @@ public abstract class Visitor extends Person {
     @param structureID the ID of the structure to visit
     @return true if the visit occurred, false otherwise
     */ 
-    public boolean visit(Structure s){  
+    public boolean visit(char structureID){  
+        Structure s = Zoo.searchStructureByID(structureID);
+
         if (s == null) return false;
         if (s.isDemolished()) return false;
 
