@@ -6,7 +6,7 @@
    Description: Structure represents a building or facility within the zoo. It includes fields for name, ID, area, maintenance cost, and other properties related to the structure's condition and usage.
 */
 import java.io.*;
-public abstract class GiftShop extends Shop{
+public class GiftShop extends Shop{
 
     //CONSTANTS
     public final static int LEARNING_PER_PURCHASE = 12;
