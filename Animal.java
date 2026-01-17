@@ -315,10 +315,23 @@ public abstract class Animal {
         habitatId = Land.EMPTY;
     }
 
+    public boolean isAdult() {
+        return age >= getAdultAge();
+    }
+
+    public boolean canReproduce() {
+        return this.getGender().equalsIgnoreCase("Female") &&
+            this.getHappiness() >= (LOW_STAT * MAX_STAT) &&
+            isAdult() &&
+            this.getHunger() <= (LOW_STAT * this.getMaxHunger());
+    }
+
     // =========================
     // ABSTRACT
     // =========================
     public abstract void updateAge();
+
+    
 
     // =========================
     // SAVE / STRING

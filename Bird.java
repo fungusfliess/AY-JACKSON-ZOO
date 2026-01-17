@@ -25,16 +25,17 @@ public abstract class Bird extends Animal {
     // =========================
 
     public Egg reproduce() {
-        if (this.getGender().equalsIgnoreCase("Female") &&
-            this.getHappiness() >= (LOW_STAT * MAX_STAT) &&
-            this.getAge() >= this.getAdultAge() &&
-            this.getHunger() <= (LOW_STAT * this.getMaxHunger()) &&
-            this.hasNest) {
+        if (canReproduce()) {
 
             Egg egg = new Egg(this);
             return egg;
         }
         return null;
+    }
+
+    @Override
+    public boolean canReproduce() {
+        return super.canReproduce() && hasNest;
     }
 
     public void buildNest() {

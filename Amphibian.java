@@ -28,17 +28,15 @@ public abstract class Amphibian extends Animal {
     // =========================
 
     public Egg reproduce() {
-        if (this.getGender().equalsIgnoreCase("Female") &&
-            this.getHappiness() >= (LOW_STAT * MAX_STAT) &&
-            this.getAge() >= this.getAdultAge() &&
-            this.getHunger() <= (LOW_STAT * this.getMaxHunger())) {
+        if (canReproduce()) {
 
             Egg egg = new Egg(this);
             return egg;
         }
         return null;
     }
-    
+
+     
     @Override
     public String saveToString() {
         return super.saveToString() + "\n" + currentStage;

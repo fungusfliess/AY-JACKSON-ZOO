@@ -82,7 +82,7 @@ public class Axolotl extends Amphibian {
 
     @Override
     public void updateAge() {
-        if (getAge() < getAdultAge()) {
+        if (!isAdult()) {
             setWeight(getWeight() + getAge()*WEIGHT_GAIN_PER_YEAR);
             setMaxHunger(getMaxHunger() + getAge()*HUNGER_GAIN_PER_YEAR);
         }

@@ -128,172 +128,24 @@ public class Zoo {
         for(int i = 0; i < numVisitors; i++){
             (visitorList[i]).passDay();
         }
+        for(int i = 0; i < numAnimals; i++){
+            (zooAnimals[i]).passDay();
+        }
+        for(int i = 0; i < numEggs; i++){
+            (incubator[i]).passDay();
+        }
+        for(int i = 0; i < numEggs; i++){
+            if (incubator[i].readyToHatch()) {
+                System.out.println("egg" + i + " is ready to hatch!");
+            }
+        }
+
+        int index = (int)(Math.random() * numAnimals);
+        zooAnimals[index].canReproduce();
+        System.out.println(zooAnimals[index].getName() + " is about to have a baby! help deliver its baby!");
         zooLand.passDay();
     }
 
-    // public boolean createStructure(String type){
-    //     int numItems;
-    //     Item[] menu;
-    //     String itemName;
-    //     double price;
-
-    //     int numFacts;
-    //     String[] facts;
-
-    //     int maxAnimals; 
-
-    //     String name;
-    //     char structureID;    
-    //     int area = 0;
-    //     int timeBetweenMaintenance;
-
-    //     Coord c1 = null;
-    //     Coord c2 = null;
-    //     char id;
-
-    //     System.out.print("Enter New ID: ");
-    //     id = sc.nextLine().charAt(0);
-
-        
-    //     if(type.equals("GiftShop") || type.equals("Restaurant")){
-    //         System.out.print("Enter X and Y for Coordinate 1: ");
-    //         c1 = new Coord(Integer.parseInt(sc.nextLine()), Integer.parseInt(sc.nextLine()));
-    //         System.out.print("Enter Desired Size: ");
-    //         area = Integer.parseInt(sc.nextLine());
-
-    //     }else {
-    //         System.out.print("Enter X and Y for Coordinate 1: ");
-    //         c1 = new Coord(Integer.parseInt(sc.nextLine()), Integer.parseInt(sc.nextLine()));
-    //         System.out.print("Enter X and Y for Coordinate 2: ");
-    //         c2 = new Coord(Integer.parseInt(sc.nextLine()), Integer.parseInt(sc.nextLine()));    
-    //     }
-
-        
-    //     if(type.equals("GiftShop")){
-
-    //         System.out.print("Enter number of items: ");
-    //         numItems = Integer.parseInt(sc.nextLine());
-    //         menu = new Item[numItems];
-
-    //         for(int i = 0; i < numItems; i++){
-    //             System.out.print("Enter item name: ");
-    //             itemName = sc.nextLine();
-
-    //             System.out.print("Enter item price: ");
-    //             price = Double.parseDouble(sc.nextLine());
-
-    //             menu[i] = new Item(itemName, price);
-    //         }
-
-    //         System.out.print("Enter number of facts: ");
-    //         numFacts = Integer.parseInt(sc.nextLine());
-    //         facts = new String[numFacts];
-
-    //         for(int i = 0; i < numFacts; i++){
-    //             System.out.print("Enter fact: ");
-    //             facts[i] = sc.nextLine();
-    //         }
-
-    //         //initializes superclass fields
-
-    //         System.out.print("Enter structure name: ");
-    //         name = sc.nextLine();
-
-    //         System.out.print("Enter time between maintenance: ");
-    //         timeBetweenMaintenance = Integer.parseInt(sc.nextLine());
-            
-    //         return zooLand.createGiftShop(c1, c2, name, id, timeBetweenMaintenance, facts, menu );
-            
-
-    //     }else if(type.equals("Restaurant")){
-    //         System.out.print("Enter number of items: ");
-    //         numItems = Integer.parseInt(sc.nextLine());
-    //         menu = new Item[numItems];
-
-    //         for(int i = 0; i < numItems; i++){
-    //             System.out.print("Enter item name: ");
-    //             itemName = sc.nextLine();
-
-    //             System.out.print("Enter item price: ");
-    //             price = Double.parseDouble(sc.nextLine());
-
-    //             menu[i] = new Item(itemName, price);
-    //         }
-
-    //         System.out.print("Enter number of facts: ");
-    //         numFacts = Integer.parseInt(sc.nextLine());
-    //         facts = new String[numFacts];
-
-    //         for(int i = 0; i < numFacts; i++){
-    //             System.out.print("Enter fact: ");
-    //             facts[i] = sc.nextLine();
-    //         }
-
-    //         //initializes superclass fields
-
-    //         System.out.print("Enter structure name: ");
-    //         name = sc.nextLine();
-
-    //         System.out.print("Enter time between maintenance: ");
-    //         timeBetweenMaintenance = Integer.parseInt(sc.nextLine());
-
-    //         return zooLand.createRestaurant(c1, c2, name, id, timeBetweenMaintenance, facts, menu );
-            
-
-    //     }else if(type.equals("Enclosure")){
-    //         System.out.print("Enter species: ");
-    //         String species = sc.nextLine();
-            
-    //         //initializes superclass fields
-
-    //         System.out.print("Enter structure name: ");
-    //         name = sc.nextLine();
-
-    //         System.out.print("Enter time between maintenance: ");
-    //         timeBetweenMaintenance = Integer.parseInt(sc.nextLine());
-
-    //         System.out.print("Enter maximum animals: ");
-    //         maxAnimals = Integer.parseInt(sc.nextLine());
-    //         return zooLand.createEnclosure(c1, area, species, name, id, timeBetweenMaintenance, maxAnimals, LivingCondition.createLivingCondition());
-
-    //     }else if(type.equals("Pavillion")){
-
-    //         //initializes superclass fields
-
-    //         System.out.print("Enter structure name: ");
-    //         name = sc.nextLine();
-
-    //         System.out.print("Enter time between maintenance: ");
-    //         timeBetweenMaintenance = Integer.parseInt(sc.nextLine());
-
-    //         System.out.print("Enter maximum animals: ");
-    //         maxAnimals = Integer.parseInt(sc.nextLine());
-    //         return zooLand.createPavillion(c1, area, name, id, timeBetweenMaintenance, maxAnimals, LivingCondition.createLivingCondition());
-
-    //     }else if(type.equals("Maze")){
-
-    //         System.out.print("Enter structure name: ");
-    //         name = sc.nextLine();
-
-    //         System.out.print("Enter time between maintenance: ");
-    //         timeBetweenMaintenance = Integer.parseInt(sc.nextLine());
-
-    //         return zooLand.createMaze(c1, name, id, timeBetweenMaintenance, null);
-            
-
-    //     }else if(type.equals("Park")){
-            
-    //         System.out.print("Enter structure name: ");
-    //         name = sc.nextLine();
-
-    //         System.out.print("Enter time between maintenance: ");
-    //         timeBetweenMaintenance = Integer.parseInt(sc.nextLine());
-
-    //         return zooLand.createPark(c1, area, name, id, timeBetweenMaintenance);
-    //     }
-
-    // }
-    
     // LAND METHODS
     //
     public boolean createGiftShop(Coord c1,Coord c2,String name,char id,int timeBetweenMaintenance,String[] facts,Item[] menu) {
@@ -991,6 +843,14 @@ public class Zoo {
         return true;
     }
 
+    public void animalsReadyToReproduce() {
+        for (int i = 0; i < numAnimals; i++) {
+            if (zooAnimals[i].canReproduce()) {
+                System.out.println(zooAnimals[i].getName() + " the " + zooAnimals[i].getSpecie() + " can reproduce");
+            }
+        }
+    }
+
 
     // =========================
     // FIND ANIMAL METHODS
@@ -1066,7 +926,6 @@ public class Zoo {
             numEggs++;
             return true;
         }
-        egg.setIndex(numEggs);
         return false;
     }
     /**
@@ -1092,38 +951,21 @@ public class Zoo {
         return true;
     }
     
-    // Description: Removes the given egg from the incubator.
-    
-    public boolean removeEgg(Egg egg) {
-
-        if (egg.getIndex() < 0 || egg.getIndex() >= numEggs) {
-            return false;
-        }
-
-        for (int i = egg.getIndex(); i < numEggs - 1; i++) {
-            incubator[i] = incubator[i + 1];
-        }
-
-        incubator[numEggs - 1] = null;
-        numEggs--;
-
-        return true;
-    }
 
     // Description: hatches the egg from incubator
-    public Animal hatchEgg(Habitat habitat, Egg egg, String name) {
+    public Animal hatchEgg(Habitat habitat, int index, String name) {
 
-        if (habitat == null || egg == null || name == null) {
+        if (habitat == null || incubator[index] == null || name == null) {
             return null;
         }
 
-        Animal baby = egg.hatch(name);
+        Animal baby = incubator[index].hatch(name);
 
         if (baby == null) {
             return null;
         }
 
-        boolean removed = removeEgg(egg);
+        boolean removed = removeEgg(index);
         if (!removed) {
             return null;
         }
@@ -1276,16 +1118,16 @@ public class Zoo {
      * Attempts to hatch the given egg. If the egg successfully hatches,
      * the egg is removed from the incubator and the newborn animal is returned.
      */
-    public Animal hatchEgg(Egg egg, String name) {
+    public Animal hatchEgg(int index, String name) {
 
-        if (egg == null) {
+        if (incubator[index] == null) {
             return null;
         }
 
-        Animal baby = egg.hatch(name);
+        Animal baby = incubator[index].hatch(name);
 
         if (baby != null) {
-            removeEgg(egg); // remove by reference, not index
+            removeEgg(index); // remove by reference, not index
         }
 
         return baby;

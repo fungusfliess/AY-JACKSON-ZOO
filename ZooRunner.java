@@ -217,7 +217,7 @@ public class ZooRunner {
                       zoo.listAllSameSpecie(sc.nextLine());
                   }
 
-                  case 20 -> addEggUI();
+                  case 20 -> addEggMenu();
                   case 21 -> zoo.displayAnimalsLowHappiness();
                   case 22 -> zoo.displayAnimalsLowHunger();
                   case 23 -> zoo.displayAnimalsLowCleansiness();
@@ -613,12 +613,6 @@ public static void hatchEggMenu() {
         System.out.print("Enter egg index: ");
         int eggIndex = Integer.parseInt(sc.nextLine());
 
-        Egg egg = zoo.getEggAtIndex(eggIndex);
-        if (egg == null) {
-            System.out.println("No egg at that index.");
-            return;
-        }
-
         System.out.print("Enter habitat ID: ");
         char habitatId = sc.nextLine().charAt(0);
 
@@ -633,7 +627,7 @@ public static void hatchEggMenu() {
         System.out.print("Enter baby animal name: ");
         String babyName = sc.nextLine();
 
-        Animal baby = zoo.hatchEgg(habitat, egg, babyName);
+        Animal baby = zoo.hatchEgg(habitat, eggIndex, babyName);
 
         if (baby != null) {
             System.out.println("Hatching successful!");
@@ -673,6 +667,7 @@ public static void hatchEggMenu() {
                 + "8  -  Maintain All Structures\n"
                 + "9  -  Print All Structures\n"
                 + "10 -  Add Person\n"
+                + "11 - Deliver animals baby\n"
                 );
    
             input = sc.nextLine();
@@ -725,6 +720,8 @@ public static void hatchEggMenu() {
                                 System.out.println("Zoo has reached max capacity OR input was invalid, Person could not be added!");
                             }
                             break;
+                        case 11:
+                          deliverOffspringMenu(zoo);
                         default:
                             System.out.println("Sorry, that is not a valid option!\n");
                     }
@@ -734,6 +731,92 @@ public static void hatchEggMenu() {
             }
         }
     }
+
+    //
+    public static void deliverOffspringMenu(Zoo zoo, Scanner sc) {
+
+    boolean delivered = false;
+
+    while (!delivered) {
+
+        zoo.animalsReadyToReproduce();
+
+        System.out.println("Enter name of the animal whose offspring you will deliver (or 'quit'):");
+        String parentName = sc.nextLine();
+        if (parentName.equalsIgnoreCase("quit")) {
+            return;
+        }
+
+        System.out.println("Enter species of the animal:");
+        String specie = sc.nextLine();
+
+        Animal parent = zoo.findAnimal(parentName, specie);
+
+        if (parent == null) {
+            System.out.println("Animal not found. Try again.");
+            continue;
+        }
+
+        System.out.println("Enter name for the newborn:");
+        String babyName = sc.nextLine();
+        if (babyName == null || babyName.trim().isEmpty()) {
+            System.out.println("Baby name cannot be empty.");
+            continue;
+        }
+
+        // =========================
+        // MAMMAL BIRTH
+        // =========================
+        if (parent instanceof Mammal) {
+
+            Mammal mammal = (Mammal) parent;
+            Animal baby = mammal.reproduce(babyName);
+
+            if (baby == null) {
+                System.out.println("This mammal cannot give birth right now.");
+                continue;
+            }
+
+            System.out.println("Enter habitat ID for the newborn:");
+            char habitatId = sc.nextLine().charAt(0);
+
+            Habitat habitat = (Habitat) zoo.searchStructureByID(habitatId);
+            if (habitat == null) {
+                System.out.println("Invalid habitat.");
+                continue;
+            }
+
+            if (zoo.addAnimal(habitat, baby)) {
+                System.out.println(babyName + " has been born successfully!");
+                delivered = true;
+            } else {
+                System.out.println("Failed to add baby to habitat.");
+            }
+        }
+
+        // =========================
+        // EGG-LAYING ANIMALS
+        // =========================
+        else {
+
+            Egg egg = parent.reproduce();
+
+            if (egg == null) {
+                System.out.println("This animal cannot reproduce right now.");
+                continue;
+            }
+
+            if (zoo.addEgg(egg)) {
+                System.out.println("Egg created successfully.");
+                delivered = true;
+            } else {
+                System.out.println("Incubator is full. Egg discarded.");
+            }
+        }
+    }
+}
+
+
     
     
     /*
