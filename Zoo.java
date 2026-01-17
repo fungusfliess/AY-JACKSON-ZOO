@@ -466,7 +466,7 @@ public class Zoo {
                             visitor.visit(searchStructureByID(sc.nextLine().charAt(0)));  
                             break;
                         case 2: 
-                            endOfDaySummary();   
+                            System.out.println(visitor.leaveZoo()); 
                             break;   
                         case 3:
                             sortStructuresByLeastAnimals();
@@ -876,7 +876,68 @@ public class Zoo {
     
         return null;
     }
+
+    /*
+    @description: sorts all visitors alphabetically by last name, then by first name
+    @algorithm: uses bubble sort; compares visitors using compareToByName
+    */
+    public void sortVisitorByName(){
+        for (int i = 0; i < numVisitors - 1; i++){
+            for (int j = 0; j < numVisitors - i - 1; j++){
+        
+                if (visitorList[j].compareToByName(visitorList[j + 1]) > 0){
+                    Visitor temp = visitorList[j];
+                    visitorList[j] = visitorList[j + 1];
+                    visitorList[j + 1] = temp;
+                }
+            }
+        }
+    }
     
+    /*
+    @description: sorts all employees from highest to lowest total earnings
+    @algorithm: uses selection sort; compares employees using compareToByEarnings
+    */
+    public void sortEmployeesByEarnings(){
+        for (int i = 0; i < numEmployees - 1; i++){
+            int maxIdx = i;
+        
+            for (int j = i + 1; j < numEmployees; j++){
+                if (staffList[j].compareToByEarnings(staffList[maxIdx]) < 0){
+                    maxIdx = j;
+                }
+            }
+        
+            if (maxIdx != i){
+                Employee temp = staffList[i];
+                staffList[i] = staffList[maxIdx];
+                staffList[maxIdx] = temp;
+            }
+        }
+    }
+
+    /*
+    @description: sorts employees by years of experience (highest first),
+                    and by hourly wage if experience is equal
+    @algorithm: uses bubble sort; compares experience first, then wage
+    @postcondition: staffList is reordered by experience and wage in descending order
+    */
+    public void sortEmployeesByExperienceAndWage(){
+        for (int i = 0; i < numEmployees - 1; i++){
+            for (int j = 0; j < numEmployees - i - 1; j++){
+        
+                int cmpExp = staffList[j].compareToByExperience(staffList[j + 1]);
+        
+                if (cmpExp > 0 || (cmpExp == 0 && staffList[j].compareToByWage(staffList[j + 1]) > 0)){
+        
+                    Employee temp = staffList[j];
+                    staffList[j] = staffList[j + 1];
+                    staffList[j + 1] = temp;
+                }
+            }
+        }
+    }
+        
     /*
         @description: checks whether the visitor role label matches the visitor's age
         @param role the role string ("CHILD", "ADULT", "SENIOR")
@@ -885,9 +946,9 @@ public class Zoo {
     */
     private static boolean ageMatchesVisitorRole(String role, int age) {
         switch (role) {
-            case "CHILD":  return age <= CHILD_MAX_AGE;
-            case "ADULT":  return age >= ADULT_MIN_AGE && age < SENIOR_MIN_AGE;
-            case "SENIOR": return age >= SENIOR_MIN_AGE;
+            case "CHILD":  return age <= Visitor.CHILD_MAX_AGE;
+            case "ADULT":  return age >= Visitor.ADULT_MIN_AGE && age < Visitor.SENIOR_MIN_AGE;
+            case "SENIOR": return age >= Visitor.SENIOR_MIN_AGE;
             default:       return false;
         }
     }
@@ -964,7 +1025,7 @@ public class Zoo {
     
         for (int i = 0; i < n; i++) {
     
-            String role = next(br).toUpperCase(Locale.ROOT);
+            String role = next(br);
     
             String personID = next(br);
             String firstName = next(br);
@@ -976,8 +1037,7 @@ public class Zoo {
             Person p = null;
     
             // -------- Employees --------
-            if (role.equals("ZOOKEEPER") || role.equals("SHOPSTAFF")) {
-    
+            if (role.equals"ZOOKEEPER") || role.equals("SHOPSTAFF")) {
                 double hourlyWage = Double.parseDouble(next(br));
                 int yearsExp = Integer.parseInt(next(br));
                 int thirdField = Integer.parseInt(next(br)); // certLevel or placeholder

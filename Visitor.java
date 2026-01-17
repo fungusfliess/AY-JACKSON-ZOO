@@ -197,6 +197,17 @@ public abstract class Visitor extends Person {
     }
 
     /*
+    @description: handles the visitor leaving the Zoo by generating a visit summary
+                and deactivating the visitor
+    @return a formatted summary of the visitor's experience
+    */
+    public String leaveZoo(){
+        String summary = endVisitorSummary();
+        deactivate();
+        return summary;
+    }
+     
+    /*
     @description: generates summary of Visitor’s experience when leaving the Zoo
     @return formatted summary string showing learning, attractions visited, items purchased, and learned facts
     */
@@ -213,7 +224,7 @@ public abstract class Visitor extends Person {
 
         summary += "Learned Facts (" + getLearningHistorySize() + "):\n";
         if (getLearningHistorySize() == 0) {
-            summary += "  (none)\n";
+            summary += "  none\n";
         } else {
             String[] hist = getLearningHistory();
             for (int i = 0; i < getLearningHistorySize(); i++) {
