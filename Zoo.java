@@ -20,12 +20,11 @@ public class Zoo {
     private Employee[] staffList;
     private Visitor[] visitorList;
 
-    private int maxStaff;
+    private int maxEmployee;
     private int maxVisitor;
     private int maxAnimal;
     private int maxEggs;
     
-    private int numPerson; 
     private int numEmployees;
     private int numVisitors;
     private int numAnimals;
@@ -51,11 +50,11 @@ public class Zoo {
             this.zooBalance = balance;
             this.maxAnimal = animals;
             this.maxEggs = eggs;
-            this.maxStaff = person;
+            this.maxEmployee = person;
             
             this.zooAnimals = new Animal[maxAnimal];
             this.incubator = new Egg[maxEggs];
-            this.staffList = new Employee[maxStaff];
+            this.staffList = new Employee[maxEmployee];
             this.visitorList = new Visitor[maxVisitor];
             
             br.close();
@@ -490,12 +489,14 @@ public class Zoo {
             BufferedWriter bw = new BufferedWriter(new FileWriter(ZOO_CONSTRUCTOR_FILE, false));
             bw.write(String.valueOf(zooBalance));
             bw.newLine();;
+            bw.write(maxVisitor);
+            bw.close();
+            bw.write(maxEmployee);
+            bw.close();
             bw.write(maxAnimal);
             bw.newLine();
             bw.write(maxEggs);
             bw.newLine();
-            bw.write(maxPerson);
-            bw.close();
 
         }catch(IOException e){
 
@@ -1037,7 +1038,7 @@ public class Zoo {
             Person p = null;
     
             // -------- Employees --------
-            if (role.equals"ZOOKEEPER") || role.equals("SHOPSTAFF")) {
+            if (role.equals("ZOOKEEPER") || role.equals("SHOPSTAFF")) {
                 double hourlyWage = Double.parseDouble(next(br));
                 int yearsExp = Integer.parseInt(next(br));
                 int thirdField = Integer.parseInt(next(br)); // certLevel or placeholder
@@ -1367,7 +1368,7 @@ public class Zoo {
      *   true if added successfully, false otherwise
      */
     public boolean addEgg(Egg egg) {
-        if (numEggs < MAX_EGGS) {
+        if (numEggs < maxEggs) {
             eggs[numEggs] = egg;
             numEggs++;
             return true;
