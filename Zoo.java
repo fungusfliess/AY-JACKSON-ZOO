@@ -423,10 +423,11 @@ public class Zoo {
                             printAllStructureInfo();
                             break;
                         case 10:
-                            if(addPerson()){
+                            Person p = inputPersonFromUser();
+                            if (addPerson(p)) {
                                 System.out.println("Person Added.");
-                            }else{
-                                System.out.println("Zoo has reached max capacity, Person could not be added!");
+                            } else {
+                                System.out.println("Zoo has reached max capacity OR input was invalid, Person could not be added!");
                             }
                             break;
                         default:
@@ -810,6 +811,95 @@ public class Zoo {
         }
     
         return false;
+    }
+    /*
+    @description: prompts the user for input and creates a new Person object
+                  based on the selected role (Employee or Visitor)
+    @return the newly created Person object if input is valid,
+            or null if creation fails or is cancelled
+    */
+    public Person inputPersonFromUser(){
+        try{
+            System.out.print("Enter role (ZOOKEEPER, SHOPSTAFF, ADULT, SENIOR, CHILD): ");
+            String role = sc.nextLine();
+            if (role.equals(QUIT)) return null;
+    
+            System.out.print("Enter person ID: ");
+            String personID = sc.nextLine();
+            if (personIDExists(personID)){
+                System.out.println("ID already exists.");
+                return null;
+            }
+    
+            System.out.print("Enter first name: ");
+            String firstName = sc.nextLine();
+    
+            System.out.print("Enter last name: ");
+            String lastName = sc.nextLine();
+    
+            System.out.print("Enter age: ");
+            int age = Integer.parseInt(sc.nextLine());
+            if (age < 0) age = 0;
+    
+            // ===== EMPLOYEES =====
+            if (role.equals("ZOOKEEPER") || role.equals("SHOPSTAFF")){
+                System.out.print("Enter hourly wage: ");
+                double wage = Double.parseDouble(sc.nextLine());
+    
+                System.out.print("Enter years of experience: ");
+                int exp = Integer.parseInt(sc.nextLine());
+    
+                if (role.equals("ZOOKEEPER")){
+                    System.out.print("Enter certification level: ");
+                    int cert = Integer.parseInt(sc.nextLine());
+                    return new ZooKeeper(age, personID, firstName, lastName, wage, exp, cert);
+                }
+                return new ShopStaff(age, personID, firstName, lastName, wage, exp);
+            }
+    
+            // ===== ADULT =====
+            if (role.equals("ADULT")){
+                if (!ageMatchesVisitorRole("ADULT", age)) return null;
+    
+                double balance = Double.parseDouble(sc.nextLine());
+                int learning = Integer.parseInt(sc.nextLine());
+                int duration = Integer.parseInt(sc.nextLine());
+                double limit = Double.parseDouble(sc.nextLine());
+    
+                return new Adult(age, personID, firstName, lastName, balance, learning, duration, limit);
+            }
+    
+            // ===== SENIOR =====
+            if (role.equals("SENIOR")){
+                if (!ageMatchesVisitorRole("SENIOR", age)) return null;
+    
+                double balance = Double.parseDouble(sc.nextLine());
+                int learning = Integer.parseInt(sc.nextLine());
+                int duration = Integer.parseInt(sc.nextLine());
+                double limit = Double.parseDouble(sc.nextLine());
+                boolean support = Boolean.parseBoolean(sc.nextLine());
+    
+                return new Senior(age, personID, firstName, lastName, balance, learning, duration, limit, support);
+            }
+    
+            // ===== CHILD =====
+            if (role.equals("CHILD")){
+                if (!ageMatchesVisitorRole("CHILD", age)) return null;
+    
+                double balance = Double.parseDouble(sc.nextLine());
+                int learning = Integer.parseInt(sc.nextLine());
+                int duration = Integer.parseInt(sc.nextLine());
+                boolean stroller = Boolean.parseBoolean(sc.nextLine());
+                String guardian = sc.nextLine();
+    
+                return new Child(age, personID, firstName, lastName, balance, learning, duration, stroller, guardian);
+            }
+    
+        } catch (Exception e){
+            System.out.println("Invalid input. Person could not be created.");
+            return null;
+        }
+        return null;
     }
     
     /*
