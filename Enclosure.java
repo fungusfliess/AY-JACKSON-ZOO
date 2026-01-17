@@ -5,7 +5,6 @@
    Date: Jan 7, 2025
    Description: Enclosure represents a living space for animals within the zoo.
 */
-import Animal_Subsystem.*;
 
 public class Enclosure extends Habitat{
 
@@ -118,7 +117,7 @@ public class Enclosure extends Habitat{
             
             // adds animal to enclosure, updates space and number of animals
             modifySpaceLeft(-(animal.getRequiredArea()));
-            animals[getNumAnimals()] = animal;
+            (getAnimals())[getNumAnimals()] = animal;
             setNumAnimals(getNumAnimals() + 1);
             return true;
         }else{
@@ -150,5 +149,9 @@ public class Enclosure extends Habitat{
             + getTimeBetweenMaintenance() + "\n"
             + getDaysSinceLastMaintenance() + "\n"
             + getMaxAnimals() + "\n";
+    }
+
+    public String toString() {
+        return "Enclosure: " + getName() + " (ID: " + getStructureID() + ")";
     }
 }
