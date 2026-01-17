@@ -36,7 +36,7 @@ public class Adult extends Visitor{
 
    //MUTATOR
    public void setPreferredBudgetLimit(double limit){
-      if (limit>0){
+      if (limit >= 0){
          this.preferredBudgetLimit = limit;
       }
    }

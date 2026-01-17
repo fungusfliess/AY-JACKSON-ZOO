@@ -100,7 +100,6 @@ public class Senior extends Adult {
       return super.saveToString() +
              requiresAccessibilitySupport + "\n";
    }
-
 }
 
 
