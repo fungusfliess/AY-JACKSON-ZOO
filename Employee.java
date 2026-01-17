@@ -195,5 +195,4 @@ public abstract class Employee extends Person {
             getYearsOfExperience() + "\n" +
             thirdField + "\n";
    }
-
 }

@@ -72,68 +72,55 @@ public class Zoo {
         System.out.println("Zoo Successfully Loaded!");
     }
    
-    public void welcomeMenu(){
+    public void welcomeMenu() {
         boolean quit = false;
-        String input; 
-        Person user;
         System.out.println("Welcome To The Zoo's Main Menu!\n");
-        input = sc.nextLine();
-        do {
-            try{
-                System.out.println("(Type quit to quit)\n" 
-                + "Enter # To Access Specific Menu: "
-                + "\n1 - Admin Menu"
-                + "\n2 - Employee Menu"
-                + "\n3 - Visitor Menu"
-                + "\n4 - Display Map");
-                
-                switch(Integer.parseInt(input)){
-                    case 1: 
-                        adminMenu();
-                        break;
+    
+        while (!quit) {
+            System.out.println("(Type quit to quit)\n"
+                    + "Enter # To Access Specific Menu: "
+                    + "\n1 - Admin Menu"
+                    + "\n2 - Employee Menu"
+                    + "\n3 - Visitor Menu"
+                    + "\n4 - Display Map");
+    
+            String input = sc.nextLine().trim();
+    
+            if (input.equalsIgnoreCase(QUIT)) {
+                System.out.println("See You Next Time!");
+                quit = true;
+                break;
+            }
+    
+            try {
+                switch (Integer.parseInt(input)) {
+                    case 1: adminMenu(); break;
                     case 2:
                         System.out.println("Enter Employee ID: ");
-                        input = sc.nextLine();
-                        user = searchByPersonID(input);
-                        if(user != null && user instanceof Employee){
-                    
-                            employeeMenu((Employee)user);
-                            
-                        }else{
-                            System.out.println("Employee Does Not Exist. ");
-                        }  
-                        break;  
+                        Person u1 = searchByPersonID(sc.nextLine());
+                        if (u1 instanceof Employee) employeeMenu((Employee) u1);
+                        else System.out.println("Employee Does Not Exist.");
+                        break;
                     case 3:
                         System.out.println("Enter Visitor ID: ");
-                        input = sc.nextLine();
-                        user = searchByPersonID(input);
-                        if(user != null && user instanceof Visitor){
-                    
-                            visitorMenu((Visitor)user);
-                        
-                        }else{
-                            System.out.println("Visitor Does Not Exist. ");
-                        }
+                        Person u2 = searchByPersonID(sc.nextLine());
+                        if (u2 instanceof Visitor) visitorMenu((Visitor) u2);
+                        else System.out.println("Visitor Does Not Exist.");
                         break;
                     case 4:
                         printMap();
                         break;
-                    default: 
-                        System.out.println("Sorry, that is not a valid option! \n");
-                        break;
+                    default:
+                        System.out.println("Sorry, that is not a valid option!\n");
                 }
-            } catch(NumberFormatException e){
-                if(input.equalsIgnoreCase(QUIT)){
-                    System.out.println("See You Next Time!");
-                    quit = true;
-                }else{
-                System.out.println("Sorry, that is not a valid option! \n");
-                }
-            }        
-        } while(quit!=true);  
-        saveZoo();    
-    }
-   
+            } catch (NumberFormatException e) {
+                System.out.println("Sorry, that is not a valid option!\n");
+            }
+        }
+    
+        saveZoo();
+    }    
+
     public void adminMenu(){
         Person search;
         boolean quit = false;
@@ -472,6 +459,7 @@ public class Zoo {
                             break;   
                         case 3:
                             sortStructuresByLeastAnimals();
+                            break;
                         default:
                             System.out.println("Sorry, that is not a valid option!\n");
                     }        
@@ -492,17 +480,16 @@ public class Zoo {
             BufferedWriter bw = new BufferedWriter(new FileWriter(ZOO_CONSTRUCTOR_FILE, false));
             bw.write(String.valueOf(zooBalance));
             bw.newLine();;
-            bw.write("" + maxVisitor);
-            bw.close();
-            bw.write("" + maxEmployee);
-            bw.close();
             bw.write("" + maxAnimal);
             bw.newLine();
             bw.write("" + maxEggs);
             bw.newLine();
-
+            bw.write("" + maxEmployee);
+            bw.close();
+            bw.write("" + maxVisitor);
+            bw.close();
         }catch(IOException e){
-
+            System.out.println("Error saving zoo: " + e.getMessage());
         }
     }
     
@@ -560,7 +547,7 @@ public class Zoo {
         }
 
         
-        if(type == "GiftShop"){
+        if(type.equals("GiftShop")){
 
             System.out.print("Enter number of items: ");
             numItems = Integer.parseInt(sc.nextLine());
@@ -596,7 +583,7 @@ public class Zoo {
             return zooLand.createGiftShop(c1, c2, name, id, timeBetweenMaintenance, facts, menu );
             
 
-        }else if(type == "Restaurant"){
+        }else if(type.equals("Restaurant")){
             System.out.print("Enter number of items: ");
             numItems = Integer.parseInt(sc.nextLine());
             menu = new Item[numItems];
@@ -1077,10 +1064,14 @@ public class Zoo {
     */
     private static boolean ageMatchesVisitorRole(String role, int age) {
         switch (role) {
-            case "CHILD":  return age <= Visitor.CHILD_MAX_AGE;
-            case "ADULT":  return age >= Visitor.ADULT_MIN_AGE && age < Visitor.SENIOR_MIN_AGE;
-            case "SENIOR": return age >= Visitor.SENIOR_MIN_AGE;
-            default:       return false;
+            case "CHILD":
+                return age < Visitor.MIN_ADULT_AGE;
+            case "ADULT":
+                return age >= Visitor.MIN_ADULT_AGE && age < Visitor.MIN_SENIOR_AGE;
+            case "SENIOR":
+                return age >= Visitor.MIN_SENIOR_AGE;
+            default:
+                return false;
         }
     }
     

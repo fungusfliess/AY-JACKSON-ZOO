@@ -98,7 +98,7 @@ public class Senior extends Adult {
    @Override
    public String saveToString() {
       return super.saveToString() +
-            getRequiresAccessibilitySupport() + "\n";
+             requiresAccessibilitySupport + "\n";
    }
 
 }
