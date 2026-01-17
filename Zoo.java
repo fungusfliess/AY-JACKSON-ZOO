@@ -38,6 +38,12 @@ public class Zoo {
     private Land zooLand;
     private Map map;
 
+    /*
+    @description: constructs and initializes the Zoo by reading configuration values
+                  from ZOO_CONSTRUCTOR_FILE, allocating arrays, and loading all saved data
+                  (persons, animals, land/structures, and map).
+    @postcondition: Zoo fields are initialized and load methods are called so the Zoo is ready to use.
+    */
     public Zoo(){
         try{
             BufferedReader br = new BufferedReader(new FileReader(ZOO_CONSTRUCTOR_FILE));
@@ -72,6 +78,12 @@ public class Zoo {
         System.out.println("Zoo Successfully Loaded!");
     }
    
+    /*
+    @description: displays the main menu for the Zoo system and routes the user to
+                  Admin, Employee, or Visitor menus, or prints the Zoo map.
+                  Continues looping until the user types QUIT.
+    @postcondition: when the user quits, the Zoo is saved using saveZoo().
+    */
     public void welcomeMenu() {
         boolean quit = false;
         System.out.println("Welcome To The Zoo's Main Menu!\n");
@@ -121,6 +133,11 @@ public class Zoo {
         saveZoo();
     }    
 
+    /*
+    @description: handles the Admin login flow (PIN check) and then displays the Admin menu.
+                  Allows the admin to run management commands until the user types QUIT.
+    @postcondition: returns to the welcome menu when the admin quits.
+    */
     public void adminMenu(){
         Person search;
         boolean quit = false;
@@ -346,7 +363,14 @@ public class Zoo {
             }
         }
     }
-   
+    
+    /*
+    @description: displays the Employee menu and allows an employee to run structure-related
+                  commands (search, sort, maintain, print) and add persons (if allowed).
+                  Continues looping until the user types QUIT.
+    @param employee the logged-in Employee using the menu
+    @postcondition: returns to the welcome menu when the employee quits.
+    */
     public void employeeMenu(Employee employee){
         boolean quit = false;
         String input;
@@ -428,7 +452,14 @@ public class Zoo {
             }
         }
     
-   
+    
+    /*
+    @description: displays the Visitor menu and allows a visitor to visit structures,
+                  view their learning summary / leave the zoo, and sort structures.
+                  Continues looping until the user types QUIT.
+    @param visitor the logged-in Visitor using the menu
+    @postcondition: returns to the welcome menu when the visitor quits.
+    */
     public void visitorMenu(Visitor visitor){
         boolean quit = false;
         String input;
@@ -471,6 +502,12 @@ public class Zoo {
         }
     }
 
+    /*
+    @description: saves the Zoo system state to files by saving persons, animals, eggs,
+                  and land/structures, and then writing configuration values back to the
+                  ZOO_CONSTRUCTOR_FILE.
+    @postcondition: persistent files are updated to reflect the Zoo's current state.
+    */
     public void saveZoo(){
         savePersons();
         saveAnimals();
@@ -493,12 +530,23 @@ public class Zoo {
         }
     }
     
+    /*
+    @description: advances the Zoo simulation forward by a specified number of days by
+                  repeatedly calling passDay().
+    @param days the number of days to simulate (if days <= 0, no changes occur)
+    @postcondition: employees, visitors, and land have progressed forward by "days" days.
+    */
     public void passTime(int days){
         for(int i = 0; i < days; i++){
             passDay();
         }
     }
 
+    /*
+    @description: advances the Zoo simulation forward by exactly one day by calling passDay()
+                  on all active employees and visitors and updating the zooLand state.
+    @postcondition: the Zoo state reflects one full day of progression.
+    */
     public void passDay(){
         for(int i = 0; i < numEmployees; i++){
             (employeeList[i]).passDay();
