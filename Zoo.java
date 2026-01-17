@@ -17,7 +17,7 @@ public class Zoo {
     public static final String QUIT = "quit";
     
     //FIELDS
-    private Employee[] staffList;
+    private Employee[] employeeList;
     private Visitor[] visitorList;
 
     private int maxEmployee;
@@ -44,17 +44,19 @@ public class Zoo {
             double balance = Double.parseDouble(br.readLine());
             int animals = Integer.parseInt(br.readLine());
             int eggs = Integer.parseInt(br.readLine());
-            int person = Integer.parseInt(br.readLine());
+            int employees = Integer.parseInt(br.readLine());
+            int visitors = Integer.parseInt(br.readLine());
             
             
             this.zooBalance = balance;
             this.maxAnimal = animals;
             this.maxEggs = eggs;
-            this.maxEmployee = person;
+            this.maxEmployee = employees;
+            this.maxVisitor = visitors; 
             
             this.zooAnimals = new Animal[maxAnimal];
             this.incubator = new Egg[maxEggs];
-            this.staffList = new Employee[maxEmployee];
+            this.employeeList = new Employee[maxEmployee];
             this.visitorList = new Visitor[maxVisitor];
             
             br.close();
@@ -490,13 +492,13 @@ public class Zoo {
             BufferedWriter bw = new BufferedWriter(new FileWriter(ZOO_CONSTRUCTOR_FILE, false));
             bw.write(String.valueOf(zooBalance));
             bw.newLine();;
-            bw.write(maxVisitor);
+            bw.write("" + maxVisitor);
             bw.close();
-            bw.write(maxEmployee);
+            bw.write("" + maxEmployee);
             bw.close();
-            bw.write(maxAnimal);
+            bw.write("" + maxAnimal);
             bw.newLine();
-            bw.write(maxEggs);
+            bw.write("" + maxEggs);
             bw.newLine();
 
         }catch(IOException e){
@@ -512,7 +514,7 @@ public class Zoo {
 
     public void passDay(){
         for(int i = 0; i < numEmployees; i++){
-            (staffList[i]).passDay();
+            (employeeList[i]).passDay();
         }
         for(int i = 0; i < numVisitors; i++){
             (visitorList[i]).passDay();
@@ -774,7 +776,7 @@ public class Zoo {
         if (personID == null){return false;}
     
         for (int i=0;i<numEmployees;i++){
-            if (staffList[i]!=null && personID.equals(staffList[i].getPersonID())){
+            if (employeeList[i]!=null && personID.equals(employeeList[i].getPersonID())){
                 return true;
             }
         }
@@ -789,7 +791,7 @@ public class Zoo {
     }
     
     /*
-        @description: adds a new Person object to the Zoo system (Employee -> staffList, Visitor -> visitorList)
+        @description: adds a new Person object to the Zoo system (Employee -> employeeList, Visitor -> visitorList)
         @param p the Person object to add
         @return true if the person was added successfully, false otherwise (null, duplicate ID, or array full)
     */
@@ -797,8 +799,8 @@ public class Zoo {
         if (p == null || p.getPersonID() == null || personIDExists(p.getPersonID())){return false;}
     
         if (p instanceof Employee) {
-            if (numEmployees >= staffList.length){return false;}
-            staffList[numEmployees] = (Employee) p;
+            if (numEmployees >= employeeList.length){return false;}
+            employeeList[numEmployees] = (Employee) p;
             numEmployees++;
             return true;
         }
@@ -812,95 +814,133 @@ public class Zoo {
     
         return false;
     }
-    /*
-    @description: prompts the user for input and creates a new Person object
-                  based on the selected role (Employee or Visitor)
-    @return the newly created Person object if input is valid,
-            or null if creation fails or is cancelled
-    */
-    public Person inputPersonFromUser(){
-        try{
-            System.out.print("Enter role (ZOOKEEPER, SHOPSTAFF, ADULT, SENIOR, CHILD): ");
-            String role = sc.nextLine();
-            if (role.equals(QUIT)) return null;
     
+    /*
+    @description: prompts the user for role, personal information, and role-specific fields,
+                  then creates and returns the appropriate Person subclass
+    @return a newly created Person object if successful, or null if input is invalid/cancelled
+    */
+    public Person inputPersonFromUser() {
+        try {
+            System.out.print("Enter role (ZOOKEEPER, SHOPSTAFF, ADULT, SENIOR, CHILD): ");
+            String role = sc.nextLine().trim().toUpperCase();
+            if (role.equalsIgnoreCase(QUIT)) return null;
+
             System.out.print("Enter person ID: ");
-            String personID = sc.nextLine();
-            if (personIDExists(personID)){
+            String personID = sc.nextLine().trim();
+            if (personIDExists(personID)) {
                 System.out.println("ID already exists.");
                 return null;
             }
-    
+
             System.out.print("Enter first name: ");
-            String firstName = sc.nextLine();
-    
+            String firstName = sc.nextLine().trim();
+
             System.out.print("Enter last name: ");
-            String lastName = sc.nextLine();
-    
+            String lastName = sc.nextLine().trim();
+
             System.out.print("Enter age: ");
-            int age = Integer.parseInt(sc.nextLine());
+            int age = Integer.parseInt(sc.nextLine().trim());
             if (age < 0) age = 0;
-    
-            // ===== EMPLOYEES =====
-            if (role.equals("ZOOKEEPER") || role.equals("SHOPSTAFF")){
-                System.out.print("Enter hourly wage: ");
-                double wage = Double.parseDouble(sc.nextLine());
-    
-                System.out.print("Enter years of experience: ");
-                int exp = Integer.parseInt(sc.nextLine());
-    
-                if (role.equals("ZOOKEEPER")){
-                    System.out.print("Enter certification level: ");
-                    int cert = Integer.parseInt(sc.nextLine());
-                    return new ZooKeeper(age, personID, firstName, lastName, wage, exp, cert);
+
+            // Early visitor age validation (right after role + age)
+            if (role.equals("ADULT") || role.equals("SENIOR") || role.equals("CHILD")) {
+                if (!ageMatchesVisitorRole(role, age)) {
+                    System.out.println("Age " + age + " does not match role " + role + ".");
+                    return null;
                 }
+            }
+
+            // ===== EMPLOYEES =====
+            if (role.equals("ZOOKEEPER")) {
+                System.out.print("Enter hourly wage: ");
+                double wage = Double.parseDouble(sc.nextLine().trim());
+
+                System.out.print("Enter years of experience: ");
+                int exp = Integer.parseInt(sc.nextLine().trim());
+
+                System.out.print("Enter certification level: ");
+                int cert = Integer.parseInt(sc.nextLine().trim());
+
+                return new ZooKeeper(age, personID, firstName, lastName, wage, exp, cert);
+            }
+
+            if (role.equals("SHOPSTAFF")) {
+                System.out.print("Enter hourly wage: ");
+                double wage = Double.parseDouble(sc.nextLine().trim());
+
+                System.out.print("Enter years of experience: ");
+                int exp = Integer.parseInt(sc.nextLine().trim());
+
                 return new ShopStaff(age, personID, firstName, lastName, wage, exp);
             }
-    
+
             // ===== ADULT =====
-            if (role.equals("ADULT")){
-                if (!ageMatchesVisitorRole("ADULT", age)) return null;
-    
-                double balance = Double.parseDouble(sc.nextLine());
-                int learning = Integer.parseInt(sc.nextLine());
-                int duration = Integer.parseInt(sc.nextLine());
-                double limit = Double.parseDouble(sc.nextLine());
-    
+            if (role.equals("ADULT")) {
+                System.out.print("Enter balance: ");
+                double balance = Double.parseDouble(sc.nextLine().trim());
+
+                System.out.print("Enter learning level: ");
+                int learning = Integer.parseInt(sc.nextLine().trim());
+
+                System.out.print("Enter visit duration (days): ");
+                int duration = Integer.parseInt(sc.nextLine().trim());
+
+                System.out.print("Enter preferred budget limit: ");
+                double limit = Double.parseDouble(sc.nextLine().trim());
+
                 return new Adult(age, personID, firstName, lastName, balance, learning, duration, limit);
             }
-    
+
             // ===== SENIOR =====
-            if (role.equals("SENIOR")){
-                if (!ageMatchesVisitorRole("SENIOR", age)) return null;
-    
-                double balance = Double.parseDouble(sc.nextLine());
-                int learning = Integer.parseInt(sc.nextLine());
-                int duration = Integer.parseInt(sc.nextLine());
-                double limit = Double.parseDouble(sc.nextLine());
-                boolean support = Boolean.parseBoolean(sc.nextLine());
-    
+            if (role.equals("SENIOR")) {
+                System.out.print("Enter balance: ");
+                double balance = Double.parseDouble(sc.nextLine().trim());
+
+                System.out.print("Enter learning level: ");
+                int learning = Integer.parseInt(sc.nextLine().trim());
+
+                System.out.print("Enter visit duration (days): ");
+                int duration = Integer.parseInt(sc.nextLine().trim());
+
+                System.out.print("Enter preferred budget limit: ");
+                double limit = Double.parseDouble(sc.nextLine().trim());
+
+                System.out.print("Requires accessibility support? (true/false): ");
+                boolean support = Boolean.parseBoolean(sc.nextLine().trim());
+
                 return new Senior(age, personID, firstName, lastName, balance, learning, duration, limit, support);
             }
-    
+
             // ===== CHILD =====
-            if (role.equals("CHILD")){
-                if (!ageMatchesVisitorRole("CHILD", age)) return null;
-    
-                double balance = Double.parseDouble(sc.nextLine());
-                int learning = Integer.parseInt(sc.nextLine());
-                int duration = Integer.parseInt(sc.nextLine());
-                boolean stroller = Boolean.parseBoolean(sc.nextLine());
-                String guardian = sc.nextLine();
-    
+            if (role.equals("CHILD")) {
+                System.out.print("Enter balance: ");
+                double balance = Double.parseDouble(sc.nextLine().trim());
+
+                System.out.print("Enter learning level: ");
+                int learning = Integer.parseInt(sc.nextLine().trim());
+
+                System.out.print("Enter visit duration (days): ");
+                int duration = Integer.parseInt(sc.nextLine().trim());
+
+                System.out.print("Stroller needed? (true/false): ");
+                boolean stroller = Boolean.parseBoolean(sc.nextLine().trim());
+
+                System.out.print("Enter guardian ID: ");
+                String guardian = sc.nextLine().trim();
+
                 return new Child(age, personID, firstName, lastName, balance, learning, duration, stroller, guardian);
             }
-    
-        } catch (Exception e){
+
+            System.out.println("Invalid role entered.");
+            return null;
+
+        } catch (Exception e) {
             System.out.println("Invalid input. Person could not be created.");
             return null;
         }
-        return null;
     }
+
     
     /*
         @description: deactivates a Person from the Zoo using their unique ID
@@ -911,8 +951,8 @@ public class Zoo {
         if (personID == null) return false;
     
         for (int i = 0; i < numEmployees; i++) {
-            if (staffList[i] != null && personID.equals(staffList[i].getPersonID())) {
-                staffList[i].deactivate();
+            if (employeeList[i] != null && personID.equals(employeeList[i].getPersonID())) {
+                employeeList[i].deactivate();
                 return true;
             }
         }
@@ -936,8 +976,8 @@ public class Zoo {
         if (personID == null) return null;
     
         for (int i = 0; i < numEmployees; i++) {
-            if (staffList[i] != null && personID.equals(staffList[i].getPersonID())) {
-                return staffList[i];
+            if (employeeList[i] != null && personID.equals(employeeList[i].getPersonID())) {
+                return employeeList[i];
             }
         }
     
@@ -959,8 +999,8 @@ public class Zoo {
         if (personID == null) return null;
     
         for (int i = 0; i < numEmployees; i++) {
-            Employee e = staffList[i];
-            if (e != null && personID.equals(e.getPersonID()) && e.getEarnings() == earnings) {
+            Employee e = employeeList[i];
+            if (e != null && personID.equals(e.getPersonID()) && (Math.abs(e.getEarnings() - earnings) < 0.0001)) {
                 return e;
             }
         }
@@ -994,15 +1034,15 @@ public class Zoo {
             int maxIdx = i;
         
             for (int j = i + 1; j < numEmployees; j++){
-                if (staffList[j].compareToByEarnings(staffList[maxIdx]) < 0){
+                if (employeeList[j].compareToByEarnings(employeeList[maxIdx]) < 0){
                     maxIdx = j;
                 }
             }
         
             if (maxIdx != i){
-                Employee temp = staffList[i];
-                staffList[i] = staffList[maxIdx];
-                staffList[maxIdx] = temp;
+                Employee temp = employeeList[i];
+                employeeList[i] = employeeList[maxIdx];
+                employeeList[maxIdx] = temp;
             }
         }
     }
@@ -1011,19 +1051,19 @@ public class Zoo {
     @description: sorts employees by years of experience (highest first),
                     and by hourly wage if experience is equal
     @algorithm: uses bubble sort; compares experience first, then wage
-    @postcondition: staffList is reordered by experience and wage in descending order
+    @postcondition: employeeList is reordered by experience and wage in descending order
     */
     public void sortEmployeesByExperienceAndWage(){
         for (int i = 0; i < numEmployees - 1; i++){
             for (int j = 0; j < numEmployees - i - 1; j++){
         
-                int cmpExp = staffList[j].compareToByExperience(staffList[j + 1]);
+                int cmpExp = employeeList[j].compareToByExperience(employeeList[j + 1]);
         
-                if (cmpExp > 0 || (cmpExp == 0 && staffList[j].compareToByWage(staffList[j + 1]) > 0)){
+                if (cmpExp > 0 || (cmpExp == 0 && employeeList[j].compareToByWage(employeeList[j + 1]) > 0)){
         
-                    Employee temp = staffList[j];
-                    staffList[j] = staffList[j + 1];
-                    staffList[j + 1] = temp;
+                    Employee temp = employeeList[j];
+                    employeeList[j] = employeeList[j + 1];
+                    employeeList[j + 1] = temp;
                 }
             }
         }
@@ -1063,8 +1103,8 @@ public class Zoo {
     public void displayAllEmployees() {
         System.out.println("=== ALL EMPLOYEES (" + numEmployees + ") ===");
         for (int i = 0; i < numEmployees; i++) {
-            if (staffList[i] != null) {
-                System.out.println(staffList[i]);
+            if (employeeList[i] != null) {
+                System.out.println(employeeList[i]);
                 System.out.println("----------------------------------------");
             }
         }
@@ -1084,8 +1124,8 @@ public class Zoo {
 
         // save employees
         for (int i = 0; i < numEmployees; i++) {
-            if (staffList[i] != null) {
-                out.write(staffList[i].saveToString());
+            if (employeeList[i] != null) {
+                out.write(employeeList[i].saveToString());
                 out.newLine();
             }
         }
@@ -1147,16 +1187,17 @@ public class Zoo {
     
             // -------- Adult --------
             else if (role.equals("ADULT")) {
-    
+                if (!ageMatchesVisitorRole("ADULT", age)) {
+                    System.out.println("[WARN] Age " + age + " does not match ADULT for '" + personID + "'. Skipping.");
+                    continue;
+                }
+
                 double balance = Double.parseDouble(next(br));
                 int learningLevel = Integer.parseInt(next(br));
                 int visitDuration = Integer.parseInt(next(br));
                 double preferredBudgetLimit = Double.parseDouble(next(br));
     
-                if (!ageMatchesVisitorRole("ADULT", age)) {
-                    System.out.println("[WARN] Age " + age + " does not match ADULT for '" + personID + "'. Skipping.");
-                    continue;
-                }
+                
     
                 p = new Adult(age, personID, firstName, lastName,
                             Math.max(0.0, balance),

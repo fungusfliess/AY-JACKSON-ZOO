@@ -103,7 +103,7 @@ public abstract class Visitor extends Person {
     @description: increases the visitor's learning level by a positive amount
     @param add the amount to increase learning level by (must be > 0)
     */
-    public void addLeavingLevel(int add) {
+    public void addLearningLevel(int add) {
         if (add>0) {
             learningLevel+=add;
         }
