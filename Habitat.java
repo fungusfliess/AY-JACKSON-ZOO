@@ -5,7 +5,6 @@
    Date: Jan 7, 2025
    Description: Habitat represents a living space for animals within the zoo. 
 */
-import Animal_Subsystem.*;
 
 public abstract class Habitat extends Structure{
 
@@ -59,6 +58,10 @@ public abstract class Habitat extends Structure{
     
     public LivingCondition getClimate(){
         return climate;
+    }
+
+    public Animal[] getAnimals(){
+        return animals;
     }
 
     //MUTATORS
