@@ -27,10 +27,7 @@ public abstract class Mammal extends Animal {
 
     // Description: creates a new mammal offspring
     public Animal reproduce(String name) {
-        if (this.getGender().equalsIgnoreCase("Female") &&
-            this.getHappiness() >= (LOW_STAT * MAX_STAT) &&
-            this.getAge() >= this.getAdultAge() &&
-            this.getHunger() <= (LOW_STAT * this.getMaxHunger())) {
+        if (canReproduce()) {
                 
             Mammal baby = createOffspring();
             baby.setName(name);

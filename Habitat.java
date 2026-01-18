@@ -60,6 +60,10 @@ public abstract class Habitat extends Structure{
         return climate;
     }
 
+    public String getClimateString () {
+        return climate.saveToString();
+    }
+
     public Animal[] getAnimals(){
         return animals;
     }
@@ -98,10 +102,11 @@ public abstract class Habitat extends Structure{
     */
     public boolean demolish(){
         if (numAnimals == 0 ){
-            System.out.println("Demolition is not possible! There are still " + numAnimals + " animals remaining. ");
             this.setDemolished(true);
             return true;
-        }return false;
+        }
+        System.out.println("Demolition is not possible! There are still " + numAnimals + " animals remaining. ");
+        return false;
     }
 
     /*
@@ -138,7 +143,6 @@ public abstract class Habitat extends Structure{
     */
     public boolean removeAnimal(Animal animal){
         int idx = findAnimalIdx(animal);
-        Animal temp;
 
         //removes animal from array and shifts remaining animals down
         

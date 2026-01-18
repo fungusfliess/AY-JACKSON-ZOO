@@ -44,4 +44,15 @@ public class WaterCondition extends LivingCondition {
                "Has Land: " + hasLand + "\n" +
                "Water Salinity: " + waterSalinity + "\n";
     }
+
+    // returns formatted String to save into a file.
+    public String saveToString() {
+        return "WATER" + "\n" 
+                    + super.saveString() 
+                    + waterAcidity + "\n" 
+                    + waterHardness + "\n"
+                    + waterTemperature + "\n"
+                    + hasLand + "\n"
+                    + waterSalinity + "\n";
+    }
 }

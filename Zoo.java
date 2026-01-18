@@ -1,10 +1,6 @@
 import java.io.*;
-import java.util.*;
-
 
 public class Zoo {
-
-    public static Scanner sc = new Scanner(System.in);
 
     //CONSTANTS 
     public static final String ZOO_CONSTRUCTOR_FILE = "zoo.txt";
@@ -13,9 +9,30 @@ public class Zoo {
     public static final String PERSON_FILE = "persons.txt";
     public static final String LAND_FILE = "land.txt";
     public static final String ADMIN_PIN = "0000";
-
+    public static final int MAX_NUM_STRUCTURES = 40; 
+    public static final int length = 20;
+    public static final int width = 50;
     public static final String QUIT = "quit";
-    
+    public static final char[][] MAZE_DEFAULT_SHAPE = {{'.', '.'}, {'N', 'N'}};
+    // {
+    //                          {'.', '.', '.', '.', '.', '.', 'N', '.', 'N', '.', '.', '.', '.', '.', '.', }, 
+    //                          {'.', '.', '.', '.', 'N', 'X', 'N', '.', 'N', '.', 'N', 'N', 'N', 'N', 'N', }, 
+    //                          {'.', 'N', 'N', 'N', 'N', 'N', 'N', '.', '.', '.', 'N', 'N', 'N', 'N', 'N', }, 
+    //                          {'.', 'N', '.', '.', '.', '.', '.', '.', 'N', '.', '.', '.', '.', '.', '.', }, 
+    //                          {'.', 'N', '.', 'N', '.', 'N', '.', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', }, 
+    //                          {'.', 'N', '.', 'N', '.', 'N', '.', '.', 'N', 'N', '.', '.', '.', '.', '.', }, 
+    //                          {'.', 'N', 'N', 'N', '.', 'N', '.', '.', '.', '.', '.', '.', '.', '.', '.', }, 
+    //                          {'.', '.', '.', '.', '.', 'N', '.', '.', '.', 'N', '.', '.', '.', '.', '.', }, 
+    //                          {'.', 'N', 'N', '.', 'N', 'N', 'N', 'N', 'N', 'N', 'N', '.', 'N', 'N', 'N', }, 
+    //                          {'.', '.', '.', '.', '.', '.', '.', 'N', 'N', '.', 'N', '.', '.', '.', '.', }, 
+    //                          {'.', 'N', '.', 'N', 'N', 'N', '.', '.', '.', '.', 'N', 'N', 'N', '.', 'N', }, 
+    //                          {'.', 'N', '.', 'N', '.', 'N', 'N', 'N', '.', 'N', 'N', '.', 'N', '.', '.', }, 
+    //                          {'.', 'N', '.', 'N', '.', 'N', '.', '.', '.', '.', '.', '.', 'N', '.', 'N', }, 
+    //                          {'.', 'N', '.', 'N', '.', 'N', '.', 'N', 'N', 'N', 'N', '.', 'N', '.', '.', }, 
+    //                          {'.', 'N', 'N', 'N', '.', 'N', '.', '.', '.', '.', 'N', '.', 'N', '.', 'N', }, 
+    //                          {'.', '.', '.', '.', '.', 'N', '.', 'N', '.', '.', 'N', '.', '.', '.', '.', }, };;
+
+
     //FIELDS
     private Employee[] employeeList;
     private Visitor[] visitorList;
@@ -35,8 +52,9 @@ public class Zoo {
     
     private Animal[] zooAnimals;
     private Egg[] incubator;
-    private Land zooLand;
-    private Map map;
+    private Map map = new Map(length, width);
+    private Land zooLand = new Land(MAX_NUM_STRUCTURES, map);
+    
 
     /*
     @description: constructs and initializes the Zoo by reading configuration values
@@ -71,436 +89,14 @@ public class Zoo {
             System.out.println("Error reading file.");
         }
         loadPersons();
-        loadAnimals();
-        loadStructures();
-        loadMap();
-        map = zooLand.getMap();
+        loadLandFromFile(LAND_FILE);
+        loadAnimals(ANIMAL_FILE);
+        loadEggs(EGG_FILE);
+
         System.out.println("Zoo Successfully Loaded!");
     }
    
-    /*
-    @description: displays the main menu for the Zoo system and routes the user to
-                  Admin, Employee, or Visitor menus, or prints the Zoo map.
-                  Continues looping until the user types QUIT.
-    @postcondition: when the user quits, the Zoo is saved using saveZoo().
-    */
-    public void welcomeMenu() {
-        boolean quit = false;
-        System.out.println("Welcome To The Zoo's Main Menu!\n");
     
-        while (!quit) {
-            System.out.println("(Type quit to quit)\n"
-                    + "Enter # To Access Specific Menu: "
-                    + "\n1 - Admin Menu"
-                    + "\n2 - Employee Menu"
-                    + "\n3 - Visitor Menu"
-                    + "\n4 - Display Map");
-    
-            String input = sc.nextLine().trim();
-    
-            if (input.equalsIgnoreCase(QUIT)) {
-                System.out.println("See You Next Time!");
-                quit = true;
-                break;
-            }
-    
-            try {
-                switch (Integer.parseInt(input)) {
-                    case 1: adminMenu(); break;
-                    case 2:
-                        System.out.println("Enter Employee ID: ");
-                        Person u1 = searchByPersonID(sc.nextLine());
-                        if (u1 instanceof Employee) employeeMenu((Employee) u1);
-                        else System.out.println("Employee Does Not Exist.");
-                        break;
-                    case 3:
-                        System.out.println("Enter Visitor ID: ");
-                        Person u2 = searchByPersonID(sc.nextLine());
-                        if (u2 instanceof Visitor) visitorMenu((Visitor) u2);
-                        else System.out.println("Visitor Does Not Exist.");
-                        break;
-                    case 4:
-                        printMap();
-                        break;
-                    default:
-                        System.out.println("Sorry, that is not a valid option!\n");
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Sorry, that is not a valid option!\n");
-            }
-        }
-    
-        saveZoo();
-    }    
-
-    /*
-    @description: handles the Admin login flow (PIN check) and then displays the Admin menu.
-                  Allows the admin to run management commands until the user types QUIT.
-    @postcondition: returns to the welcome menu when the admin quits.
-    */
-    public void adminMenu(){
-        Person search;
-        boolean quit = false;
-        boolean login = false;
-        String input;
-   
-        while(!quit && !login){
-            System.out.println("(Type quit to return to Main Menu)\nEnter Admin PIN: ");
-            input = sc.nextLine();
-   
-            if(input.equalsIgnoreCase(QUIT)){
-                System.out.println("Returning To Main Menu...");
-                quit = true;
-            }else if(input.equals(ADMIN_PIN)){
-                login = true;
-            }else{
-                System.out.println("PIN ENTERED WRONG.");
-            }
-        }
-   
-        while(login && !quit){
-            System.out.println("Admin Menu:\n"
-                + "(Type quit to return to Main Menu)\n"
-                + "Enter # To Run Command:\n"
-                + "1  -  Pass Time\n"
-                + "2  -  Display Zoo Balance\n"
-                + "3  -  Search Person By ID\n"
-                + "4  -  Search Person By ID & Earnings\n"
-                + "5  -  Sort Visitors By Name Alphabetically\n"
-                + "6  -  Sort Employees From Highest To Lowest Earnings\n"
-                + "7  -  Sort Employees By Experience, Then By Wage\n"
-                + "8  -  Display All Employees\n"
-                + "9  -  Create Gift Shop\n"
-                + "10 -  Create Restaurant\n"
-                + "11 -  Create Pavillion\n"
-                + "12 -  Create Enclosure\n"
-                + "13 -  Create Park\n"
-                + "14 -  Create Maze\n"
-                + "15 -  Remove Structure\n"
-                + "16 -  Maintain All Structures\n"
-                + "17 -  Add Animal\n"
-                + "18 -  Relocate Animal\n"
-                + "19 -  List All Animals Of Specified Species\n"
-                + "20 -  Add Egg\n"
-                + "21 -  Display Animals With Low Happiness\n"
-                + "22 -  Display Animals With High Hunger\n"
-                + "23 -  Display Animals With Low Cleansiness\n" 
-                + "24 -  Sort Animals By Name, Then Species\n"
-                + "25 -  Sort Animals By Age\n"
-                + "26 -  Sort Animals By Happiness\n"
-                + "27 -  Sort Animals By Hunger\n"
-                + "28 -  Sort Animals By Cleanliness\n"
-            );
-   
-            input = sc.nextLine();
-   
-            if(input.equalsIgnoreCase(QUIT)){
-                System.out.println("Returning To Main Menu...");
-                quit = true;
-            }else{
-                try{
-                    switch(Integer.parseInt(input)){
-                        case 1:
-                            System.out.print("Enter Days: ");
-                            passTime(Integer.parseInt(sc.nextLine()));
-                            break;
-                        case 2: 
-                            System.out.println("Zoo Balance: $" + zooBalance);
-                            break;
-                        case 3:
-                            System.out.print("Enter ID: ");
-                            input = sc.nextLine();
-                            search = searchByPersonID(input);
-                            if(search != null){
-                                System.out.println(search);
-                            }else{
-                                System.out.println("Person Does Not Exist.");
-                            }
-                            break;
-                        case 4:
-                            System.out.print("Enter ID: ");
-                            input = sc.nextLine();
-                            System.out.println("Enter Earnings: ");
-                            search = searchByPersonIDAndEarnings(input, sc.nextDouble());
-
-                            sc.nextLine();
-                            if(search != null){
-                                System.out.println(search);
-                            }else{
-                                System.out.println("Matching Person Could Not Be Found.");
-                            }
-                            break;
-                        case 5:
-                            sortVisitorByName();
-                            break; 
-                        case 6:
-                            sortEmployeesByEarnings();
-                            break;
-                        case 7:
-                            sortEmployeesByExperienceAndWage();
-                            break;
-                        case 8:
-                            displayAllEmployees();
-                            break;
-                        case 9:
-                            if(createStructure("GiftShop")){        
-                            }else{
-                                System.out.println("Could Not Build Structure Due to Insuffient Space.");
-                            }
-                            break;
-                        case 10: 
-                            if(createStructure("Restaurant")){        
-                            }else{
-                                System.out.println("Could Not Build Structure Due to Insuffient Space.");
-                            }
-                            break;
-                        case 11: 
-                            if(createStructure("Pavillion")){        
-                            }else{
-                                System.out.println("Could Not Build Structure Due to Insuffient Space.");
-                            }
-                            break;
-                        case 12: 
-                            if(createStructure("Enclosure")){        
-                            }else{
-                                System.out.println("Could Not Build Structure Due to Insuffient Space.");
-                            }
-                            break;
-                        case 13: 
-                            if(createStructure("Park")){        
-                            }else{
-                                System.out.println("Could Not Build Structure Due to Insuffient Space.");
-                            }
-                            break;
-                        case 14: 
-                            if(createStructure("Maze")){        
-                            }else{
-                                System.out.println("Could Not Build Structure Due to Insuffient Space.");
-                            }
-                            break;
-                        case 15:
-                            System.out.print("Enter Structure ID");
-                            if(removeStructure(sc.nextLine().charAt(0))){
-                                System.out.println("Removal Successful.");
-                            }else{
-                                System.out.println("Removal Unseccesful.");
-                            }
-                            break;
-                        case 16: 
-                            System.out.println("Maintaining All Structures...");
-                            maintainAll();
-                            break;
-                        case 17:
-                            System.out.println("input name of the animal");
-                            String name = sc.nextLine();
-                            System.out.println("input specie of the animal");
-                            String specie = sc.nextLine();
-                            Animal animal = findAnimal(name,specie);
-                            if(addAnimal(animal)){
-                                System.out.println("Animal Successfully Added.");
-                            }else{
-                                System.out.println("Animal Failed To Be Added.");
-                            }
-                            break;
-                        case 18:
-                            System.out.println("input name of the animal");
-                            String name = sc.nextLine();
-                            System.out.println("input specie of the animal");
-                            String specie = sc.nextLine();
-                            Animal animal = findAnimal(name,specie);
-                            System.out.println("input habitat id");
-                            char habitatId = sc.nextLine().charAt(0);
-                            Habitat habitat = (Habitat)searchStructureByID(habitatId);
-                            if(relocateAnimal(habitat, animal)){
-                                System.out.println("Relocation Successful!");
-                            }else{
-                                System.out.println("Relocation Failed.");
-                            }
-                            break;
-                        case 19:
-                            System.out.print("Enter Species: ");
-                            listAllSameSpecie(sc.nextLine());
-                            break;
-                        case 20:
-                            if(addEgg()){
-                                System.out.println("Egg Successfully Added.");
-                            }else{
-                                System.out.println("Egg Failed To Be Added.");
-                            }
-                            break;
-                        case 21:
-                            displayAnimalsLowHappiness();
-                            break;
-                        case 22:
-                            displayAnimalsLowHunger();
-                            break;
-                        case 23: 
-                            displayAnimalsLowCleansiness();
-                            break;
-                        case 24:
-                            sortAnimalsByNameThenSpecie();
-                            break;
-                        case 25:
-                            sortAnimalsByAge();
-                            break;
-                        case 26:
-                            sortAnimalsByHappiness();
-                            break;
-                        case 27:
-                            sortAnimalsByHunger();
-                            break;
-                        case 28: 
-                            sortAnimalsByCleanliness();
-                            break;
-                        default: 
-                            System.out.println("Sorry, that is not a valid option!\n");
-                            break;
-                    }
-   
-                }catch(NumberFormatException e){
-                    System.out.println("Sorry, that is not a valid option/input!\n");
-                }
-            }
-        }
-    }
-    
-    /*
-    @description: displays the Employee menu and allows an employee to run structure-related
-                  commands (search, sort, maintain, print) and add persons (if allowed).
-                  Continues looping until the user types QUIT.
-    @param employee the logged-in Employee using the menu
-    @postcondition: returns to the welcome menu when the employee quits.
-    */
-    public void employeeMenu(Employee employee){
-        boolean quit = false;
-        String input;
-
-   
-        while(!quit){
-            System.out.println("Employee Menu:\n"
-                + "(Type quit to return to Main Menu)\n"
-                + "Enter # To Run Command:\n"
-                + "1  -  Search Structure By Number Of Animals And Size\n"
-                + "2  -  Search Habitat By Living Condition & With Most Animals\n"
-                + "3  -  Sort Structures By Size\n"
-                + "4  -  Sort Structures By Size, Then Time Between Maintenance\n"
-                + "5  -  Sort Structures By Size, Then Number Of Animals\n"
-                + "6  -  Print Structures Needing Maintenace\n"
-                + "7  -  Maintain Structure\n" 
-                + "8  -  Maintain All Structures\n"
-                + "9  -  Print All Structures\n"
-                + "10 -  Add Person\n"
-                );
-   
-            input = sc.nextLine();
-   
-            if(input.equalsIgnoreCase(QUIT)){
-                System.out.println("Returning Back To Main Menu...\n");
-                quit = true;
-            }else{
-                try{
-                    switch(Integer.parseInt(input)){
-                        case 1:
-                            System.out.println("Enter Number Of Animals And Size");
-                            System.out.println(searchByNumberAnimalsAndSize(Integer.parseInt(sc.nextLine()), Integer.parseInt(sc.nextLine())));
-                            break;
-                     
-                        case 2: 
-                            System.out.println(searchHabitatMostAnimalsAndLivingConditions(LivingCondition.createLivingCondition()));
-                            break;
-
-                        case 3:
-                            sortStructureBySize();
-                            System.out.println("Sorting Complete.");
-                            break;
-                        
-                        case 4:
-                            sortBySizeAndTimeBetweenMaintenance();
-                            System.out.println("Sorting Complete.");
-                            break;
-                        case 5:
-                            sortBySizeAndMostAnimals();
-                            System.out.println("Sorting Complete.");
-                            break;
-                        case 6:
-                            printAllStructuresNeedingMaintenance();
-                            break;
-                        case 7: 
-                            System.out.print("Enter Structure ID: ");
-                            maintain(searchStructureByID(sc.nextLine().charAt(0))); 
-                            break;
-                        case 8:
-                            maintainAll();
-                            break;
-                        case 9:
-                            printAllStructureInfo();
-                            break;
-                        case 10:
-                            Person p = inputPersonFromUser();
-                            if (addPerson(p)) {
-                                System.out.println("Person Added.");
-                            } else {
-                                System.out.println("Zoo has reached max capacity OR input was invalid, Person could not be added!");
-                            }
-                            break;
-                        default:
-                            System.out.println("Sorry, that is not a valid option!\n");
-                    }
-                }catch(NumberFormatException e){
-                    System.out.println("Sorry, that is not a valid option!\n");
-                }
-            }
-        }
-    
-    
-    /*
-    @description: displays the Visitor menu and allows a visitor to visit structures,
-                  view their learning summary / leave the zoo, and sort structures.
-                  Continues looping until the user types QUIT.
-    @param visitor the logged-in Visitor using the menu
-    @postcondition: returns to the welcome menu when the visitor quits.
-    */
-    public void visitorMenu(Visitor visitor){
-        boolean quit = false;
-        String input;
-   
-        while(!quit){
-            System.out.println("Visitor Menu:\n"
-                + "(Type quit to return to Main Menu)\n"
-                + "Enter # To Run Command:\n"
-                + "1  -  Visit Structure\n"
-                + "2  -  Learning Summary\n"
-                + "3  -  Sort Structures From Least To Most Animals()\n"
-            );
-            
-            input = sc.nextLine();
-   
-            if(input.equalsIgnoreCase(QUIT)){
-                System.out.println("Returning Back To Main Menu...\n");
-                quit = true;
-            }else{
-                try{   
-                    switch(Integer.parseInt(input)){
-                        case 1:
-                            System.out.print("Enter Structure ID: ");
-                            visitor.visit(searchStructureByID(sc.nextLine().charAt(0)));  
-                            break;
-                        case 2: 
-                            System.out.println(visitor.leaveZoo()); 
-                            break;   
-                        case 3:
-                            sortStructuresByLeastAnimals();
-                            break;
-                        default:
-                            System.out.println("Sorry, that is not a valid option!\n");
-                    }        
-   
-                }catch(NumberFormatException e){
-                    System.out.println("Sorry, that is not a valid option!\n");
-                }
-            }
-        }
-    }
 
     /*
     @description: saves the Zoo system state to files by saving persons, animals, eggs,
@@ -509,22 +105,25 @@ public class Zoo {
     @postcondition: persistent files are updated to reflect the Zoo's current state.
     */
     public void saveZoo(){
-        savePersons();
-        saveAnimals();
-        saveEggs();
-        saveLand();
         try{
             BufferedWriter bw = new BufferedWriter(new FileWriter(ZOO_CONSTRUCTOR_FILE, false));
             bw.write(String.valueOf(zooBalance));
-            bw.newLine();;
+            bw.newLine();
             bw.write("" + maxAnimal);
             bw.newLine();
             bw.write("" + maxEggs);
             bw.newLine();
             bw.write("" + maxEmployee);
-            bw.close();
+            bw.newLine();
             bw.write("" + maxVisitor);
             bw.close();
+            System.out.println("after saving zoo info, before saving the 3 files.");
+            savePersons();
+            System.out.println("after savePersons");
+            saveAnimals(ANIMAL_FILE);
+            System.out.println("after saveAnimals");
+            saveLandToFile(LAND_FILE);
+            System.out.println("Zoo Successfully Saved!");
         }catch(IOException e){
             System.out.println("Error saving zoo: " + e.getMessage());
         }
@@ -554,179 +153,128 @@ public class Zoo {
         for(int i = 0; i < numVisitors; i++){
             (visitorList[i]).passDay();
         }
+        for(int i = 0; i < numAnimals; i++){
+            (zooAnimals[i]).passDay();
+        }
+        for(int i = 0; i < numEggs; i++){
+            (incubator[i]).passDay();
+        }
+        for(int i = 0; i < numEggs; i++){
+            if (incubator[i].readyToHatch()) {
+                System.out.println("egg" + i + " is ready to hatch!");
+            }
+        }
+
+        int index = (int)(Math.random() * numAnimals);
+        zooAnimals[index].canReproduce();
+        System.out.println(zooAnimals[index].getName() + " is about to have a baby! help deliver its baby!");
         zooLand.passDay();
     }
 
-    public boolean createStructure(String type){
-        int numItems;
-        Item[] menu;
-        String itemName;
-        double price;
+    
 
-        int numFacts;
-        String[] facts;
-
-        int maxAnimals; 
-
-        String name;
-        char structureID;    
-        int area = 0;
-        int timeBetweenMaintenance;
-
-        Coord c1 = null;
-        Coord c2 = null;
-        char id;
-
-        System.out.print("Enter New ID: ");
-        id = sc.nextLine().charAt(0);
-
-        
-        if(type.equals("GiftShop") || type.equals("Restaurant")){
-            System.out.print("Enter X and Y for Coordinate 1: ");
-            c1 = new Coord(Integer.parseInt(sc.nextLine()), Integer.parseInt(sc.nextLine()));
-            System.out.print("Enter Desired Size: ");
-            area = Integer.parseInt(sc.nextLine());
-
-        }else {
-            System.out.print("Enter X and Y for Coordinate 1: ");
-            c1 = new Coord(Integer.parseInt(sc.nextLine()), Integer.parseInt(sc.nextLine()));
-            System.out.print("Enter X and Y for Coordinate 2: ");
-            c2 = new Coord(Integer.parseInt(sc.nextLine()), Integer.parseInt(sc.nextLine()));    
+    // LAND METHODS
+    //
+    public boolean createGiftShop(Coord c1,Coord c2,String name,char id,int timeBetweenMaintenance,String[] facts,Item[] menu) {
+        if (c1 == null || c2 == null || name == null || facts == null || menu == null) {
+            return false;
         }
-
-        
-        if(type.equals("GiftShop")){
-
-            System.out.print("Enter number of items: ");
-            numItems = Integer.parseInt(sc.nextLine());
-            menu = new Item[numItems];
-
-            for(int i = 0; i < numItems; i++){
-                System.out.print("Enter item name: ");
-                itemName = sc.nextLine();
-
-                System.out.print("Enter item price: ");
-                price = Double.parseDouble(sc.nextLine());
-
-                menu[i] = new Item(itemName, price);
-            }
-
-            System.out.print("Enter number of facts: ");
-            numFacts = Integer.parseInt(sc.nextLine());
-            facts = new String[numFacts];
-
-            for(int i = 0; i < numFacts; i++){
-                System.out.print("Enter fact: ");
-                facts[i] = sc.nextLine();
-            }
-
-            //initializes superclass fields
-
-            System.out.print("Enter structure name: ");
-            name = sc.nextLine();
-
-            System.out.print("Enter time between maintenance: ");
-            timeBetweenMaintenance = Integer.parseInt(sc.nextLine());
-            
-            return zooLand.createGiftShop(c1, c2, name, id, timeBetweenMaintenance, facts, menu );
-            
-
-        }else if(type.equals("Restaurant")){
-            System.out.print("Enter number of items: ");
-            numItems = Integer.parseInt(sc.nextLine());
-            menu = new Item[numItems];
-
-            for(int i = 0; i < numItems; i++){
-                System.out.print("Enter item name: ");
-                itemName = sc.nextLine();
-
-                System.out.print("Enter item price: ");
-                price = Double.parseDouble(sc.nextLine());
-
-                menu[i] = new Item(itemName, price);
-            }
-
-            System.out.print("Enter number of facts: ");
-            numFacts = Integer.parseInt(sc.nextLine());
-            facts = new String[numFacts];
-
-            for(int i = 0; i < numFacts; i++){
-                System.out.print("Enter fact: ");
-                facts[i] = sc.nextLine();
-            }
-
-            //initializes superclass fields
-
-            System.out.print("Enter structure name: ");
-            name = sc.nextLine();
-
-            System.out.print("Enter time between maintenance: ");
-            timeBetweenMaintenance = Integer.parseInt(sc.nextLine());
-
-            return zooLand.createRestaurant(c1, c2, name, id, timeBetweenMaintenance, facts, menu );
-            
-
-        }else if(type.equals("Enclosure")){
-            System.out.print("Enter species: ");
-            String species = sc.nextLine();
-            
-            //initializes superclass fields
-
-            System.out.print("Enter structure name: ");
-            name = sc.nextLine();
-
-            System.out.print("Enter time between maintenance: ");
-            timeBetweenMaintenance = Integer.parseInt(sc.nextLine());
-
-            System.out.print("Enter maximum animals: ");
-            maxAnimals = Integer.parseInt(sc.nextLine());
-            return zooLand.createEnclosure(c1, area, species, name, id, timeBetweenMaintenance, maxAnimals, LivingCondition.createLivingCondition());
-
-        }else if(type.equals("Pavillion")){
-
-            //initializes superclass fields
-
-            System.out.print("Enter structure name: ");
-            name = sc.nextLine();
-
-            System.out.print("Enter time between maintenance: ");
-            timeBetweenMaintenance = Integer.parseInt(sc.nextLine());
-
-            System.out.print("Enter maximum animals: ");
-            maxAnimals = Integer.parseInt(sc.nextLine());
-            return zooLand.createPavillion(c1, area, name, id, timeBetweenMaintenance, maxAnimals, LivingCondition.createLivingCondition());
-
-        }else if(type.equals("Maze")){
-
-            System.out.print("Enter structure name: ");
-            name = sc.nextLine();
-
-            System.out.print("Enter time between maintenance: ");
-            timeBetweenMaintenance = Integer.parseInt(sc.nextLine());
-
-            return zooLand.createMaze(c1, name, id, timeBetweenMaintenance, null);
-            
-
-        }else if(type.equals("Park")){
-            
-            System.out.print("Enter structure name: ");
-            name = sc.nextLine();
-
-            System.out.print("Enter time between maintenance: ");
-            timeBetweenMaintenance = Integer.parseInt(sc.nextLine());
-
-            return zooLand.createPark(c1, area, name, id, timeBetweenMaintenance);
-        }
-
+        return zooLand.createGiftShop(c1,c2,name,id,timeBetweenMaintenance,facts,menu);
     }
     
-    // LAND METHODS
-    public boolean loadLandFromFile () { 
-        return zooLand.loadFromFile(LAND_FILE);
+    //
+    public boolean createRestaurant(Coord c1, Coord c2, String name, char id,
+                                    int timeBetweenMaintenance, String[] facts, Item[] menu) {
+        if (c1 == null || c2 == null || name == null || facts == null || menu == null) {
+            return false;
+        }
+        return zooLand.createRestaurant(c1, c2, name, id, timeBetweenMaintenance, facts, menu);
+    }
+    
+    // 
+    public boolean createEnclosure(Coord c1, int area, String species, String name, char id,
+                               int timeBetweenMaintenance, int maxAnimals, LivingCondition condition) {
+        if (c1 == null || species == null || name == null || condition == null) {
+            return false;
+        }
+        return zooLand.createEnclosure(c1, area, species, name, id,
+                                    timeBetweenMaintenance, maxAnimals, condition);
     }
 
-    public boolean saveLandToFile () {
-        return zooLand.saveToFile(LAND_FILE);
+    //
+    public boolean createPavillion(Coord c1, int area, String name, char id,
+                                int timeBetweenMaintenance, int maxAnimals, LivingCondition condition) {
+
+        if (c1 == null || name == null || condition == null) {
+            return false;
+        }
+
+        return zooLand.createPavillion(c1, area, name, id,
+                                    timeBetweenMaintenance, maxAnimals, condition);
+    }
+    
+    //
+    public boolean createPark(Coord c1, int area, String name, char id, int timeBetweenMaintenance) {
+
+        if (c1 == null || name == null) {
+            return false;
+        }
+
+        return zooLand.createPark(c1, area, name, id, timeBetweenMaintenance);
+    }
+
+    //
+    public boolean createMaze(Coord c1, String name, char id,
+                          int timeBetweenMaintenance /*layout: replaced by default */) {
+
+        if (c1 == null || name == null) {
+            return false;
+        }
+
+        return zooLand.createMaze(c1, name, id, timeBetweenMaintenance, /*layout */ MAZE_DEFAULT_SHAPE);
+    }
+
+    public boolean removeStructure (char id) {
+        return zooLand.removeStructureFromList(zooLand.searchIdxByID(id));
+    }
+
+
+    public boolean loadLandFromFile (String filename) { 
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(filename));
+            String total = "";
+            String input;
+            while ((input = br.readLine()) != null) {
+                total += input + "\n";
+            }
+            
+            br.close();
+            System.out.println("Reading Land file " + filename + " was successful!");
+            if (zooLand.loadLandFromString(total)) {
+                System.out.println("Interpreting file successful!");
+                return true;
+            } else {
+                System.out.println("Error during file interpretation! ");
+                return false;
+            }
+        } catch (IOException iox) {
+            System.out.println("Error loading file: " + filename);
+            return false;
+        }
+    }
+
+    public boolean saveLandToFile (String filename) {
+        String toSave =  zooLand.saveLandToString();
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(filename));
+            bw.write(toSave);
+            bw.close();
+            System.out.println("Saving to " + filename + " was successful!");
+            return true;
+        } catch (IOException iox) {
+            System.out.println("Error occurred when trying to save to file " + filename + " !");
+            return false;
+        }
     }
 
     public int searchStructureIdxByName (String name) {
@@ -751,6 +299,10 @@ public class Zoo {
 
     public Habitat searchHabitatMostAnimalsAndLivingConditions (LivingCondition condition) {
         return zooLand.searchHabitatMostAnimalsAndLivingConditions(condition);
+    }
+
+    public void sortBySizeAndMostAnimals () {
+        zooLand.sortByAnimalsAndSize();
     }
 
     public void sortStructuresByDaysSinceLastMaintenance (int numToSort) {
@@ -793,6 +345,9 @@ public class Zoo {
         input.maintenance();
     } 
 
+    public double getBalance() {
+        return zooBalance;
+    }
 
 
     public String toString() {
@@ -850,132 +405,6 @@ public class Zoo {
         return false;
     }
     
-    /*
-    @description: prompts the user for role, personal information, and role-specific fields,
-                  then creates and returns the appropriate Person subclass
-    @return a newly created Person object if successful, or null if input is invalid/cancelled
-    */
-    public Person inputPersonFromUser() {
-        try {
-            System.out.print("Enter role (ZOOKEEPER, SHOPSTAFF, ADULT, SENIOR, CHILD): ");
-            String role = sc.nextLine().trim().toUpperCase();
-            if (role.equalsIgnoreCase(QUIT)) return null;
-
-            System.out.print("Enter person ID: ");
-            String personID = sc.nextLine().trim();
-            if (personIDExists(personID)) {
-                System.out.println("ID already exists.");
-                return null;
-            }
-
-            System.out.print("Enter first name: ");
-            String firstName = sc.nextLine().trim();
-
-            System.out.print("Enter last name: ");
-            String lastName = sc.nextLine().trim();
-
-            System.out.print("Enter age: ");
-            int age = Integer.parseInt(sc.nextLine().trim());
-            if (age < 0) age = 0;
-
-            // Early visitor age validation (right after role + age)
-            if (role.equals("ADULT") || role.equals("SENIOR") || role.equals("CHILD")) {
-                if (!ageMatchesVisitorRole(role, age)) {
-                    System.out.println("Age " + age + " does not match role " + role + ".");
-                    return null;
-                }
-            }
-
-            // ===== EMPLOYEES =====
-            if (role.equals("ZOOKEEPER")) {
-                System.out.print("Enter hourly wage: ");
-                double wage = Double.parseDouble(sc.nextLine().trim());
-
-                System.out.print("Enter years of experience: ");
-                int exp = Integer.parseInt(sc.nextLine().trim());
-
-                System.out.print("Enter certification level: ");
-                int cert = Integer.parseInt(sc.nextLine().trim());
-
-                return new ZooKeeper(age, personID, firstName, lastName, wage, exp, cert);
-            }
-
-            if (role.equals("SHOPSTAFF")) {
-                System.out.print("Enter hourly wage: ");
-                double wage = Double.parseDouble(sc.nextLine().trim());
-
-                System.out.print("Enter years of experience: ");
-                int exp = Integer.parseInt(sc.nextLine().trim());
-
-                return new ShopStaff(age, personID, firstName, lastName, wage, exp);
-            }
-
-            // ===== ADULT =====
-            if (role.equals("ADULT")) {
-                System.out.print("Enter balance: ");
-                double balance = Double.parseDouble(sc.nextLine().trim());
-
-                System.out.print("Enter learning level: ");
-                int learning = Integer.parseInt(sc.nextLine().trim());
-
-                System.out.print("Enter visit duration (days): ");
-                int duration = Integer.parseInt(sc.nextLine().trim());
-
-                System.out.print("Enter preferred budget limit: ");
-                double limit = Double.parseDouble(sc.nextLine().trim());
-
-                return new Adult(age, personID, firstName, lastName, balance, learning, duration, limit);
-            }
-
-            // ===== SENIOR =====
-            if (role.equals("SENIOR")) {
-                System.out.print("Enter balance: ");
-                double balance = Double.parseDouble(sc.nextLine().trim());
-
-                System.out.print("Enter learning level: ");
-                int learning = Integer.parseInt(sc.nextLine().trim());
-
-                System.out.print("Enter visit duration (days): ");
-                int duration = Integer.parseInt(sc.nextLine().trim());
-
-                System.out.print("Enter preferred budget limit: ");
-                double limit = Double.parseDouble(sc.nextLine().trim());
-
-                System.out.print("Requires accessibility support? (true/false): ");
-                boolean support = Boolean.parseBoolean(sc.nextLine().trim());
-
-                return new Senior(age, personID, firstName, lastName, balance, learning, duration, limit, support);
-            }
-
-            // ===== CHILD =====
-            if (role.equals("CHILD")) {
-                System.out.print("Enter balance: ");
-                double balance = Double.parseDouble(sc.nextLine().trim());
-
-                System.out.print("Enter learning level: ");
-                int learning = Integer.parseInt(sc.nextLine().trim());
-
-                System.out.print("Enter visit duration (days): ");
-                int duration = Integer.parseInt(sc.nextLine().trim());
-
-                System.out.print("Stroller needed? (true/false): ");
-                boolean stroller = Boolean.parseBoolean(sc.nextLine().trim());
-
-                System.out.print("Enter guardian ID: ");
-                String guardian = sc.nextLine().trim();
-
-                return new Child(age, personID, firstName, lastName, balance, learning, duration, stroller, guardian);
-            }
-
-            System.out.println("Invalid role entered.");
-            return null;
-
-        } catch (Exception e) {
-            System.out.println("Invalid input. Person could not be created.");
-            return null;
-        }
-    }
-
     
     /*
         @description: deactivates a Person from the Zoo using their unique ID
@@ -1325,93 +754,111 @@ public class Zoo {
     // SAVE ANIMALS
     // =========================
 
-    public void saveAnimals(String file) throws IOException {
+    public void saveAnimals(String filename) throws IOException {
+    try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
 
-        BufferedWriter bw = new BufferedWriter(new FileWriter(file));
-
-        // save number of animals
-        bw.write(numAnimals + "");
-        bw.newLine();
-
-        // save each animal
         for (int i = 0; i < numAnimals; i++) {
-            bw.write(animals[i].saveToString());
-            bw.newLine();
+            if (zooAnimals[i] != null) {
+                bw.write(zooAnimals[i].saveToString());
+                bw.newLine();
+            }
         }
 
-        bw.close();
     }
+}
+
 
 
     // =========================
     // LOAD ANIMALS
     // =========================
 
-    public void loadAnimals(Scanner input) {
+    public void loadAnimals(String filename) {
+        numAnimals = 0;
+        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+            String line;
 
-        numAnimals = Integer.parseInt(input.nextLine());
+            while ((line = br.readLine()) != null) {
+                String[] data = line.split("\\|");
+                int i = 0;
 
-        for (int i = 0; i < numAnimals; i++) {
+                String specie = data[i++];
 
-            // ===== READ COMMON STATE =====
-            char habitatId = input.nextLine().charAt(0);
-            String name = input.nextLine();
-            String specie = input.nextLine();
-            String preferedInteraction = input.nextLine();
-            String gender = input.nextLine();
-            int happiness = Integer.parseInt(input.nextLine());
-            int cleanliness = Integer.parseInt(input.nextLine());
-            int hunger = Integer.parseInt(input.nextLine());
-            int age = Integer.parseInt(input.nextLine());
-            double weight = Double.parseDouble(input.nextLine());
+                char habitatId = (data[i++]).charAt(0);
+                String name = data[i++];
+                String preferredInteraction = data[i++];
+                String gender = data[i++];
+                int happiness = Integer.parseInt(data[i++]);
+                int cleanliness = Integer.parseInt(data[i++]);
+                int hunger = Integer.parseInt(data[i++]);
+                int age = Integer.parseInt(data[i++]);
+                double weight = Double.parseDouble(data[i++]);
+                int daysPassed = Integer.parseInt(data[i++]);
 
-            // ===== CREATE CORRECT SPECIES =====
-            Animal animal = null;
+                Animal animal = null;
 
-            if (specie.equalsIgnoreCase("Unicorn")) {
-                animal = new Unicorn(habitatId, name, preferedInteraction, gender,
-                        happiness, cleanliness, hunger, age, weight);
-            }
-            else if (specie.equalsIgnoreCase("Capybara")) {
-                animal = new Capybara(habitatId, name, preferedInteraction, gender,
-                        happiness, cleanliness, hunger, age, weight);
-            }
-            else if (specie.equalsIgnoreCase("Eagle")) {
-                animal = new Eagle(habitatId, name, preferedInteraction, gender,
-                        happiness, cleanliness, hunger, age, weight);
-            }
-            else if (specie.equalsIgnoreCase("Cockatoo")) {
-                animal = new Cockatoo(habitatId, name, preferedInteraction, gender,
-                        happiness, cleanliness, hunger, age, weight);
-            }
-            else if (specie.equalsIgnoreCase("Snake")) {
-                animal = new Snake(habitatId, name, preferedInteraction, gender,
-                        happiness, cleanliness, hunger, age, weight);
-            }
-            else if (specie.equalsIgnoreCase("Crocodile")) {
-                animal = new Crocodile(habitatId, name, preferedInteraction, gender,
-                        happiness, cleanliness, hunger, age, weight);
-            }
-            else if (specie.equalsIgnoreCase("Frog")) {
-                animal = new Frog(habitatId, name, preferedInteraction, gender,
-                        happiness, cleanliness, hunger, age, weight);
-            }
-            else if (specie.equalsIgnoreCase("Axolotl")) {
-                animal = new Axolotl(habitatId, name, preferedInteraction, gender,
-                        happiness, cleanliness, hunger, age, weight);
-            }
-            else if (specie.equalsIgnoreCase("Shark")) {
-                animal = new Shark(habitatId, name, preferedInteraction, gender,
-                        happiness, cleanliness, hunger, age, weight);
-            }
-            else if (specie.equalsIgnoreCase("Sunfish")) {
-                animal = new Sunfish(habitatId, name, preferedInteraction, gender,
-                        happiness, cleanliness, hunger, age, weight);
+                if (specie.equalsIgnoreCase("Unicorn")) {
+                    animal = new Unicorn(habitatId, name, preferredInteraction, gender,
+                            happiness, cleanliness, hunger, age, weight);
+
+                } else if (specie.equalsIgnoreCase("Capybara")) {
+                    animal = new Capybara(habitatId, name, preferredInteraction, gender,
+                            happiness, cleanliness, hunger, age, weight);
+
+                } else if (specie.equalsIgnoreCase("Eagle")) {
+                    Eagle eagle = new Eagle(habitatId, name, preferredInteraction, gender,
+                            happiness, cleanliness, hunger, age, weight);
+                    eagle.setHasNest(Boolean.parseBoolean(data[i++]));
+                    animal = eagle;
+
+                } else if (specie.equalsIgnoreCase("Cockatoo")) {
+                    Cockatoo cockatoo = new Cockatoo(habitatId, name, preferredInteraction, gender,
+                            happiness, cleanliness, hunger, age, weight);
+                    cockatoo.setHasNest(Boolean.parseBoolean(data[i++]));
+                    animal = cockatoo;
+
+                } else if (specie.equalsIgnoreCase("Snake")) {
+                    Snake snake = new Snake(habitatId, name, preferredInteraction, gender,
+                            happiness, cleanliness, hunger, age, weight);
+                    snake.setTimeToShed(Integer.parseInt(data[i++]));
+                    animal = snake;
+
+                } else if (specie.equalsIgnoreCase("Crocodile")) {
+                    Crocodile croc = new Crocodile(habitatId, name, preferredInteraction, gender,
+                            happiness, cleanliness, hunger, age, weight);
+                    croc.setTimeToShed(Integer.parseInt(data[i++]));
+                    animal = croc;
+
+                } else if (specie.equalsIgnoreCase("Frog")) {
+                    animal = new Frog(habitatId, name, preferredInteraction, gender,
+                            happiness, cleanliness, hunger, age, weight);
+
+                } else if (specie.equalsIgnoreCase("Axolotl")) {
+                    animal = new Axolotl(habitatId, name, preferredInteraction, gender,
+                            happiness, cleanliness, hunger, age, weight);
+
+                } else if (specie.equalsIgnoreCase("Shark")) {
+                    animal = new Shark(habitatId, name, preferredInteraction, gender,
+                            happiness, cleanliness, hunger, age, weight);
+
+                } else if (specie.equalsIgnoreCase("Sunfish")) {
+                    animal = new Sunfish(habitatId, name, preferredInteraction, gender,
+                            happiness, cleanliness, hunger, age, weight);
+                }
+                
+                Habitat habitat = (Habitat)searchStructureByID(habitatId);
+                if (habitat != null && animal != null) {
+                    animal.setDaysPassed(daysPassed);
+                    addAnimal(habitat, animal);
+                }
             }
 
-            animals[i] = animal;
+        } catch (IOException e) {
+            System.out.println("Error loading animals: " + e.getMessage());
         }
     }
+
+
 
     // =========================
     // ANIMAL METHODS
@@ -1450,7 +897,7 @@ public class Zoo {
             return false;
         }
 
-        if (numAnimals >= animals.length) {
+        if (numAnimals >= zooAnimals.length) {
             return false;
         }
 
@@ -1459,13 +906,21 @@ public class Zoo {
             return false;
         }
 
-        animals[numAnimals] = animal;
+        zooAnimals[numAnimals] = animal;
         numAnimals++;
 
         animal.setHabitatId(habitat.getStructureID());
         habitat.addAnimal(animal);
 
         return true;
+    }
+
+    public void animalsReadyToReproduce() {
+        for (int i = 0; i < numAnimals; i++) {
+            if (zooAnimals[i].canReproduce()) {
+                System.out.println(zooAnimals[i].getName() + " the " + zooAnimals[i].getSpecie() + " can reproduce");
+            }
+        }
     }
 
 
@@ -1502,16 +957,71 @@ public class Zoo {
      */
     public Animal findAnimal(String name) {
         for (int i = 0; i < numAnimals; i++) {
-            if (animals[i].getName().equalsIgnoreCase(name)) {
-                return animals[i];
+            if (zooAnimals[i].getName().equalsIgnoreCase(name)) {
+                return zooAnimals[i];
             }
         }
         return null;
     }
 
     // =========================
-    // LISTING METHODS
+    // ANIMAL DISPLAYING METHODS
     // =========================
+    /**
+     * Description: Displays information for all animals currently in the Zoo.
+     *              Uses each Animal's toString() method.
+     */
+    public void displayAllAnimals() {
+        System.out.println("=== ALL ANIMALS (" + numAnimals + ") ===");
+
+        if (numAnimals == 0) {
+            System.out.println("No animals in the zoo.");
+            return;
+        }
+
+        for (int i = 0; i < numAnimals; i++) {
+            if (zooAnimals[i] != null) {
+                System.out.println(zooAnimals[i]);
+                System.out.println("----------------------------------------");
+            }
+        }
+    }
+    // =========================
+    // DISPLAY LOW STAT METHODS
+    // =========================
+
+    /**
+     * Description: Displays names of all animals with low hunger.
+     */
+    public void displayAnimalsLowHunger() {
+        for (int i = 0; i < numAnimals; i++) {
+            if (zooAnimals[i].lowHunger()) {
+                System.out.println(zooAnimals[i].getName());
+            }
+        }
+    }
+
+    /**
+     * Description: Displays names of all animals with low happiness.
+     */
+    public void displayAnimalsLowHappiness() {
+        for (int i = 0; i < numAnimals; i++) {
+            if (zooAnimals[i].lowHappiness()) {
+                System.out.println(zooAnimals[i].getName());
+            }
+        }
+    }
+
+    /**
+     * Description: Displays names of all animals with low cleanliness.
+     */
+    public void displayAnimalsLowCleansiness() {
+        for (int i = 0; i < numAnimals; i++) {
+            if (zooAnimals[i].lowCleansiness()) {
+                System.out.println(zooAnimals[i].getName());
+            }
+        }
+    }
 
     /**
      * Description: Prints all animals that match the given species.
@@ -1520,8 +1030,8 @@ public class Zoo {
      */
     public void listAllSameSpecie(String specie) {
         for (int i = 0; i < numAnimals; i++) {
-            if (animals[i].getSpecie().equalsIgnoreCase(specie)) {
-                System.out.println(animals[i]);
+            if (zooAnimals[i].getSpecie().equalsIgnoreCase(specie)) {
+                System.out.println(zooAnimals[i]);
             }
         }
     }
@@ -1529,6 +1039,26 @@ public class Zoo {
     // =========================
     // EGG METHODS
     // =========================
+    /**
+     * Description: Displays all eggs currently in the incubator.
+     *              Uses each Egg's toString() method.
+     */
+    public void displayIncubator() {
+        System.out.println("=== INCUBATOR (" + numEggs + " eggs) ===");
+
+        if (numEggs == 0) {
+            System.out.println("No eggs in the incubator.");
+            return;
+        }
+
+        for (int i = 0; i < numEggs; i++) {
+            if (incubator[i] != null) {
+                System.out.println("Egg #" + i);
+                System.out.println(incubator[i]);
+                System.out.println("----------------------------------------");
+            }
+        }
+    }
 
     /**
      * Description: Adds an egg to the incubator if there is space.
@@ -1539,11 +1069,10 @@ public class Zoo {
      */
     public boolean addEgg(Egg egg) {
         if (numEggs < maxEggs) {
-            eggs[numEggs] = egg;
+            incubator[numEggs] = egg;
             numEggs++;
             return true;
         }
-        egg.setIndex(numEggs);
         return false;
     }
     /**
@@ -1560,50 +1089,43 @@ public class Zoo {
         }
 
         for (int i = index; i < numEggs - 1; i++) {
-            eggs[i] = eggs[i + 1];
+            incubator[i] = incubator[i + 1];
         }
 
-        eggs[numEggs - 1] = null;
+        incubator[numEggs - 1] = null;
         numEggs--;
 
         return true;
     }
-    // =========================
-    // DISPLAY LOW STAT METHODS
-    // =========================
+    
 
-    /**
-     * Description: Displays names of all animals with low hunger.
-     */
-    public void displayAnimalsLowHunger() {
-        for (int i = 0; i < numAnimals; i++) {
-            if (animals[i].lowHunger()) {
-                System.out.println(animals[i].getName());
-            }
+    // Description: hatches the egg from incubator
+    public Animal hatchEgg(Habitat habitat, int index, String name) {
+
+        if (habitat == null || incubator[index] == null || name == null) {
+            return null;
         }
+
+        Animal baby = incubator[index].hatch(name);
+
+        if (baby == null) {
+            return null;
+        }
+
+        boolean removed = removeEgg(index);
+        if (!removed) {
+            return null;
+        }
+
+        boolean added = addAnimal(habitat, baby);
+        if (!added) {
+            return null;
+        }
+
+        return baby;
     }
 
-    /**
-     * Description: Displays names of all animals with low happiness.
-     */
-    public void displayAnimalsLowHappiness() {
-        for (int i = 0; i < numAnimals; i++) {
-            if (animals[i].lowHappiness()) {
-                System.out.println(animals[i].getName());
-            }
-        }
-    }
-
-    /**
-     * Description: Displays names of all animals with low cleanliness.
-     */
-    public void displayAnimalsLowCleansiness() {
-        for (int i = 0; i < numAnimals; i++) {
-            if (animals[i].lowCleansiness()) {
-                System.out.println(animals[i].getName());
-            }
-        }
-    }
+    
 
     // =========================
     // SORTING METHODS
@@ -1615,23 +1137,23 @@ public class Zoo {
      */
     public void sortAnimalsByNameThenSpecie() {
         for (int i = 1; i < numAnimals; i++) {
-            Animal key = animals[i];
+            Animal key = zooAnimals[i];
             int j = i - 1;
 
             while (j >= 0) {
                 int nameCompare =
-                    animals[j].getName().compareToIgnoreCase(key.getName());
+                    zooAnimals[j].getName().compareToIgnoreCase(key.getName());
 
                 if (nameCompare > 0 ||
                 (nameCompare == 0 &&
-                    animals[j].getSpecie().compareToIgnoreCase(key.getSpecie()) > 0)) {
-                    animals[j + 1] = animals[j];
+                    zooAnimals[j].getSpecie().compareToIgnoreCase(key.getSpecie()) > 0)) {
+                    zooAnimals[j + 1] = zooAnimals[j];
                     j--;
                 } else {
                     break;
                 }
             }
-            animals[j + 1] = key;
+            zooAnimals[j + 1] = key;
         }
     }
 
@@ -1644,14 +1166,14 @@ public class Zoo {
             int minIndex = i;
 
             for (int j = i + 1; j < numAnimals; j++) {
-                if (animals[j].getAge() < animals[minIndex].getAge()) {
+                if (zooAnimals[j].getAge() < zooAnimals[minIndex].getAge()) {
                     minIndex = j;
                 }
             }
 
-            Animal temp = animals[i];
-            animals[i] = animals[minIndex];
-            animals[minIndex] = temp;
+            Animal temp = zooAnimals[i];
+            zooAnimals[i] = zooAnimals[minIndex];
+            zooAnimals[minIndex] = temp;
         }
     }
 
@@ -1662,10 +1184,10 @@ public class Zoo {
     public void sortAnimalsByHappiness() {
         for (int i = 0; i < numAnimals - 1; i++) {
             for (int j = 0; j < numAnimals - 1 - i; j++) {
-                if (animals[j].getHappiness() > animals[j + 1].getHappiness()) {
-                    Animal temp = animals[j];
-                    animals[j] = animals[j + 1];
-                    animals[j + 1] = temp;
+                if (zooAnimals[j].getHappiness() > zooAnimals[j + 1].getHappiness()) {
+                    Animal temp = zooAnimals[j];
+                    zooAnimals[j] = zooAnimals[j + 1];
+                    zooAnimals[j + 1] = temp;
                 }
             }
         }
@@ -1678,10 +1200,10 @@ public class Zoo {
     public void sortAnimalsByHunger() {
         for (int i = 0; i < numAnimals - 1; i++) {
             for (int j = 0; j < numAnimals - 1 - i; j++) {
-                if (animals[j].getHunger() < animals[j + 1].getHunger()) {
-                    Animal temp = animals[j];
-                    animals[j] = animals[j + 1];
-                    animals[j + 1] = temp;
+                if (zooAnimals[j].getHunger() < zooAnimals[j + 1].getHunger()) {
+                    Animal temp = zooAnimals[j];
+                    zooAnimals[j] = zooAnimals[j + 1];
+                    zooAnimals[j + 1] = temp;
                 }
             }
         }
@@ -1694,32 +1216,106 @@ public class Zoo {
     public void sortAnimalsByCleanliness() {
         for (int i = 0; i < numAnimals - 1; i++) {
             for (int j = 0; j < numAnimals - 1 - i; j++) {
-                if (animals[j].getCleanliness() > animals[j + 1].getCleanliness()) {
-                    Animal temp = animals[j];
-                    animals[j] = animals[j + 1];
-                    animals[j + 1] = temp;
+                if (zooAnimals[j].getCleanliness() > zooAnimals[j + 1].getCleanliness()) {
+                    Animal temp = zooAnimals[j];
+                    zooAnimals[j] = zooAnimals[j + 1];
+                    zooAnimals[j + 1] = temp;
                 }
             }
         }
     }
 
+    // EGG METHODS
     /**
      * Description:
      * Attempts to hatch the given egg. If the egg successfully hatches,
      * the egg is removed from the incubator and the newborn animal is returned.
      */
-    public Animal hatchEgg(Egg egg, String name) {
+    public void saveEggs(String file) {
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
 
-        if (egg == null) {
+            bw.write(Integer.toString(numEggs));
+            bw.newLine();
+            bw.newLine();
+
+            for (int i = 0; i < numEggs; i++) {
+                bw.write(incubator[i].saveToString());
+                bw.newLine();
+                bw.newLine();
+            }
+
+            bw.close();
+        } catch (IOException e) {
+            System.out.println("Error saving eggs.");
+        }
+    }
+
+
+
+    //========================================
+    public void loadEggs(String file) {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+
+            String line = br.readLine();
+            if (line == null) {
+                br.close();
+                return;
+            }
+
+            int count = Integer.parseInt(line.trim());
+            numEggs = 0;
+
+            for (int i = 0; i < count; i++) {
+
+                br.readLine(); // skip blank line
+
+                String parentName = br.readLine();
+                String species = br.readLine();
+                int hatchTime = Integer.parseInt(br.readLine());
+
+                Animal parent = findAnimal(parentName, species);
+                if (parent == null) {
+                    System.out.println("Parent not found for egg: " + parentName);
+                    continue;
+                }
+
+                Egg egg = new Egg(parent);
+                egg.setHatchTime(hatchTime);
+
+                addEgg(egg);
+            }
+
+            br.close();
+        } catch (IOException e) {
+            System.out.println("Error loading eggs.");
+        }
+    }
+
+
+
+    //==============================================
+    public Animal hatchEgg(int index, String name) {
+
+        if (incubator[index] == null) {
             return null;
         }
 
-        Animal baby = egg.hatch(name);
+        Animal baby = incubator[index].hatch(name);
 
         if (baby != null) {
-            removeEgg(egg); // remove by reference, not index
+            removeEgg(index); // remove by reference, not index
         }
 
         return baby;
     }
+
+    public Egg getEggAtIndex(int index) {
+        if (index < 0 || index >= numEggs) {
+            return null;
+        }
+        return incubator[index];
+    }
+
 }

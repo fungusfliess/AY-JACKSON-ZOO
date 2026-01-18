@@ -31,10 +31,10 @@ public class Frog extends Amphibian {
         setAdultAge(5);
         setRequiredArea(10.0);
 
-        stage2Age = 2;
-        stage3Age = 4;
-        canWalk = false;
-        canBreathUnderwater = true;
+        setStage2Age(2);
+        setStage3Age(4);
+        setCanWalk(false);
+        setCanBreathUnderwater(true);
     }
 
     // ===== GETTERS =====
@@ -85,18 +85,20 @@ public class Frog extends Amphibian {
         setWeight(getWeight() + getAge()*WEIGHT_GAIN_PER_YEAR);
         setMaxHunger(getMaxHunger() + getAge()*HUNGER_GAIN_PER_YEAR);
 
-        if (getAge() > stage3Age) {
-            currentStage = STAGE_ADULT;
-            canWalk = true;
-            canBreathUnderwater = false;
-        } else if (getAge() > stage2Age) {
-            currentStage = STAGE_JUVENILE;
-            canWalk = true;
-            canBreathUnderwater = true;
+        if (getAge() > getStage3Age()) {
+            setCurrentStage(STAGE_ADULT);
+            setCanWalk(true);
+            setCanBreathUnderwater(false);
+
+        } else if (getAge() > getStage2Age()) {
+            setCurrentStage(STAGE_JUVENILE);
+            setCanWalk(true);
+            setCanBreathUnderwater(true);
+
         } else {
-            currentStage = STAGE_LARVA;
-            canWalk = false;
-            canBreathUnderwater = true;
+            setCurrentStage(STAGE_LARVA);
+            setCanWalk(false);
+            setCanBreathUnderwater(true);
         }
     }
 

@@ -6,7 +6,7 @@
     Description: Land represents the physical land of the zoo, managing the map and structures within the zoo.
 */
 
-import java.io.*;
+
 public class Land {
     
     // FIELDS
@@ -53,122 +53,236 @@ public class Land {
     }
 
 
-    /*
-    @description: Saves land's map and list of structures to a file.
-    @params: String filename represents the name of the file to save to.
-    @returns: boolean indicating success.
-    */
-    public boolean saveToFile (String filename) {
-        try {
-            BufferedWriter out = new BufferedWriter(new FileWriter(filename));
-            // write landMap into file.
-            out.write(this.landMap.saveToString());
+    // /*
+    // @description: Saves land's map and list of structures to a file.
+    // @params: String filename represents the name of the file to save to.
+    // @returns: boolean indicating success.
+    // */
+    // public boolean saveToFile (String filename) {
+    //     try {
+    //         BufferedWriter out = new BufferedWriter(new FileWriter(filename));
+    //         // write landMap into file.
+    //         out.write(this.landMap.saveToString());
 
-            // use out.write("\n") to create new lines because out.newLine() may cause formatting issues on different OS. (I think, I read this from a Google search.)
-            out.write("\n");
-            out.write(this.maxNumStructures + "\n");
-            out.write(this.currentNumStructures + "\n");
-            out.write("\n");
-            // writing Structure info into the file.
-            for (int i = 0; i < this.currentNumStructures; i++) {
-                out.write(this.structureList[i].saveToString());
-                // COME_BACK_HERE
-                // any minor adjustments to formatting can be done here. (wait until Structure class is done)
-            }
+    //         // use out.write("\n") to create new lines because out.newLine() may cause formatting issues on different OS. (I think, I read this from a Google search.)
+    //         out.write("\n");
+    //         out.write(this.maxNumStructures + "\n");
+    //         out.write(this.currentNumStructures + "\n");
+    //         out.write("\n");
+    //         // writing Structure info into the file.
+    //         for (int i = 0; i < this.currentNumStructures; i++) {
+    //             out.write(this.structureList[i].saveToString());
+    //             out.write("\n");
+                
+    //             // any minor adjustments to formatting can be done here. (wait until Structure class is done)
+    //         }
              
-            out.close();
-            return true;
-        } catch (IOException iox) {
-            System.out.println("Error writing to file: " + filename);
-            return false;
+    //         out.close();
+    //         return true;
+    //     } catch (IOException iox) {
+    //         System.out.println("Error writing to file: " + filename);
+    //         return false;
+    //     }
+    // }
+
+    /*
+    @description: Saves land's map and list of structures to a String so that Zoo can save it into a file.
+                Adapted from saveToFile, to be more OO.
+    @returns: properly formatted String.
+    */
+    public String saveLandToString () {
+        // add everything to a String, formatted accordingly
+        String str = "";
+        str += this.landMap.saveToString() + "\n";
+        str += this.maxNumStructures + "\n";
+        str += this.currentNumStructures + "\n";
+        str += "\n";
+        for (int i = 0; i < this.currentNumStructures; i++) {
+            str += this.structureList[i].saveToString();
+            str += "\n";
+            // any minor adjustments to formatting can be done here. (wait until Structure class is done)
         }
+        return str;
     }
 
+    // /*
+    // @description: Loads land's map and list of structures from a file.
+    // @params: String filename represents the name of the file to load from.
+    // @returns: boolean indicating success.
+
+    // NOTE: This will OVERWRITE ANY EXISTING DATA in the Land object.
+    // */
+    // public boolean loadFromFile (String filename) {
+    //     String input, sumString;
+        
+    //     try {
+    //         BufferedReader in = new BufferedReader(new FileReader(filename));
+    //         // reading landMap from file
+    //         sumString = "";
+    //         // if input is an empty line, stop reading. Check null to avoid errors. 
+    //         // This will still read the empty line, so the next line is the beginning of the next section.
+    //         while ((input = in.readLine()) != null && !input.isEmpty()) {
+    //             sumString += input + "\n";
+    //         }
+    //         // pass this formatted String to Map.loadFromString to create landMap.
+    //         this.landMap = Map.loadFromString(sumString);
+            
+    //         // reading currentNumStructures
+    //         input = in.readLine();
+    //         if (input != null) {
+    //             this.maxNumStructures = Integer.parseInt(input);
+    //         }
+    //         input = in.readLine();
+    //         if (input != null) {
+    //             this.currentNumStructures = Integer.parseInt(input);
+    //         }
+    //         // creating new array of Structure
+    //         this.structureList = new Structure[this.maxNumStructures];
+
+    //         in.readLine();
+    //         // reading Structure info from the file.
+    //         String structureType = "";
+            
+    //         // for loop through array of Structures.
+    //         for (int i = 0; i < this.currentNumStructures; i++) {
+    //             sumString = "";
+    //             input = in.readLine();
+    //             if (input != null) {
+    //                 structureType = input;
+    //             } else {
+    //                 return false;
+    //             }
+    //             // if input is an empty line, stop reading. Check null to avoid errors. This will still read the empty line.
+    //             while ((input = in.readLine()) != null && !input.isEmpty()) {
+    //                 sumString += input + "\n";
+    //             }
+
+    //             // based on the structureType, call the appropriate loadFromString method.
+    //             System.out.println(structureType);
+    //             switch (structureType) {
+    //                 case "GiftShop":
+    //                     this.structureList[i] = GiftShop.loadFromString(sumString, this);
+    //                     break;
+    //                 case "Restaurant":
+    //                     this.structureList[i] = Restaurant.loadFromString(sumString, this);
+    //                     break;
+    //                 case "Pavillion":
+    //                     this.structureList[i] = Pavillion.loadFromString(sumString, this);
+    //                     break;
+    //                 case "Enclosure":
+    //                     this.structureList[i] = Enclosure.loadFromString(sumString, this);
+    //                     break;
+    //                 case "Maze":
+    //                     this.structureList[i] = Maze.loadFromString(sumString, this);
+    //                     break;
+    //                 case "Park":
+    //                     this.structureList[i] = Park.loadFromString(sumString, this);
+    //                     break;
+    //                 // add more cases as more instantiatable Structure types are created.
+    //                 default:
+    //                     System.out.println("Error: Unknown Structure type: " + structureType + "\nfound in file: " + filename + ". ");
+    //                     return false;
+    //             }
+
+    //         }
+    //         in.close();
+    //         return true;
+    //     } catch (IOException iox) {
+    //         System.out.println("Error reading from file: " + filename);
+    //     }
+    //     return false;
+    // }
+
+
     /*
-    @description: Loads land's map and list of structures from a file.
-    @params: String filename represents the name of the file to load from.
+    @description: Loads land's map and list of structures from a String. 
+                Adapted from loadFromFile, to be more OO. 
+    @params: String info represents the String from which to load in data.
     @returns: boolean indicating success.
 
     NOTE: This will OVERWRITE ANY EXISTING DATA in the Land object.
     */
-    public boolean loadFromFile (String filename) {
-        String input, sumString;
-        
-        try {
-            BufferedReader in = new BufferedReader(new FileReader(filename));
-            // reading landMap from file
-            sumString = "";
-            // if input is an empty line, stop reading. Check null to avoid errors. 
-            // This will still read the empty line, so the next line is the beginning of the next section.
-            while ((input = in.readLine()) != null && !input.isEmpty()) {
-                sumString += input + "\n";
-            }
-            // pass this formatted String to Map.loadFromString to create landMap.
-            this.landMap = Map.loadFromString(sumString);
-            
-            // reading currentNumStructures
-            input = in.readLine();
-            if (input != null) {
-                this.maxNumStructures = Integer.parseInt(input);
-            }
-            input = in.readLine();
-            if (input != null) {
-                this.currentNumStructures = Integer.parseInt(input);
-            }
-            // creating new array of Structure
-            this.structureList = new Structure[this.maxNumStructures];
+    public boolean loadLandFromString (String info) {
+        String[] rowStrings = info.split("\n");
 
-            in.readLine();
-            // reading Structure info from the file.
-            String structureType = "";
-            
-            // for loop through array of Structures.
-            for (int i = 0; i < this.currentNumStructures; i++) {
-                sumString = "";
-                input = in.readLine();
-                if (input != null) {
-                    structureType = input;
-                } else {
-                    return false;
-                }
-                // if input is an empty line, stop reading. Check null to avoid errors. This will still read the empty line.
-                while ((input = in.readLine()) != null && !input.isEmpty()) {
-                    sumString += input + "\n";
-                }
-
-                // based on the structureType, call the appropriate loadFromString method.
-                switch (structureType) {
-                    case "GiftShop":
-                        this.structureList[i] = GiftShop.loadFromString(sumString, this);
-                        break;
-                    case "Restaurant":
-                        this.structureList[i] = Restaurant.loadFromString(sumString, this);
-                        break;
-                    case "Pavillion":
-                        this.structureList[i] = Pavillion.loadFromString(sumString, this);
-                        break;
-                    case "Enclosure":
-                        this.structureList[i] = Enclosure.loadFromString(sumString, this);
-                        break;
-                    case "Maze":
-                        this.structureList[i] = Maze.loadFromString(sumString, this);
-                        break;
-                    case "Park":
-                        this.structureList[i] = Park.loadFromString(sumString, this);
-                        break;
-                    // add more cases as more instantiatable Structure types are created.
-                    default:
-                        System.out.println("Error: Unknown Structure type: " + structureType + "\nfound in file: " + filename + ". ");
-                        return false;
-                }
-
-            }
-            in.close();
-            return true;
-        } catch (IOException iox) {
-            System.out.println("Error reading from file: " + filename);
+        String sumString = "";
+        int idx = 0;
+        // if input is an empty line, stop reading. Check null to avoid errors. 
+        // This will still read the empty line, so the next line is the beginning of the next section.
+        while (!(idx > rowStrings.length-1) && rowStrings[idx] != null && !rowStrings[idx].isEmpty()) {
+            sumString += rowStrings[idx] + "\n";
+            idx++;
         }
-        return false;
+        // pass this formatted String to Map.loadFromString to create landMap.
+        this.landMap = Map.loadFromString(sumString);
+
+        idx++;
+        // reading maxNumStructures and currentNumStructures
+        if (!(idx > rowStrings.length-1) && rowStrings[idx] != null && !rowStrings[idx].isEmpty()) {
+            this.maxNumStructures = Integer.parseInt(rowStrings[idx]);
+        } else {
+            return false;
+        }
+        idx++;
+        if (!(idx > rowStrings.length-1) && rowStrings[idx] != null && !rowStrings[idx].isEmpty()) {
+            this.currentNumStructures = Integer.parseInt(rowStrings[idx]);
+        } else {
+            return false;
+        }
+        idx+= 2;
+
+         // creating new array of Structure
+        this.structureList = new Structure[this.maxNumStructures];
+
+        
+        // reading Structure info from the file.
+        String structureType = "";
+        
+        // for loop through array of Structures.
+        for (int i = 0; i < this.currentNumStructures; i++) {
+            sumString = "";
+            if (rowStrings[idx] != null) {
+                structureType = rowStrings[idx];
+                idx++;
+            } else {
+                return false;
+            }
+            // if input is an empty line, stop reading. Check null to avoid errors. This will still read the empty line.
+            while (!(idx > rowStrings.length-1) && rowStrings[idx] != null && !rowStrings[idx].isEmpty()) {
+                sumString += rowStrings[idx] + "\n";
+                idx++;
+            }
+            idx += 1;
+
+            // based on the structureType, call the appropriate loadFromString method.
+            System.out.println(structureType);
+            System.out.println(sumString);
+            switch (structureType) {
+                case "GiftShop":
+                    this.structureList[i] = GiftShop.loadFromString(sumString, this);
+                    break;
+                case "Restaurant":
+                    this.structureList[i] = Restaurant.loadFromString(sumString, this);
+                    break;
+                case "Pavillion":
+                    this.structureList[i] = Pavillion.loadFromString(sumString, this);
+                    break;
+                case "Enclosure":
+                    this.structureList[i] = Enclosure.loadFromString(sumString, this);
+                    break;
+                case "Maze":
+                    this.structureList[i] = Maze.loadFromString(sumString, this);
+                    break;
+                case "Park":
+                    this.structureList[i] = Park.loadFromString(sumString, this);
+                    break;
+                // add more cases as more instantiatable Structure types are created.
+                default:
+                    System.out.println("Error: Unknown Structure type: " + structureType + " found in file. ");
+                    return false;
+            }
+        }
+        return true;
     }
 
     // MANAGE STRUCTURE ARRAY
@@ -590,7 +704,7 @@ public class Land {
         }
         // calculating area of the Structure.
         int area = landMap.areaOf(corner1);
-        structureList[currentNumStructures] = new Enclosure(name, species, structureID, area, timeBetweenMaintenance, 0, this, maxAnimal, climate);
+        structureList[currentNumStructures] = new Enclosure(species, name, structureID, area, timeBetweenMaintenance, 0, this, maxAnimal, climate);
         currentNumStructures++;
         return true;
     }

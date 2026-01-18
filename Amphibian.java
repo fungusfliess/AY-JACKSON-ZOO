@@ -1,10 +1,10 @@
 public abstract class Amphibian extends Animal {
 
-    protected String currentStage;
-    protected int stage2Age;
-    protected int stage3Age;
-    protected boolean canWalk;
-    protected boolean canBreathUnderwater;
+    private String currentStage;
+    private int stage2Age;
+    private int stage3Age;
+    private boolean canWalk;
+    private boolean canBreathUnderwater;
 
     public static final String STAGE_LARVA = "Larva";
     public static final String STAGE_JUVENILE = "Juvenile";
@@ -24,24 +24,70 @@ public abstract class Amphibian extends Animal {
     }
 
     // =========================
+    // GETTERS (ACCESSORS)
+    // =========================
+
+    public String getCurrentStage() {
+        return currentStage;
+    }
+
+    public int getStage2Age() {
+        return stage2Age;
+    }
+
+    public int getStage3Age() {
+        return stage3Age;
+    }
+
+    public boolean canWalk() {
+        return canWalk;
+    }
+
+    public boolean canBreathUnderwater() {
+        return canBreathUnderwater;
+    }
+
+    // =========================
+    // SETTERS (MUTATORS)
+    // =========================
+
+    public void setCurrentStage(String currentStage) {
+        this.currentStage = currentStage;
+    }
+
+    public void setStage2Age(int stage2Age) {
+        this.stage2Age = stage2Age;
+    }
+
+    public void setStage3Age(int stage3Age) {
+        this.stage3Age = stage3Age;
+    }
+
+    public void setCanWalk(boolean canWalk) {
+        this.canWalk = canWalk;
+    }
+
+    public void setCanBreathUnderwater(boolean canBreathUnderwater) {
+        this.canBreathUnderwater = canBreathUnderwater;
+    }
+
+    // =========================
     // SHARED AMPHIBIAN METHODS
     // =========================
 
     public Egg reproduce() {
-        if (this.getGender().equalsIgnoreCase("Female") &&
-            this.getHappiness() >= (LOW_STAT * MAX_STAT) &&
-            this.getAge() >= this.getAdultAge() &&
-            this.getHunger() <= (LOW_STAT * this.getMaxHunger())) {
+        if (canReproduce()) {
 
             Egg egg = new Egg(this);
             return egg;
         }
         return null;
     }
-    
+
+     
     @Override
     public String saveToString() {
-        return super.saveToString() + "\n" + currentStage;
+        return super.saveToString() + "|" + currentStage;
     }
 
     @Override

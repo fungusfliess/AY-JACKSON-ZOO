@@ -49,7 +49,7 @@ public class Restaurant extends Shop{
 
         //initializes subclass-specific fields
 
-        int numItems = Integer.parseInt(fields[index]);
+        int numItems = Integer.parseInt(fields[index++]);
         Item[] menu = new Item[numItems];
 
         String itemName;
@@ -148,6 +148,7 @@ public class Restaurant extends Shop{
         }
         int animalLength = (getAnimalFacts()).getLength();
         saveToString += animalLength;
+        saveToString += "\n";
         for (int j = 0; j < animalLength; j++){
             saveToString += (getAnimalFacts()).getAnimalFact(j) + "\n";
         }

@@ -1,6 +1,6 @@
 public abstract class Reptile extends Animal {
 
-    protected int timeToShed;
+    private int timeToShed;
 
     // Description: constructor for reptiles (template-based)
     public Reptile(Animal parent) {
@@ -15,16 +15,22 @@ public abstract class Reptile extends Animal {
               happiness, cleanliness, hunger, age, weight);
     }
 
+    // Accessor
+    public int getTimeToShed() {
+        return timeToShed;
+    }
+    // Mutator
+    public void setTimeToShed(int timeToShed) {
+        this.timeToShed = timeToShed;
+    }
+
     // =========================
     // SHARED REPTILE METHODS
     // =========================
 
     // Description: reptiles reproduce via eggs
     public Egg reproduce() {
-        if (this.getGender().equalsIgnoreCase("Female") &&
-            this.getHappiness() >= (LOW_STAT * MAX_STAT) &&
-            this.getAge() >= this.getAdultAge() &&
-            this.getHunger() <= (LOW_STAT * this.getMaxHunger())) {
+        if (canReproduce()) {
 
             return new Egg(this);
         }
@@ -43,7 +49,7 @@ public abstract class Reptile extends Animal {
 
     @Override
     public String saveToString() {
-        return super.saveToString() + "\n" + timeToShed;
+        return super.saveToString() + "|" + timeToShed;
     }
 
     @Override

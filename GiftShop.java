@@ -5,7 +5,6 @@
    Date: Jan 7, 2025
    Description: Structure represents a building or facility within the zoo. It includes fields for name, ID, area, maintenance cost, and other properties related to the structure's condition and usage.
 */
-import java.io.*;
 public class GiftShop extends Shop{
 
     //CONSTANTS
@@ -48,7 +47,7 @@ public class GiftShop extends Shop{
 
         //initializes subclass-specific fields
 
-        int numItems = Integer.parseInt(fields[index]);
+        int numItems = Integer.parseInt(fields[index++]);
         Item[] menu = new Item[numItems];
 
         String itemName;
@@ -150,6 +149,7 @@ public class GiftShop extends Shop{
         }
         int animalLength = (getAnimalFacts()).getLength();
         saveToString += animalLength;
+        saveToString += "\n";
         for (int j = 0; j < animalLength; j++){
             saveToString += (getAnimalFacts()).getAnimalFact(j) + "\n";
         }
@@ -165,6 +165,10 @@ public class GiftShop extends Shop{
         //returns the complete save string
         return saveToString;
 
+   }
+
+   public String toString() {
+       return "GiftShop: " + getName() + " (ID: " + getStructureID() + ")";
    }
    
 }

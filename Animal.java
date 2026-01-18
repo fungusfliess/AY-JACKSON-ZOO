@@ -180,6 +180,10 @@ public abstract class Animal {
         this.weight = weight;
     }
 
+    public void setDaysPassed(int days) {
+        this.daysPassed = days;
+    }
+
     // =========================
     // SPECIE-BASED SETTERS
     // =========================
@@ -315,27 +319,42 @@ public abstract class Animal {
         habitatId = Land.EMPTY;
     }
 
+    public boolean isAdult() {
+        return age >= getAdultAge();
+    }
+
+    public boolean canReproduce() {
+        return this.getGender().equalsIgnoreCase("Female") &&
+            this.getHappiness() >= (LOW_STAT * MAX_STAT) &&
+            isAdult() &&
+            this.getHunger() <= (LOW_STAT * this.getMaxHunger());
+    }
+
     // =========================
     // ABSTRACT
     // =========================
     public abstract void updateAge();
+
+    
 
     // =========================
     // SAVE / STRING
     // =========================
 
     public String saveToString() {
-        return habitatId + "\n" +
-            name + "\n" +
-            specie + "\n" +
-            preferedInteraction + "\n" +
-            gender + "\n" +
-            happiness + "\n" +
-            cleanliness + "\n" +
-            hunger + "\n" +
-            age + "\n" +
-            weight;
+        return specie + "|" +
+            habitatId + "|" +
+            name + "|" +
+            preferedInteraction + "|" +
+            gender + "|" +
+            happiness + "|" +
+            cleanliness + "|" +
+            hunger + "|" +
+            age + "|" +
+            weight + "|" +
+            daysPassed;
     }
+
 
     public String description() {
     return "Name: " + getName() + "\n" +

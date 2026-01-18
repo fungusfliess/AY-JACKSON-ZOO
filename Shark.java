@@ -30,7 +30,7 @@ public class Shark extends Fish {
         setTotalDailyInteractions(3);
         setAdultAge(5);
         setRequiredArea(150.0);
-        amountEggs = 2;
+        setAmountEggs(2);
     }
 
     // ===== GETTERS =====

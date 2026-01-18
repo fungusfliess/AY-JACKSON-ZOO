@@ -30,8 +30,8 @@ public class Eagle extends Bird {
         setTotalDailyInteractions(3);
         setAdultAge(5);
         setRequiredArea(30.0);
-        flyingAge = 3;
-        canFly = false;
+        setFlyingAge(3);
+        setCanFly(false);
     }
 
     // =========================
@@ -87,8 +87,8 @@ public class Eagle extends Bird {
         setWeight(getWeight() + getAge()*WEIGHT_GAIN_PER_YEAR);
         setMaxHunger(getMaxHunger() + getAge()*HUNGER_GAIN_PER_YEAR);
 
-        if (getAge() >= flyingAge) {
-            canFly = true;
+        if (getAge() >= getFlyingAge()) {
+            setCanFly(true);
         }
     }
 

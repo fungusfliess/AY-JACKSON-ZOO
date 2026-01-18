@@ -44,4 +44,15 @@ public class LandCondition extends LivingCondition {
                 "Vegetation Density: " + vegetationDensity + "\n" +
                 "Amount of Structures: " + amountStructures + "\n";
     }
+
+    // returns formatted String to save into a file.
+    public String saveToString() {
+        return "LAND" + "\n" 
+                    + super.saveString() 
+                    + soilCompaction + "\n" 
+                    + landSlope + "\n"
+                    + vegetationDensity + "\n"
+                    + hasWaterSource + "\n"
+                    + amountStructures + "\n";
+    }
 }

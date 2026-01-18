@@ -5,7 +5,6 @@
    Date: Jan 7, 2025
    Description: Enclosure represents a living space for animals within the zoo.
 */
-import Animal_Subsystem.*;
 
 public class Enclosure extends Habitat{
 
@@ -55,7 +54,7 @@ public class Enclosure extends Habitat{
 
         //initializes subclass-specific fields
         
-        String species = fields[index];
+        String species = fields[index++];
         
         String climateType = fields[index++];
         double temp = Double.parseDouble(fields[index++]);
@@ -68,8 +67,8 @@ public class Enclosure extends Habitat{
         if(climateType.equals("LAND")){
             double soilCompaction = Double.parseDouble(fields[index++]);
             double landSlope = Double.parseDouble(fields[index++]);
-            boolean hasWaterSource = Boolean.parseBoolean(fields[index++]);
             double vegetationDensity = Double.parseDouble(fields[index++]);
+            boolean hasWaterSource = Boolean.parseBoolean(fields[index++]);
             int amountStructures = Integer.parseInt(fields[index++]);
 
             climate = new LandCondition(temp, humidity, region, soilCompaction, landSlope, hasWaterSource, vegetationDensity, amountStructures);
@@ -118,7 +117,7 @@ public class Enclosure extends Habitat{
             
             // adds animal to enclosure, updates space and number of animals
             modifySpaceLeft(-(animal.getRequiredArea()));
-            animals[getNumAnimals()] = animal;
+            (getAnimals())[getNumAnimals()] = animal;
             setNumAnimals(getNumAnimals() + 1);
             return true;
         }else{
@@ -142,13 +141,17 @@ public class Enclosure extends Habitat{
     public String saveToString(){
 
         return "Enclosure\n"
-            + species
-            + getClimate() + "\n"
+            + species + "\n"
+            + getClimateString()
             + getName() + "\n"
             + getStructureID() + "\n"
             + getArea() + "\n"
             + getTimeBetweenMaintenance() + "\n"
             + getDaysSinceLastMaintenance() + "\n"
             + getMaxAnimals() + "\n";
+    }
+
+    public String toString() {
+        return "Enclosure: " + getName() + " (ID: " + getStructureID() + ")";
     }
 }

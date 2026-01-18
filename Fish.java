@@ -1,6 +1,6 @@
 public abstract class Fish extends Animal {
 
-    protected int amountEggs;
+    private int amountEggs;
 
     // Description: constructor for fish (template-based)
     public Fish(Animal parent) {
@@ -15,16 +15,28 @@ public abstract class Fish extends Animal {
               happiness, cleanliness, hunger, age, weight);
         
     }
+    // =========================
+    // GETTER (ACCESSOR)
+    // =========================
+
+    public int getAmountEggs() {
+        return amountEggs;
+    }
+
+    // =========================
+    // SETTER (MUTATOR)
+    // =========================
+
+    public void setAmountEggs(int amountEggs) {
+        this.amountEggs = amountEggs;
+    }
 
     // =========================
     // SHARED FISH METHODS
     // =========================
 
     public Egg[] reproduce() {
-        if (this.getGender().equalsIgnoreCase("Female") &&
-            this.getHappiness() >= (LOW_STAT * MAX_STAT) &&
-            this.getAge() >= this.getAdultAge() &&
-            this.getHunger() <= (LOW_STAT * this.getMaxHunger())) {
+        if (canReproduce()) {
 
             Egg[] eggs = new Egg[amountEggs];
             for (int i = 0; i < amountEggs; i++) {
@@ -34,6 +46,7 @@ public abstract class Fish extends Animal {
         }
         return null;
     }
+
 
     @Override
     public String toString() {
