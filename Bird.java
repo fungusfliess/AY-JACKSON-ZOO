@@ -1,8 +1,8 @@
 public abstract class Bird extends Animal {
 
-    protected boolean canFly;
-    protected int flyingAge;
-    protected boolean hasNest;
+    private boolean canFly;
+    private int flyingAge;
+    private boolean hasNest;
 
     // Description: constructor for birds (template-based)
     public Bird(Animal parent) {
@@ -18,6 +18,37 @@ public abstract class Bird extends Animal {
               happiness, cleanliness, hunger, age, weight);
 
         this.hasNest = false;
+    }
+
+    // =========================
+    // GETTERS (ACCESSORS)
+    // =========================
+
+    public boolean canFly() {
+        return canFly;
+    }
+
+    public int getFlyingAge() {
+        return flyingAge;
+    }
+    public boolean getHasNest() {
+        return hasNest;
+    }
+
+    // =========================
+    // SETTERS (MUTATORS)
+    // =========================
+
+    public void setCanFly(boolean canFly) {
+        this.canFly = canFly;
+    }
+
+    public void setFlyingAge(int flyingAge) {
+        this.flyingAge = flyingAge;
+    }
+
+    public void setHasNest(boolean hasNest) {
+        this.hasNest = hasNest;
     }
 
     // =========================
@@ -44,7 +75,7 @@ public abstract class Bird extends Animal {
     
     @Override
     public String saveToString() {
-        return super.saveToString() + "\n" + hasNest;
+        return super.saveToString() + "|" + hasNest;
     }
 
     @Override

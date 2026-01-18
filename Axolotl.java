@@ -30,10 +30,10 @@ public class Axolotl extends Amphibian {
         setAdultAge(3);
         setRequiredArea(8.0);
 
-        stage2Age = 1;
-        stage3Age = 2;
-        canWalk = false;
-        canBreathUnderwater = true;
+        setStage2Age(1);
+        setStage3Age(2);
+        setCanWalk(false);
+        setCanBreathUnderwater(true);
     }
 
     // ===== GETTERS =====
@@ -87,19 +87,22 @@ public class Axolotl extends Amphibian {
             setMaxHunger(getMaxHunger() + getAge()*HUNGER_GAIN_PER_YEAR);
         }
 
-        if (getAge() > stage3Age) {
-            currentStage = STAGE_ADULT;
-            canWalk = true;
-            canBreathUnderwater = false;
-        } else if (getAge() > stage2Age) {
-            currentStage = STAGE_JUVENILE;
-            canWalk = true;
-            canBreathUnderwater = true;
+        if (getAge() > getStage3Age()) {
+            setCurrentStage(STAGE_ADULT);
+            setCanWalk(true);
+            setCanBreathUnderwater(false);
+
+        } else if (getAge() > getStage2Age()) {
+            setCurrentStage(STAGE_JUVENILE);
+            setCanWalk(true);
+            setCanBreathUnderwater(true);
+
         } else {
-            currentStage = STAGE_LARVA;
-            canWalk = false;
-            canBreathUnderwater = true;
+            setCurrentStage(STAGE_LARVA);
+            setCanWalk(false);
+            setCanBreathUnderwater(true);
         }
+
     }
 
     public String description() {

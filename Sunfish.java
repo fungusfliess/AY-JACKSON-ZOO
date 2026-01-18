@@ -30,7 +30,7 @@ public class Sunfish extends Fish {
         setTotalDailyInteractions(5);
         setAdultAge(3);
         setRequiredArea(80.0);
-        amountEggs = 10;
+        setAmountEggs(10);
     }
 
     // ===== GETTERS =====

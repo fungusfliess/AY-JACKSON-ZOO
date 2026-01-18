@@ -1,6 +1,6 @@
 public abstract class Reptile extends Animal {
 
-    protected int timeToShed;
+    private int timeToShed;
 
     // Description: constructor for reptiles (template-based)
     public Reptile(Animal parent) {
@@ -13,6 +13,15 @@ public abstract class Reptile extends Animal {
 
         super(habitatId, name, specie, preferedInteraction, gender,
               happiness, cleanliness, hunger, age, weight);
+    }
+
+    // Accessor
+    public int getTimeToShed() {
+        return timeToShed;
+    }
+    // Mutator
+    public void setTimeToShed(int timeToShed) {
+        this.timeToShed = timeToShed;
     }
 
     // =========================
@@ -40,7 +49,7 @@ public abstract class Reptile extends Animal {
 
     @Override
     public String saveToString() {
-        return super.saveToString() + "\n" + timeToShed;
+        return super.saveToString() + "|" + timeToShed;
     }
 
     @Override

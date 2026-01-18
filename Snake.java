@@ -30,7 +30,7 @@ public class Snake extends Reptile {
         setTotalDailyInteractions(5);
         setAdultAge(3);
         setRequiredArea(20.0);
-        timeToShed = 15;
+        setTimeToShed(30);
     }
 
     // ===== ABSTRACT GETTERS =====
@@ -89,7 +89,7 @@ public class Snake extends Reptile {
     public void updateAge() {
         setWeight(getWeight() + getAge()*WEIGHT_GAIN_PER_YEAR);
         setMaxHunger(getMaxHunger() + getAge()*HUNGER_GAIN_PER_YEAR);
-        timeToShed--;
+        setTimeToShed(getTimeToShed()-1);
     }
 
     @Override

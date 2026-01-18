@@ -30,7 +30,7 @@ public class Crocodile extends Reptile {
         setTotalDailyInteractions(3);
         setAdultAge(5);
         setRequiredArea(50.0);
-        timeToShed = 30;
+        setTimeToShed(30); 
     }
 
     // ===== GETTERS =====
@@ -88,7 +88,7 @@ public class Crocodile extends Reptile {
     public void updateAge() {
         setWeight(getWeight() + getAge()*WEIGHT_GAIN_PER_YEAR);
         setMaxHunger(getMaxHunger() + getAge()*HUNGER_GAIN_PER_YEAR);
-        timeToShed--;
+        setTimeToShed(getTimeToShed()-1);
     }
 
     public String description() {

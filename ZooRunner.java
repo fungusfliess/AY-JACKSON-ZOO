@@ -73,139 +73,145 @@ public class ZooRunner {
 */
     public static void adminMenu() {
 
-      boolean quit = false;
-      boolean login = false;
-      String input;
+    boolean quit = false;
+    boolean login = false;
+    String input;
 
-      // ===== LOGIN LOOP =====
-      while (!quit && !login) {
-          System.out.print("(Type quit to return)\nEnter Admin PIN: ");
-          input = sc.nextLine();
+    // ===== LOGIN LOOP =====
+    while (!quit && !login) {
+        System.out.print("(Type quit to return)\nEnter Admin PIN: ");
+        input = sc.nextLine();
 
-          if (input.equalsIgnoreCase(QUIT)) {
-              return;
-          } else if (input.equals(ADMIN_PIN)) {
-              login = true;
-          } else {
-              System.out.println("PIN ENTERED WRONG.");
-          }
-      }
+        if (input.equalsIgnoreCase(QUIT)) {
+            return;
+        } else if (input.equals(ADMIN_PIN)) {
+            login = true;
+        } else {
+            System.out.println("PIN ENTERED WRONG.");
+        }
+    }
 
-      // ===== ADMIN MENU LOOP =====
-      while (login && !quit) {
+    // ===== ADMIN MENU LOOP =====
+    while (login && !quit) {
 
-          System.out.println("""
-              Admin Menu:
-              (Type quit to return)
-              1  - Pass Time
-              2  - Display Zoo Balance
-              3  - Search Person By ID
-              4  - Search Person By ID & Earnings
-              5  - Sort Visitors By Name
-              6  - Sort Employees By Earnings
-              7  - Sort Employees By Experience & Wage
-              8  - Display All Employees
-              9  - Create Gift Shop
-              10 - Create Restaurant
-              11 - Create Pavillion
-              12 - Create Enclosure
-              13 - Create Park
-              14 - Create Maze
-              15 - Remove Structure
-              16 - Maintain All Structures
-              17 - Add Animal
-              18 - Relocate Animal
-              19 - List Animals By Species
-              20 - Add Egg
-              21 - Display Animals With Low Happiness
-              22 - Display Animals With High Hunger
-              23 - Display Animals With Low Cleanliness
-              24 - Sort Animals By Name Then Species
-              25 - Sort Animals By Age
-              26 - Sort Animals By Happiness
-              27 - Sort Animals By Hunger
-              28 - Sort Animals By Cleanliness
-              """);
+        System.out.println("""
+            Admin Menu:
+            (Type quit to return)
+            1  - Pass Time
+            2  - Display Zoo Balance
+            3  - Search Person By ID
+            4  - Search Person By ID & Earnings
+            5  - Sort Visitors By Name
+            6  - Sort Employees By Earnings
+            7  - Sort Employees By Experience & Wage
+            8  - Display All Employees
+            9  - Create Gift Shop
+            10 - Create Restaurant
+            11 - Create Pavillion
+            12 - Create Enclosure
+            13 - Create Park
+            14 - Create Maze
+            15 - Remove Structure
+            16 - Maintain All Structures
+            17 - Add Animal
+            18 - Relocate Animal
+            19 - List Animals By Species
+            20 - Add Egg
+            21 - Display Animals With Low Happiness
+            22 - Display Animals With High Hunger
+            23 - Display Animals With Low Cleanliness
+            24 - Sort Animals By Name Then Species
+            25 - Sort Animals By Age
+            26 - Sort Animals By Happiness
+            27 - Sort Animals By Hunger
+            28 - Sort Animals By Cleanliness
+            29 - Display All Animals
+            30 - Display Incubator
+            """);
 
-          input = sc.nextLine();
+        input = sc.nextLine();
 
-          if (input.equalsIgnoreCase(QUIT)) {
-              return;
-          }
+        if (input.equalsIgnoreCase(QUIT)) {
+            return;
+        }
 
-          //try {
-              switch (Integer.parseInt(input)) {
+        try {
+            switch (Integer.parseInt(input)) {
 
-                  case 1 -> {
-                      System.out.print("Enter days: ");
-                      zoo.passTime(Integer.parseInt(sc.nextLine()));
-                  }
+                case 1 -> {
+                    System.out.print("Enter days: ");
+                    zoo.passTime(Integer.parseInt(sc.nextLine()));
+                }
 
-                  case 2 -> System.out.println("Zoo Balance: $" + zoo.getBalance());
+                case 2 -> System.out.println("Zoo Balance: $" + zoo.getBalance());
 
-                  case 3 -> {
-                      System.out.print("Enter ID: ");
-                      Person p = zoo.searchByPersonID(sc.nextLine());
-                      System.out.println(p != null ? p : "Person not found.");
-                  }
+                case 3 -> {
+                    System.out.print("Enter ID: ");
+                    Person p = zoo.searchByPersonID(sc.nextLine());
+                    System.out.println(p != null ? p : "Person not found.");
+                }
 
-                  case 4 -> {
-                      System.out.print("Enter ID: ");
-                      String id = sc.nextLine();
-                      System.out.print("Enter earnings: ");
-                      double earn = Double.parseDouble(sc.nextLine());
-                      Employee e = zoo.searchByPersonIDAndEarnings(id, earn);
-                      System.out.println(e != null ? e : "No match found.");
-                  }
+                case 4 -> {
+                    System.out.print("Enter ID: ");
+                    String id = sc.nextLine();
+                    System.out.print("Enter earnings: ");
+                    double earn = Double.parseDouble(sc.nextLine());
+                    Employee e = zoo.searchByPersonIDAndEarnings(id, earn);
+                    System.out.println(e != null ? e : "No match found.");
+                }
 
-                  case 5 -> zoo.sortVisitorByName();
-                  case 6 -> zoo.sortEmployeesByEarnings();
-                  case 7 -> zoo.sortEmployeesByExperienceAndWage();
-                  case 8 -> zoo.displayAllEmployees();
+                case 5 -> zoo.sortVisitorByName();
+                case 6 -> zoo.sortEmployeesByEarnings();
+                case 7 -> zoo.sortEmployeesByExperienceAndWage();
+                case 8 -> zoo.displayAllEmployees();
 
-                  // ===== STRUCTURES =====
-                  case 9 -> buildGiftShop();
-                  case 10 -> buildRestaurant();
-                  case 11 -> buildPavillion();
-                  case 12 -> buildEnclosure();
-                  case 13 -> buildPark();
-                  case 14 -> buildMaze();
+                // ===== STRUCTURES =====
+                case 9 -> buildGiftShop();
+                case 10 -> buildRestaurant();
+                case 11 -> buildPavillion();
+                case 12 -> buildEnclosure();
+                case 13 -> buildPark();
+                case 14 -> buildMaze();
 
-                  case 15 -> {
-                      System.out.print("Enter Structure ID: ");
-                      System.out.println(zoo.removeStructure(sc.nextLine().charAt(0)));
-                  }
+                case 15 -> {
+                    System.out.print("Enter Structure ID: ");
+                    System.out.println(zoo.removeStructure(sc.nextLine().charAt(0)));
+                }
 
-                  case 16 -> zoo.maintainAll();
+                case 16 -> zoo.maintainAll();
 
-                  // ===== ANIMALS =====
-                  case 17 -> addAnimalUI();
-                  case 18 -> relocateAnimalUI();
+                // ===== ANIMALS =====
+                case 17 -> addAnimalUI();
+                case 18 -> relocateAnimalUI();
 
-                  case 19 -> {
-                      System.out.print("Enter species: ");
-                      zoo.listAllSameSpecie(sc.nextLine());
-                  }
+                case 19 -> {
+                    System.out.print("Enter species: ");
+                    zoo.listAllSameSpecie(sc.nextLine());
+                }
 
-                  case 20 -> addEggMenu();
-                  case 21 -> zoo.displayAnimalsLowHappiness();
-                  case 22 -> zoo.displayAnimalsLowHunger();
-                  case 23 -> zoo.displayAnimalsLowCleansiness();
+                case 20 -> addEggMenu();
+                case 21 -> zoo.displayAnimalsLowHappiness();
+                case 22 -> zoo.displayAnimalsLowHunger();
+                case 23 -> zoo.displayAnimalsLowCleansiness();
 
-                  case 24 -> zoo.sortAnimalsByNameThenSpecie();
-                  case 25 -> zoo.sortAnimalsByAge();
-                  case 26 -> zoo.sortAnimalsByHappiness();
-                  case 27 -> zoo.sortAnimalsByHunger();
-                  case 28 -> zoo.sortAnimalsByCleanliness();
+                case 24 -> zoo.sortAnimalsByNameThenSpecie();
+                case 25 -> zoo.sortAnimalsByAge();
+                case 26 -> zoo.sortAnimalsByHappiness();
+                case 27 -> zoo.sortAnimalsByHunger();
+                case 28 -> zoo.sortAnimalsByCleanliness();
 
-                  default -> System.out.println("Invalid option.");
-               }}
+                case 29 -> zoo.displayAllAnimals();
+                case 30 -> zoo.displayIncubator();
 
-        //   } catch (Exception e) {
-        //       System.out.println("Invalid input.");
-        //   }
-      //}
-  }
+                default -> System.out.println("Invalid option.");
+            }
+
+        } catch (Exception e) {
+            System.out.println("Invalid input.");
+        }
+    }
+}
+
     
     /*
     @description: displays the Employee menu and allows an employee to run structure-related

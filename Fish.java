@@ -1,6 +1,6 @@
 public abstract class Fish extends Animal {
 
-    protected int amountEggs;
+    private int amountEggs;
 
     // Description: constructor for fish (template-based)
     public Fish(Animal parent) {
@@ -14,6 +14,21 @@ public abstract class Fish extends Animal {
         super(habitatId, name, specie, preferedInteraction, gender,
               happiness, cleanliness, hunger, age, weight);
         
+    }
+    // =========================
+    // GETTER (ACCESSOR)
+    // =========================
+
+    public int getAmountEggs() {
+        return amountEggs;
+    }
+
+    // =========================
+    // SETTER (MUTATOR)
+    // =========================
+
+    public void setAmountEggs(int amountEggs) {
+        this.amountEggs = amountEggs;
     }
 
     // =========================

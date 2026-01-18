@@ -89,8 +89,10 @@ public class Zoo {
             System.out.println("Error reading file.");
         }
         loadPersons();
-        loadAnimals(ANIMAL_FILE);
         loadLandFromFile();
+        loadAnimals(ANIMAL_FILE);
+        loadEggs(EGG_FILE);
+
         System.out.println("Zoo Successfully Loaded!");
     }
    
@@ -722,15 +724,9 @@ public class Zoo {
     // SAVE ANIMALS
     // =========================
 
-    public void saveAnimals(String file) throws IOException {
+    public void saveAnimals(String filename) throws IOException {
+    try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
 
-        BufferedWriter bw = new BufferedWriter(new FileWriter(file));
-
-        // save number of animals
-        bw.write(numAnimals + "");
-        bw.newLine();
-
-        // save each animal
         for (int i = 0; i < numAnimals; i++) {
             if (zooAnimals[i] != null) {
                 bw.write(zooAnimals[i].saveToString());
@@ -738,91 +734,100 @@ public class Zoo {
             }
         }
 
-        bw.close();
     }
+}
+
 
 
     // =========================
     // LOAD ANIMALS
     // =========================
 
-    public void loadAnimals(String file) {
+    public void loadAnimals(String filename) {
+        numAnimals = 0;
+        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+            String line;
 
-    try {
-        BufferedReader br = new BufferedReader(new FileReader(file));
+            while ((line = br.readLine()) != null) {
+                String[] data = line.split("\\|");
+                int i = 0;
 
-        numAnimals = Integer.parseInt(br.readLine());
-        br.readLine();
+                String specie = data[i++];
 
-        for (int i = 0; i < numAnimals; i++) {
+                char habitatId = (data[i++]).charAt(0);
+                String name = data[i++];
+                String preferredInteraction = data[i++];
+                String gender = data[i++];
+                int happiness = Integer.parseInt(data[i++]);
+                int cleanliness = Integer.parseInt(data[i++]);
+                int hunger = Integer.parseInt(data[i++]);
+                int age = Integer.parseInt(data[i++]);
+                double weight = Double.parseDouble(data[i++]);
+                int daysPassed = Integer.parseInt(data[i++]);
 
-            // ===== READ COMMON STATE =====
-            char habitatId = br.readLine().charAt(0);
-            String name = br.readLine();
-            String specie = br.readLine();
-            String preferedInteraction = br.readLine();
-            String gender = br.readLine();
-            int happiness = Integer.parseInt(br.readLine());
-            int cleanliness = Integer.parseInt(br.readLine());
-            int hunger = Integer.parseInt(br.readLine());
-            int age = Integer.parseInt(br.readLine());
-            double weight = Double.parseDouble(br.readLine());
+                Animal animal = null;
 
-            // ===== CREATE CORRECT SPECIES =====
-            Animal animal = null;
+                if (specie.equalsIgnoreCase("Unicorn")) {
+                    animal = new Unicorn(habitatId, name, preferredInteraction, gender,
+                            happiness, cleanliness, hunger, age, weight);
 
-            if (specie.equalsIgnoreCase("Unicorn")) {
-                animal = new Unicorn(habitatId, name, preferedInteraction, gender,
-                        happiness, cleanliness, hunger, age, weight);
-            }
-            else if (specie.equalsIgnoreCase("Capybara")) {
-                animal = new Capybara(habitatId, name, preferedInteraction, gender,
-                        happiness, cleanliness, hunger, age, weight);
-            }
-            else if (specie.equalsIgnoreCase("Eagle")) {
-                animal = new Eagle(habitatId, name, preferedInteraction, gender,
-                        happiness, cleanliness, hunger, age, weight);
-            }
-            else if (specie.equalsIgnoreCase("Cockatoo")) {
-                animal = new Cockatoo(habitatId, name, preferedInteraction, gender,
-                        happiness, cleanliness, hunger, age, weight);
-            }
-            else if (specie.equalsIgnoreCase("Snake")) {
-                animal = new Snake(habitatId, name, preferedInteraction, gender,
-                        happiness, cleanliness, hunger, age, weight);
-            }
-            else if (specie.equalsIgnoreCase("Crocodile")) {
-                animal = new Crocodile(habitatId, name, preferedInteraction, gender,
-                        happiness, cleanliness, hunger, age, weight);
-            }
-            else if (specie.equalsIgnoreCase("Frog")) {
-                animal = new Frog(habitatId, name, preferedInteraction, gender,
-                        happiness, cleanliness, hunger, age, weight);
-            }
-            else if (specie.equalsIgnoreCase("Axolotl")) {
-                animal = new Axolotl(habitatId, name, preferedInteraction, gender,
-                        happiness, cleanliness, hunger, age, weight);
-            }
-            else if (specie.equalsIgnoreCase("Shark")) {
-                animal = new Shark(habitatId, name, preferedInteraction, gender,
-                        happiness, cleanliness, hunger, age, weight);
-            }
-            else if (specie.equalsIgnoreCase("Sunfish")) {
-                animal = new Sunfish(habitatId, name, preferedInteraction, gender,
-                        happiness, cleanliness, hunger, age, weight);
+                } else if (specie.equalsIgnoreCase("Capybara")) {
+                    animal = new Capybara(habitatId, name, preferredInteraction, gender,
+                            happiness, cleanliness, hunger, age, weight);
+
+                } else if (specie.equalsIgnoreCase("Eagle")) {
+                    Eagle eagle = new Eagle(habitatId, name, preferredInteraction, gender,
+                            happiness, cleanliness, hunger, age, weight);
+                    eagle.setHasNest(Boolean.parseBoolean(data[i++]));
+                    animal = eagle;
+
+                } else if (specie.equalsIgnoreCase("Cockatoo")) {
+                    Cockatoo cockatoo = new Cockatoo(habitatId, name, preferredInteraction, gender,
+                            happiness, cleanliness, hunger, age, weight);
+                    cockatoo.setHasNest(Boolean.parseBoolean(data[i++]));
+                    animal = cockatoo;
+
+                } else if (specie.equalsIgnoreCase("Snake")) {
+                    Snake snake = new Snake(habitatId, name, preferredInteraction, gender,
+                            happiness, cleanliness, hunger, age, weight);
+                    snake.setTimeToShed(Integer.parseInt(data[i++]));
+                    animal = snake;
+
+                } else if (specie.equalsIgnoreCase("Crocodile")) {
+                    Crocodile croc = new Crocodile(habitatId, name, preferredInteraction, gender,
+                            happiness, cleanliness, hunger, age, weight);
+                    croc.setTimeToShed(Integer.parseInt(data[i++]));
+                    animal = croc;
+
+                } else if (specie.equalsIgnoreCase("Frog")) {
+                    animal = new Frog(habitatId, name, preferredInteraction, gender,
+                            happiness, cleanliness, hunger, age, weight);
+
+                } else if (specie.equalsIgnoreCase("Axolotl")) {
+                    animal = new Axolotl(habitatId, name, preferredInteraction, gender,
+                            happiness, cleanliness, hunger, age, weight);
+
+                } else if (specie.equalsIgnoreCase("Shark")) {
+                    animal = new Shark(habitatId, name, preferredInteraction, gender,
+                            happiness, cleanliness, hunger, age, weight);
+
+                } else if (specie.equalsIgnoreCase("Sunfish")) {
+                    animal = new Sunfish(habitatId, name, preferredInteraction, gender,
+                            happiness, cleanliness, hunger, age, weight);
+                }
+                
+                Habitat habitat = (Habitat)searchStructureByID(habitatId);
+                if (habitat != null && animal != null) {
+                    animal.setDaysPassed(daysPassed);
+                    addAnimal(habitat, animal);
+                }
             }
 
-            zooAnimals[i] = animal;
+        } catch (IOException e) {
+            System.out.println("Error loading animals: " + e.getMessage());
         }
-
-        br.close();
-
-    } catch (IOException e) {
-        System.out.println("Error loading animals from file: " + e.getMessage());
-    } catch (NumberFormatException e) {
-        System.out.println("Invalid number format in animal file.");
     }
-}
+
 
 
     // =========================
@@ -930,8 +935,63 @@ public class Zoo {
     }
 
     // =========================
-    // LISTING METHODS
+    // ANIMAL DISPLAYING METHODS
     // =========================
+    /**
+     * Description: Displays information for all animals currently in the Zoo.
+     *              Uses each Animal's toString() method.
+     */
+    public void displayAllAnimals() {
+        System.out.println("=== ALL ANIMALS (" + numAnimals + ") ===");
+
+        if (numAnimals == 0) {
+            System.out.println("No animals in the zoo.");
+            return;
+        }
+
+        for (int i = 0; i < numAnimals; i++) {
+            if (zooAnimals[i] != null) {
+                System.out.println(zooAnimals[i]);
+                System.out.println("----------------------------------------");
+            }
+        }
+    }
+    // =========================
+    // DISPLAY LOW STAT METHODS
+    // =========================
+
+    /**
+     * Description: Displays names of all animals with low hunger.
+     */
+    public void displayAnimalsLowHunger() {
+        for (int i = 0; i < numAnimals; i++) {
+            if (zooAnimals[i].lowHunger()) {
+                System.out.println(zooAnimals[i].getName());
+            }
+        }
+    }
+
+    /**
+     * Description: Displays names of all animals with low happiness.
+     */
+    public void displayAnimalsLowHappiness() {
+        for (int i = 0; i < numAnimals; i++) {
+            if (zooAnimals[i].lowHappiness()) {
+                System.out.println(zooAnimals[i].getName());
+            }
+        }
+    }
+
+    /**
+     * Description: Displays names of all animals with low cleanliness.
+     */
+    public void displayAnimalsLowCleansiness() {
+        for (int i = 0; i < numAnimals; i++) {
+            if (zooAnimals[i].lowCleansiness()) {
+                System.out.println(zooAnimals[i].getName());
+            }
+        }
+    }
 
     /**
      * Description: Prints all animals that match the given species.
@@ -949,6 +1009,26 @@ public class Zoo {
     // =========================
     // EGG METHODS
     // =========================
+    /**
+     * Description: Displays all eggs currently in the incubator.
+     *              Uses each Egg's toString() method.
+     */
+    public void displayIncubator() {
+        System.out.println("=== INCUBATOR (" + numEggs + " eggs) ===");
+
+        if (numEggs == 0) {
+            System.out.println("No eggs in the incubator.");
+            return;
+        }
+
+        for (int i = 0; i < numEggs; i++) {
+            if (incubator[i] != null) {
+                System.out.println("Egg #" + i);
+                System.out.println(incubator[i]);
+                System.out.println("----------------------------------------");
+            }
+        }
+    }
 
     /**
      * Description: Adds an egg to the incubator if there is space.
@@ -1015,42 +1095,7 @@ public class Zoo {
         return baby;
     }
 
-    // =========================
-    // DISPLAY LOW STAT METHODS
-    // =========================
-
-    /**
-     * Description: Displays names of all animals with low hunger.
-     */
-    public void displayAnimalsLowHunger() {
-        for (int i = 0; i < numAnimals; i++) {
-            if (zooAnimals[i].lowHunger()) {
-                System.out.println(zooAnimals[i].getName());
-            }
-        }
-    }
-
-    /**
-     * Description: Displays names of all animals with low happiness.
-     */
-    public void displayAnimalsLowHappiness() {
-        for (int i = 0; i < numAnimals; i++) {
-            if (zooAnimals[i].lowHappiness()) {
-                System.out.println(zooAnimals[i].getName());
-            }
-        }
-    }
-
-    /**
-     * Description: Displays names of all animals with low cleanliness.
-     */
-    public void displayAnimalsLowCleansiness() {
-        for (int i = 0; i < numAnimals; i++) {
-            if (zooAnimals[i].lowCleansiness()) {
-                System.out.println(zooAnimals[i].getName());
-            }
-        }
-    }
+    
 
     // =========================
     // SORTING METHODS

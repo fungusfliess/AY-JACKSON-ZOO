@@ -30,8 +30,8 @@ public class Cockatoo extends Bird {
         setTotalDailyInteractions(5);
         setAdultAge(3);
         setRequiredArea(15.0);
-        flyingAge = 2;
-        canFly = false;
+        setFlyingAge(2);
+        setCanFly(false);
     }
 
     // ===== GETTERS =====
@@ -83,8 +83,8 @@ public class Cockatoo extends Bird {
         setWeight(getWeight() + getAge()*WEIGHT_GAIN_PER_YEAR);
         setMaxHunger(getMaxHunger() + getAge()*HUNGER_GAIN_PER_YEAR);
 
-        if (getAge() >= flyingAge) {
-            canFly = true;
+        if (getAge() >= getFlyingAge()) {
+            setCanFly(true);
         }
     }
 

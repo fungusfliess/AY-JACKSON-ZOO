@@ -180,6 +180,10 @@ public abstract class Animal {
         this.weight = weight;
     }
 
+    public void setDaysPassed(int days) {
+        this.daysPassed = days;
+    }
+
     // =========================
     // SPECIE-BASED SETTERS
     // =========================
@@ -338,18 +342,19 @@ public abstract class Animal {
     // =========================
 
     public String saveToString() {
-        return habitatId + "\n" +
-            name + "\n" +
-            specie + "\n" +
-            preferedInteraction + "\n" +
-            gender + "\n" +
-            happiness + "\n" +
-            cleanliness + "\n" +
-            hunger + "\n" +
-            age + "\n" +
-            weight + "\n" + 
+        return specie + "|" +
+            habitatId + "|" +
+            name + "|" +
+            preferedInteraction + "|" +
+            gender + "|" +
+            happiness + "|" +
+            cleanliness + "|" +
+            hunger + "|" +
+            age + "|" +
+            weight + "|" +
             daysPassed;
     }
+
 
     public String description() {
     return "Name: " + getName() + "\n" +
