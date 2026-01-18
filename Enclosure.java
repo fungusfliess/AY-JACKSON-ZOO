@@ -54,7 +54,7 @@ public class Enclosure extends Habitat{
 
         //initializes subclass-specific fields
         
-        String species = fields[index];
+        String species = fields[index++];
         
         String climateType = fields[index++];
         double temp = Double.parseDouble(fields[index++]);

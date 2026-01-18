@@ -48,7 +48,7 @@ public class Pavillion extends Habitat{
         
         //initializes subclass-specific fields
 
-        String climateType = fields[index];
+        String climateType = fields[index++];
         double temp = Double.parseDouble(fields[index++]);
         double humidity = Double.parseDouble(fields[index++]);
         String region = fields[index++];

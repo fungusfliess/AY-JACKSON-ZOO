@@ -98,10 +98,11 @@ public abstract class Habitat extends Structure{
     */
     public boolean demolish(){
         if (numAnimals == 0 ){
-            System.out.println("Demolition is not possible! There are still " + numAnimals + " animals remaining. ");
             this.setDemolished(true);
             return true;
-        }return false;
+        }
+        System.out.println("Demolition is not possible! There are still " + numAnimals + " animals remaining. ");
+        return false;
     }
 
     /*

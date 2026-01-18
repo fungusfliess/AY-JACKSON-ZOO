@@ -161,7 +161,7 @@ public class ZooRunner {
               return;
           }
 
-          try {
+          //try {
               switch (Integer.parseInt(input)) {
 
                   case 1 -> {
@@ -201,9 +201,7 @@ public class ZooRunner {
 
                   case 15 -> {
                       System.out.print("Enter Structure ID: ");
-                      System.out.println(zoo.removeStructure(sc.nextLine().charAt(0))
-                              ? "Removed."
-                              : "Removal failed.");
+                      System.out.println(zoo.removeStructure(sc.nextLine().charAt(0)));
                   }
 
                   case 16 -> zoo.maintainAll();
@@ -229,12 +227,12 @@ public class ZooRunner {
                   case 28 -> zoo.sortAnimalsByCleanliness();
 
                   default -> System.out.println("Invalid option.");
-              }
+               }}
 
-          } catch (Exception e) {
-              System.out.println("Invalid input.");
-          }
-      }
+        //   } catch (Exception e) {
+        //       System.out.println("Invalid input.");
+        //   }
+      //}
   }
 
 
@@ -401,7 +399,7 @@ private static void buildMaze() {
     int time = readMaintenanceTime();
     Coord c1 = readCoord();
 
-    boolean success = zoo.createMaze(c1, name, id, time, null);
+    boolean success = zoo.createMaze(c1, name, id, time);
 
     if (success) System.out.println("Maze created.");
     else System.out.println("Maze creation failed.");
@@ -680,11 +678,56 @@ public static void hatchEggMenu() {
                     switch(Integer.parseInt(input)){
                         case 1:
                             System.out.println("Enter Number Of Animals And Size");
-                            System.out.println(searchByNumberAnimalsAndSize(Integer.parseInt(sc.nextLine()), Integer.parseInt(sc.nextLine())));
+                            System.out.println(zoo.searchByNumberAnimalsAndSize(Integer.parseInt(sc.nextLine()), Integer.parseInt(sc.nextLine())));
                             break;
                      
                         case 2: 
-                            System.out.println(searchHabitatMostAnimalsAndLivingConditions(LivingCondition.createLivingCondition()));
+                            LivingCondition lc = null;
+                            System.out.println("Enter Living Condition Type (water/land): ");
+                            String condition = sc.nextLine();
+                            if (condition.equalsIgnoreCase("water")) {
+                                System.out.println("Enter Temperature: ");
+                                double temp = Double.parseDouble(sc.nextLine());
+                                System.out.println("Enter Humidity: ");
+                                double hum = Double.parseDouble(sc.nextLine());
+                                System.out.println("Enter Region: ");
+                                String region = sc.nextLine();
+                                System.out.println("Enter Acidity: ");
+                                double acidity = Double.parseDouble(sc.nextLine());
+                                System.out.println("Enter Hardness: ");
+                                double hardness = Double.parseDouble(sc.nextLine());
+                                System.out.println("Enter Water Temperature: ");
+                                double waterTemp = Double.parseDouble(sc.nextLine());
+                                System.out.println("Has Land? (true/false): ");
+                                boolean hasLand = Boolean.parseBoolean(sc.nextLine());
+                                System.out.println("Enter Salinity: ");
+                                double salinity = Double.parseDouble(sc.nextLine());
+                                lc = new WaterCondition(temp, hum, condition, acidity, hardness, waterTemp, hasLand, salinity);
+                            } else if (condition.equalsIgnoreCase("land")) {
+                                System.out.println("Enter Temperature: ");
+                                double temp = Double.parseDouble(sc.nextLine());
+                                System.out.println("Enter Humidity: ");
+                                double hum = Double.parseDouble(sc.nextLine());
+                                System.out.println("Enter Region: ");
+                                String region = sc.nextLine();
+                                System.out.println("Enter Soil Compaction: ");
+                                double soilCompaction = Double.parseDouble(sc.nextLine());
+                                System.out.println("Enter Slope: ");
+                                double slope = Double.parseDouble(sc.nextLine());
+                                System.out.println("Has Water? (true/false): ");
+                                boolean hasWater = Boolean.parseBoolean(sc.nextLine());
+                                System.out.println("Enter Vegetation Amount: ");
+                                double vegetation = Double.parseDouble(sc.nextLine());
+                                System.out.println("Enter Number Of Structures: ");
+                                int structures = Integer.parseInt(sc.nextLine());
+                                lc = new LandCondition(temp, hum, condition, soilCompaction, slope, hasWater, vegetation, structures);
+                            } else {
+                                System.out.println("Invalid living condition type.");
+                                break;
+                            }
+                            if (lc != null) {
+                                System.out.println(zoo.searchHabitatMostAnimalsAndLivingConditions(lc));
+                            }
                             break;
 
                         case 3:
@@ -697,11 +740,11 @@ public static void hatchEggMenu() {
                             System.out.println("Sorting Complete.");
                             break;
                         case 5:
-                            sortBySizeAndMostAnimals();
+                            zoo.sortBySizeAndMostAnimals();
                             System.out.println("Sorting Complete.");
                             break;
                         case 6:
-                            printAllStructuresNeedingMaintenance();
+                            zoo.printAllStructuresNeedingMaintenance();
                             break;
                         case 7: 
                             System.out.print("Enter Structure ID: ");
@@ -714,14 +757,36 @@ public static void hatchEggMenu() {
                             zoo.printAllStructureInfo();
                             break;
                         case 10:
-                            if (addPerson()) {
-                                System.out.println("Person Added.");
-                            } else {
-                                System.out.println("Zoo has reached max capacity OR input was invalid, Person could not be added!");
+                            Person p;
+                            System.out.println("Enter Person Type (Visitor/Employee): ");
+                            String personType = sc.nextLine();
+                            switch (personType.toLowerCase()) {
+                                case "child":
+                                    System.out.println("Enter Visitor Name: ");
+                                    String visitorName = sc.nextLine();
+                                    System.out.println("Enter Visitor Age: ");
+                                    int visitorAge = Integer.parseInt(sc.nextLine());
+                                    
+                                    break;
+                                case "adult":
+                                    System.out.println("Enter Visitor Name: ");
+                                    String name = sc.nextLine();
+                                    System.out.println("Enter Visitor Age: ");
+                                    int age = Integer.parseInt(sc.nextLine());
+                                    
+                                    break;
+                                default:
+                                    System.out.println("Invalid person type.");
+                                    break;
                             }
+                            //if (zoo.addPerson()) {
+                                System.out.println("Person Added.");
+                            //} else {
+                                System.out.println("Zoo has reached max capacity OR input was invalid, Person could not be added!");
+                            //}
                             break;
                         case 11:
-                          deliverOffspringMenu(zoo);
+                          deliverOffspringMenu(zoo, sc);
                         default:
                             System.out.println("Sorry, that is not a valid option!\n");
                     }
@@ -797,22 +862,22 @@ public static void hatchEggMenu() {
         // =========================
         // EGG-LAYING ANIMALS
         // =========================
-        else {
+        // else {
 
-            Egg egg = parent.reproduce();
+        //     Egg egg = parent.reproduce();
 
-            if (egg == null) {
-                System.out.println("This animal cannot reproduce right now.");
-                continue;
-            }
+        //     if (egg == null) {
+        //         System.out.println("This animal cannot reproduce right now.");
+        //         continue;
+        //     }
 
-            if (zoo.addEgg(egg)) {
-                System.out.println("Egg created successfully.");
-                delivered = true;
-            } else {
-                System.out.println("Incubator is full. Egg discarded.");
-            }
-        }
+        //     if (zoo.addEgg(egg)) {
+        //         System.out.println("Egg created successfully.");
+        //         delivered = true;
+        //     } else {
+        //         System.out.println("Incubator is full. Egg discarded.");
+        //     }
+        // }
     }
 }
 

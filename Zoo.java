@@ -9,9 +9,30 @@ public class Zoo {
     public static final String PERSON_FILE = "persons.txt";
     public static final String LAND_FILE = "land.txt";
     public static final String ADMIN_PIN = "0000";
-
+    public static final int MAX_NUM_STRUCTURES = 40; 
+    public static final int length = 20;
+    public static final int width = 50;
     public static final String QUIT = "quit";
-    
+    public static final char[][] MAZE_DEFAULT_SHAPE = {{'.', '.'}, {'N', 'N'}};
+    // {
+    //                          {'.', '.', '.', '.', '.', '.', 'N', '.', 'N', '.', '.', '.', '.', '.', '.', }, 
+    //                          {'.', '.', '.', '.', 'N', 'X', 'N', '.', 'N', '.', 'N', 'N', 'N', 'N', 'N', }, 
+    //                          {'.', 'N', 'N', 'N', 'N', 'N', 'N', '.', '.', '.', 'N', 'N', 'N', 'N', 'N', }, 
+    //                          {'.', 'N', '.', '.', '.', '.', '.', '.', 'N', '.', '.', '.', '.', '.', '.', }, 
+    //                          {'.', 'N', '.', 'N', '.', 'N', '.', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', }, 
+    //                          {'.', 'N', '.', 'N', '.', 'N', '.', '.', 'N', 'N', '.', '.', '.', '.', '.', }, 
+    //                          {'.', 'N', 'N', 'N', '.', 'N', '.', '.', '.', '.', '.', '.', '.', '.', '.', }, 
+    //                          {'.', '.', '.', '.', '.', 'N', '.', '.', '.', 'N', '.', '.', '.', '.', '.', }, 
+    //                          {'.', 'N', 'N', '.', 'N', 'N', 'N', 'N', 'N', 'N', 'N', '.', 'N', 'N', 'N', }, 
+    //                          {'.', '.', '.', '.', '.', '.', '.', 'N', 'N', '.', 'N', '.', '.', '.', '.', }, 
+    //                          {'.', 'N', '.', 'N', 'N', 'N', '.', '.', '.', '.', 'N', 'N', 'N', '.', 'N', }, 
+    //                          {'.', 'N', '.', 'N', '.', 'N', 'N', 'N', '.', 'N', 'N', '.', 'N', '.', '.', }, 
+    //                          {'.', 'N', '.', 'N', '.', 'N', '.', '.', '.', '.', '.', '.', 'N', '.', 'N', }, 
+    //                          {'.', 'N', '.', 'N', '.', 'N', '.', 'N', 'N', 'N', 'N', '.', 'N', '.', '.', }, 
+    //                          {'.', 'N', 'N', 'N', '.', 'N', '.', '.', '.', '.', 'N', '.', 'N', '.', 'N', }, 
+    //                          {'.', '.', '.', '.', '.', 'N', '.', 'N', '.', '.', 'N', '.', '.', '.', '.', }, };;
+
+
     //FIELDS
     private Employee[] employeeList;
     private Visitor[] visitorList;
@@ -31,8 +52,9 @@ public class Zoo {
     
     private Animal[] zooAnimals;
     private Egg[] incubator;
-    private Land zooLand;
-    private Map map;
+    private Map map = new Map(length, width);
+    private Land zooLand = new Land(MAX_NUM_STRUCTURES, map);
+    
 
     /*
     @description: constructs and initializes the Zoo by reading configuration values
@@ -66,11 +88,9 @@ public class Zoo {
         }catch(IOException e){
             System.out.println("Error reading file.");
         }
-        loadPersons(PERSON_FILE);
+        loadPersons();
         loadAnimals(ANIMAL_FILE);
-        loadStructures();
-        loadMap();
-        map = zooLand.getMap();
+        loadLandFromFile();
         System.out.println("Zoo Successfully Loaded!");
     }
    
@@ -82,11 +102,7 @@ public class Zoo {
                   ZOO_CONSTRUCTOR_FILE.
     @postcondition: persistent files are updated to reflect the Zoo's current state.
     */
-    public void saveZoo(String file){
-        savePersons();
-        saveAnimals(file + "animals");
-        saveEggs(file + "eggs");
-        saveLand();
+    public void saveZoo(){
         try{
             BufferedWriter bw = new BufferedWriter(new FileWriter(ZOO_CONSTRUCTOR_FILE, false));
             bw.write(String.valueOf(zooBalance));
@@ -99,6 +115,10 @@ public class Zoo {
             bw.close();
             bw.write("" + maxVisitor);
             bw.close();
+            savePersons();
+            saveAnimals(ANIMAL_FILE);
+            saveLandToFile();
+            System.out.println("Zoo Successfully Saved!");
         }catch(IOException e){
             System.out.println("Error saving zoo: " + e.getMessage());
         }
@@ -145,6 +165,8 @@ public class Zoo {
         System.out.println(zooAnimals[index].getName() + " is about to have a baby! help deliver its baby!");
         zooLand.passDay();
     }
+
+    
 
     // LAND METHODS
     //
@@ -198,16 +220,18 @@ public class Zoo {
 
     //
     public boolean createMaze(Coord c1, String name, char id,
-                          int timeBetweenMaintenance, char[][] layout) {
+                          int timeBetweenMaintenance /*layout: replaced by default */) {
 
         if (c1 == null || name == null) {
             return false;
         }
 
-        return zooLand.createMaze(c1, name, id, timeBetweenMaintenance, layout);
+        return zooLand.createMaze(c1, name, id, timeBetweenMaintenance, /*layout */ MAZE_DEFAULT_SHAPE);
     }
 
-
+    public boolean removeStructure (char id) {
+        return zooLand.removeStructureFromList(zooLand.searchIdxByID(id));
+    }
 
 
     public boolean loadLandFromFile () { 
@@ -240,6 +264,10 @@ public class Zoo {
 
     public Habitat searchHabitatMostAnimalsAndLivingConditions (LivingCondition condition) {
         return zooLand.searchHabitatMostAnimalsAndLivingConditions(condition);
+    }
+
+    public void sortBySizeAndMostAnimals () {
+        zooLand.sortByAnimalsAndSize();
     }
 
     public void sortStructuresByDaysSinceLastMaintenance (int numToSort) {
@@ -282,6 +310,9 @@ public class Zoo {
         input.maintenance();
     } 
 
+    public double getBalance() {
+        return zooBalance;
+    }
 
 
     public String toString() {
@@ -716,6 +747,7 @@ public class Zoo {
         BufferedReader br = new BufferedReader(new FileReader(file));
 
         numAnimals = Integer.parseInt(br.readLine());
+        br.readLine();
 
         for (int i = 0; i < numAnimals; i++) {
 

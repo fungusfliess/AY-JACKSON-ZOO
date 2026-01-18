@@ -137,6 +137,7 @@ public class Land {
                 }
 
                 // based on the structureType, call the appropriate loadFromString method.
+                System.out.println(structureType);
                 switch (structureType) {
                     case "GiftShop":
                         this.structureList[i] = GiftShop.loadFromString(sumString, this);

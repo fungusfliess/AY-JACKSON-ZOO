@@ -47,7 +47,7 @@ public class GiftShop extends Shop{
 
         //initializes subclass-specific fields
 
-        int numItems = Integer.parseInt(fields[index]);
+        int numItems = Integer.parseInt(fields[index++]);
         Item[] menu = new Item[numItems];
 
         String itemName;
