@@ -7,7 +7,7 @@
                 job-related data such as hourly wage, years of experience, hours worked, total earnings, and
                 benefits eligibility. Concrete subclasses (ex: ZooKeeper, ShopStaff) implement setEarnings()
                 and provide role-specific behavior.
-*/
+*/ 
 
 public abstract class Employee extends Person {
    //FIELDS 
