@@ -8,7 +8,6 @@ public class Zoo {
     public static final String EGG_FILE = "eggs.txt";
     public static final String PERSON_FILE = "persons.txt";
     public static final String LAND_FILE = "land.txt";
-    private static final String SAVE_FOLDER = "textfiles";
     public static final String ADMIN_PIN = "0000";
     public static final int MAX_NUM_STRUCTURES = 40; 
     public static final int length = 20;
@@ -65,7 +64,7 @@ public class Zoo {
     */
     public Zoo(){
         try{
-            BufferedReader br = new BufferedReader(new FileReader(SAVE_FOLDER+"/"+ZOO_CONSTRUCTOR_FILE));
+            BufferedReader br = new BufferedReader(new FileReader(ZOO_CONSTRUCTOR_FILE));
             double balance = Double.parseDouble(br.readLine());
             int animals = Integer.parseInt(br.readLine());
             int eggs = Integer.parseInt(br.readLine());
@@ -1151,11 +1150,77 @@ public class Zoo {
         }
     }
 
+    // EGG METHODS
     /**
      * Description:
      * Attempts to hatch the given egg. If the egg successfully hatches,
      * the egg is removed from the incubator and the newborn animal is returned.
      */
+    public void saveEggs(String file) {
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+
+            bw.write(Integer.toString(numEggs));
+            bw.newLine();
+            bw.newLine();
+
+            for (int i = 0; i < numEggs; i++) {
+                bw.write(incubator[i].saveToString());
+                bw.newLine();
+                bw.newLine();
+            }
+
+            bw.close();
+        } catch (IOException e) {
+            System.out.println("Error saving eggs.");
+        }
+    }
+
+
+
+    //========================================
+    public void loadEggs(String file) {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+
+            String line = br.readLine();
+            if (line == null) {
+                br.close();
+                return;
+            }
+
+            int count = Integer.parseInt(line.trim());
+            numEggs = 0;
+
+            for (int i = 0; i < count; i++) {
+
+                br.readLine(); // skip blank line
+
+                String parentName = br.readLine();
+                String species = br.readLine();
+                int hatchTime = Integer.parseInt(br.readLine());
+
+                Animal parent = findAnimal(parentName, species);
+                if (parent == null) {
+                    System.out.println("Parent not found for egg: " + parentName);
+                    continue;
+                }
+
+                Egg egg = new Egg(parent);
+                egg.setHatchTime(hatchTime);
+
+                addEgg(egg);
+            }
+
+            br.close();
+        } catch (IOException e) {
+            System.out.println("Error loading eggs.");
+        }
+    }
+
+
+
+    //==============================================
     public Animal hatchEgg(int index, String name) {
 
         if (incubator[index] == null) {

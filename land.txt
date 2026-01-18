@@ -1,6 +1,6 @@
 5
 10
-. c c c . . . . . .
+. c c c . . . . . . 
 . c c c . p . . . .
 . . . . . . . o o .
 n n . . m m . o o o
@@ -24,7 +24,7 @@ c
 GiftShop
 1
 Octopus Stuffed Animal
-5.5
+5.50
 2
 Octopuses have 3 hearts!
 Male seahorses can give birth!
@@ -35,14 +35,16 @@ d
 15
 
 Enclosure
-GiraffeTemperature: 22.5
-Humidity: 0.6
-Region: Ontario
-Soil Compaction: 12.0
-Land Slope: 23.0
-Has Water Source: true
-Vegetation Density: 45.0
-Amount of Structures: 2
+Giraffe
+LAND
+22.5
+0.60
+Ontario
+12
+23
+True
+45
+2
 Giraffe Enclosure
 o
 7
@@ -51,26 +53,28 @@ o
 10
 
 Pavillion
-Temperature: 3.0
-Humidity: 12.0
-Region: Florida Everglades
-Water Acidity: 12.0
-Water Hardness: 33.0
-Water Temperature: 23.1
-Has Land: false
-Water Salinity: 24.0
+WATER
+23.1 
+12
+Florida Everglades
+12
+33
+3
+23
+24
 North American Pavillion 
 n
 4
 100
 68
 4
+20
 
 Maze
 2
 2
-N N 
-N N 
+N N
+N N
 Corn Maze
 m
 16
@@ -83,4 +87,3 @@ p
 6
 14
 7
-

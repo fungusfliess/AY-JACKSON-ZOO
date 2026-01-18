@@ -347,7 +347,8 @@ public abstract class Animal {
             cleanliness + "\n" +
             hunger + "\n" +
             age + "\n" +
-            weight;
+            weight + "\n" + 
+            daysPassed;
     }
 
     public String description() {

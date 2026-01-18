@@ -1,26 +1,13 @@
-5
-
-Eagle
 3
-Bird
-n
 
-Tree Frog
-4
-Amphibian
-n
-
-Clownfish
+Timmy
+Eagle
 2
-Fish
-n
 
-Python
+Kaa
+Snake
 6
-Reptile
-o
 
-Macaw
-5
-Bird
-n
+Nemo
+Sunfish
+0
