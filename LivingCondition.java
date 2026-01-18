@@ -43,4 +43,16 @@ public abstract class LivingCondition {
                "Humidity: " + humidity + "\n" +
                "Region: " + region + "\n";
     }
+
+    // to format and give Superclass's info as a String
+    public String saveString () {
+        return temperature + "\n" +
+               humidity + "\n" +
+               region + "\n";
+    }
+
+
+
+    // to save LivingCondition to a file
+    public abstract String saveToString();
 }

@@ -67,8 +67,8 @@ public class Enclosure extends Habitat{
         if(climateType.equals("LAND")){
             double soilCompaction = Double.parseDouble(fields[index++]);
             double landSlope = Double.parseDouble(fields[index++]);
-            boolean hasWaterSource = Boolean.parseBoolean(fields[index++]);
             double vegetationDensity = Double.parseDouble(fields[index++]);
+            boolean hasWaterSource = Boolean.parseBoolean(fields[index++]);
             int amountStructures = Integer.parseInt(fields[index++]);
 
             climate = new LandCondition(temp, humidity, region, soilCompaction, landSlope, hasWaterSource, vegetationDensity, amountStructures);
@@ -141,8 +141,8 @@ public class Enclosure extends Habitat{
     public String saveToString(){
 
         return "Enclosure\n"
-            + species
-            + getClimate()
+            + species + "\n"
+            + getClimateString()
             + getName() + "\n"
             + getStructureID() + "\n"
             + getArea() + "\n"

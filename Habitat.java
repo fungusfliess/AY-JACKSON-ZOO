@@ -60,6 +60,10 @@ public abstract class Habitat extends Structure{
         return climate;
     }
 
+    public String getClimateString () {
+        return climate.saveToString();
+    }
+
     public Animal[] getAnimals(){
         return animals;
     }
@@ -139,7 +143,6 @@ public abstract class Habitat extends Structure{
     */
     public boolean removeAnimal(Animal animal){
         int idx = findAnimalIdx(animal);
-        Animal temp;
 
         //removes animal from array and shifts remaining animals down
         

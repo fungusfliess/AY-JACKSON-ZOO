@@ -89,7 +89,7 @@ public class Zoo {
             System.out.println("Error reading file.");
         }
         loadPersons();
-        loadLandFromFile();
+        loadLandFromFile(LAND_FILE);
         loadAnimals(ANIMAL_FILE);
         loadEggs(EGG_FILE);
 
@@ -122,7 +122,7 @@ public class Zoo {
             System.out.println("after savePersons");
             saveAnimals(ANIMAL_FILE);
             System.out.println("after saveAnimals");
-            saveLandToFile();
+            saveLandToFile(LAND_FILE);
             System.out.println("Zoo Successfully Saved!");
         }catch(IOException e){
             System.out.println("Error saving zoo: " + e.getMessage());
@@ -239,12 +239,42 @@ public class Zoo {
     }
 
 
-    public boolean loadLandFromFile () { 
-        return zooLand.loadFromFile(LAND_FILE);
+    public boolean loadLandFromFile (String filename) { 
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(filename));
+            String total = "";
+            String input;
+            while ((input = br.readLine()) != null) {
+                total += input + "\n";
+            }
+            
+            br.close();
+            System.out.println("Reading Land file " + filename + " was successful!");
+            if (zooLand.loadLandFromString(total)) {
+                System.out.println("Interpreting file successful!");
+                return true;
+            } else {
+                System.out.println("Error during file interpretation! ");
+                return false;
+            }
+        } catch (IOException iox) {
+            System.out.println("Error loading file: " + filename);
+            return false;
+        }
     }
 
-    public boolean saveLandToFile () {
-        return zooLand.saveToFile(LAND_FILE);
+    public boolean saveLandToFile (String filename) {
+        String toSave =  zooLand.saveLandToString();
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(filename));
+            bw.write(toSave);
+            bw.close();
+            System.out.println("Saving to " + filename + " was successful!");
+            return true;
+        } catch (IOException iox) {
+            System.out.println("Error occurred when trying to save to file " + filename + " !");
+            return false;
+        }
     }
 
     public int searchStructureIdxByName (String name) {
