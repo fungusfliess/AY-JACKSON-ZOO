@@ -106,17 +106,20 @@ public class Zoo {
         try{
             BufferedWriter bw = new BufferedWriter(new FileWriter(ZOO_CONSTRUCTOR_FILE, false));
             bw.write(String.valueOf(zooBalance));
-            bw.newLine();;
+            bw.newLine();
             bw.write("" + maxAnimal);
             bw.newLine();
             bw.write("" + maxEggs);
             bw.newLine();
             bw.write("" + maxEmployee);
-            bw.close();
+            bw.newLine();
             bw.write("" + maxVisitor);
             bw.close();
+            System.out.println("after saving zoo info, before saving the 3 files.");
             savePersons();
+            System.out.println("after savePersons");
             saveAnimals(ANIMAL_FILE);
+            System.out.println("after saveAnimals");
             saveLandToFile();
             System.out.println("Zoo Successfully Saved!");
         }catch(IOException e){
@@ -729,8 +732,10 @@ public class Zoo {
 
         // save each animal
         for (int i = 0; i < numAnimals; i++) {
-            bw.write(zooAnimals[i].saveToString());
-            bw.newLine();
+            if (zooAnimals[i] != null) {
+                bw.write(zooAnimals[i].saveToString());
+                bw.newLine();
+            }
         }
 
         bw.close();

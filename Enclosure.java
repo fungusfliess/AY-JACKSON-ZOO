@@ -142,7 +142,7 @@ public class Enclosure extends Habitat{
 
         return "Enclosure\n"
             + species
-            + getClimate() + "\n"
+            + getClimate()
             + getName() + "\n"
             + getStructureID() + "\n"
             + getArea() + "\n"

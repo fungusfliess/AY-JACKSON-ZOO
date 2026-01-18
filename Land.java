@@ -72,7 +72,8 @@ public class Land {
             // writing Structure info into the file.
             for (int i = 0; i < this.currentNumStructures; i++) {
                 out.write(this.structureList[i].saveToString());
-                // COME_BACK_HERE
+                out.write("\n");
+                
                 // any minor adjustments to formatting can be done here. (wait until Structure class is done)
             }
              

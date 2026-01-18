@@ -148,6 +148,7 @@ public class Restaurant extends Shop{
         }
         int animalLength = (getAnimalFacts()).getLength();
         saveToString += animalLength;
+        saveToString += "\n";
         for (int j = 0; j < animalLength; j++){
             saveToString += (getAnimalFacts()).getAnimalFact(j) + "\n";
         }

@@ -779,11 +779,11 @@ public static void hatchEggMenu() {
                                     System.out.println("Invalid person type.");
                                     break;
                             }
-                            //if (zoo.addPerson()) {
+                            if (zoo.addPerson()) { //ERRORS HERE
                                 System.out.println("Person Added.");
-                            //} else {
+                            } else {
                                 System.out.println("Zoo has reached max capacity OR input was invalid, Person could not be added!");
-                            //}
+                            }
                             break;
                         case 11:
                           deliverOffspringMenu(zoo, sc);
@@ -862,22 +862,24 @@ public static void hatchEggMenu() {
         // =========================
         // EGG-LAYING ANIMALS
         // =========================
-        // else {
+        
+        //ERRORS HERE 
+        else {
 
-        //     Egg egg = parent.reproduce();
+            Egg egg = parent.reproduce();
 
-        //     if (egg == null) {
-        //         System.out.println("This animal cannot reproduce right now.");
-        //         continue;
-        //     }
+            if (egg == null) {
+                System.out.println("This animal cannot reproduce right now.");
+                continue;
+            }
 
-        //     if (zoo.addEgg(egg)) {
-        //         System.out.println("Egg created successfully.");
-        //         delivered = true;
-        //     } else {
-        //         System.out.println("Incubator is full. Egg discarded.");
-        //     }
-        // }
+            if (zoo.addEgg(egg)) {
+                System.out.println("Egg created successfully.");
+                delivered = true;
+            } else {
+                System.out.println("Incubator is full. Egg discarded.");
+            }
+        }
     }
 }
 

@@ -134,7 +134,7 @@ public class Pavillion extends Habitat{
     public String saveToString(){
 
         return "Pavillion\n" 
-            + getClimate() + "\n"//change after jerry
+            + getClimate() //change after jerry
             + getName() + "\n"
             + getStructureID() + "\n"
             + getArea() + "\n"
