@@ -8,6 +8,7 @@ public class Zoo {
     public static final String EGG_FILE = "eggs.txt";
     public static final String PERSON_FILE = "persons.txt";
     public static final String LAND_FILE = "land.txt";
+    private static final String SAVE_FOLDER = "textfiles";
     public static final String ADMIN_PIN = "0000";
     public static final int MAX_NUM_STRUCTURES = 40; 
     public static final int length = 20;
@@ -64,7 +65,7 @@ public class Zoo {
     */
     public Zoo(){
         try{
-            BufferedReader br = new BufferedReader(new FileReader(ZOO_CONSTRUCTOR_FILE));
+            BufferedReader br = new BufferedReader(new FileReader(SAVE_FOLDER+"/"+ZOO_CONSTRUCTOR_FILE));
             double balance = Double.parseDouble(br.readLine());
             int animals = Integer.parseInt(br.readLine());
             int eggs = Integer.parseInt(br.readLine());
