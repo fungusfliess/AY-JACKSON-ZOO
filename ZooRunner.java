@@ -80,7 +80,7 @@ public class ZooRunner {
     // ===== LOGIN LOOP =====
     while (!quit && !login) {
         System.out.print("(Type quit to return)\nEnter Admin PIN: ");
-        input = sc.nextLine();
+        input = sc.nextLine().trim();
 
         if (input.equalsIgnoreCase(QUIT)) {
             return;
@@ -130,14 +130,14 @@ public class ZooRunner {
             31 - Display Incubator
             """);
 
-        input = sc.nextLine();
+        input = sc.nextLine().trim();
 
         if (input.equalsIgnoreCase(QUIT)) {
             return;
         }
 
         try {
-            switch (Integer.parseInt(input)) {
+            switch (input) {
 
                 case 1 -> {
                     System.out.print("Enter days: ");
