@@ -72,7 +72,7 @@ public class Pavillion extends Habitat{
             boolean hasLand = Boolean.parseBoolean(fields[index++]);
             double waterSalinity = Double.parseDouble(fields[index++]);
 
-            climate = new WaterCondition(waterTemp, humidity, region, waterAcidity, waterHardness, temp, hasLand, waterSalinity);
+            climate = new WaterCondition(temp, humidity, region, waterAcidity, waterHardness, waterTemp, hasLand, waterSalinity);
 
         }
 
