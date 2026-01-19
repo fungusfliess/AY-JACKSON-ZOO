@@ -1,3 +1,11 @@
+/*
+   File Name: Axolotl.java
+   Name: Jerry Ning
+   Class: ICS4U1-23
+   Date: Jan 7, 2025
+   Description: Axolotl is a concrete class representing axolotls in the zoo.
+                Axolotls are amphibians that live in freshwater environments.
+*/
 public class Axolotl extends Amphibian {
 
     private static final LivingCondition AXOLOTL_CONDITION =
@@ -5,11 +13,16 @@ public class Axolotl extends Amphibian {
     private static final int WEIGHT_GAIN_PER_YEAR = 1;
     private static final int HUNGER_GAIN_PER_YEAR = 2;
 
+    /* @description: Template constructor creates baby axolotl from parent
+       @param parent the parent axolotl to copy traits from
+    */
     public Axolotl(Animal parent) {
         super(parent);
         setupStats();
     }
 
+    /* @description: Full constructor creates axolotl with all specified attributes
+    */
     public Axolotl(char habitatId, String name, String preferedInteraction, String gender,
                    int happiness, int cleanliness, int hunger, int age, double weight) {
 
@@ -20,6 +33,9 @@ public class Axolotl extends Amphibian {
         updateAge();
     }
 
+    /* @description: Configures axolotl-specific stats including dietary needs, habitat requirements,
+                     and life stage ages. Axolotls remain aquatic and can breathe underwater.
+    */
     private void setupStats() {
         setMaxHunger(20);
         setTypeFoods(new String[]{"Insects", "Small Fish"});
@@ -80,13 +96,19 @@ public class Axolotl extends Amphibian {
 
     // ===== METHODS =====
 
+    /* @description: Updates the axolotl's weight and hunger capacity as it ages,
+                     and transitions it through life stages (Larva -> Juvenile -> Adult).
+                     Walking and underwater breathing abilities change with stage.
+    */
     @Override
     public void updateAge() {
+        // Increase weight and hunger capacity based on age (until adult)
         if (!isAdult()) {
             setWeight(getWeight() + getAge()*WEIGHT_GAIN_PER_YEAR);
             setMaxHunger(getMaxHunger() + getAge()*HUNGER_GAIN_PER_YEAR);
         }
 
+        // Determine life stage and abilities based on age
         if (getAge() > getStage3Age()) {
             setCurrentStage(STAGE_ADULT);
             setCanWalk(true);

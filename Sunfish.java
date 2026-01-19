@@ -1,16 +1,29 @@
+/*
+   File Name: Sunfish.java
+   Name: Jerry Ning
+   Class: ICS4U1-23
+   Date: Jan 7, 2025
+   Description: Sunfish is a concrete class representing sunfish in the zoo.
+                Sunfish are large ocean fish that live in pelagic zones.
+*/
 public class Sunfish extends Fish {
 
+    // Sunfish require pelagic (open ocean) saltwater conditions
     private static final LivingCondition SUNFISH_CONDITION =
         new WaterCondition(22, 70, "Pelagic Zone", 8, 160, 23, false, 34);
 
     private static final int WEIGHT_GAIN_PER_YEAR = 6;
     private static final int HUNGER_GAIN_PER_YEAR = 4;
 
+    /* @description: Template constructor creates baby sunfish from parent
+    */
     public Sunfish(Animal parent) {
         super(parent);
         setupStats();
     }
 
+    /* @description: Full constructor creates sunfish with all specified attributes
+    */
     public Sunfish(char habitatId, String name, String preferedInteraction, String gender,
                    int happiness, int cleanliness, int hunger, int age, double weight) {
 

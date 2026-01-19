@@ -165,6 +165,11 @@ public class Restaurant extends Shop{
 
    }
 
+   /* 
+    @description: returns a string representation of the restaurant
+    @return: string representation of the restaurant
+   */
+
    public String toString () {
       return "Restaurant Name: " + getName() + "\nStructure ID: " + getStructureID() + "\nArea: " + getArea() + "\nMaintenance Cost: " + getMaintenanceCost() + "\nTime Between Maintenance: " + getTimeBetweenMaintenance() + "\nDays Since Last Maintenance: " + getDaysSinceLastMaintenance();
    }

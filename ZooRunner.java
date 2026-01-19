@@ -1,13 +1,25 @@
+/*
+   File Name: ZooRunner.java
+   Names: Arianna Liu, Jerry Ning, Jason Liu, Elizabeth Wang
+   Class: ICS4U1-23
+   Date: Jan 7, 2025
+   Description: ZooRunner is the main runner class for the zoo management system.
+                It provides menu interfaces for admins, employees, and visitors.
+*/
 import java.util.Scanner;
 
 public class ZooRunner {
 
+    //CONSTANTS
     private static final String QUIT = "quit";
     private static final String ADMIN_PIN = "0000";
+
+    //FIELDS
     private static Scanner sc = new Scanner(System.in);
     private static Zoo zoo = new Zoo();
 
-    public static void main(String[] args) {
+    //MAIN METHOD
+        public static void main(String[] args) {
         welcomeMenu();
     }
 
@@ -21,6 +33,7 @@ public class ZooRunner {
         boolean quit = false;
         System.out.println("Welcome To The Zoo's Main Menu!\n");
     
+        // ===== MAIN MENU LOOP =====
         while (!quit) {
             System.out.println("(Type quit to quit)\n"
                     + "Enter # To Access Specific Menu: "
@@ -30,7 +43,8 @@ public class ZooRunner {
                     + "\n4 - Display Map");
     
             String input = sc.nextLine().trim();
-    
+            
+            // QUIT CHECK 
             if (input.equalsIgnoreCase(QUIT)) {
                 System.out.println("See You Next Time!");
                 quit = true;
@@ -38,6 +52,8 @@ public class ZooRunner {
             }
     
             try {
+
+                // SWITCH CASE
                 switch (Integer.parseInt(input)) {
                     case 1: adminMenu(); break;
                     case 2:
@@ -63,6 +79,7 @@ public class ZooRunner {
             }
         }
     
+        // SAVE ZOO ON EXIT
         zoo.saveZoo();
     }    
 
@@ -94,7 +111,7 @@ public class ZooRunner {
     // ===== ADMIN MENU LOOP =====
     while (login && !quit) {
         System.out.println("Visitors loaded: " + zoo.getNumVisitors());
-System.out.println("Employees loaded: " + zoo.getNumEmployees());
+    System.out.println("Employees loaded: " + zoo.getNumEmployees());
 
         System.out.println("""
             Admin Menu:
@@ -138,76 +155,131 @@ System.out.println("Employees loaded: " + zoo.getNumEmployees());
             return;
         }
 
+        // ===== ADMIN COMMAND SWITCH =====
         try {
             switch (Integer.parseInt(input)) {
 
-                case 1 -> {
+                case 1: 
                     System.out.print("Enter days: ");
                     zoo.passTime(Integer.parseInt(sc.nextLine()));
-                }
+                    break;
+                
 
-                case 2 -> System.out.println("Zoo Balance: $" + zoo.getBalance());
+                case 2:
+                    System.out.println("Zoo Balance: $" + zoo.getBalance());
+                    break;
 
-                case 3 -> {
+                case 3:
                     System.out.print("Enter ID: ");
                     Person p = zoo.searchByPersonID(sc.nextLine());
                     System.out.println(p != null ? p : "Person not found.");
-                }
+                    break;
 
-                case 4 -> {
+                case 4:
                     System.out.print("Enter ID: ");
                     String id = sc.nextLine();
                     System.out.print("Enter earnings: ");
                     double earn = Double.parseDouble(sc.nextLine());
                     Employee e = zoo.searchByPersonIDAndEarnings(id, earn);
                     System.out.println(e != null ? e : "No match found.");
-                }
+                    break;
 
-                case 5 -> zoo.sortVisitorByName();
-                case 6 -> zoo.sortEmployeesByEarnings();
-                case 7 -> zoo.sortEmployeesByExperienceAndWage();
-                case 8 -> zoo.displayAllEmployees();
-                case 9 -> zoo.displayAllVisitors();
+                case 5:
+                    zoo.sortVisitorByName();
+                    break;
+                case 6:
+                    zoo.sortEmployeesByEarnings();
+                    break;
+                case 7:
+                    zoo.sortEmployeesByExperienceAndWage();
+                    break;
+                case 8:
+                    zoo.displayAllEmployees();
+                    break;
+                case 9:
+                    zoo.displayAllVisitors();
+                    break;
 
                 // ===== STRUCTURES =====
-                case 10 -> buildGiftShop();
-                case 11 -> buildRestaurant();
-                case 12 -> buildPavillion();
-                case 13 -> buildEnclosure();
-                case 14 -> buildPark();
-                case 15 -> buildMaze();
+                case 10:
+                    buildGiftShop();
+                    break;
+                case 11:
+                    buildRestaurant();
+                    break;
+                case 12:
+                    buildPavillion();
+                    break;
+                case 13:
+                    buildEnclosure();
+                    break;
+                case 14:
+                    buildPark();
+                    break;
+                case 15:
+                    buildMaze();
+                    break;
 
-                case 16 -> {
+                case 16:
                     System.out.print("Enter Structure ID: ");
                     System.out.println(zoo.removeStructure(sc.nextLine().charAt(0)));
-                }
+                    break;
 
-                case 17 -> zoo.maintainAll();
+                case 17:
+                    zoo.maintainAll();
+                    break;
 
                 // ===== ANIMALS =====
-                case 18 -> addAnimalUI();
-                case 19 -> relocateAnimalUI();
+                case 18:
+                    addAnimalUI();
+                    break;
+                case 19:
+                    relocateAnimalUI();
+                    break;
 
-                case 20 -> {
+                case 20:
                     System.out.print("Enter species: ");
                     zoo.listAllSameSpecie(sc.nextLine());
-                }
+                    break;
 
-                case 21 -> addEggMenu();
-                case 22 -> zoo.displayAnimalsLowHappiness();
-                case 23 -> zoo.displayAnimalsLowHunger();
-                case 24 -> zoo.displayAnimalsLowCleansiness();
+                case 21:
+                    addEggMenu();
+                    break;
+                case 22:
+                    zoo.displayAnimalsLowHappiness();
+                    break;
+                case 23:
+                    zoo.displayAnimalsLowHunger();
+                    break;
+                case 24:
+                    zoo.displayAnimalsLowCleansiness();
+                    break;
 
-                case 25 -> zoo.sortAnimalsByNameThenSpecie();
-                case 26 -> zoo.sortAnimalsByAge();
-                case 27 -> zoo.sortAnimalsByHappiness();
-                case 28 -> zoo.sortAnimalsByHunger();
-                case 29 -> zoo.sortAnimalsByCleanliness();
+                case 25:
+                    zoo.sortAnimalsByNameThenSpecie();
+                    break;
+                case 26:
+                    zoo.sortAnimalsByAge();
+                    break;
+                case 27:
+                    zoo.sortAnimalsByHappiness();
+                    break;
+                case 28:
+                    zoo.sortAnimalsByHunger();
+                    break;
+                case 29:
+                    zoo.sortAnimalsByCleanliness();
+                    break;
 
-                case 30 -> zoo.displayAllAnimals();
-                case 31 -> zoo.displayIncubator();
+                case 30:
+                    zoo.displayAllAnimals();
+                    break;
+                case 31:
+                    zoo.displayIncubator();
+                    break;
 
-                default -> System.out.println("Invalid option.");
+                default:
+                    System.out.println("Invalid option.");
             }
 
         } catch (Exception e) {
@@ -553,6 +625,10 @@ System.out.println("Employees loaded: " + zoo.getNumEmployees());
 
 
 //==========================================
+
+/* description: relocates an animal to a new habitat by prompting the user for necessary fields
+*/
+
 private static void relocateAnimalUI() {
 
     System.out.print("Enter animal name: ");
@@ -588,7 +664,7 @@ private static void relocateAnimalUI() {
 }
 
 // =============================================
-// =============== EGG STUFF ===============
+// =============== EGG MENU ===============
 // ================================================
 public static void addEggMenu() {
 
@@ -758,15 +834,24 @@ public static void hatchEggMenu() {
         return sc.nextLine().charAt(0);
     }
 
+    /* description: reads structure name by prompting the user for necessary fields
+     */
+
     private static String readStructureName() {
         System.out.print("Enter name: ");
         return sc.nextLine();
     }
 
+    /* description: reads maintenance time by prompting the user for necessary fields
+    */
+
     private static int readMaintenanceTime() {
         System.out.print("Enter time between maintenance: ");
         return Integer.parseInt(sc.nextLine());
     }
+
+    /* description: reads coordinates by prompting the user for necessary fields
+    */
 
     private static Coord readCoord() {
         System.out.print("Enter Coord (x y): ");
@@ -774,6 +859,9 @@ public static void hatchEggMenu() {
         int y = Integer.parseInt(sc.nextLine());
         return new Coord(x, y);
     }
+
+    /* description: reads facts by prompting the user for necessary fields
+    */
 
     private static String[] readFacts() {
         System.out.print("Enter number of facts: ");
@@ -785,6 +873,9 @@ public static void hatchEggMenu() {
         }
         return facts;
     }
+
+    /* description: reads menu items by prompting the user for necessary field
+    */
 
     private static Item[] readMenuItems() {
         System.out.print("Enter number of items: ");
@@ -804,6 +895,9 @@ public static void hatchEggMenu() {
 // STRUCTURE BUILD METHODS
 // ======================================================
 
+    /* description: builds a gift shop by prompting the user for necessary fields
+    */
+
     private static void buildGiftShop() {
 
         char id = readStructureID();
@@ -820,6 +914,9 @@ public static void hatchEggMenu() {
         else System.out.println("Gift Shop creation failed.");
     }
 
+    /* description: builds a restaurant by prompting the user for necessary fields
+    */
+
     private static void buildRestaurant() {
 
         char id = readStructureID();
@@ -835,6 +932,9 @@ public static void hatchEggMenu() {
         if (success) System.out.println("Restaurant created.");
         else System.out.println("Restaurant creation failed.");
     }
+
+    /* description: builds an enclosure by prompting the user for necessary fields
+    */
 
     private static void buildEnclosure() {
 
@@ -865,6 +965,9 @@ public static void hatchEggMenu() {
             System.out.println("Enclosure creation failed.");
         }
     }
+
+    /* description: builds a pavillion by prompting the user for necessary fields
+    */
 
     private static void buildPavillion() {
 
@@ -973,6 +1076,11 @@ public static void hatchEggMenu() {
             }
         }
     }
+
+    /* description: displays the Add Person menu and allows the admin/employee to add a person
+       to the zoo (visitor or employee). Prompts for all necessary fields.
+       @param zoo: the zoo to add the person to
+    */
     public static void addPersonMenu(Zoo zoo) {
 
         Person p = null;

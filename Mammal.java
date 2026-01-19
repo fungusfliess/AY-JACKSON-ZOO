@@ -1,3 +1,11 @@
+/*
+   File Name: Mammal.java
+   Name: Jerry Ning
+   Class: ICS4U1-23
+   Date: Jan 7, 2025
+   Description: Mammal is an abstract class representing mammals in the zoo.
+                Mammals drink milk and give live birth to offspring.
+*/
 public abstract class Mammal extends Animal {
 
     protected boolean drinksMilk = true;
@@ -25,12 +33,16 @@ public abstract class Mammal extends Animal {
                "Drinks Milk: " + drinksMilk + "\n";
     }
 
-    // Description: creates a new mammal offspring
+    /* @description: Creates a new mammal offspring through live birth
+       @param name the name for the new baby mammal
+       @return the baby Animal if successful, null if reproduction fails
+    */
     public Animal reproduce(String name) {
         if (canReproduce()) {
                 
             Mammal baby = createOffspring();
             baby.setName(name);
+            // Randomly assign gender
             if (Math.random() < 0.5) {
                 baby.setGender("Male");
             } else {

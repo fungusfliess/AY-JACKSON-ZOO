@@ -1,3 +1,11 @@
+/*
+   File Name: Egg.java
+   Name: Jerry Ning
+   Class: ICS4U1-23
+   Date: Jan 7, 2025
+   Description: Egg represents an animal egg that can hatch after a species-specific
+                incubation period. Used for breeding and reproduction in the zoo.
+*/
 public class Egg {
 
     // =========================
@@ -22,6 +30,10 @@ public class Egg {
     // =========================
     // CONSTRUCTOR
     // =========================
+    
+    /* @description: Creates an egg from a parent animal with species-specific hatch time
+       @param parent the parent animal that laid this egg
+    */
     public Egg(Animal parent) {
         this.parent = parent;
         this.hatched = false;
@@ -57,10 +69,16 @@ public class Egg {
     // =========================
     // TIME METHODS
     // =========================
+    
+    /* @description: Decrements the hatch time by one day
+    */
     public void passDay() {
         hatchTime--;
     }
 
+    /* @description: Checks if the egg is ready to hatch (hatch time reached)
+       @return true if hatch time is 0 or less, false otherwise
+    */
     public boolean readyToHatch() {
         return hatchTime <= 0;
     }
@@ -68,6 +86,13 @@ public class Egg {
     // =========================
     // HATCH METHOD
     // =========================
+    
+    /* @description: Hatches the egg into a baby animal of the parent's species.
+                     Checks if already hatched or not ready, creates appropriate species,
+                     assigns name and random gender.
+       @param name the name for the newly hatched animal
+       @return the baby Animal if successful, null if hatching fails
+    */
     public Animal hatch(String name) {
 
         if (hatched) {
@@ -82,6 +107,7 @@ public class Egg {
 
         Animal baby = null;
 
+        // Create baby of appropriate species based on parent type
         if (parent instanceof Shark) {
             baby = new Shark(parent);
         }
@@ -112,7 +138,9 @@ public class Egg {
             return null;
         }
 
+        // Assign name to baby
         baby.setName(name);
+        // Randomly assign gender
         if (Math.random() < 0.5) {
             baby.setGender("Male");
         } else {
@@ -128,6 +156,11 @@ public class Egg {
     // =========================
     // HELPER
     // =========================
+    
+    /* @description: Determines the hatch time based on parent species
+       @param parent the parent animal
+       @return the species-specific hatch time in days
+    */
     private int getInitialHatchTime(Animal parent) {
 
         if (parent instanceof Shark) return SHARK_HATCH_TIME;
@@ -145,10 +178,15 @@ public class Egg {
     // =========================
     // SAVE
     // =========================
+    
+    /* @description: Converts the egg data to a string format for file storage
+       @return formatted string with parent name, species group, and hatch time
+    */
     public String saveToString() {
 
         String group = "";
 
+        // Determine species group for saving
         if (parent instanceof Shark) group = "Shark";
         else if (parent instanceof Sunfish) group = "Sunfish";
         else if (parent instanceof Snake) group = "Snake";

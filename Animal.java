@@ -1,3 +1,12 @@
+/*
+   File Name: Animal.java
+   Name: Jerry Ning
+   Class: ICS4U1-23
+   Date: Jan 7, 2025
+   Description: Animal is an abstract base class representing all animals in the zoo.
+                It includes common fields like name, species, age, and stats for happiness,
+                cleanliness, and hunger, as well as methods for daily updates and interactions.
+*/
 public abstract class Animal {
 
     // =========================
@@ -44,6 +53,9 @@ public abstract class Animal {
     // CONSTRUCTORS
     // =========================
 
+    /* @description: Creates a baby animal based on parent template with default initial stats
+       @param parent the parent animal to copy species and interaction preferences from
+    */
     public Animal(Animal parent) {
         this.habitatId = Land.EMPTY;
         this.name = "";
@@ -61,6 +73,18 @@ public abstract class Animal {
         this.numPreferredInteractions = 0;
     }
 
+    /* @description: Creates an animal with all specified attributes
+       @param habitatId the ID of the habitat where the animal lives
+       @param name the name of the animal
+       @param specie the species of the animal
+       @param preferedInteraction the animal's preferred type of interaction
+       @param gender the gender of the animal (Male/Female)
+       @param happiness the happiness level (0-100)
+       @param cleanliness the cleanliness level (0-100)
+       @param hunger the hunger level (0-maxHunger)
+       @param age the age of the animal in years
+       @param weight the weight of the animal in kilograms
+    */
     public Animal(char habitatId, String name, String specie, String preferedInteraction, String gender,
                   int happiness, int cleanliness, int hunger, int age, double weight) {
 
@@ -236,6 +260,11 @@ public abstract class Animal {
     // BEHAVIOUR METHODS
     // =========================
 
+    /* @description: Feeds the animal if the food type is acceptable
+       @param food the type of food being offered
+       @param amount the amount of hunger to restore
+       @return true if the animal ate the food, false otherwise
+    */
     public boolean eat(String food, int amount) {
         if (food == null || amount <= 0 || typeFoods == null) {
             return false;
@@ -254,10 +283,15 @@ public abstract class Animal {
         return false;
     }
 
-
+    /* @description: Calculates the happiness of the animal based on cleanliness, hunger,
+                     interactions, and preferred interactions. Happiness is averaged across
+                     four factors: cleanliness, hunger satisfaction, daily interactions, and
+                     preferred interaction count.
+    */
     public void calculateHappiness() {
         double avg = 0.0;
 
+        // Factor 1: Cleanliness as a percentage of max stat
         avg += (double) cleanliness / MAX_STAT;
         if (maxHunger > 0) avg += (double) hunger / maxHunger;
         if (totalDailyInteractions > 0)
@@ -268,9 +302,13 @@ public abstract class Animal {
         happiness = Math.max(0, Math.min(MAX_STAT, happiness));
     }
 
+    /* @description: Performs an interaction with the animal, tracking if it's the preferred type
+       @param interaction the type of interaction being performed
+    */
     public void interact(String interaction) {
         if (interaction == null) return;
 
+        // Only count interactions up to the daily limit
         if (numDailyInteractions < totalDailyInteractions) {
             numDailyInteractions++;
             if (interaction.equalsIgnoreCase(preferedInteraction)) {
@@ -279,21 +317,34 @@ public abstract class Animal {
         }
     }
 
+    /* @description: Checks if the animal is suitable for a given habitat based on living
+                     conditions and space requirements. Uses flexibility to determine how
+                     closely the habitat must match the animal's preferred conditions.
+       @param habitat the habitat to check suitability for
+       @return true if the habitat is suitable, false otherwise
+    */
     public boolean isSuitable(Habitat habitat) {
         if (habitat == null || livingCondition == null || habitat.getClimate() == null) {
             return false;
         }
 
+        // Check if living conditions match within flexibility tolerance and space is sufficient
         return livingCondition.compareTo(habitat.getClimate()) >= (1-flexibility)
                 && habitat.enoughSpace(requiredArea);
     }
 
+    /* @description: Simulates the passing of a day for the animal, updating its state.
+                     Resets daily interaction counters, decreases hunger and cleanliness,
+                     and increments age annually.
+    */
     public void passDay() {
         daysPassed++;
 
+        // Reset daily interaction counters
         numDailyInteractions = 0;
         numPreferredInteractions = 0;
 
+        // Decrease hunger and cleanliness naturally over time
         hunger = Math.max(0, hunger - maxHunger*DAILY_HUNGER_DECREASE);
         cleanliness = Math.max(0, cleanliness - MAX_STAT*DAILY_CLEANLINESS_DECREASE);
 
@@ -303,26 +354,43 @@ public abstract class Animal {
         }
     }
 
+    /* @description: Checks if the animal's hunger is below the low threshold
+       @return true if hunger is low, false otherwise
+    */
     public boolean lowHunger() {
         return maxHunger <= 0 || hunger <= (LOW_STAT * maxHunger) / 100;
     }
 
+    /* @description: Checks if the animal's cleanliness is below the low threshold
+       @return true if cleanliness is low, false otherwise
+    */
     public boolean lowCleansiness() {
         return cleanliness <= LOW_STAT;
     }
 
+    /* @description: Checks if the animal's happiness is below the low threshold
+       @return true if happiness is low, false otherwise
+    */
     public boolean lowHappiness() {
         return happiness <= LOW_STAT;
     }
 
+    /* @description: Removes the animal from its current habitat
+    */
     public void leaveHabitat() {
         habitatId = Land.EMPTY;
     }
 
+    /* @description: Checks if the animal has reached adult age
+       @return true if the animal is an adult, false otherwise
+    */
     public boolean isAdult() {
         return age >= getAdultAge();
     }
 
+    /* @description: Checks if the animal can reproduce based on gender, happiness, age, and hunger
+       @return true if the animal can reproduce, false otherwise
+    */
     public boolean canReproduce() {
         return this.getGender().equalsIgnoreCase("Female") &&
             this.getHappiness() >= (LOW_STAT * MAX_STAT) &&
@@ -341,6 +409,9 @@ public abstract class Animal {
     // SAVE / STRING
     // =========================
 
+    /* @description: Converts the animal's data to a pipe-delimited string for file storage
+       @return a string representation of the animal's data
+    */
     public String saveToString() {
         return specie + "|" +
             habitatId + "|" +
@@ -356,6 +427,9 @@ public abstract class Animal {
     }
 
 
+    /* @description: Returns a brief description of the animal with basic info
+       @return a string with name, species, and age
+    */
     public String description() {
     return "Name: " + getName() + "\n" +
            "Specie: " + getSpecie() + "\n" +

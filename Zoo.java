@@ -1,3 +1,11 @@
+/*
+   File Name: Zoo.java
+   Names: Arianna Liu, Jerry Ning, Jason Liu, Elizabeth Wang
+   Class: ICS4U1-23
+   Date: Jan 7, 2025
+   Description: Zoo is the main management class for the zoo system.
+                It manages structures, animals, persons, and handles file I/O operations.
+*/
 import java.io.*;
 
 public class Zoo {
