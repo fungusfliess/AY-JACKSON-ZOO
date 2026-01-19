@@ -1,16 +1,29 @@
+/*
+   File Name: Frog.java
+   Name: Jerry Ning
+   Class: ICS4U1-23
+   Date: Jan 7, 2025
+   Description: Frog is a concrete class representing frogs in the zoo.
+                Frogs are amphibians that live in wetland environments.
+*/
 public class Frog extends Amphibian {
 
+    // Frogs prefer humid wetlands with slightly acidic water
     private static final LivingCondition FROG_CONDITION =
         new WaterCondition(20, 85, "Wetland", 6.8, 60, 18, true, 0.1);
     private static final int WEIGHT_GAIN_PER_YEAR = 2;
     private static final int HUNGER_GAIN_PER_YEAR = 3;
 
 
+    /* @description: Template constructor creates baby frog from parent
+    */
     public Frog(Animal parent) {
         super(parent);
         setupStats();
     }
 
+    /* @description: Full constructor creates frog with all specified attributes
+    */
     public Frog(char habitatId, String name, String preferedInteraction, String gender,
                 int happiness, int cleanliness, int hunger, int age, double weight) {
 

@@ -1,3 +1,11 @@
+/*
+   File Name: Fish.java
+   Name: Jerry Ning
+   Class: ICS4U1-23
+   Date: Jan 7, 2025
+   Description: Fish is an abstract class representing fish in the zoo.
+                Fish live in aquatic environments and can lay eggs.
+*/
 public abstract class Fish extends Animal {
 
     private int amountEggs;
@@ -35,10 +43,14 @@ public abstract class Fish extends Animal {
     // SHARED FISH METHODS
     // =========================
 
+    /* @description: Creates multiple eggs if the fish can reproduce
+       @return an array of Egg objects equal to amountEggs, null if reproduction fails
+    */
     public Egg[] reproduce() {
         if (canReproduce()) {
 
             Egg[] eggs = new Egg[amountEggs];
+            // Create each egg individually
             for (int i = 0; i < amountEggs; i++) {
                 eggs[i] = new Egg(this);
             }

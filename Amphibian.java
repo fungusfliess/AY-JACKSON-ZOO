@@ -1,3 +1,12 @@
+/*
+   File Name: Amphibian.java
+   Name: Jerry Ning
+   Class: ICS4U1-23
+   Date: Jan 7, 2025
+   Description: Amphibian is an abstract class representing amphibians in the zoo.
+                Amphibians have life stages (Larva, Juvenile, Adult) and can walk
+                and breathe underwater depending on their stage.
+*/
 public abstract class Amphibian extends Animal {
 
     //FIELDS
@@ -76,6 +85,9 @@ public abstract class Amphibian extends Animal {
     // SHARED AMPHIBIAN METHODS
     // =========================
 
+    /* @description: Creates an egg if the amphibian can reproduce
+       @return an Egg object if reproduction is successful, null otherwise
+    */
     public Egg reproduce() {
         if (canReproduce()) {
 
@@ -85,7 +97,8 @@ public abstract class Amphibian extends Animal {
         return null;
     }
 
-    /* description: returns a string representation of the Amphibian object for saving to a file
+    /* @description: Returns a string representation of the Amphibian object for saving to a file
+       @return pipe-delimited string with amphibian data including current stage
     */
      
     @Override

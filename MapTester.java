@@ -1,4 +1,11 @@
-
+/*
+   File Name: MapTester.java
+   Names: Arianna Liu, Jerry Ning, Jason Liu, Elizabeth Wang
+   Class: ICS4U1-23
+   Date: Jan 7, 2025
+   Description: MapTester is a testing class for the Map functionality.
+                It creates test mazes and validates map operations.
+*/
 
 public class MapTester {
     public static void main(String[] args) {

@@ -1,16 +1,29 @@
+/*
+   File Name: Cockatoo.java
+   Name: Jerry Ning
+   Class: ICS4U1-23
+   Date: Jan 7, 2025
+   Description: Cockatoo is a concrete class representing cockatoos in the zoo.
+                Cockatoos are tropical birds that live in forest environments.
+*/
 public class Cockatoo extends Bird {
 
+    // Cockatoos prefer tropical forest conditions with high humidity
     private static final LivingCondition COCKATOO_CONDITION =
         new LandCondition(24, 65, "Tropical Forest", 50, 5, true, 80, 15);
 
     private static final int WEIGHT_GAIN_PER_YEAR = 1;
     private static final int HUNGER_GAIN_PER_YEAR = 4;
 
+    /* @description: Template constructor creates baby cockatoo from parent
+    */
     public Cockatoo(Animal parent) {
         super(parent);
         setupStats();
     }
 
+    /* @description: Full constructor creates cockatoo with all specified attributes
+    */
     public Cockatoo(char habitatId, String name, String preferedInteraction, String gender,
                     int happiness, int cleanliness, int hunger, int age, double weight) {
 
@@ -21,6 +34,8 @@ public class Cockatoo extends Bird {
         updateAge();
     }
 
+    /* @description: Sets up the initial stats for the cockatoo
+    */
     private void setupStats() {
         setMaxHunger(50);
         setTypeFoods(new String[]{"Seeds", "Fruits"});

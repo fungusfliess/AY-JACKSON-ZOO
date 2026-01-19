@@ -1,16 +1,30 @@
+/*
+   File Name: Crocodile.java
+   Name: Jerry Ning
+   Class: ICS4U1-23
+   Date: Jan 7, 2025
+   Description: Crocodile is a concrete class representing crocodiles in the zoo.
+                Crocodiles are large reptiles that live in river delta environments.
+*/
 public class Crocodile extends Reptile {
 
+    // Crocodiles prefer warm, humid river deltas with specific water conditions
     private static final LivingCondition CROCODILE_CONDITION =
         new WaterCondition(28, 80, "River Delta", 7.2, 180, 26, true, 0.5);
 
+    //CONSTANTS
     private static final int WEIGHT_GAIN_PER_YEAR = 12;
     private static final int HUNGER_GAIN_PER_YEAR = 4;
 
+    /* @description: Template constructor creates baby crocodile from parent
+    */
     public Crocodile(Animal parent) {
         super(parent);
         setupStats();
     }
 
+    /* @description: Full constructor creates crocodile with all specified attributes
+    */
     public Crocodile(char habitatId, String name, String preferedInteraction, String gender,
                      int happiness, int cleanliness, int hunger, int age, double weight) {
 

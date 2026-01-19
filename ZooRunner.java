@@ -1,3 +1,11 @@
+/*
+   File Name: ZooRunner.java
+   Names: Arianna Liu, Jerry Ning, Jason Liu, Elizabeth Wang
+   Class: ICS4U1-23
+   Date: Jan 7, 2025
+   Description: ZooRunner is the main runner class for the zoo management system.
+                It provides menu interfaces for admins, employees, and visitors.
+*/
 import java.util.Scanner;
 
 public class ZooRunner {

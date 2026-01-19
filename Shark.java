@@ -1,16 +1,29 @@
+/*
+   File Name: Shark.java
+   Name: Jerry Ning
+   Class: ICS4U1-23
+   Date: Jan 7, 2025
+   Description: Shark is a concrete class representing sharks in the zoo.
+                Sharks are large predatory fish that live in ocean environments.
+*/
 public class Shark extends Fish {
 
+    // Sharks require saltwater ocean conditions with specific parameters
     private static final LivingCondition SHARK_CONDITION =
         new WaterCondition(18, 75, "Ocean", 8.1, 180, 20, false, 35);
 
     private static final int WEIGHT_GAIN_PER_YEAR = 10;
     private static final int HUNGER_GAIN_PER_YEAR = 6;
 
+    /* @description: Template constructor creates baby shark from parent
+    */
     public Shark(Animal parent) {
         super(parent);
         setupStats();
     }
 
+    /* @description: Full constructor creates shark with all specified attributes
+    */
     public Shark(char habitatId, String name, String preferedInteraction, String gender,
                  int happiness, int cleanliness, int hunger, int age, double weight) {
 
