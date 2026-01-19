@@ -8,6 +8,8 @@
                 information such as strollerNeeded and guardianID. Child returns the role identifier "CHILD".
 */
 
+import java.util.Locale;
+
 public class Child extends Visitor{
    //CONSTANTS 
    public static final double LEARNING_BOOST_FACTOR = 0.20;
@@ -115,8 +117,17 @@ public class Child extends Visitor{
    */
    @Override
    public String saveToString() {
-      return super.saveToString() +
-            strollerNeeded + "\n" + 
-            guardianID + "\n";
+      return String.join("\n",
+         "CHILD",
+         getPersonID(),
+         getFirstName(),
+         getLastName(),
+         String.valueOf(getAge()),
+         String.format(Locale.US, "%.2f", getBalance()),
+         String.valueOf(getLearningLevel()),
+         String.valueOf(getVisitDuration()),
+         String.valueOf(getStrollerNeeded()),
+         getGuardianID()
+      );
    }
 }

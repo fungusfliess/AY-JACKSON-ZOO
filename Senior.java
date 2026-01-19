@@ -8,6 +8,8 @@
                 the role identifier "SENIOR". Senior overrides calculateTicketCost() and includes support info in output.
 */
 
+import java.util.Locale;
+
 public class Senior extends Adult {
    //CONSTANTS 
    public static final double SENIOR_DISCOUNT = 0.20; 
@@ -97,8 +99,18 @@ public class Senior extends Adult {
    */
    @Override
    public String saveToString() {
-      return super.saveToString() +
-             requiresAccessibilitySupport + "\n";
+      return String.join("\n",
+         "SENIOR",
+         getPersonID(),
+         getFirstName(),
+         getLastName(),
+         String.valueOf(getAge()),
+         String.format(Locale.US, "%.2f", getBalance()),
+         String.valueOf(getLearningLevel()),
+         String.valueOf(getVisitDuration()),
+         String.format(Locale.US, "%.2f", getPreferredBudgetLimit()),
+         String.valueOf(getRequiresAccessibilitySupport())
+      );
    }
 }
 

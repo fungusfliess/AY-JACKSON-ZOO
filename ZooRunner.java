@@ -1155,9 +1155,16 @@ public static void hatchEggMenu() {
             System.out.println("Enter certification level:");
             int cert = Integer.parseInt(sc.nextLine());
 
-            p = new ZooKeeper(age, id, firstName, lastName, wage, experience, cert);
-        }
+            System.out.println("Enter hours worked (starting):");
+            double hoursWorked = Double.parseDouble(sc.nextLine());
 
+            System.out.println("Enter starting earnings:");
+            double earnings = Double.parseDouble(sc.nextLine());
+
+            p = new ZooKeeper(age, id, firstName, lastName, wage, experience, cert,
+                            hoursWorked, earnings);
+
+        }
         else if (personType.equals("shopstaff")) {
 
             System.out.println("Enter hourly wage:");
@@ -1166,7 +1173,14 @@ public static void hatchEggMenu() {
             System.out.println("Enter years of experience:");
             int experience = Integer.parseInt(sc.nextLine());
 
-            p = new ShopStaff(age, id, firstName, lastName, wage, experience);
+            System.out.println("Enter hours worked (starting):");
+            double hoursWorked = Double.parseDouble(sc.nextLine());
+
+            System.out.println("Enter starting earnings:");
+            double earnings = Double.parseDouble(sc.nextLine());
+
+            p = new ShopStaff(age, id, firstName, lastName, wage, experience,
+                            hoursWorked, earnings);
         }
 
         else {

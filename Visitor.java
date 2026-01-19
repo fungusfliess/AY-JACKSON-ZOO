@@ -255,22 +255,6 @@ public abstract class Visitor extends Person {
         attractionsVisited++;
         return true;
     }
-
-    /*
-    @description: returns this Visitor in file format (role + base fields + visitor fields)
-    @return a string formatted for writing to person.txt
-    */
-    @Override
-    public String saveToString() {
-    return getRole() + "\n" +
-            getPersonID() + "\n" +
-            getFirstName() + "\n" +
-            getLastName() + "\n" +
-            getAge() + "\n" +
-            balance + "\n" +
-            learningLevel + "\n" + 
-            visitDuration + "\n";
-    }
 }
 
 

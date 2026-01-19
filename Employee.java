@@ -57,6 +57,22 @@ public abstract class Employee extends Person {
       //determine benefits eligibility
       setBenefitsEligible();
    }
+
+   public Employee(int age, String personID, String firstName, String lastName,
+      double hourlyWage, int yearsOfExperience,
+      double hoursWorked, double earnings) {
+
+      super(age, personID, firstName, lastName);
+
+      this.hourlyWage = Math.abs(hourlyWage);
+      this.yearsOfExperience = Math.max(0, yearsOfExperience);
+
+      this.hoursWorked = Math.max(0.0, hoursWorked);
+      this.earnings = Math.max(0.0, earnings);
+
+      this.daysWorked = 0; 
+      setBenefitsEligible();
+   }
    
    //ACCESSOR
    public double getHourlyWage(){
@@ -168,31 +184,5 @@ public abstract class Employee extends Person {
          setBenefitsEligible(); 
       }
       setEarnings(); 
-      hoursWorked = 0.0; 
-   }
-
-   /*
-   @description: returns this Employee in file format so it can be saved and reloaded later
-   @return a string formatted for writing to persons.txt
-   */
-   @Override
-   public String saveToString() {
-      // For employees, the 3rd role-specific line is:
-      // - ZooKeeper: certificationLevel
-      // - ShopStaff: placeholder value of 0
-
-      int thirdField = 0;
-      if (this instanceof ZooKeeper) {
-         thirdField = ((ZooKeeper) this).getCertificationLevel();
-      }
-
-      return getRole() + "\n" +
-            getPersonID() + "\n" +
-            getFirstName() + "\n" +
-            getLastName() + "\n" +
-            getAge() + "\n" +
-            getHourlyWage() + "\n" +
-            getYearsOfExperience() + "\n" +
-            thirdField + "\n";
    }
 }

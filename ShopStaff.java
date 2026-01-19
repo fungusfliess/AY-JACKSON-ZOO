@@ -8,6 +8,8 @@
                 earnings or experience.
 */
 
+import java.util.Locale;
+
 public class ShopStaff extends Employee {
 
     //CONSTANTS
@@ -28,12 +30,16 @@ public class ShopStaff extends Employee {
      @param hourlyWage        the employee's hourly wage
      @param yearsOfExperience the employee's years of experience
      */
-    public ShopStaff(int age, String personID, String firstName, String lastName,
-                     double hourlyWage, int yearsOfExperience) {
-        super(age, personID, firstName, lastName, hourlyWage, yearsOfExperience);
-        itemsSold = 0;
-        totalSales = 0.0;
-        factsShared = 0;
+     public ShopStaff(int age, String personID, String firstName, String lastName,
+        double hourlyWage, int yearsOfExperience,
+        double hoursWorked, double earnings) {
+
+        super(age, personID, firstName, lastName, hourlyWage, yearsOfExperience,
+        hoursWorked, earnings);
+
+        this.itemsSold = 0;
+        this.totalSales = 0.0;
+        this.factsShared = 0;
     }
 
     //ACCESSOR
@@ -115,5 +121,26 @@ public class ShopStaff extends Employee {
     public void addFactShared() {
         factsShared++;
     }
+
+
+    /*
+     @description: returns a formatted string summary of this ShopStaff employee in save form 
+     @return formatted ShopStaff info
+     */
+    @Override
+    public String saveToString() {
+        return String.join("\n",
+            getRole(),                 
+            getPersonID(),
+            getFirstName(),
+            getLastName(),
+            String.valueOf(getAge()),
+            String.format(Locale.US, "%.2f", getHourlyWage()),
+            String.valueOf(getYearsOfExperience()),
+            String.format(Locale.US, "%.1f", getHoursWorked()),
+            String.format(Locale.US, "%.1f", getEarnings())
+        );
+    }
+
 
 }

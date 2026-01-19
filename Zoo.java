@@ -665,12 +665,24 @@ public int getNumEmployees() { return numEmployees; }
                 double hourlyWage = Double.parseDouble(next(br));
                 int yearsExp = Integer.parseInt(next(br));
                 int certLevel = Integer.parseInt(next(br));
-                p = new ZooKeeper(age, personID, firstName, lastName, hourlyWage, yearsExp, certLevel);
+                double hoursWorked = Double.parseDouble(next(br));
+                double earnings = Double.parseDouble(next(br));
+
+                p = new ZooKeeper(age, personID, firstName, lastName,
+                                hourlyWage, yearsExp, certLevel,
+                                hoursWorked, earnings);
+
             
             } else if (role.equals("SHOPSTAFF")) {
                 double hourlyWage = Double.parseDouble(next(br));
                 int yearsExp = Integer.parseInt(next(br));
-                p = new ShopStaff(age, personID, firstName, lastName, hourlyWage, yearsExp);
+
+                double hoursWorked = Double.parseDouble(next(br));
+                double earnings = Double.parseDouble(next(br));
+
+                p = new ShopStaff(age, personID, firstName, lastName,
+                                hourlyWage, yearsExp,
+                                hoursWorked, earnings);
             }            
             else if (role.equals("ADULT")) {
                 if (!ageMatchesVisitorRole("ADULT", age)) {

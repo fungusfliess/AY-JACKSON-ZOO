@@ -8,6 +8,8 @@
                 within budget. Adult returns the role identifier "ADULT" and uses adult ticket pricing rules.
 */
 
+import java.util.Locale;
+
 public class Adult extends Visitor{
    //FIELDS 
    private double preferredBudgetLimit; 
@@ -92,8 +94,16 @@ public class Adult extends Visitor{
    */
    @Override
    public String saveToString() {
-      return super.saveToString() +
-            preferredBudgetLimit + "\n";
+      return String.join("\n",
+         "ADULT",
+         getPersonID(),
+         getFirstName(),
+         getLastName(),
+         String.valueOf(getAge()),
+         String.format(Locale.US, "%.2f", getBalance()),
+         String.valueOf(getLearningLevel()),
+         String.valueOf(getVisitDuration()),
+         String.format(Locale.US, "%.2f", getPreferredBudgetLimit())
+      );
    }
-
 }

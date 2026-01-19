@@ -7,7 +7,9 @@
                 exhibits. It tracks certification level and daily tasks completed, and calculates earnings using a
                 certification-based bonus. ZooKeeper returns the role identifier "ZOOKEEPER" and provides animal-care actions.
 */
- 
+
+import java.util.Locale;
+
 public class ZooKeeper extends Employee {
     //CONSTANTS 
     public static final int MAX_CERTIFICATION_LEVEL = 5; 
@@ -29,19 +31,16 @@ public class ZooKeeper extends Employee {
      @param yearsOfExperience  the employee's years of experience
      @param certificationLevel certification level (clamped to range 1..MAX_CERTIFICATION_LEVEL)
     */
-    public ZooKeeper(int age, String personID, String firstName, String lastName, double hourlyWage, int yearsOfExperience, int certificationLevel){
-        super(age, personID, firstName, lastName, hourlyWage, yearsOfExperience);
-        this.certificationLevel = certificationLevel;
+     public ZooKeeper(int age, String personID, String firstName, String lastName,
+        double hourlyWage, int yearsOfExperience, int certificationLevel,
+        double hoursWorked, double earnings) {
 
-        //ensure certification level is within valid range
-        if (certificationLevel<MIN_CERTIFICATION_LEVEL){
-            this.certificationLevel = MIN_CERTIFICATION_LEVEL; 
-        } else if (certificationLevel>MAX_CERTIFICATION_LEVEL){
-            this.certificationLevel = MAX_CERTIFICATION_LEVEL; 
-        } else {
-            this.certificationLevel = certificationLevel; 
-        }
-        dailyTasksCompleted = 0; 
+        super(age, personID, firstName, lastName, hourlyWage, yearsOfExperience,
+        hoursWorked, earnings);
+
+        this.certificationLevel = Math.min(MAX_CERTIFICATION_LEVEL, certificationLevel);
+        this.certificationLevel = Math.max(MIN_CERTIFICATION_LEVEL, this.certificationLevel);
+        this.dailyTasksCompleted = 0;
     }   
     
     //ACCESSOR
@@ -142,4 +141,25 @@ public class ZooKeeper extends Employee {
         super.passDay(); 
         dailyTasksCompleted =0; 
     }
+
+    /*
+     @description: returns a formatted string summary of this ZooKeeper employee in save form 
+     @return formatted ZooKeeper info
+     */
+    @Override
+    public String saveToString() {
+        return String.join("\n",
+            getRole(),                
+            getPersonID(),
+            getFirstName(),
+            getLastName(),
+            String.valueOf(getAge()),
+            String.format(Locale.US, "%.2f", getHourlyWage()),
+            String.valueOf(getYearsOfExperience()),
+            String.valueOf(getCertificationLevel()),
+            String.format(Locale.US, "%.1f", getHoursWorked()),
+            String.format(Locale.US, "%.1f", getEarnings())
+        );
+    }
+
 }
