@@ -452,11 +452,24 @@ public class Map {
     @description: prints the map to standard output.
    */
    public void printMap() {
+        // formatting to indicate x-axis scale
+        System.out.print("     ");
+        for (int i = 0; i < this.width; i++) {
+            System.out.printf("%3d ", i);
+        }
+        System.out.println();
+        System.out.print("     ");
+        for (int i = 0; i < this.width; i++) {
+            System.out.print("----");
+        }
+        System.out.println();
+        // print
         for (int i = 0; i < this.length; i++) {
+            System.out.printf("%4d | ", i);
             for (int j = 0; j < this.width; j++) {
-                System.out.print(this.map[i][j] + " ");
+                System.out.print(this.map[i][j] + "   ");
             }
-            System.out.println();
+            System.out.println("\n     |");
         }
    }
 }
