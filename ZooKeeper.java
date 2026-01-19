@@ -127,6 +127,7 @@ public class ZooKeeper extends Employee {
                 "Name: " + getFirstName() + " " + getLastName() + "\n" +
                 "Age: " + getAge() + "\n" +
                 "Role: " + getRole() + "\n" +
+                "Years of Experience: " + getYearsOfExperience() + "\n" + 
                 "Certification Level: " + certificationLevel + "\n" + 
                 "Tasks Completed: " + dailyTasksCompleted + "\n" + 
                 "Earnings: " + getEarnings() + "\n";

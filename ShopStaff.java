@@ -97,6 +97,7 @@ public class ShopStaff extends Employee {
                "Name: " + getFirstName() + " " + getLastName() + "\n" +
                "Age: " + getAge() + "\n" +
                "Role: " + getRole() + "\n" +
+               "Years of Experience: " + getYearsOfExperience() + "\n" + 
                "Items Sold: " + itemsSold + "\n" +
                "Total Sales: " + totalSales + "\n" +
                "Facts Shared: " + factsShared + "\n" +

@@ -530,18 +530,19 @@ public int getNumEmployees() { return numEmployees; }
 
     /*
     @description: sorts employees by years of experience (highest first),
-                    and by hourly wage if experience is equal
-    @algorithm: uses bubble sort; compares experience first, then wage
-    @postcondition: employeeList is reordered by experience and wage in descending order
+                and by total earnings (highest first) if experience is equal
+    @algorithm: uses bubble sort; compares experience first, then earnings
+    @postcondition: employeeList is reordered by experience and earnings in descending order
     */
-    public void sortEmployeesByExperienceAndWage(){
-        for (int i = 0; i < numEmployees - 1; i++){
-            for (int j = 0; j < numEmployees - i - 1; j++){
-        
+    public void sortEmployeesByExperienceAndEarnings() {
+        for (int i = 0; i < numEmployees - 1; i++) {
+            for (int j = 0; j < numEmployees - i - 1; j++) {
+
                 int cmpExp = employeeList[j].compareToByExperience(employeeList[j + 1]);
-        
-                if (cmpExp > 0 || (cmpExp == 0 && employeeList[j].compareToByWage(employeeList[j + 1]) > 0)){
-        
+
+                // if experience is the same, compare earnings
+                if (cmpExp > 0 || (cmpExp == 0 && employeeList[j].compareToByEarnings(employeeList[j + 1]) > 0)) {
+
                     Employee temp = employeeList[j];
                     employeeList[j] = employeeList[j + 1];
                     employeeList[j + 1] = temp;
