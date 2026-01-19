@@ -337,6 +337,10 @@ public class Zoo {
         zooLand.printAllStructureInfo();
     }
 
+    public void printAllHabitatInfo () {
+        zooLand.printAllHabitatInfo();
+    }
+
     public void maintainAll () {
         zooLand.maintainAll();
     }

@@ -255,8 +255,7 @@ public class Land {
             idx += 1;
 
             // based on the structureType, call the appropriate loadFromString method.
-            System.out.println(structureType);
-            System.out.println(sumString);
+
             switch (structureType) {
                 case "GiftShop":
                     this.structureList[i] = GiftShop.loadFromString(sumString, this);
@@ -612,6 +611,16 @@ public class Land {
     public void printAllStructureInfo () {
         for (int i = 0; i < currentNumStructures; i++) {
             System.out.println(String.format("Name: %s%nID: %c%nArea: %d%n", structureList[i].getName(), structureList[i].getStructureID(), structureList[i].getArea()));
+        }
+    }
+
+    public void printAllHabitatInfo () {
+        for (int i = 0; i < currentNumStructures; i++) {
+            if (structureList[i] instanceof Habitat) {
+                System.out.println(((Habitat)structureList[i]).toString());
+                System.out.println();
+            }
+            
         }
     }
 

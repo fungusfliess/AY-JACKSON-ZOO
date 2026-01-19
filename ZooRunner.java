@@ -240,6 +240,7 @@ public class ZooRunner {
                 + "9  -  Print All Structures\n"
                 + "10 -  Add Person\n"
                 + "11 - Deliver animals baby\n"
+                + "12 - Print All Habitats\n"
                 );
    
             input = sc.nextLine();
@@ -289,6 +290,10 @@ public class ZooRunner {
                             break;
                         case 11:
                           deliverOffspringMenu(zoo);
+                          break;
+                        case 12: 
+                            zoo.printAllHabitatInfo();
+                            break;
                         default:
                             System.out.println("Sorry, that is not a valid option!\n");
                     }

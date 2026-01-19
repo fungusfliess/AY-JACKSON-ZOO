@@ -152,6 +152,6 @@ public class Enclosure extends Habitat{
     }
 
     public String toString() {
-        return "Enclosure: " + getName() + " (ID: " + getStructureID() + ")";
+        return "Enclosure: " + getName() + "\nStructure ID: " + getStructureID() + "\nArea: " + getArea() + "\nMaintenance Cost: " + calculateMaintenanceCost() + "\nTime Between Maintenance: " + getTimeBetweenMaintenance() + "\nDays Since Last Maintenance: " + getDaysSinceLastMaintenance();
     }
 }
