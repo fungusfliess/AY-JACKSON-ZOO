@@ -616,10 +616,9 @@ public int getNumEmployees() { return numEmployees; }
         out.close(); 
 
         } catch (IOException e) {
-        System.out.println("ERROR failed to save persons: " + e.getMessage());
+            System.out.println("ERROR failed to save persons: " + e.getMessage());
         }
     }
-    
 
     /*
     @description: loads all Person records from persons.txt using the assignment file format
