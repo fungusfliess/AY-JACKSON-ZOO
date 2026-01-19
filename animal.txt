@@ -1,0 +1,10 @@
+Unicorn|A|Sparkle|Pet|Female|85|90|20|4|350.5|3
+Capybara|B|Chill|Pet|Male|90|95|15|6|45.0|2
+Eagle|C|Aquila|Observe|Female|80|85|30|5|6.2|4|true
+Cockatoo|C|Sunny|Talk|Male|88|92|25|3|1.1|1|false
+Snake|D|Sly|Handle|Female|70|80|40|2|12.4|5|14
+Crocodile|E|Snapper|Observe|Male|75|70|50|12|500.0|10|30
+Frog|F|Hopper|Pet|Male|85|90|20|1|0.4|0
+Axolotl|F|Neo|Observe|Female|88|93|18|2|0.6|1
+Shark|G|Razor|Observe|Male|65|75|60|8|900.0|6
+Sunfish|G|SunnyFin|Observe|Female|78|88|35|4|250.0|3
