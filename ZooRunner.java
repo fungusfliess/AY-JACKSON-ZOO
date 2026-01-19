@@ -80,7 +80,7 @@ public class ZooRunner {
     // ===== LOGIN LOOP =====
     while (!quit && !login) {
         System.out.print("(Type quit to return)\nEnter Admin PIN: ");
-        input = sc.nextLine();
+        input = sc.nextLine().trim();
 
         if (input.equalsIgnoreCase(QUIT)) {
             return;
@@ -93,6 +93,8 @@ public class ZooRunner {
 
     // ===== ADMIN MENU LOOP =====
     while (login && !quit) {
+        System.out.println("Visitors loaded: " + zoo.getNumVisitors());
+System.out.println("Employees loaded: " + zoo.getNumEmployees());
 
         System.out.println("""
             Admin Menu:
@@ -105,31 +107,32 @@ public class ZooRunner {
             6  - Sort Employees By Earnings
             7  - Sort Employees By Experience & Wage
             8  - Display All Employees
-            9  - Create Gift Shop
-            10 - Create Restaurant
-            11 - Create Pavillion
-            12 - Create Enclosure
-            13 - Create Park
-            14 - Create Maze
-            15 - Remove Structure
-            16 - Maintain All Structures
-            17 - Add Animal
-            18 - Relocate Animal
-            19 - List Animals By Species
-            20 - Add Egg
-            21 - Display Animals With Low Happiness
-            22 - Display Animals With High Hunger
-            23 - Display Animals With Low Cleanliness
-            24 - Sort Animals By Name Then Species
-            25 - Sort Animals By Age
-            26 - Sort Animals By Happiness
-            27 - Sort Animals By Hunger
-            28 - Sort Animals By Cleanliness
-            29 - Display All Animals
-            30 - Display Incubator
+            9  - Display All Visitors
+            10 - Create Gift Shop
+            11 - Create Restaurant
+            12 - Create Pavillion
+            13 - Create Enclosure
+            14 - Create Park
+            15 - Create Maze
+            16 - Remove Structure
+            17 - Maintain All Structures
+            18 - Add Animal
+            19 - Relocate Animal
+            20 - List Animals By Species
+            21 - Add Egg
+            22 - Display Animals With Low Happiness
+            23 - Display Animals With High Hunger
+            24 - Display Animals With Low Cleanliness
+            25 - Sort Animals By Name Then Species
+            26 - Sort Animals By Age
+            27 - Sort Animals By Happiness
+            28 - Sort Animals By Hunger
+            29 - Sort Animals By Cleanliness
+            30 - Display All Animals
+            31 - Display Incubator
             """);
 
-        input = sc.nextLine();
+        input = sc.nextLine().trim();
 
         if (input.equalsIgnoreCase(QUIT)) {
             return;
@@ -164,44 +167,45 @@ public class ZooRunner {
                 case 6 -> zoo.sortEmployeesByEarnings();
                 case 7 -> zoo.sortEmployeesByExperienceAndWage();
                 case 8 -> zoo.displayAllEmployees();
+                case 9 -> zoo.displayAllVisitors();
 
                 // ===== STRUCTURES =====
-                case 9 -> buildGiftShop();
-                case 10 -> buildRestaurant();
-                case 11 -> buildPavillion();
-                case 12 -> buildEnclosure();
-                case 13 -> buildPark();
-                case 14 -> buildMaze();
+                case 10 -> buildGiftShop();
+                case 11 -> buildRestaurant();
+                case 12 -> buildPavillion();
+                case 13 -> buildEnclosure();
+                case 14 -> buildPark();
+                case 15 -> buildMaze();
 
-                case 15 -> {
+                case 16 -> {
                     System.out.print("Enter Structure ID: ");
                     System.out.println(zoo.removeStructure(sc.nextLine().charAt(0)));
                 }
 
-                case 16 -> zoo.maintainAll();
+                case 17 -> zoo.maintainAll();
 
                 // ===== ANIMALS =====
-                case 17 -> addAnimalUI();
-                case 18 -> relocateAnimalUI();
+                case 18 -> addAnimalUI();
+                case 19 -> relocateAnimalUI();
 
-                case 19 -> {
+                case 20 -> {
                     System.out.print("Enter species: ");
                     zoo.listAllSameSpecie(sc.nextLine());
                 }
 
-                case 20 -> addEggMenu();
-                case 21 -> zoo.displayAnimalsLowHappiness();
-                case 22 -> zoo.displayAnimalsLowHunger();
-                case 23 -> zoo.displayAnimalsLowCleansiness();
+                case 21 -> addEggMenu();
+                case 22 -> zoo.displayAnimalsLowHappiness();
+                case 23 -> zoo.displayAnimalsLowHunger();
+                case 24 -> zoo.displayAnimalsLowCleansiness();
 
-                case 24 -> zoo.sortAnimalsByNameThenSpecie();
-                case 25 -> zoo.sortAnimalsByAge();
-                case 26 -> zoo.sortAnimalsByHappiness();
-                case 27 -> zoo.sortAnimalsByHunger();
-                case 28 -> zoo.sortAnimalsByCleanliness();
+                case 25 -> zoo.sortAnimalsByNameThenSpecie();
+                case 26 -> zoo.sortAnimalsByAge();
+                case 27 -> zoo.sortAnimalsByHappiness();
+                case 28 -> zoo.sortAnimalsByHunger();
+                case 29 -> zoo.sortAnimalsByCleanliness();
 
-                case 29 -> zoo.displayAllAnimals();
-                case 30 -> zoo.displayIncubator();
+                case 30 -> zoo.displayAllAnimals();
+                case 31 -> zoo.displayIncubator();
 
                 default -> System.out.println("Invalid option.");
             }
@@ -1074,5 +1078,4 @@ public static void hatchEggMenu() {
             System.out.println("Zoo has reached max capacity or ID already exists.");
         }
     }
-
 }

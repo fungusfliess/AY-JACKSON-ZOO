@@ -113,7 +113,12 @@ public class Egg {
         }
 
         baby.setName(name);
-        baby.setGender(Math.random() < 0.5 ? "Male" : "Female");
+        if (Math.random() < 0.5) {
+            baby.setGender("Male");
+        } else {
+            baby.setGender("Female");
+        }
+
         hatched = true;
 
         System.out.println(name + " has been born!");

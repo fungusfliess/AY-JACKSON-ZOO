@@ -32,6 +32,9 @@ public class Zoo {
     //                          {'.', 'N', 'N', 'N', '.', 'N', '.', '.', '.', '.', 'N', '.', 'N', '.', 'N', }, 
     //                          {'.', '.', '.', '.', '.', 'N', '.', 'N', '.', '.', 'N', '.', '.', '.', '.', }, };;
 
+    //RANDOM 
+    public int getNumVisitors() { return numVisitors; }
+public int getNumEmployees() { return numEmployees; }
 
     //FIELDS
     private Employee[] employeeList;
@@ -562,6 +565,11 @@ public class Zoo {
     */
     public void displayAllVisitors() {
         System.out.println("=== ALL VISITORS (" + numVisitors + ") ===");
+        if (numVisitors == 0) {
+            System.out.println("No visitors loaded.");
+            return;
+        }
+        
         for (int i = 0; i < numVisitors; i++) {
             if (visitorList[i] != null) {
                 System.out.println(visitorList[i]);
@@ -575,6 +583,11 @@ public class Zoo {
     */
     public void displayAllEmployees() {
         System.out.println("=== ALL EMPLOYEES (" + numEmployees + ") ===");
+        if (numEmployees == 0) {
+            System.out.println("No employees loaded.");
+            return;
+        }
+        
         for (int i = 0; i < numEmployees; i++) {
             if (employeeList[i] != null) {
                 System.out.println(employeeList[i]);
@@ -613,10 +626,9 @@ public class Zoo {
         out.close(); 
 
         } catch (IOException e) {
-        System.out.println("ERROR failed to save persons: " + e.getMessage());
+            System.out.println("ERROR failed to save persons: " + e.getMessage());
         }
     }
-    
 
     /*
     @description: loads all Person records from persons.txt using the assignment file format
@@ -640,25 +652,17 @@ public class Zoo {
     
             Person p = null;
     
-            // -------- Employees --------
-            if (role.equals("ZOOKEEPER") || role.equals("SHOPSTAFF")) {
+            if (role.equals("ZOOKEEPER")) {
                 double hourlyWage = Double.parseDouble(next(br));
                 int yearsExp = Integer.parseInt(next(br));
-                int thirdField = Integer.parseInt(next(br)); // certLevel or placeholder
-    
-                if (hourlyWage < 0 || yearsExp < 0) {
-                    System.out.println("[WARN] Invalid employee fields for '" + personID + "'. Skipping.");
-                    continue;
-                }
-    
-                if (role.equals("ZOOKEEPER")) {
-                    p = new ZooKeeper(age, personID, firstName, lastName, hourlyWage, yearsExp, thirdField);
-                } else {
-                    p = new ShopStaff(age, personID, firstName, lastName, hourlyWage, yearsExp);
-                }
-            }
-    
-            // -------- Adult --------
+                int certLevel = Integer.parseInt(next(br));
+                p = new ZooKeeper(age, personID, firstName, lastName, hourlyWage, yearsExp, certLevel);
+            
+            } else if (role.equals("SHOPSTAFF")) {
+                double hourlyWage = Double.parseDouble(next(br));
+                int yearsExp = Integer.parseInt(next(br));
+                p = new ShopStaff(age, personID, firstName, lastName, hourlyWage, yearsExp);
+            }            
             else if (role.equals("ADULT")) {
                 if (!ageMatchesVisitorRole("ADULT", age)) {
                     System.out.println("[WARN] Age " + age + " does not match ADULT for '" + personID + "'. Skipping.");
@@ -670,16 +674,12 @@ public class Zoo {
                 int visitDuration = Integer.parseInt(next(br));
                 double preferredBudgetLimit = Double.parseDouble(next(br));
     
-                
-    
                 p = new Adult(age, personID, firstName, lastName,
                             Math.max(0.0, balance),
                             Math.max(0, learningLevel),
                             Math.max(0, visitDuration),
                             Math.max(0.0, preferredBudgetLimit));
-            }
-    
-            // -------- Child --------
+            }    
             else if (role.equals("CHILD")) {
     
                 double balance = Double.parseDouble(next(br));
@@ -700,8 +700,6 @@ public class Zoo {
                             strollerNeeded,
                             guardianID);
             }
-    
-            // -------- Senior --------
             else if (role.equals("SENIOR")) {
                 // If your file includes SENIOR, use:
                 // balance, learningLevel, visitDuration, preferredBudgetLimit, requiresAccessibilitySupport
@@ -1256,8 +1254,6 @@ public class Zoo {
         }
     }
 
-
-
     //========================================
     public void loadEggs(String file) {
         try {
@@ -1281,9 +1277,10 @@ public class Zoo {
                 int hatchTime = Integer.parseInt(br.readLine());
 
                 Animal parent = findAnimal(parentName, species);
+
+                // 🔹 Fallback: create dummy parent if not found
                 if (parent == null) {
-                    System.out.println("Parent not found for egg: " + parentName);
-                    continue;
+                    parent = createDummyParent(species);
                 }
 
                 Egg egg = new Egg(parent);
@@ -1298,7 +1295,89 @@ public class Zoo {
         }
     }
 
+    // 
+    private Animal createDummyParent(String specie) {
 
+        char habitatId = Land.EMPTY; // placeholder
+        String name = "Unknown_" + specie;
+        String preferredInteraction = "None";
+        String gender;
+
+        if (Math.random() < 0.5) {
+            gender = "Male";
+        } else {
+            gender = "Female";
+        }
+
+        int happiness = Animal.MAX_STAT / 2;
+        int cleanliness = Animal.MAX_STAT / 2;
+        int hunger = Animal.MAX_STAT / 2;
+        int age = 0;
+        double weight = 0;
+
+        Animal animal = null;
+
+        if (specie.equalsIgnoreCase("Unicorn")) {
+
+            animal = new Unicorn(habitatId, name, preferredInteraction, gender,
+                    happiness, cleanliness, hunger, age, weight);
+
+        } else if (specie.equalsIgnoreCase("Capybara")) {
+
+            animal = new Capybara(habitatId, name, preferredInteraction, gender,
+                    happiness, cleanliness, hunger, age, weight);
+
+        } else if (specie.equalsIgnoreCase("Eagle")) {
+
+            Eagle eagle = new Eagle(habitatId, name, preferredInteraction, gender,
+                    happiness, cleanliness, hunger, age, weight);
+            eagle.setHasNest(false);
+            animal = eagle;
+
+        } else if (specie.equalsIgnoreCase("Cockatoo")) {
+
+            Cockatoo cockatoo = new Cockatoo(habitatId, name, preferredInteraction, gender,
+                    happiness, cleanliness, hunger, age, weight);
+            cockatoo.setHasNest(false);
+            animal = cockatoo;
+
+        } else if (specie.equalsIgnoreCase("Snake")) {
+
+            Snake snake = new Snake(habitatId, name, preferredInteraction, gender,
+                    happiness, cleanliness, hunger, age, weight);
+            snake.setTimeToShed(0);
+            animal = snake;
+
+        } else if (specie.equalsIgnoreCase("Crocodile")) {
+
+            Crocodile croc = new Crocodile(habitatId, name, preferredInteraction, gender,
+                    happiness, cleanliness, hunger, age, weight);
+            croc.setTimeToShed(0);
+            animal = croc;
+
+        } else if (specie.equalsIgnoreCase("Frog")) {
+
+            animal = new Frog(habitatId, name, preferredInteraction, gender,
+                    happiness, cleanliness, hunger, age, weight);
+
+        } else if (specie.equalsIgnoreCase("Axolotl")) {
+
+            animal = new Axolotl(habitatId, name, preferredInteraction, gender,
+                    happiness, cleanliness, hunger, age, weight);
+
+        } else if (specie.equalsIgnoreCase("Shark")) {
+
+            animal = new Shark(habitatId, name, preferredInteraction, gender,
+                    happiness, cleanliness, hunger, age, weight);
+
+        } else if (specie.equalsIgnoreCase("Sunfish")) {
+
+            animal = new Sunfish(habitatId, name, preferredInteraction, gender,
+                    happiness, cleanliness, hunger, age, weight);
+        }
+
+        return animal;
+    }
 
     //==============================================
     public Animal hatchEgg(int index, String name) {
