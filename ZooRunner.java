@@ -110,8 +110,6 @@ public class ZooRunner {
 
     // ===== ADMIN MENU LOOP =====
     while (login && !quit) {
-        System.out.println("Visitors loaded: " + zoo.getNumVisitors());
-    System.out.println("Employees loaded: " + zoo.getNumEmployees());
 
         System.out.println("""
             Admin Menu:
