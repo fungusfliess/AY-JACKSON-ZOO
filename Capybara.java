@@ -1,6 +1,15 @@
+/*
+   File Name: Capybara.java
+   Name: Jerry Ning
+   Class: ICS4U1-23
+   Date: Jan 7, 2025
+   Description: Capybara is a concrete class representing capybaras in the zoo.
+                Capybaras are large rodents that live in wet grassland environments.
+*/
 public class Capybara extends Mammal {
 
     // CONSTANTS
+    // Capybaras prefer wet grasslands with high humidity and water access
     private static final LivingCondition CAPYBARA_CONDITION =
         new LandCondition(26, 75, "Wet Grassland", 30, 2, true, 80, 5);
 
@@ -8,11 +17,16 @@ public class Capybara extends Mammal {
     private static final int HUNGER_GAIN_PER_YEAR = 5;
     
     // CONSTRUCTORS
+    
+    /* @description: Template constructor creates baby capybara from parent
+    */
     public Capybara(Animal parent) {
         super(parent);
         setupStats();
     }
 
+    /* @description: Full constructor creates capybara with all specified attributes
+    */
     public Capybara(char habitatId, String name, String preferedInteraction, String gender,
                     int happiness, int cleanliness, int hunger, int age, double weight) {
 

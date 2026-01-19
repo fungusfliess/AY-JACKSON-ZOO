@@ -1,3 +1,11 @@
+/*
+   File Name: Coord.java
+   Name: Jason Liu
+   Class: ICS4U1-23
+   Date: Jan 7, 2025
+   Description: Coord represents a coordinate point with x and y values,
+                used for positioning elements in the zoo map.
+*/
 
 public class Coord {
     private int x;

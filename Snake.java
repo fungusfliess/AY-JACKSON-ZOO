@@ -1,16 +1,29 @@
+/*
+   File Name: Snake.java
+   Name: Jerry Ning
+   Class: ICS4U1-23
+   Date: Jan 7, 2025
+   Description: Snake is a concrete class representing snakes in the zoo.
+                Snakes are reptiles that live in grassland environments.
+*/
 public class Snake extends Reptile {
 
+    // Snakes prefer warm grasslands with moderate conditions
     private static final LivingCondition SNAKE_CONDITION =
         new LandCondition(26, 50, "Grassland", 40, 6, true, 45, 6);
 
     private static final int WEIGHT_GAIN_PER_YEAR = 4;
     private static final int HUNGER_GAIN_PER_YEAR = 2;
 
+    /* @description: Template constructor creates baby snake from parent
+    */
     public Snake(Animal parent) {
         super(parent);
         setupStats();
     }
 
+    /* @description: Full constructor creates snake with all specified attributes
+    */
     public Snake(char habitatId, String name, String preferedInteraction, String gender,
                  int happiness, int cleanliness, int hunger, int age, double weight) {
 

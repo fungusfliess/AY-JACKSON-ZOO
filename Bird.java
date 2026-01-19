@@ -1,3 +1,11 @@
+/*
+   File Name: Bird.java
+   Name: Jerry Ning
+   Class: ICS4U1-23
+   Date: Jan 7, 2025
+   Description: Bird is an abstract class representing birds in the zoo.
+                Birds can fly (depending on age) and may have nests.
+*/
 public abstract class Bird extends Animal {
 
     private boolean canFly;
@@ -55,6 +63,9 @@ public abstract class Bird extends Animal {
     // SHARED BIRD METHODS
     // =========================
 
+    /* @description: Creates an egg if the bird can reproduce and has a nest
+       @return an Egg object if reproduction is successful, null otherwise
+    */
     public Egg reproduce() {
         if (canReproduce()) {
 
@@ -64,11 +75,16 @@ public abstract class Bird extends Animal {
         return null;
     }
 
+    /* @description: Overrides base canReproduce to also require a nest
+       @return true if the bird can reproduce and has a nest, false otherwise
+    */
     @Override
     public boolean canReproduce() {
         return super.canReproduce() && hasNest;
     }
 
+    /* @description: Builds a nest for the bird to enable reproduction
+    */
     public void buildNest() {
         this.hasNest = true;
     }
