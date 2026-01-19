@@ -32,6 +32,9 @@ public class Zoo {
     //                          {'.', 'N', 'N', 'N', '.', 'N', '.', '.', '.', '.', 'N', '.', 'N', '.', 'N', }, 
     //                          {'.', '.', '.', '.', '.', 'N', '.', 'N', '.', '.', 'N', '.', '.', '.', '.', }, };;
 
+    //RANDOM 
+    public int getNumVisitors() { return numVisitors; }
+public int getNumEmployees() { return numEmployees; }
 
     //FIELDS
     private Employee[] employeeList;
