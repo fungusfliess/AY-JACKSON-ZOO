@@ -431,37 +431,116 @@ public class ZooRunner {
     //==========================================
     private static void addAnimalUI() {
 
-    System.out.print("Enter habitat ID: ");
-    char habitatId = sc.nextLine().charAt(0);
+        System.out.print("Enter habitat ID: ");
+        char habitatId = sc.nextLine().charAt(0);
 
-    Structure s = zoo.searchStructureByID(habitatId);
-    if (!(s instanceof Habitat)) {
-        System.out.println("Invalid habitat.");
-        return;
+        Structure s = zoo.searchStructureByID(habitatId);
+        if (!(s instanceof Habitat)) {
+            System.out.println("Invalid habitat.");
+            return;
+        }
+        Habitat habitat = (Habitat) s;
+
+        System.out.print("Enter animal name: ");
+        String name = sc.nextLine();
+
+        System.out.print("Enter species: ");
+        String specie = sc.nextLine();
+
+        System.out.print("Enter preferred interaction: ");
+        String interaction = sc.nextLine();
+
+        System.out.print("Enter gender: ");
+        String gender = sc.nextLine();
+
+        System.out.print("Enter happiness (0–100): ");
+        int happiness = Integer.parseInt(sc.nextLine());
+
+        System.out.print("Enter cleanliness (0–100): ");
+        int cleanliness = Integer.parseInt(sc.nextLine());
+
+        System.out.print("Enter hunger (0–100): ");
+        int hunger = Integer.parseInt(sc.nextLine());
+
+        System.out.print("Enter age: ");
+        int age = Integer.parseInt(sc.nextLine());
+
+        System.out.print("Enter weight: ");
+        double weight = Double.parseDouble(sc.nextLine());
+
+        Animal animal = null;
+
+        switch (specie.toLowerCase()) {
+
+            case "capybara":
+                animal = new Capybara(
+                    habitatId, name, interaction, gender,
+                    happiness, cleanliness, hunger, age, weight
+                );
+                break;
+
+            case "unicorn":
+                animal = new Unicorn(
+                    habitatId, name, interaction, gender,
+                    happiness, cleanliness, hunger, age, weight
+                );
+                break;
+
+            case "eagle":
+                animal = new Eagle(
+                    habitatId, name, interaction, gender,
+                    happiness, cleanliness, hunger, age, weight
+                );
+                break;
+
+            case "cockatoo":
+                animal = new Cockatoo(
+                    habitatId, name, interaction, gender,
+                    happiness, cleanliness, hunger, age, weight
+                );
+                break;
+
+            case "shark":
+                animal = new Shark(
+                    habitatId, name, interaction, gender,
+                    happiness, cleanliness, hunger, age, weight
+                );
+                break;
+
+            case "sunfish":
+                animal = new Sunfish(
+                    habitatId, name, interaction, gender,
+                    happiness, cleanliness, hunger, age, weight
+                );
+                break;
+
+            case "snake":
+                animal = new Snake(
+                    habitatId, name, interaction, gender,
+                    happiness, cleanliness, hunger, age, weight
+                );
+                break;
+
+            case "axolotl":
+                animal = new Axolotl(
+                    habitatId, name, interaction, gender,
+                    happiness, cleanliness, hunger, age, weight
+                );
+                break;
+
+            default:
+                System.out.println("Unknown species.");
+                return;
+        }
+
+        if (zoo.addAnimal(habitat, animal)) {
+            System.out.println("Animal successfully added.");
+        } else {
+            System.out.println("Failed to add animal.");
+        }
     }
-    Habitat habitat = (Habitat) s;
 
-    System.out.print("Enter animal name: ");
-    String name = sc.nextLine();
 
-    System.out.print("Enter species: ");
-    String species = sc.nextLine();
-
-    Animal animal = zoo.findAnimal(name, species);
-
-    if (animal == null) {
-        System.out.println("Animal not found.");
-        return;
-    }
-
-    boolean success = zoo.addAnimal(habitat, animal);
-
-    if (success) {
-        System.out.println("Animal successfully added to habitat.");
-    } else {
-        System.out.println("Failed to add animal.");
-    }
-}
 
 //==========================================
 private static void relocateAnimalUI() {
