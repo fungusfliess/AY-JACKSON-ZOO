@@ -110,9 +110,6 @@ public class ZooRunner {
 
     // ===== ADMIN MENU LOOP =====
     while (login && !quit) {
-        System.out.println("Visitors loaded: " + zoo.getNumVisitors());
-    System.out.println("Employees loaded: " + zoo.getNumEmployees());
-
         System.out.println("""
             Admin Menu:
             (Type quit to return)
@@ -280,6 +277,7 @@ public class ZooRunner {
 
                 default:
                     System.out.println("Invalid option.");
+                    break;
             }
 
         } catch (Exception e) {
