@@ -1,4 +1,4 @@
-12
+11
 
 ZOOKEEPER
 E101
@@ -35,15 +35,6 @@ Patel
 18.25
 1
 0
-
-VET
-E105
-Rachel
-Ng
-35
-32.00
-10
-3
 
 ADULT
 V201
