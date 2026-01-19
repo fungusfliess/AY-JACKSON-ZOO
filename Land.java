@@ -715,6 +715,7 @@ public class Land {
         int area = landMap.areaOf(corner1);
         structureList[currentNumStructures] = new Enclosure(species, name, structureID, area, timeBetweenMaintenance, 0, this, maxAnimal, climate);
         currentNumStructures++;
+        System.out.println("Area of Enclosure: " + area); 
         return true;
     }
 
@@ -736,6 +737,7 @@ public class Land {
         int area = landMap.areaOf(corner1);
         structureList[currentNumStructures] = new Pavillion(name, structureID, area, timeBetweenMaintenance, 0, this, capacity, condition);
         currentNumStructures++;
+        System.out.println("Area of Pavillion: " + area); 
         return true;
     }
 

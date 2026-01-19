@@ -1,7 +1,7 @@
 10
 20
-b c c c j j j j j j j j j j j j j j j j
-b c c c g p e e e j j j j j j j j j j j
+b c c c j j j j j j j j j d d j j j j j
+b c c c g p e e e j j j j d d j j j j j
 g g g g g g j o o j j j j j j j j j j j
 n n g g m j j o o j j j j j j j j j j j
 n n g g m j j j j j j j j j j j j j j j
@@ -52,7 +52,7 @@ true
 2
 Giraffe Enclosure
 o
-7
+4
 40
 12
 10

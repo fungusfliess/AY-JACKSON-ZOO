@@ -210,10 +210,14 @@ public class Map {
 
     /*
     @description: Random boolean generator, with a modifiable probability that will approach 100% true as count --> max. Used by recursive blob generation.
-    @parameters: int max, int count. These are used in the probability calculation. Max is the maximum sprawl, and count is to change the probability with each call from buildStructureBlob's recursive algorithm.
+    @parameters: int max, int count. These are used in the probability calculation. Max is the maximum sprawl, and a minimum sprawl is calculated from this value as well. Count is to change the probability with each call from buildStructureBlob's recursive algorithm, to linearly increase the chance so that each call has an equal chance of being terminated.
     @return: boolean with a 1/(max-count) chance of being false. 
     */ 
     private boolean probabilityOfEnd (int max, int count) {
+        int min = (int)Math.sqrt(max); // minimum possible sprawl assuming no obstacles (lower bound)
+        if (count < min) { // if it's still below the lower bound, don't use probability to stop, just go on.
+            return true;
+        }
         int den = max - count;
         // limiting den to positive, just in case
         if (den < 0) {

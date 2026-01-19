@@ -855,8 +855,11 @@ public static void hatchEggMenu() {
             c1, area, species, name, id, time, maxAnimals, condition
         );
 
-        if (success) System.out.println("Enclosure created.");
-        else System.out.println("Enclosure creation failed.");
+        if (success) {
+            System.out.println("Enclosure created.");
+        } else {
+            System.out.println("Enclosure creation failed.");
+        }
     }
 
     private static void buildPavillion() {
