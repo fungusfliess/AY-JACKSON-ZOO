@@ -127,7 +127,6 @@ public int getNumEmployees() { return numEmployees; }
             bw.write("" + maxEmployee);
             bw.newLine();
             bw.write("" + maxVisitor);
-            bw.close();
             System.out.println("after saving zoo info, before saving the 3 files.");
             savePersons();
             System.out.println("after savePersons");
