@@ -1,11 +1,13 @@
 public class Capybara extends Mammal {
 
+    // CONSTANTS
     private static final LivingCondition CAPYBARA_CONDITION =
         new LandCondition(26, 75, "Wet Grassland", 30, 2, true, 80, 5);
 
     private static final int WEIGHT_GAIN_PER_YEAR = 8;
     private static final int HUNGER_GAIN_PER_YEAR = 5;
     
+    // CONSTRUCTORS
     public Capybara(Animal parent) {
         super(parent);
         setupStats();
@@ -20,6 +22,9 @@ public class Capybara extends Mammal {
         setupStats();
         updateAge();
     }
+
+    /* description: sets up the initial stats for the Capybara
+    */
 
     private void setupStats() {
         setMaxHunger(80);
@@ -38,6 +43,9 @@ public class Capybara extends Mammal {
     public int getMaxHunger() {
         return 80;
     }
+    
+    /* description: returns the types of food the Capybara eats
+    */
 
     @Override
     public String[] getTypeFoods() {
@@ -45,6 +53,9 @@ public class Capybara extends Mammal {
         return foods;
     }
     
+    /* description: returns the life expectancy of the Capybara
+    */
+
     @Override
     public int getLifeExpectancy() {
         return 10;
@@ -53,6 +64,9 @@ public class Capybara extends Mammal {
     public double getFlexibility() {
         return 0.7;
     }
+
+    /* description: returns the living condition of the Capybara
+    */
 
     @Override
     public LivingCondition getLivingCondition() {
@@ -63,11 +77,16 @@ public class Capybara extends Mammal {
         return 5;
     }
 
+    /* description: returns the adult age of the Capybara
+    */
+
     @Override
     public int getAdultAge() {
         return 2;
     }
 
+    /* description: returns the required area for the Capybara
+    */
     @Override
     public double getRequiredArea() {
         return 30.0;

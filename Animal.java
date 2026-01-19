@@ -254,6 +254,8 @@ public abstract class Animal {
         return false;
     }
 
+    /* description: calculates the happiness of the animal based on cleanliness, hunger, interactions, and preferred interactions
+    */
 
     public void calculateHappiness() {
         double avg = 0.0;
@@ -279,6 +281,9 @@ public abstract class Animal {
         }
     }
 
+    /* description: checks if the animal is suitable for a given habitat based on living conditions and space requirements
+    */
+
     public boolean isSuitable(Habitat habitat) {
         if (habitat == null || livingCondition == null || habitat.getClimate() == null) {
             return false;
@@ -288,6 +293,9 @@ public abstract class Animal {
                 && habitat.enoughSpace(requiredArea);
     }
 
+    /* description: simulates the passing of a day for the animal, updating its state accordingly
+    */
+   
     public void passDay() {
         daysPassed++;
 

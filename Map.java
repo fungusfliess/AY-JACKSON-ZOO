@@ -1,3 +1,10 @@
+/*
+    File Name: Map.java
+    Name: Jason Liu
+    Class: ICS4U1-23
+    Date: Jan 7, 2025
+    Description: Map manages the overhead view visual representation of the Zoo, as a character array.
+*/
 
 public class Map {
     
