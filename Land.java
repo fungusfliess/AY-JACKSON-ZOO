@@ -282,7 +282,7 @@ public class Land {
                     return false;
             }
             // gets area from calculation on
-            int tgtArea = landMap.areaOf(landMap.find(this.structureList[i].getStructureID()));
+            int tgtArea = NUM_AREA_PER_SQUARE * landMap.areaOf(landMap.find(this.structureList[i].getStructureID()));
             this.structureList[i].setArea(tgtArea);
         }
         return true;
