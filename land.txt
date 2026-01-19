@@ -1,18 +1,18 @@
 10
 20
-b c c c . . . . . . . . . d d . . . . .
-b c c c . p e e e . . . . d d . . . . .
-. . . . . . . o o . . . . . . j . . . .
-n n . . m . . o o . . . . . . j j j j .
-n n . . m . . . . . . . j j j j j . . .
-. . . . . . . . . . . . j j j j j j j .
-. . . . . . . . . . . . . j j j j j j j
-. . . . . . . . . . . . . j j j j j j j
-. . . . . . . . . . . . . j j j . j j j
-. . . . . . . . . . . . . . j . . . . .
+. c c c . . . . . . . . . d d . . . . .
+. c c c . p e e e . . . . d d . . . . .
+. . . . . . . o o . . . . . . . . . . .
+n n . . m . . o o . . . . . . . . . . .
+n n . . m . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . .
 
 40
-9
+7
 
 Restaurant
 1
@@ -22,7 +22,7 @@ Pasta
 Dolphins have pink milk!
 Rain Forest Cafe
 c
-6
+150
 300
 260
 
@@ -35,7 +35,7 @@ Octopuses have 3 hearts!
 Male seahorses can give birth!
 Zoo Gift Shop
 d
-4
+100
 120
 15
 
@@ -52,7 +52,7 @@ true
 2
 Giraffe Enclosure
 o
-4
+100
 40
 12
 10
@@ -69,7 +69,7 @@ false
 24.0
 North American Pavillion 
 n
-4
+100
 100
 68
 4
@@ -81,14 +81,14 @@ N N
 N N 
 Corn Maze
 m
-16
+50
 5
 4
 
 Park
 Zoo Central Field
 p
-6
+25
 14
 7
 
@@ -105,42 +105,7 @@ false
 10.0
 enclosure1
 e
-6
+75
 100
 0
 1
-
-Pavillion
-LAND
-26.0
-75.0
-wet grassland
-30.0
-2.0
-80.0
-true
-5
-Capybara Pavillion
-b
-2
-30
-0
-2
-
-Pavillion
-WATER
-15.0
-70.0
-Freshwater
-7.4
-150.0
-16.0
-true
-0.0
-pavillion1
-j
-38
-100000
-0
-10
-

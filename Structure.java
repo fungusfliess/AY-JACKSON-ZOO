@@ -80,6 +80,10 @@ public abstract class Structure{
       demolished = status; 
    }
 
+   public void setArea (int in) {
+      this.area = in;
+   }
+
    //OTHER METHODS
 
 
