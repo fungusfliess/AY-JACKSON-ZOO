@@ -1,5 +1,6 @@
 public abstract class Amphibian extends Animal {
 
+    //FIELDS
     private String currentStage;
     private int stage2Age;
     private int stage3Age;
@@ -84,11 +85,16 @@ public abstract class Amphibian extends Animal {
         return null;
     }
 
+    /* description: returns a string representation of the Amphibian object for saving to a file
+    */
      
     @Override
     public String saveToString() {
         return super.saveToString() + "|" + currentStage;
     }
+
+    /* description: returns a string representation of the Amphibian object, including its stages and abilities 
+    */
 
     @Override
     public String toString() {
