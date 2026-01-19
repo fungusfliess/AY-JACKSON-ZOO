@@ -281,6 +281,9 @@ public class Land {
                     System.out.println("Error: Unknown Structure type: " + structureType + " found in file. ");
                     return false;
             }
+            // gets area from calculation on
+            int tgtArea = landMap.areaOf(landMap.find(this.structureList[i].getStructureID()));
+            this.structureList[i].setArea(tgtArea);
         }
         return true;
     }
