@@ -284,7 +284,7 @@ public abstract class Animal {
             return false;
         }
 
-        return livingCondition.compareTo(habitat.getClimate()) >= flexibility
+        return livingCondition.compareTo(habitat.getClimate()) >= (1-flexibility)
                 && habitat.enoughSpace(requiredArea);
     }
 

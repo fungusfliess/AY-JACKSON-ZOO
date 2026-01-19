@@ -14,7 +14,7 @@ public abstract class LivingCondition {
         double diff = 0;
         diff += Math.min(this.getTemperature(), other.getTemperature())/Math.max(this.getTemperature(), other.getTemperature());
         diff += Math.min(this.getHumidity(), other.getHumidity())/Math.max(this.getHumidity(), other.getHumidity());
-        return diff/3;
+        return diff/2;
     }
 
     // GETTERS
