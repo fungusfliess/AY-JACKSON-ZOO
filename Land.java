@@ -598,7 +598,7 @@ public class Land {
             swapped = false;
             for (int j = 0; j < currentNumStructures-i-1; j++) {
                 
-                // if this structure is larger than the one after it, swap
+                // if this structure is larger than the one after it, swap. if size is the same, but this has less time since last maintenance, then swap so that the one that has the most maintenance time is first.
                 if ((structureList[j].compareToSize(structureList[j+1]) > 0) || ((structureList[j].compareToSize(structureList[j+1]) == 0) && (structureList[j].compareToSinceLastMaintenance(structureList[j+1]) < 0))) {
                     temp = structureList[j];
                     structureList[j] = structureList[j+1];
