@@ -134,6 +134,7 @@ public int getNumEmployees() { return numEmployees; }
             System.out.println("after saveAnimals");
             saveLandToFile(LAND_FILE);
             System.out.println("Zoo Successfully Saved!");
+            bw.close();
         }catch(IOException e){
             System.out.println("Error saving zoo: " + e.getMessage());
         }
