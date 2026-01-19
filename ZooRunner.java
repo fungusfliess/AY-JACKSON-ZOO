@@ -131,13 +131,13 @@ public class ZooRunner {
             """);
 
         input = sc.nextLine().trim();
-
+        
         if (input.equalsIgnoreCase(QUIT)) {
             return;
         }
 
         try {
-            switch (input) {
+            switch (Integer.parseInt(input)) {
 
                 case 1 -> {
                     System.out.print("Enter days: ");
