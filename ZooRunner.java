@@ -277,6 +277,7 @@ public class ZooRunner {
 
                 default:
                     System.out.println("Invalid option.");
+                    break;
             }
 
         } catch (Exception e) {
