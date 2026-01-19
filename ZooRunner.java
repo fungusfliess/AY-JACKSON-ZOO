@@ -110,7 +110,6 @@ public class ZooRunner {
 
     // ===== ADMIN MENU LOOP =====
     while (login && !quit) {
-
         System.out.println("""
             Admin Menu:
             (Type quit to return)
