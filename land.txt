@@ -105,7 +105,7 @@ false
 10.0
 enclosure1
 e
-6
+75
 100
 0
 1
@@ -120,27 +120,10 @@ wet grassland
 80.0
 true
 5
-bingus
+Capybara Pavillion
 b
-2
+50
 30
 0
 2
-
-Pavillion
-WATER
-15.0
-70.0
-Freshwater
-7.4
-150.0
-16.0
-true
-0.0
-pavillion1
-j
-38
-100000
-0
-10
 
