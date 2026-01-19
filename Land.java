@@ -17,6 +17,7 @@ public class Land {
 
     // CONSTANTS
     public static final char EMPTY = '.'; // represents empty space on grid
+    public static final int NUM_AREA_PER_SQUARE = 25;
 
     // CONSTRUCTOR
     public Land(int maxNumStructures, Map landMap) {
@@ -671,7 +672,7 @@ public class Land {
             return false;
         }
         // calculating area of the Structure.
-        int area = landMap.areaOf(corner1);
+        int area = landMap.areaOf(corner1) * NUM_AREA_PER_SQUARE;
         structureList[currentNumStructures] = new GiftShop(name, structureID, area, timeBetweenMaintenance, 0, this, animalFactStrings, menu);
         currentNumStructures++;
         return true;
@@ -692,7 +693,7 @@ public class Land {
             return false;
         }
         // calculating area of the Structure.
-        int area = landMap.areaOf(corner1);
+        int area = landMap.areaOf(corner1) * NUM_AREA_PER_SQUARE;
         structureList[currentNumStructures] = new Restaurant(name, structureID, area, timeBetweenMaintenance, 0, this, animalFactStrings, menu);
         currentNumStructures++;
         return true;
@@ -713,7 +714,7 @@ public class Land {
             return false;
         }
         // calculating area of the Structure.
-        int area = landMap.areaOf(corner1);
+        int area = landMap.areaOf(corner1) * NUM_AREA_PER_SQUARE;
         structureList[currentNumStructures] = new Enclosure(species, name, structureID, area, timeBetweenMaintenance, 0, this, maxAnimal, climate);
         currentNumStructures++;
         System.out.println("Area of Enclosure: " + area); 
@@ -735,7 +736,7 @@ public class Land {
             return false;
         }
         // calculating area of the Structure.
-        int area = landMap.areaOf(corner1);
+        int area = landMap.areaOf(corner1) * NUM_AREA_PER_SQUARE;
         structureList[currentNumStructures] = new Pavillion(name, structureID, area, timeBetweenMaintenance, 0, this, capacity, condition);
         currentNumStructures++;
         System.out.println("Area of Pavillion: " + area); 
@@ -757,7 +758,7 @@ public class Land {
             return false;
         }
         // calculating area of the Structure.
-        int area = landMap.areaOf(corner1);
+        int area = landMap.areaOf(corner1) * NUM_AREA_PER_SQUARE;
         structureList[currentNumStructures] = new Park(name, structureID, area, timeBetweenMaintenance, 0, this);
         currentNumStructures++;
         return true;
@@ -779,7 +780,7 @@ public class Land {
             return false;
         }
         // calculating area of the Structure.
-        int area = landMap.areaOf(corner1);
+        int area = landMap.areaOf(corner1) * NUM_AREA_PER_SQUARE;
         structureList[currentNumStructures] = new Maze(name, structureID, area, timeBetweenMaintenance, 0, this, mazeLayout);
         currentNumStructures++;
         return true;
