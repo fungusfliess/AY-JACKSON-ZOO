@@ -610,7 +610,8 @@ public class Land {
     */
     public void printAllStructureInfo () {
         for (int i = 0; i < currentNumStructures; i++) {
-            System.out.println(String.format("Name: %s%nID: %c%nArea: %d%n", structureList[i].getName(), structureList[i].getStructureID(), structureList[i].getArea()));
+            System.out.println(structureList[i].toString());
+            //String.format("Name: %s%nID: %c%nArea: %d%n", structureList[i].getName(), structureList[i].getStructureID(), structureList[i].getArea())
         }
     }
 
