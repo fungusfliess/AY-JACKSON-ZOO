@@ -105,28 +105,29 @@ public class ZooRunner {
             6  - Sort Employees By Earnings
             7  - Sort Employees By Experience & Wage
             8  - Display All Employees
-            9  - Create Gift Shop
-            10 - Create Restaurant
-            11 - Create Pavillion
-            12 - Create Enclosure
-            13 - Create Park
-            14 - Create Maze
-            15 - Remove Structure
-            16 - Maintain All Structures
-            17 - Add Animal
-            18 - Relocate Animal
-            19 - List Animals By Species
-            20 - Add Egg
-            21 - Display Animals With Low Happiness
-            22 - Display Animals With High Hunger
-            23 - Display Animals With Low Cleanliness
-            24 - Sort Animals By Name Then Species
-            25 - Sort Animals By Age
-            26 - Sort Animals By Happiness
-            27 - Sort Animals By Hunger
-            28 - Sort Animals By Cleanliness
-            29 - Display All Animals
-            30 - Display Incubator
+            9  - Display All Visitors
+            10 - Create Gift Shop
+            11 - Create Restaurant
+            12 - Create Pavillion
+            13 - Create Enclosure
+            14 - Create Park
+            15 - Create Maze
+            16 - Remove Structure
+            17 - Maintain All Structures
+            18 - Add Animal
+            19 - Relocate Animal
+            20 - List Animals By Species
+            21 - Add Egg
+            22 - Display Animals With Low Happiness
+            23 - Display Animals With High Hunger
+            24 - Display Animals With Low Cleanliness
+            25 - Sort Animals By Name Then Species
+            26 - Sort Animals By Age
+            27 - Sort Animals By Happiness
+            28 - Sort Animals By Hunger
+            29 - Sort Animals By Cleanliness
+            30 - Display All Animals
+            31 - Display Incubator
             """);
 
         input = sc.nextLine();
