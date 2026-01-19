@@ -106,7 +106,7 @@ public class Pavillion extends Habitat{
     public boolean addAnimal(Animal animal){
 
         //checks if animal is suitable for pavillion and if there is space
-        if(animal.isSuitable(this) && getNumAnimals() > getMaxAnimals()){
+        if(animal.isSuitable(this) && getNumAnimals() < getMaxAnimals()){
 
             // adds animal to pavillion, updates space and number of animals
             modifySpaceLeft(-(animal.getRequiredArea()));
