@@ -8,11 +8,11 @@ public class WaterCondition extends LivingCondition {
     private double waterSalinity;
 
     public WaterCondition(double temp, double hum, String region, 
-                          double acidity, double hardness, double temperature, boolean hasLand, double salinity) {
+                          double acidity, double hardness, double waterTemperature, boolean hasLand, double salinity) {
         super(temp, hum, region);
         this.waterAcidity = acidity;
         this.waterHardness = hardness;
-        this.waterTemperature = temperature;
+        this.waterTemperature = waterTemperature;
         this.hasLand = hasLand;
         this.waterSalinity = salinity;
     }
