@@ -6,7 +6,7 @@
    Description: Adult is a concrete subclass of Visitor that represents standard visitors who pay the regular
                 admission price. It tracks a preferred budget limit and can report whether the visitor stayed
                 within budget. Adult returns the role identifier "ADULT" and uses adult ticket pricing rules.
-*/
+*/ 
 
 public class Adult extends Visitor{
    //FIELDS 
