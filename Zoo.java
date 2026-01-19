@@ -169,8 +169,9 @@ public int getNumEmployees() { return numEmployees; }
         }
 
         int index = (int)(Math.random() * numAnimals);
-        zooAnimals[index].canReproduce();
-        System.out.println(zooAnimals[index].getName() + " is about to have a baby! help deliver its baby!");
+        if (zooAnimals[index].canReproduce()) {
+            System.out.println(zooAnimals[index].getName() + " is about to have a baby! help deliver its baby!");
+        }
         zooLand.passDay();
     }
 
