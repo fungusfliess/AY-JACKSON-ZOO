@@ -119,7 +119,7 @@ public class ZooRunner {
             4  - Search Person By ID & Earnings
             5  - Sort Visitors By Name
             6  - Sort Employees By Earnings
-            7  - Sort Employees By Experience & Wage
+            7  - Sort Employees By Experience & Earnings
             8  - Display All Employees
             9  - Display All Visitors
             10 - Create Gift Shop
@@ -188,7 +188,7 @@ public class ZooRunner {
                     zoo.sortEmployeesByEarnings();
                     break;
                 case 7:
-                    zoo.sortEmployeesByExperienceAndWage();
+                    zoo.sortEmployeesByExperienceAndEarnings();
                     break;
                 case 8:
                     zoo.displayAllEmployees();
