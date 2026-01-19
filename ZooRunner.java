@@ -258,6 +258,7 @@ public class ZooRunner {
                      
                         case 2: 
                             buildLivingCondition();
+                            break;
 
                         case 3:
                             zoo.sortStructureBySize();
