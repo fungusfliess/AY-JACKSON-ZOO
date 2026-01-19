@@ -565,6 +565,11 @@ public int getNumEmployees() { return numEmployees; }
     */
     public void displayAllVisitors() {
         System.out.println("=== ALL VISITORS (" + numVisitors + ") ===");
+        if (numVisitors == 0) {
+            System.out.println("No visitors loaded.");
+            return;
+        }
+        
         for (int i = 0; i < numVisitors; i++) {
             if (visitorList[i] != null) {
                 System.out.println(visitorList[i]);
@@ -578,6 +583,11 @@ public int getNumEmployees() { return numEmployees; }
     */
     public void displayAllEmployees() {
         System.out.println("=== ALL EMPLOYEES (" + numEmployees + ") ===");
+        if (numEmployees == 0) {
+            System.out.println("No employees loaded.");
+            return;
+        }
+        
         for (int i = 0; i < numEmployees; i++) {
             if (employeeList[i] != null) {
                 System.out.println(employeeList[i]);

@@ -1078,5 +1078,4 @@ public static void hatchEggMenu() {
             System.out.println("Zoo has reached max capacity or ID already exists.");
         }
     }
-
 }
