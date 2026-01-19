@@ -255,8 +255,7 @@ public class Land {
             idx += 1;
 
             // based on the structureType, call the appropriate loadFromString method.
-            System.out.println(structureType);
-            System.out.println(sumString);
+
             switch (structureType) {
                 case "GiftShop":
                     this.structureList[i] = GiftShop.loadFromString(sumString, this);
@@ -615,6 +614,16 @@ public class Land {
         }
     }
 
+    public void printAllHabitatInfo () {
+        for (int i = 0; i < currentNumStructures; i++) {
+            if (structureList[i] instanceof Habitat) {
+                System.out.println(((Habitat)structureList[i]).toString());
+                System.out.println();
+            }
+            
+        }
+    }
+
     /*
     @description: prints the ID of all Structures that require maintenance
     */
@@ -706,6 +715,7 @@ public class Land {
         int area = landMap.areaOf(corner1);
         structureList[currentNumStructures] = new Enclosure(species, name, structureID, area, timeBetweenMaintenance, 0, this, maxAnimal, climate);
         currentNumStructures++;
+        System.out.println("Area of Enclosure: " + area); 
         return true;
     }
 
@@ -727,6 +737,7 @@ public class Land {
         int area = landMap.areaOf(corner1);
         structureList[currentNumStructures] = new Pavillion(name, structureID, area, timeBetweenMaintenance, 0, this, capacity, condition);
         currentNumStructures++;
+        System.out.println("Area of Pavillion: " + area); 
         return true;
     }
 

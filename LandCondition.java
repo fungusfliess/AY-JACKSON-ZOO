@@ -27,11 +27,11 @@ public class LandCondition extends LivingCondition {
             return 0; 
         }
         double diff = 0;
-        diff += Math.min(this.landSlope, otherLandCondition.    landSlope)/Math.max(this.landSlope, otherLandCondition.landSlope);
+        diff += Math.min(this.landSlope, otherLandCondition.landSlope)/Math.max(this.landSlope, otherLandCondition.landSlope);
         diff += Math.min(this.vegetationDensity, otherLandCondition.vegetationDensity)/Math.max(this.vegetationDensity, otherLandCondition.vegetationDensity);
         diff += Math.min(this.amountStructures, otherLandCondition.amountStructures)/Math.max(this.amountStructures, otherLandCondition.amountStructures);
         diff += Math.min(this.soilCompaction, otherLandCondition.soilCompaction)/Math.max(this.soilCompaction, otherLandCondition.soilCompaction);
-        diff /= 7;
+        diff /= 4;
         return (diff+ super.compareTo(other))/2;
     }
 

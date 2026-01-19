@@ -199,6 +199,7 @@ public class Zoo {
         }
         return zooLand.createEnclosure(c1, area, species, name, id,
                                     timeBetweenMaintenance, maxAnimals, condition);
+                                    
     }
 
     //
@@ -335,6 +336,10 @@ public class Zoo {
 
     public void printAllStructureInfo () {
         zooLand.printAllStructureInfo();
+    }
+
+    public void printAllHabitatInfo () {
+        zooLand.printAllHabitatInfo();
     }
 
     public void maintainAll () {

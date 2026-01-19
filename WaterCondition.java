@@ -31,7 +31,7 @@ public class WaterCondition extends LivingCondition {
         diff += Math.min(this.waterHardness, otherWaterCondition.waterHardness)/Math.max(this.waterHardness, otherWaterCondition.waterHardness);
         diff += Math.min(this.waterTemperature, otherWaterCondition.waterTemperature)/Math.max(this.waterTemperature, otherWaterCondition.waterTemperature);
         diff += Math.min(this.waterSalinity, otherWaterCondition.waterSalinity)/Math.max(this.waterSalinity, otherWaterCondition.waterSalinity);
-        diff /= 7;
+        diff /= 4;
         return (diff+ super.compareTo(other))/2;
     }
 
