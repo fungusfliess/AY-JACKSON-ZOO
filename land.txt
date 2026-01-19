@@ -24,7 +24,7 @@ Rain Forest Cafe
 c
 150
 300
-260
+261
 
 GiftShop
 1
@@ -37,25 +37,7 @@ Zoo Gift Shop
 d
 100
 120
-15
-
-Enclosure
-Giraffe
-LAND
-22.5
-0.6
-Ontario
-12.0
-23.0
-45.0
-true
-2
-Giraffe Enclosure
-o
-100
-40
-12
-10
+16
 
 Pavillion
 WATER
@@ -71,7 +53,7 @@ North American Pavillion
 n
 100
 100
-68
+69
 4
 
 Maze
@@ -83,14 +65,14 @@ Corn Maze
 m
 50
 5
-4
+5
 
 Park
 Zoo Central Field
 p
 25
 14
-7
+8
 
 Enclosure
 shark
@@ -107,7 +89,7 @@ enclosure1
 e
 75
 100
-0
+1
 1
 
 Enclosure
@@ -125,7 +107,7 @@ Unicorn Enclosure
 u
 300
 100
-0
+1
 2
 
 Park
