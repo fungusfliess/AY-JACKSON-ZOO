@@ -1,18 +1,18 @@
 10
 20
-b c c c . . . . . . . . . d d . . . . .
-b c c c . p e e e . . . . d d . . . . .
-. . . . . . . o o . . . . . . j . . . .
-n n . . m . . o o . . . . . . j j j j .
-n n . . m . . . . . . . j j j j j . . .
-. . . . . . . . . . . . j j j j j j j .
-. . . . . . . . . . . . . j j j j j j j
-. . . . . . . . . . . . . j j j j j j j
-. . . . . . . . . . . . . j j j . j j j
-. . . . . . . . . . . . . . j . . . . .
+b c c c u u u u u u u u u d d . . . . .
+b c c c u p e e e u u u u d d . . . . .
+u u u u u u u o o u u u u u u j . . . .
+n n u u m u u o o u u u u u u j j j j .
+n n u u m u u u u u u u j j j j j . . .
+u u u u u u u u u u u u j j j j j j j .
+u u u u u u u u u u u u u j j j j j j j
+u u u u u u u u u u u u u j j j j j j j
+u u u u u u u u u u u u u j j j . j j j
+u u u u u u u u u u u u u u j . . . . .
 
 40
-9
+10
 
 Restaurant
 1
@@ -143,4 +143,22 @@ j
 100000
 0
 10
+
+Enclosure
+Unicorn
+LAND
+18.0
+60.0
+Enchanted Forest
+45.0
+4.0
+70.0
+true
+8
+Unicorn Enclosure
+u
+111
+10
+0
+2
 
