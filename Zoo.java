@@ -640,25 +640,17 @@ public class Zoo {
     
             Person p = null;
     
-            // -------- Employees --------
-            if (role.equals("ZOOKEEPER") || role.equals("SHOPSTAFF")) {
+            if (role.equals("ZOOKEEPER")) {
                 double hourlyWage = Double.parseDouble(next(br));
                 int yearsExp = Integer.parseInt(next(br));
-                int thirdField = Integer.parseInt(next(br)); // certLevel or placeholder
-    
-                if (hourlyWage < 0 || yearsExp < 0) {
-                    System.out.println("[WARN] Invalid employee fields for '" + personID + "'. Skipping.");
-                    continue;
-                }
-    
-                if (role.equals("ZOOKEEPER")) {
-                    p = new ZooKeeper(age, personID, firstName, lastName, hourlyWage, yearsExp, thirdField);
-                } else {
-                    p = new ShopStaff(age, personID, firstName, lastName, hourlyWage, yearsExp);
-                }
-            }
-    
-            // -------- Adult --------
+                int certLevel = Integer.parseInt(next(br));
+                p = new ZooKeeper(age, personID, firstName, lastName, hourlyWage, yearsExp, certLevel);
+            
+            } else if (role.equals("SHOPSTAFF")) {
+                double hourlyWage = Double.parseDouble(next(br));
+                int yearsExp = Integer.parseInt(next(br));
+                p = new ShopStaff(age, personID, firstName, lastName, hourlyWage, yearsExp);
+            }            
             else if (role.equals("ADULT")) {
                 if (!ageMatchesVisitorRole("ADULT", age)) {
                     System.out.println("[WARN] Age " + age + " does not match ADULT for '" + personID + "'. Skipping.");
@@ -670,16 +662,12 @@ public class Zoo {
                 int visitDuration = Integer.parseInt(next(br));
                 double preferredBudgetLimit = Double.parseDouble(next(br));
     
-                
-    
                 p = new Adult(age, personID, firstName, lastName,
                             Math.max(0.0, balance),
                             Math.max(0, learningLevel),
                             Math.max(0, visitDuration),
                             Math.max(0.0, preferredBudgetLimit));
-            }
-    
-            // -------- Child --------
+            }    
             else if (role.equals("CHILD")) {
     
                 double balance = Double.parseDouble(next(br));
@@ -700,8 +688,6 @@ public class Zoo {
                             strollerNeeded,
                             guardianID);
             }
-    
-            // -------- Senior --------
             else if (role.equals("SENIOR")) {
                 // If your file includes SENIOR, use:
                 // balance, learningLevel, visitDuration, preferredBudgetLimit, requiresAccessibilitySupport

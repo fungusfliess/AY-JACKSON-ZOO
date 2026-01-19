@@ -165,7 +165,7 @@ public class ZooRunner {
                 case 6 -> zoo.sortEmployeesByEarnings();
                 case 7 -> zoo.sortEmployeesByExperienceAndWage();
                 case 8 -> zoo.displayAllEmployees();
-                case 9 -> zoo.displayAllEmployees();
+                case 9 -> zoo.displayAllVisitors();
 
                 // ===== STRUCTURES =====
                 case 10 -> buildGiftShop();
