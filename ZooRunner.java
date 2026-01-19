@@ -93,7 +93,6 @@ public class ZooRunner {
 
     // ===== ADMIN MENU LOOP =====
     while (login && !quit) {
-
         System.out.println("""
             Admin Menu:
             (Type quit to return)
@@ -131,7 +130,7 @@ public class ZooRunner {
             """);
 
         input = sc.nextLine().trim();
-        
+
         if (input.equalsIgnoreCase(QUIT)) {
             return;
         }
