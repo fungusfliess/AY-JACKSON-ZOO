@@ -1254,8 +1254,6 @@ public int getNumEmployees() { return numEmployees; }
         }
     }
 
-
-
     //========================================
     public void loadEggs(String file) {
         try {
@@ -1279,9 +1277,10 @@ public int getNumEmployees() { return numEmployees; }
                 int hatchTime = Integer.parseInt(br.readLine());
 
                 Animal parent = findAnimal(parentName, species);
+
+                // 🔹 Fallback: create dummy parent if not found
                 if (parent == null) {
-                    System.out.println("Parent not found for egg: " + parentName);
-                    continue;
+                    parent = createDummyParent(species);
                 }
 
                 Egg egg = new Egg(parent);
@@ -1296,7 +1295,89 @@ public int getNumEmployees() { return numEmployees; }
         }
     }
 
+    // 
+    private Animal createDummyParent(String specie) {
 
+    char habitatId = Land.EMPTY; // placeholder
+    String name = "Unknown_" + specie;
+    String preferredInteraction = "None";
+    String gender;
+
+    if (Math.random() < 0.5) {
+        gender = "Male";
+    } else {
+        gender = "Female";
+    }
+
+    int happiness = Animal.MAX_STAT / 2;
+    int cleanliness = Animal.MAX_STAT / 2;
+    int hunger = Animal.MAX_STAT / 2;
+    int age = 0;
+    double weight = 0;
+
+    Animal animal = null;
+
+    if (specie.equalsIgnoreCase("Unicorn")) {
+
+        animal = new Unicorn(habitatId, name, preferredInteraction, gender,
+                happiness, cleanliness, hunger, age, weight);
+
+    } else if (specie.equalsIgnoreCase("Capybara")) {
+
+        animal = new Capybara(habitatId, name, preferredInteraction, gender,
+                happiness, cleanliness, hunger, age, weight);
+
+    } else if (specie.equalsIgnoreCase("Eagle")) {
+
+        Eagle eagle = new Eagle(habitatId, name, preferredInteraction, gender,
+                happiness, cleanliness, hunger, age, weight);
+        eagle.setHasNest(false);
+        animal = eagle;
+
+    } else if (specie.equalsIgnoreCase("Cockatoo")) {
+
+        Cockatoo cockatoo = new Cockatoo(habitatId, name, preferredInteraction, gender,
+                happiness, cleanliness, hunger, age, weight);
+        cockatoo.setHasNest(false);
+        animal = cockatoo;
+
+    } else if (specie.equalsIgnoreCase("Snake")) {
+
+        Snake snake = new Snake(habitatId, name, preferredInteraction, gender,
+                happiness, cleanliness, hunger, age, weight);
+        snake.setTimeToShed(0);
+        animal = snake;
+
+    } else if (specie.equalsIgnoreCase("Crocodile")) {
+
+        Crocodile croc = new Crocodile(habitatId, name, preferredInteraction, gender,
+                happiness, cleanliness, hunger, age, weight);
+        croc.setTimeToShed(0);
+        animal = croc;
+
+    } else if (specie.equalsIgnoreCase("Frog")) {
+
+        animal = new Frog(habitatId, name, preferredInteraction, gender,
+                happiness, cleanliness, hunger, age, weight);
+
+    } else if (specie.equalsIgnoreCase("Axolotl")) {
+
+        animal = new Axolotl(habitatId, name, preferredInteraction, gender,
+                happiness, cleanliness, hunger, age, weight);
+
+    } else if (specie.equalsIgnoreCase("Shark")) {
+
+        animal = new Shark(habitatId, name, preferredInteraction, gender,
+                happiness, cleanliness, hunger, age, weight);
+
+    } else if (specie.equalsIgnoreCase("Sunfish")) {
+
+        animal = new Sunfish(habitatId, name, preferredInteraction, gender,
+                happiness, cleanliness, hunger, age, weight);
+    }
+
+    return animal;
+}
 
     //==============================================
     public Animal hatchEgg(int index, String name) {
