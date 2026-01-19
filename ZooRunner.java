@@ -164,44 +164,45 @@ public class ZooRunner {
                 case 6 -> zoo.sortEmployeesByEarnings();
                 case 7 -> zoo.sortEmployeesByExperienceAndWage();
                 case 8 -> zoo.displayAllEmployees();
+                case 9 -> zoo.displayAllEmployees();
 
                 // ===== STRUCTURES =====
-                case 9 -> buildGiftShop();
-                case 10 -> buildRestaurant();
-                case 11 -> buildPavillion();
-                case 12 -> buildEnclosure();
-                case 13 -> buildPark();
-                case 14 -> buildMaze();
+                case 10 -> buildGiftShop();
+                case 11 -> buildRestaurant();
+                case 12 -> buildPavillion();
+                case 13 -> buildEnclosure();
+                case 14 -> buildPark();
+                case 15 -> buildMaze();
 
-                case 15 -> {
+                case 16 -> {
                     System.out.print("Enter Structure ID: ");
                     System.out.println(zoo.removeStructure(sc.nextLine().charAt(0)));
                 }
 
-                case 16 -> zoo.maintainAll();
+                case 17 -> zoo.maintainAll();
 
                 // ===== ANIMALS =====
-                case 17 -> addAnimalUI();
-                case 18 -> relocateAnimalUI();
+                case 18 -> addAnimalUI();
+                case 19 -> relocateAnimalUI();
 
-                case 19 -> {
+                case 20 -> {
                     System.out.print("Enter species: ");
                     zoo.listAllSameSpecie(sc.nextLine());
                 }
 
-                case 20 -> addEggMenu();
-                case 21 -> zoo.displayAnimalsLowHappiness();
-                case 22 -> zoo.displayAnimalsLowHunger();
-                case 23 -> zoo.displayAnimalsLowCleansiness();
+                case 21 -> addEggMenu();
+                case 22 -> zoo.displayAnimalsLowHappiness();
+                case 23 -> zoo.displayAnimalsLowHunger();
+                case 24 -> zoo.displayAnimalsLowCleansiness();
 
-                case 24 -> zoo.sortAnimalsByNameThenSpecie();
-                case 25 -> zoo.sortAnimalsByAge();
-                case 26 -> zoo.sortAnimalsByHappiness();
-                case 27 -> zoo.sortAnimalsByHunger();
-                case 28 -> zoo.sortAnimalsByCleanliness();
+                case 25 -> zoo.sortAnimalsByNameThenSpecie();
+                case 26 -> zoo.sortAnimalsByAge();
+                case 27 -> zoo.sortAnimalsByHappiness();
+                case 28 -> zoo.sortAnimalsByHunger();
+                case 29 -> zoo.sortAnimalsByCleanliness();
 
-                case 29 -> zoo.displayAllAnimals();
-                case 30 -> zoo.displayIncubator();
+                case 30 -> zoo.displayAllAnimals();
+                case 31 -> zoo.displayIncubator();
 
                 default -> System.out.println("Invalid option.");
             }
