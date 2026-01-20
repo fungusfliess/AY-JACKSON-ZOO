@@ -42,7 +42,7 @@ public class Zoo {
 
     //RANDOM 
     public int getNumVisitors() { return numVisitors; }
-public int getNumEmployees() { return numEmployees; }
+    public int getNumEmployees() { return numEmployees; }
 
     //FIELDS
     private Employee[] employeeList;
@@ -74,21 +74,28 @@ public int getNumEmployees() { return numEmployees; }
     @postcondition: Zoo fields are initialized and load methods are called so the Zoo is ready to use.
     */
     public Zoo(){
+
         try{
+
+            // constructs BufferedReader to read from file
+
             BufferedReader br = new BufferedReader(new FileReader(ZOO_CONSTRUCTOR_FILE));
+            
+            // reads in configuration values
             double balance = Double.parseDouble(br.readLine());
             int animals = Integer.parseInt(br.readLine());
             int eggs = Integer.parseInt(br.readLine());
             int employees = Integer.parseInt(br.readLine());
             int visitors = Integer.parseInt(br.readLine());
             
-            
+            // initializes fields
             this.zooBalance = balance;
             this.maxAnimal = animals;
             this.maxEggs = eggs;
             this.maxEmployee = employees;
             this.maxVisitor = visitors; 
             
+            // creates field arrays
             this.zooAnimals = new Animal[maxAnimal];
             this.incubator = new Egg[maxEggs];
             this.employeeList = new Employee[maxEmployee];
@@ -99,6 +106,8 @@ public int getNumEmployees() { return numEmployees; }
         }catch(IOException e){
             System.out.println("Error reading file.");
         }
+
+        // loads all data files
         loadPersons();
         loadLandFromFile(LAND_FILE);
         loadAnimals(ANIMAL_FILE);
@@ -107,7 +116,10 @@ public int getNumEmployees() { return numEmployees; }
         System.out.println("Zoo Successfully Loaded!");
     }
    
-    
+    // ACCESSOR
+    public double getBalance() {
+        return zooBalance;
+    }
 
     /*
     @description: saves the Zoo system state to files by saving persons, animals, eggs,
@@ -117,7 +129,11 @@ public int getNumEmployees() { return numEmployees; }
     */
     public void saveZoo(){
         try{
+
+            // constructs BufferedWriter to write to file
             BufferedWriter bw = new BufferedWriter(new FileWriter(ZOO_CONSTRUCTOR_FILE, false));
+            
+            // writes ZOO_CONSTRUCTOR_FILE values
             bw.write(String.valueOf(zooBalance));
             bw.newLine();
             bw.write("" + maxAnimal);
@@ -127,6 +143,10 @@ public int getNumEmployees() { return numEmployees; }
             bw.write("" + maxEmployee);
             bw.newLine();
             bw.write("" + maxVisitor);
+
+            // prints status messages and calls save methods
+            // saves persons, animals, and land to respective files
+
             System.out.println("after saving zoo info, before saving the 3 files.");
             savePersons();
             System.out.println("after savePersons");
@@ -135,6 +155,7 @@ public int getNumEmployees() { return numEmployees; }
             saveLandToFile(LAND_FILE);
             System.out.println("Zoo Successfully Saved!");
             bw.close();
+
         }catch(IOException e){
             System.out.println("Error saving zoo: " + e.getMessage());
         }
@@ -186,7 +207,8 @@ public int getNumEmployees() { return numEmployees; }
     
 
     // LAND METHODS
-    //
+    /* description: creates a new GiftShop structure on the zoo land
+     */
     public boolean createGiftShop(Coord c1,Coord c2,String name,char id,int timeBetweenMaintenance,String[] facts,Item[] menu) {
         if (c1 == null || c2 == null || name == null || facts == null || menu == null) {
             return false;
@@ -194,7 +216,8 @@ public int getNumEmployees() { return numEmployees; }
         return zooLand.createGiftShop(c1,c2,name,id,timeBetweenMaintenance,facts,menu);
     }
     
-    //
+    /* description: creates a new Restaurant structure on the zoo land
+     */
     public boolean createRestaurant(Coord c1, Coord c2, String name, char id,
                                     int timeBetweenMaintenance, String[] facts, Item[] menu) {
         if (c1 == null || c2 == null || name == null || facts == null || menu == null) {
@@ -203,7 +226,8 @@ public int getNumEmployees() { return numEmployees; }
         return zooLand.createRestaurant(c1, c2, name, id, timeBetweenMaintenance, facts, menu);
     }
     
-    // 
+    /* description: creates a new Enclosure structure on the zoo land
+     */
     public boolean createEnclosure(Coord c1, int area, String species, String name, char id,
                                int timeBetweenMaintenance, int maxAnimals, LivingCondition condition) {
         if (c1 == null || species == null || name == null || condition == null) {
@@ -214,7 +238,8 @@ public int getNumEmployees() { return numEmployees; }
                                     
     }
 
-    //
+    /* description: creates a new Pavillion structure on the zoo land
+     */
     public boolean createPavillion(Coord c1, int area, String name, char id,
                                 int timeBetweenMaintenance, int maxAnimals, LivingCondition condition) {
 
@@ -226,7 +251,8 @@ public int getNumEmployees() { return numEmployees; }
                                     timeBetweenMaintenance, maxAnimals, condition);
     }
     
-    //
+    /* description: creates a new Park structure on the zoo land
+     */
     public boolean createPark(Coord c1, int area, String name, char id, int timeBetweenMaintenance) {
 
         if (c1 == null || name == null) {
@@ -236,7 +262,8 @@ public int getNumEmployees() { return numEmployees; }
         return zooLand.createPark(c1, area, name, id, timeBetweenMaintenance);
     }
 
-    //
+    /* description: creates a new Maze structure on the zoo land
+     */
     public boolean createMaze(Coord c1, String name, char id,
                           int timeBetweenMaintenance /*layout: replaced by default */) {
 
@@ -247,11 +274,15 @@ public int getNumEmployees() { return numEmployees; }
         return zooLand.createMaze(c1, name, id, timeBetweenMaintenance, /*layout */ MAZE_DEFAULT_SHAPE);
     }
 
+    /* description: removes a structure from the zoo land by its unique ID
+     */
     public boolean removeStructure (char id) {
         return zooLand.removeStructureFromList(zooLand.searchIdxByID(id));
     }
 
 
+    /* description: loads land and structures from a specified file
+     */
     public boolean loadLandFromFile (String filename) { 
         try {
             BufferedReader br = new BufferedReader(new FileReader(filename));
@@ -276,6 +307,8 @@ public int getNumEmployees() { return numEmployees; }
         }
     }
 
+    /* description: saves land and structures to a specified file
+     */
     public boolean saveLandToFile (String filename) {
         String toSave =  zooLand.saveLandToString();
         try {
@@ -290,14 +323,21 @@ public int getNumEmployees() { return numEmployees; }
         }
     }
 
+    // SEARCH, SORT, AND PRINT METHODS FOR LAND/STRUCTURES
+    /* description: searches for a structure by its name and returns its index in the land's structure list
+     */
     public int searchStructureIdxByName (String name) {
         return zooLand.searchIdxByName(name);
     }
 
+    /* description: searches for a structure by its name and returns the Structure object
+     */
     public int searchStructureIdxByID (char id) {
         return zooLand.searchIdxByID(id);
     }
 
+    /* description: searches for a structure by its ID and returns the Structure object
+     */
     public Structure searchStructureByID (char id) {
         int idx = zooLand.searchIdxByID(id);
         if (idx == -1) {
@@ -306,65 +346,89 @@ public int getNumEmployees() { return numEmployees; }
         return zooLand.getStructureAtIdx(idx);
     }
 
+    /* description: searches for a structure by number of animals and size
+     */
     public Structure searchByNumberAnimalsAndSize (int numAnimals, int size) {
         return zooLand.searchByNumberAnimalsAndSize(numAnimals, size);
     }
 
+    /* description: searches for a habitat with the most animals that meets certain living conditions
+     */
     public Habitat searchHabitatMostAnimalsAndLivingConditions (LivingCondition condition) {
         return zooLand.searchHabitatMostAnimalsAndLivingConditions(condition);
     }
 
+    /* description: sorts structures by size and number of animals
+     */
     public void sortBySizeAndMostAnimals () {
         zooLand.sortByAnimalsAndSize();
     }
 
+    /* description: sorts structures by days since last maintenance
+     */
     public void sortStructuresByDaysSinceLastMaintenance (int numToSort) {
         zooLand.sortByDaysSinceLastMaintenance(numToSort);
     }
 
+    /* description: sorts structures by least number of animals
+     */
     public void sortStructuresByLeastAnimals () {
         zooLand.sortByLeastAnimals();
     }
 
+    /* description: prints the map of the zoo land
+     */
     public void printMap() {
         zooLand.printMap();
     }
 
+    /* description: sorts structures by size from smallest to largest
+     */
     public void sortStructureBySize () {
         zooLand.sortBySmallestToLargest();
     }
 
+    /* description: sorts structures by size and time between maintenance
+     */
     public void sortBySizeAndTimeBetweenMaintenance () {
         zooLand.sortBySizeAndTimeBetweenMaintenance();
     }
 
+    /* description: sorts structures by most animals
+     */
     public void sortByMostAnimals () {
         zooLand.sortByMostAnimals();
     }
  
+    /* description: prints all structures that need maintenance
+     */
     public void printAllStructuresNeedingMaintenance () {
         zooLand.printAllStructuresNeedingMaintenance();
     }
 
+    /* description: prints all structure information
+     */
     public void printAllStructureInfo () {
         zooLand.printAllStructureInfo();
     }
 
+    /* description: prints all habitat information
+     */
     public void printAllHabitatInfo () {
         zooLand.printAllHabitatInfo();
     }
 
+    /* description: performs maintenance on all structures that need it
+     */
     public void maintainAll () {
         zooLand.maintainAll();
     }
 
+    /* description: performs maintenance on a specific structure
+     */
     public void maintain(Structure input) {
         input.maintenance();
     } 
-
-    public double getBalance() {
-        return zooBalance;
-    }
 
 
     public String toString() {
@@ -477,8 +541,11 @@ public int getNumEmployees() { return numEmployees; }
         @return the matching Employee object if found, otherwise null
     */
     public Employee searchByPersonIDAndEarnings(String personID, double earnings) {
+
+        // checks for null ID
         if (personID == null) return null;
     
+        // searches for matching employee
         for (int i = 0; i < numEmployees; i++) {
             Employee e = employeeList[i];
             if (e != null && personID.equals(e.getPersonID()) && (Math.abs(e.getEarnings() - earnings) < 0.0001)) {
@@ -514,12 +581,14 @@ public int getNumEmployees() { return numEmployees; }
         for (int i = 0; i < numEmployees - 1; i++){
             int maxIdx = i;
         
+            // finds index of employee with highest earnings in remaining unsorted portion
             for (int j = i + 1; j < numEmployees; j++){
                 if (employeeList[j].compareToByEarnings(employeeList[maxIdx]) < 0){
                     maxIdx = j;
                 }
             }
         
+            // swaps employee at i with employee at maxIdx
             if (maxIdx != i){
                 Employee temp = employeeList[i];
                 employeeList[i] = employeeList[maxIdx];
@@ -662,6 +731,8 @@ public int getNumEmployees() { return numEmployees; }
     
             Person p = null;
     
+            // Create specific Person type based on role
+
             if (role.equals("ZOOKEEPER")) {
                 double hourlyWage = Double.parseDouble(next(br));
                 int yearsExp = Integer.parseInt(next(br));
@@ -1256,10 +1327,14 @@ public int getNumEmployees() { return numEmployees; }
      * Attempts to hatch the given egg. If the egg successfully hatches,
      * the egg is removed from the incubator and the newborn animal is returned.
      */
+
     public void saveEggs(String file) {
+
+        // save number of eggs and each egg's data to file
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(file));
 
+            // write into file
             bw.write(Integer.toString(numEggs));
             bw.newLine();
             bw.newLine();
@@ -1272,11 +1347,18 @@ public int getNumEmployees() { return numEmployees; }
 
             bw.close();
         } catch (IOException e) {
+
+            // error handling
             System.out.println("Error saving eggs.");
         }
     }
 
-    //========================================
+    /**
+     * Description:
+     * Loads eggs from the specified file into the incubator.
+     * If the parent animal is not found, a dummy parent is created.
+     */
+
     public void loadEggs(String file) {
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
@@ -1317,7 +1399,10 @@ public int getNumEmployees() { return numEmployees; }
         }
     }
 
-    // 
+    /* description: creates a dummy parent Animal of the given specie
+       used when loading eggs if the actual parent is not found in the zoo
+    */
+
     private Animal createDummyParent(String specie) {
 
         char habitatId = Land.EMPTY; // placeholder

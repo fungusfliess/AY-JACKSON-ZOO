@@ -113,7 +113,10 @@ public class Enclosure extends Habitat{
     public boolean addAnimal(Animal animal){
         
         // checks if animal is suitable for enclosure and if there is space
-        if(animal.isSuitable((this)) && getNumAnimals() < getMaxAnimals() && (animal.getSpecie()).equals(species)){
+        if(animal!= null 
+            && animal.isSuitable((this)) 
+            && getNumAnimals() < getMaxAnimals() 
+            && (animal.getSpecie()).equals(species)){
             
             // adds animal to enclosure, updates space and number of animals
             modifySpaceLeft(-(animal.getRequiredArea()));
