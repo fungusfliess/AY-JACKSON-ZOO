@@ -16,7 +16,7 @@ public class Coord {
         this.y = y1;
     }
 
-    // ACCESSOR MUTATORS
+    // ACCESSOR 
     public int getX() {
         return x;
     }
@@ -25,6 +25,7 @@ public class Coord {
         return y;
     }
 
+    // MUTATORS
     public void setX(int x1) {
         this.x = x1;
     }
