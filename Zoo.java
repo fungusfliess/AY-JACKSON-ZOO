@@ -42,7 +42,7 @@ public class Zoo {
 
     //RANDOM 
     public int getNumVisitors() { return numVisitors; }
-public int getNumEmployees() { return numEmployees; }
+    public int getNumEmployees() { return numEmployees; }
 
     //FIELDS
     private Employee[] employeeList;
@@ -74,21 +74,28 @@ public int getNumEmployees() { return numEmployees; }
     @postcondition: Zoo fields are initialized and load methods are called so the Zoo is ready to use.
     */
     public Zoo(){
+
         try{
+
+            // constructs BufferedReader to read from file
+
             BufferedReader br = new BufferedReader(new FileReader(ZOO_CONSTRUCTOR_FILE));
+            
+            // reads in configuration values
             double balance = Double.parseDouble(br.readLine());
             int animals = Integer.parseInt(br.readLine());
             int eggs = Integer.parseInt(br.readLine());
             int employees = Integer.parseInt(br.readLine());
             int visitors = Integer.parseInt(br.readLine());
             
-            
+            // initializes fields
             this.zooBalance = balance;
             this.maxAnimal = animals;
             this.maxEggs = eggs;
             this.maxEmployee = employees;
             this.maxVisitor = visitors; 
             
+            // creates field arrays
             this.zooAnimals = new Animal[maxAnimal];
             this.incubator = new Egg[maxEggs];
             this.employeeList = new Employee[maxEmployee];
@@ -99,6 +106,8 @@ public int getNumEmployees() { return numEmployees; }
         }catch(IOException e){
             System.out.println("Error reading file.");
         }
+
+        // loads all data files
         loadPersons();
         loadLandFromFile(LAND_FILE);
         loadAnimals(ANIMAL_FILE);
@@ -117,7 +126,11 @@ public int getNumEmployees() { return numEmployees; }
     */
     public void saveZoo(){
         try{
+
+            // constructs BufferedWriter to write to file
             BufferedWriter bw = new BufferedWriter(new FileWriter(ZOO_CONSTRUCTOR_FILE, false));
+            
+            // writes ZOO_CONSTRUCTOR_FILE values
             bw.write(String.valueOf(zooBalance));
             bw.newLine();
             bw.write("" + maxAnimal);
@@ -127,6 +140,10 @@ public int getNumEmployees() { return numEmployees; }
             bw.write("" + maxEmployee);
             bw.newLine();
             bw.write("" + maxVisitor);
+
+            // prints status messages and calls save methods
+            // saves persons, animals, and land to respective files
+
             System.out.println("after saving zoo info, before saving the 3 files.");
             savePersons();
             System.out.println("after savePersons");
@@ -135,6 +152,7 @@ public int getNumEmployees() { return numEmployees; }
             saveLandToFile(LAND_FILE);
             System.out.println("Zoo Successfully Saved!");
             bw.close();
+            
         }catch(IOException e){
             System.out.println("Error saving zoo: " + e.getMessage());
         }
