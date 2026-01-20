@@ -42,7 +42,7 @@ Flexibility ranges:
 3. Animal Living Conditions
 --------------------------------------------------
 
-3.1 Land Animals
+3.1 Mammals
 
 Capybara
   Living Condition Type: LandCondition
@@ -57,6 +57,7 @@ Capybara
   Amount Strutures: 5
   Required Area: 30
   Flexibility: 0.7 Medium
+  Type Foods: Grass, Vegetables
 
 Unicorn
   Living Condition Type: LandCondition
@@ -71,21 +72,8 @@ Unicorn
   Amount Strutures: 8
   Required Area: 50
   Flexibility: 0.4 Low
-
-Snake
-  Living Condition Type: LandCondition
-  Requirements:
-  Temperature: 26
-  Humidity: 50
-  Region: Grassland
-  Soil Compaction: 40
-  Slope: 6
-  HasWater: true
-  Vegetation: 45
-  Amount Strutes: 6
-  Required Area: 20
-  Flexibility: 0.9 High
-
+  Type Foods: Grass, Hay, Fruits
+  
 
 3.2 Birds
 
@@ -102,6 +90,7 @@ Eagle
   Amount Strutes: 12
   Required Area: 30
   Flexibility: 0.4 Low
+  Type Foods: Meat, Fish
 
 Cockatoo
   Living Condition Type: LandCondition
@@ -116,9 +105,10 @@ Cockatoo
   Amount Strutes: 15
   Required Area: 15
   Flexibility: 0.7 Medium
+  Type Foods: Seeds, Fruits
 
 
-3.3 Water Animals
+3.3 Fish
 
 Shark
   Living Condition Type: WaterCondition
@@ -133,6 +123,7 @@ Shark
   Salinity: 35
   Required Area: 150
   Flexibility: 0.4 Low
+  Type Foods: Meat, Fish
 
 Sunfish
   Living Condition Type: WaterCondition
@@ -147,6 +138,43 @@ Sunfish
   Salinity: 34
   Required Area: 80
   Flexibility: 0.7 Medium
+  Type Foods: Algae, Flakes
+
+
+3.4 Reptles
+
+Snake
+  Living Condition Type: LandCondition
+  Requirements:
+  Temperature: 26
+  Humidity: 50
+  Region: Grassland
+  Soil Compaction: 40
+  Slope: 6
+  HasWater: true
+  Vegetation: 45
+  Amount Strutes: 6
+  Required Area: 20
+  Flexibility: 0.9 High
+  Type Foods: Rats, Birds
+
+Crocodile
+  Living Condition Type: WaterCondition
+  Requirements:
+  Temperature: 28
+  Humidity: 80
+  Region: River Delta
+  Acidity: 7.2
+  Hardness 180
+  Water Temperature: 26
+  Has Land: true
+  Salinity: 0.5
+  Required Area: 50
+  Flexibility: 0.4 Low
+  Type Foods: Meat, Fish
+
+
+3.5 Amphibians
 
 Frog
   Living Condition Type: WaterCondition
@@ -161,6 +189,23 @@ Frog
   Salinity: 0.1
   Required Area: 10
   Flexibility: 0.4 Low
+  Type Foods: Flies, Worms
+
+Axolotl
+  Living Condition Type: WaterCondition
+  Requirements:
+  Temperature: 16
+  Humidity: 70
+  Region: Freshwater
+  Acidity: 7.4
+  Hardness 150
+  Water Temperature: 15
+  Has Land: true
+  Salinity: 0
+  Required Area: 8
+  Flexibility: 0.7 Medium
+  Type Foods: Insects, Small Fish
+
 
 
 4. Habitat Suitability Logic
