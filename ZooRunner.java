@@ -6,6 +6,7 @@
    Description: ZooRunner is the main runner class for the zoo management system.
                 It provides menu interfaces for admins, employees, and visitors.
 */   
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ZooRunner {
@@ -158,9 +159,9 @@ public class ZooRunner {
 
                 case 1: 
                     System.out.print("Enter days: ");
-                    zoo.passTime(Integer.parseInt(sc.nextLine()));
+                    int numDays = Integer.parseInt(sc.nextLine());
+                    zoo.passTime(numDays);
                     break;
-                
 
                 case 2:
                     System.out.println("Zoo Balance: $" + zoo.getBalance());
@@ -280,7 +281,7 @@ public class ZooRunner {
                     break;
             }
 
-        } catch (Exception e) {
+        } catch (InputMismatchException imx) {
             System.out.println("Invalid input.");
         }
     }
@@ -315,6 +316,7 @@ public class ZooRunner {
                 + "10 -  Add Person\n"
                 + "11 - Deliver animals baby\n"
                 + "12 - Print All Habitats\n"
+                + "13 - Feed Animal"
                 );
    
             input = sc.nextLine();
@@ -369,6 +371,9 @@ public class ZooRunner {
                         case 12: 
                             zoo.printAllHabitatInfo();
                             break;
+                        case 13:
+                            feedAnimalMenu(employee);
+                            break;
                         default:
                             System.out.println("Sorry, that is not a valid option!\n");
                     }
@@ -382,6 +387,49 @@ public class ZooRunner {
     // ===========================
     // Animal menus
     // ===========================
+    public static void feedAnimalMenu(Employee employee) {
+
+        // Check role
+        if (!(employee instanceof ZooKeeper)) {
+            System.out.println("You must be a ZooKeeper to feed animals.");
+            return;
+        }
+
+        System.out.println("Enter the name of the animal you would like to feed:");
+        String name = sc.nextLine();
+
+        System.out.println("Enter the species:");
+        String specie = sc.nextLine();
+
+        Animal animal = zoo.findAnimal(name, specie);
+
+        // Check if animal exists
+        if (animal == null) {
+            System.out.println("Animal not found. Please check the name and species.");
+            return;
+        }
+
+        System.out.println("What are you feeding " + name + "?");
+        String food = sc.nextLine();
+
+        System.out.println("Enter the amount you are feeding " + name + ":");
+        int amount;
+
+        try {
+            amount = Integer.parseInt(sc.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid amount entered.");
+            return;
+        }
+
+        // Safe cast now
+        ZooKeeper keeper = (ZooKeeper) employee;
+        keeper.feedAnimal(animal, food, amount);
+
+        System.out.println(name + " has been fed successfully.");
+    }
+
+    
     public static void deliverOffspringMenu(Zoo zoo) {
 
         boolean delivered = false;

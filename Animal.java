@@ -15,8 +15,8 @@ public abstract class Animal {
     public static final int MAX_STAT = 100;
     public static final int LOW_STAT = 30;
 
-    private static final int DAILY_HUNGER_DECREASE = 10;
-    private static final int DAILY_CLEANLINESS_DECREASE = 5;
+    private static final double DAILY_HUNGER_DECREASE = 0.10;
+    private static final double DAILY_CLEANLINESS_DECREASE = 0.05;
     private static final int DAYS_PER_YEAR = 365;
 
     // =========================
@@ -345,12 +345,11 @@ public abstract class Animal {
         numPreferredInteractions = 0;
 
         // Decrease hunger and cleanliness naturally over time
-        hunger = Math.max(0, hunger - maxHunger*DAILY_HUNGER_DECREASE);
-        cleanliness = Math.max(0, cleanliness - MAX_STAT*DAILY_CLEANLINESS_DECREASE);
-
-        updateAge();
+        hunger -= maxHunger*DAILY_HUNGER_DECREASE;
+        cleanliness -= MAX_STAT*DAILY_CLEANLINESS_DECREASE;
         if (daysPassed % DAYS_PER_YEAR == 0) {
             age++;
+            updateAge();
         }
     }
 

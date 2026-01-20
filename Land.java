@@ -242,18 +242,25 @@ public class Land {
         // for loop through array of Structures.
         for (int i = 0; i < this.currentNumStructures; i++) {
             sumString = "";
-            if (rowStrings[idx] != null) {
+
+            if (idx < rowStrings.length && rowStrings[idx] != null) {
                 structureType = rowStrings[idx];
                 idx++;
             } else {
                 return false;
             }
-            // if input is an empty line, stop reading. Check null to avoid errors. This will still read the empty line.
-            while (!(idx > rowStrings.length-1) && rowStrings[idx] != null && !rowStrings[idx].isEmpty()) {
+
+            while (idx < rowStrings.length &&
+                rowStrings[idx] != null &&
+                !rowStrings[idx].isEmpty()) {
                 sumString += rowStrings[idx] + "\n";
                 idx++;
             }
-            idx += 1;
+
+            // skip empty separator line if present
+            if (idx < rowStrings.length && rowStrings[idx] != null && rowStrings[idx].isEmpty()) {
+                idx++;
+            }
 
             // based on the structureType, call the appropriate loadFromString method.
 
@@ -794,25 +801,40 @@ public class Land {
     @params: int tgtIdx is the index of the Structure to be removed.
     @returns: boolean representing success. Will be unsuccessful if the Structure's demolish method returns false.
     */
-    public boolean removeStructureFromList (int tgtIdx) {
-        // if demolish is unsuccessful (also calls demolish on the Structure)
-        char tempID = structureList[tgtIdx].getStructureID();
-        if (structureList[tgtIdx] == null || !structureList[tgtIdx].demolish()) {
-            return false;
-        } 
-        // shift all Structures after it down to fill in the gap. 
-        for (int i = tgtIdx; i < currentNumStructures-1; i++) {
-            structureList[i] = structureList[i+1];
-        }
-        
-        structureList[currentNumStructures-1] = null;
+    public boolean removeStructureFromList(int tgtIdx) {
 
-        // update currentNumStructures
-        currentNumStructures --;
-        // remove from map by finding any coordinate with structureID and recursively erasing it from there. 
-        landMap.erase(landMap.find(tempID));
-        return true;
+    // bounds check
+    if (tgtIdx < 0 || tgtIdx >= currentNumStructures) {
+        return false;
     }
+
+    // null check
+    if (structureList[tgtIdx] == null) {
+        return false;
+    }
+
+    // attempt demolish
+    if (!structureList[tgtIdx].demolish()) {
+        return false;
+    }
+
+    // safe to access now
+    char tempID = structureList[tgtIdx].getStructureID();
+
+    // shift left to fill gap
+    for (int i = tgtIdx; i < currentNumStructures - 1; i++) {
+        structureList[i] = structureList[i + 1];
+    }
+
+    structureList[currentNumStructures - 1] = null;
+    currentNumStructures--;
+
+    // remove from map
+    landMap.erase(landMap.find(tempID));
+
+    return true;
+}
+
 
     /*
     @description: checks if a character is allowed to be placed on the land map.

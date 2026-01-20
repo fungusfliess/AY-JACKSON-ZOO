@@ -169,7 +169,7 @@ public class Zoo {
     */
     public void passTime(int days){
         for(int i = 0; i < days; i++){
-            passDay();
+            this.passDay();
         }
     }
 
@@ -197,9 +197,12 @@ public class Zoo {
             }
         }
 
-        int index = (int)(Math.random() * numAnimals);
-        if (zooAnimals[index].canReproduce()) {
-            System.out.println(zooAnimals[index].getName() + " is about to have a baby! help deliver its baby!");
+        if (numAnimals > 0) {
+            int index = (int)(Math.random() * numAnimals);
+            if (zooAnimals[index].canReproduce()) {
+                System.out.println(zooAnimals[index].getName()
+                    + " is about to have a baby! help deliver its baby!");
+            }
         }
         zooLand.passDay();
     }
