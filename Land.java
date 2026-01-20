@@ -797,7 +797,7 @@ public class Land {
     public boolean removeStructureFromList (int tgtIdx) {
         // if demolish is unsuccessful (also calls demolish on the Structure)
         char tempID = structureList[tgtIdx].getStructureID();
-        if (!structureList[tgtIdx].demolish()) {
+        if (structureList[tgtIdx] == null || !structureList[tgtIdx].demolish()) {
             return false;
         } 
         // shift all Structures after it down to fill in the gap. 
